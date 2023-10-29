@@ -45,6 +45,8 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+
+  isOnboarded Boolean @default(false)
 }
 
 model VerificationToken {

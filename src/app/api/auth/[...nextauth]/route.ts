@@ -11,9 +11,41 @@ const handler = NextAuth({
       clientSecret: process.env.AUTH_GITHUB_SECRET!
     })
   ],
-  // pages: {
-  //   signIn: "/login"
-  // }
+  callbacks: {
+    async session({ token, session }) {
+      if (token && session.user) {
+        session.user.id = token.id
+        session.user.name = token.name
+        session.user.email = token.email
+        session.user.image = token.picture
+      }
+
+      return session
+    },
+    async jwt({ token, user }) {
+      const dbUser = await prisma.user.findFirst({
+        where: {
+          email: token.email,
+        },
+      })
+
+      if (!dbUser) {
+        if (user) {
+          token.id = user?.id
+          token.isOnboarded = false
+        }
+        return token
+      }
+
+      return {
+        id: dbUser.id,
+        name: dbUser.name,
+        email: dbUser.email,
+        picture: dbUser.image,
+        isOnboarded: dbUser.isOnboarded,
+      }
+    },
+  },
 })
 
 export { handler as GET, handler as POST }
