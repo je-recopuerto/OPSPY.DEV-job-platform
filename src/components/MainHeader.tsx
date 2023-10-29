@@ -19,7 +19,8 @@ export default function MainHeader() {
 
         {data?.user ? (
           <>
-            <Navbar.Link className={"cursor-pointer"} active onClick={() => signOut()}>Log out</Navbar.Link>
+            <Navbar.Link>{data.user.isOnboarded.toString()}</Navbar.Link>
+            <Navbar.Link className={"cursor-pointer"} active onClick={() => signOut()}>Log out ({data.user.name})</Navbar.Link>
           </>
         ) : (
           <>

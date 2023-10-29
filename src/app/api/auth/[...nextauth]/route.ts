@@ -1,9 +1,12 @@
-import NextAuth from "next-auth"
+import NextAuth, {AuthOptions} from "next-auth"
 import GitHubProvider from "next-auth/providers/github";
 import {PrismaAdapter} from "@auth/prisma-adapter";
 import prisma from "@/lib/db";
 
-const handler = NextAuth({
+export const authOptions: AuthOptions = {
+  session: {
+    strategy: "jwt",
+  },
   adapter: PrismaAdapter(prisma),
   providers: [
     GitHubProvider({
@@ -12,17 +15,21 @@ const handler = NextAuth({
     })
   ],
   callbacks: {
-    async session({ token, session }) {
-      if (token && session.user) {
+    async session({token, session, user}) {
+      if (token) {
         session.user.id = token.id
         session.user.name = token.name
         session.user.email = token.email
         session.user.image = token.picture
+        session.user.isOnboarded = token.isOnboarded
       }
+
+      console.log("Session: ", session)
+      console.log("Token: ", token)
 
       return session
     },
-    async jwt({ token, user }) {
+    async jwt({token, user}) {
       const dbUser = await prisma.user.findFirst({
         where: {
           email: token.email,
@@ -46,6 +53,8 @@ const handler = NextAuth({
       }
     },
   },
-})
+}
+
+const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST }
