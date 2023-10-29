@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import LoginButton from "@/components/LoginButton";
 
 export default function Home() {
 
@@ -57,8 +56,6 @@ export default function Home() {
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
             Find in-depth information about Next.js features and API.
           </p>
-
-          <LoginButton />
         </a>
 
         <a
