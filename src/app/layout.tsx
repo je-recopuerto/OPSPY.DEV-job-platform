@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import NextAuthSessionProvider from "@/providers/SessionProvider";
+import MainHeader from "@/components/MainHeader";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,7 +18,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <body className={inter.className}>
+    <NextAuthSessionProvider>
+      <MainHeader />
+
+      <div className={"max-w-[64rem] mx-auto mt-14"}>
+        {children}
+      </div>
+    </NextAuthSessionProvider>
+    </body>
     </html>
   )
 }
