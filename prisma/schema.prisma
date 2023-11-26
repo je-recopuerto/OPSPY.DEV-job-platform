@@ -45,8 +45,20 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  isOnboarded   Boolean   @default(false)
+  profile       Profile?
+}
 
-  isOnboarded Boolean @default(false)
+model Profile {
+  id          Int       @id @default(autoincrement())
+  firstName   String?
+  lastName    String?
+  dateOfBirth DateTime?
+  bio         String?
+  imageURL    String?
+  createdAt   DateTime  @default(now())
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id])
 }
 
 model VerificationToken {

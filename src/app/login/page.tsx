@@ -1,8 +1,6 @@
 'use client'
 
-import {Button, Checkbox, Label, TextInput} from "flowbite-react";
 import DiscordLoginButton from "@/components/Buttons/DiscordLoginButton";
-import FormSplitter from "@/components/FormSplitter";
 
 export default function LoginPage() {
   return (

@@ -12,15 +12,26 @@ export default withAuth(
 
     // @ts-ignore
     const session = await getSession({req: requestForNextAuth})
-    if(session && !session.user.isOnboarded) {
+    if(!session || !session.user) {
+      // Do nothing
+      return NextResponse.next()
+    }
+
+    const endsWith = req.url.endsWith("/onboarding")
+    if(!session.user.isOnboarded && !endsWith) {
       return NextResponse.redirect(new URL("/onboarding", req.url))
+    }
+
+    // if at /onboarding path and is already onboarded, redirect to home
+    if(session.user.isOnboarded && req.url.endsWith("/onboarding")) {
+      return NextResponse.redirect(new URL("/", req.url))
     }
   }
 )
 
-export const config = {
-  matcher: [
-    // Match all request paths except for the one starting with onboarding
-    '/((?!onboarding).*)',
-  ],
-}
+// export const config = {
+//   matcher: [
+//     // Match all request paths except for the one starting with onboarding
+//     '/((?!onboarding).*)',
+//   ],
+// }

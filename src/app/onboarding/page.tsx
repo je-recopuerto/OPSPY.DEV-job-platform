@@ -1,5 +1,15 @@
-export default function OnboardingPage() {
+import OnboardingCard from "@/components/onboarding/OnboardCard";
+
+export default async function OnboardingPage() {
+  async function handleOnboarding() {
+    "use server"
+
+    console.log("Handling onboarding")
+  }
+
   return (
-    "All aboard!"
+    <form action={handleOnboarding}>
+      <OnboardingCard />
+    </form>
   )
 }

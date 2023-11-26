@@ -24,9 +24,6 @@ export const authOptions: AuthOptions = {
         session.user.isOnboarded = token.isOnboarded
       }
 
-      console.log("Session: ", session)
-      console.log("Token: ", token)
-
       return session
     },
     async jwt({token, user}) {
