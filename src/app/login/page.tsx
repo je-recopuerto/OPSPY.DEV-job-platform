@@ -1,7 +1,5 @@
 'use client'
 
-import DiscordLoginButton from "@/components/Buttons/DiscordLoginButton";
-
 export default function LoginPage() {
   return (
     <div className={"flex-1 flex flex-col relative max-w-[390px] mx-auto"}>
@@ -49,8 +47,6 @@ export default function LoginPage() {
       {/*  </Button>*/}
       {/*</form>*/}
       {/*<FormSplitter text={"or"} className={"my-4"} />*/}
-
-      <DiscordLoginButton />
     </div>
   )
 }

@@ -1,21 +1,21 @@
 'use server'
 
 import {OnboardProps} from "../../types/props";
-import {getServerSession} from "next-auth";
-import {authOptions} from "@/app/api/auth/[...nextauth]/route";
 import prisma from "@/lib/db";
 import {onboardingSchema} from "@/schemas/onboardingSchema";
 import {redirect} from "next/navigation";
+import {auth} from "@/auth";
+import * as z from "zod";
 
-export async function setOnboarding(state: OnboardProps) {
+export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
   // This will throw an error if the state is invalid
-  const validatedState = onboardingSchema.parse(state);
+  const validatedState = onboardingSchema.parse(values);
 
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session || !session.user)
     throw new Error("User not found")
 
-  console.log("Setting onboarding:", state, "for user:", session?.user ?? "unknown")
+  console.log("Setting onboarding:", values, "for user:", session?.user ?? "unknown")
   const user = await prisma.user.findFirst({
     where: {
       id: session.user.id
