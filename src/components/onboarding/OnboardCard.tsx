@@ -1,7 +1,6 @@
 'use client'
 
 import {setOnboarding} from "@/app/actions";
-import {OnboardProps} from "../../../types/props";
 import {onboardingSchema} from "@/schemas/onboardingSchema";
 import * as z from "zod";
 import {Card, CardDescription} from "../ui/card";
@@ -11,8 +10,13 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {Separator} from "@/components/ui/separator";
 import GettingStarted from "@/components/onboarding/getting-started";
 import FormSubmitButton from "@/components/onboarding/form-submit";
+import {useToast} from "@/components/ui/use-toast";
+import {useEffect} from "react";
 
 export default function OnboardingCard() {
+
+  const { toast } = useToast()
+
   const form = useForm<z.infer<typeof onboardingSchema>>({
     resolver: zodResolver(onboardingSchema),
     defaultValues: {
@@ -21,6 +25,19 @@ export default function OnboardingCard() {
       dateOfBirth: new Date("November 12, 1960"),
     },
   })
+
+  const { formState: {isSubmitSuccessful} } = form
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      toast({
+        variant: "default",
+        title: "Onboarding",
+        description: "✅ You have been onboarded successfully!",
+        duration: 3000,
+      })
+    }
+  }, [isSubmitSuccessful])
 
   return (
     <Form {...form}>

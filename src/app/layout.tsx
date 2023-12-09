@@ -1,10 +1,11 @@
-import type { Metadata } from 'next'
-import { Inter as FontSans } from "next/font/google"
+import type {Metadata} from 'next'
+import {Inter as FontSans} from "next/font/google"
 import '@/styles/globals.css'
 import NextAuthSessionProvider from "@/providers/SessionProvider";
 import MainHeader from "@/components/MainHeader";
 import {cn} from "@/lib/utils";
 import {ThemeProvider} from "@/components/theme-provider";
+import {Toaster} from "@/components/ui/toaster";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -34,6 +35,8 @@ export default function RootLayout({
         <div className={"max-w-[64rem] mx-auto mt-14"}>
           {children}
         </div>
+
+        <Toaster />
       </ThemeProvider>
     </NextAuthSessionProvider>
     </body>

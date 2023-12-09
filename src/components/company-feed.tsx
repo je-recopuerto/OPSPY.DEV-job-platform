@@ -1,16 +1,18 @@
-import {getCompanies} from "@/services/companyService";
+import {getCompaniesWithOpenings} from "@/services/companyService";
+import CompanyProfile from "@/components/job-listing/company-profile";
 
 export default async function CompanyFeed() {
-
-  const companies = await getCompanies();
+  const companies = await getCompaniesWithOpenings();
 
   return (
     <>
-      {companies.map((company) => (
-        <div className={"whitespace-pre-wrap"}>
-          {JSON.stringify(company, null, 2)}
-        </div>
-      ))}
+      <h1 className="text-2xl font-semibold pb-6">Companies ({companies.length})</h1>
+
+      <div className={"flex flex-col gap-y-3"}>
+        {companies.map((company) => (
+          <CompanyProfile company={company} key={company.id} />
+        ))}
+      </div>
     </>
   )
 }
