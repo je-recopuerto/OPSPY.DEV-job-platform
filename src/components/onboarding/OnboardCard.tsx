@@ -38,16 +38,6 @@ export default function OnboardingCard() {
     },
   })
 
-  // const submit = async () => {
-  //   try {
-  //     await form.handleSubmit((data) => setOnboarding(data))
-  //   } catch (e) {
-  //     console.error(e)
-  //   }
-  // }
-
-  const {formState: {isSubmitting}} = form
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit((data) => setOnboarding(data))} className="space-y-8">

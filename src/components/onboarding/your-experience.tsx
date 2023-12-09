@@ -5,7 +5,6 @@ import {Button} from "@/components/ui/button";
 import {MinusIcon, PlusIcon} from "lucide-react";
 
 export default function YourExperience({form}: OnboardingCardProps) {
-
   return (
     <>
       <CardHeader>
@@ -14,7 +13,6 @@ export default function YourExperience({form}: OnboardingCardProps) {
       </CardHeader>
 
       <CardContent>
-
         <div className={"flex flex-row justify-end space-x-2"}>
           <Button variant="outline" size="icon">
             <PlusIcon className="h-4 w-4"/>

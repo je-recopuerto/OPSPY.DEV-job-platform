@@ -24,6 +24,7 @@ import {
   UserPlus,
   Users
 } from "lucide-react";
+import Link from "next/link";
 
 export default async function UserButton() {
   const session = await auth()
@@ -47,11 +48,15 @@ export default async function UserButton() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+
+          <DropdownMenuItem asChild>
+            <Link href={"/profile"}>
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+            </Link>
           </DropdownMenuItem>
+
           <DropdownMenuItem>
             <CreditCard className="mr-2 h-4 w-4" />
             <span>Billing</span>
