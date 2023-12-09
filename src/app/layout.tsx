@@ -6,6 +6,8 @@ import MainHeader from "@/components/MainHeader";
 import {cn} from "@/lib/utils";
 import {ThemeProvider} from "@/components/theme-provider";
 import {Toaster} from "@/components/ui/toaster";
+import NextNProgress from 'nextjs-progressbar';
+import NavigationProgressBar from "@/components/nav-progress-bar";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -30,6 +32,7 @@ export default function RootLayout({
     )}>
     <NextAuthSessionProvider>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <NavigationProgressBar />
         <MainHeader/>
 
         <div className={"max-w-[64rem] mx-auto mt-14"}>
