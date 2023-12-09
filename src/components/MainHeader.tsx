@@ -10,9 +10,12 @@ export default async function MainHeader() {
   return (
     <header className="sticky flex justify-center border-b">
       <div className="flex items-center justify-between w-full h-16 max-w-3xl px-4 mx-auto sm:px-6">
-        <MainNav />
-        <ThemeToggle />
-        <UserButton />
+        <MainNav/>
+
+        <div className={"flex space-x-5 justify-end"}>
+          <ThemeToggle/>
+          <UserButton/>
+        </div>
       </div>
     </header>
   )

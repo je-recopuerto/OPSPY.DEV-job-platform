@@ -5,8 +5,8 @@
   "tsx": true,
   "tailwind": {
     "config": "tailwind.config.js",
-    "css": "src/app/globals.css",
-    "baseColor": "slate",
+    "css": "src/styles/globals.css",
+    "baseColor": "gray",
     "cssVariables": true
   },
   "aliases": {
