@@ -5,34 +5,28 @@ import {
   NavigationMenuLink,
 } from "./ui/navigation-menu"
 import React from "react"
-import { Button } from "./ui/button"
 import Link from "next/link";
 
-export function MainNav() {
+export function MainNav({
+                          className,
+                          ...props
+                        }: React.HTMLAttributes<HTMLElement>) {
   return (
-    <div className="flex items-center space-x-2 lg:space-x-6">
-      <Link href="/">
-        <Button variant="ghost">
+    <nav className={cn("flex items-center space-x-2 lg:space-x-6", className)}>
+      <Link href="dashboard" className="text-sm font-medium transition-colors hover:text-primary">
           Home
-        </Button>
       </Link>
 
-      <Link href="jobs">
-        <Button variant="ghost">
+      <Link href="jobs" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
           Jobs
-        </Button>
       </Link>
 
-      <Link href="companies">
-        <Button variant="ghost">
+      <Link href="companies" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
           Companies
-        </Button>
       </Link>
 
-      <Link href="onboarding">
-        <Button variant="ghost">
+      <Link href="onboarding" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
           (TEST) Onboarding
-        </Button>
       </Link>
       {/*<NavigationMenu>*/}
       {/*  <NavigationMenuList>*/}
@@ -62,7 +56,7 @@ export function MainNav() {
       {/*    </NavigationMenuItem>*/}
       {/*  </NavigationMenuList>*/}
       {/*</NavigationMenu>*/}
-    </div>
+    </nav>
   )
 }
 
