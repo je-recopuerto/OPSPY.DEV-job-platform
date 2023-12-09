@@ -2,7 +2,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies by running `yarn install`
+2. Seed the database by running `npx prisma db seed`
+3. Run the development server:
 
 ```bash
 npm run dev
