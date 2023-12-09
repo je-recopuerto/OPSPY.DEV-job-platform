@@ -7,16 +7,18 @@ export default function FormSubmitButton({form}: OnboardingCardProps) {
 
   return (
     <>
-      {isSubmitting ? (
-        <Button disabled>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
-          Please wait
-        </Button>
-      ) : (
-        <Button type="submit">
-          Submit
-        </Button>
-      )}
+      <Button className={"w-full"} disabled={isSubmitting}>
+        {isSubmitting ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
+            Please wait
+          </>
+        ) : (
+          <>
+            Climb aboard!
+          </>
+        )}
+      </Button>
     </>
   )
 }

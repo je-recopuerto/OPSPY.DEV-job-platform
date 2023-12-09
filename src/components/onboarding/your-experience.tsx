@@ -1,6 +1,5 @@
 import {OnboardingCardProps} from "@/components/onboarding/getting-started";
 import {CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import FormSubmitButton from "@/components/onboarding/form-submit";
 import {Button} from "@/components/ui/button";
 import {MinusIcon, PlusIcon} from "lucide-react";
 
@@ -8,7 +7,7 @@ export default function YourExperience({form}: OnboardingCardProps) {
   return (
     <>
       <CardHeader>
-        <CardTitle>&gt; Work experience</CardTitle>
+        <CardTitle>Work experience</CardTitle>
         <CardDescription>This can be full time, part time or internships</CardDescription>
       </CardHeader>
 
@@ -26,8 +25,6 @@ export default function YourExperience({form}: OnboardingCardProps) {
         <div>
 
         </div>
-
-        <FormSubmitButton form={form}/>
       </CardContent>
     </>
   )

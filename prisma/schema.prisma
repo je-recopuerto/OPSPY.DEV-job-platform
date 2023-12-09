@@ -47,6 +47,7 @@ model User {
   sessions      Session[]
   isOnboarded   Boolean   @default(false)
   profile       Profile?
+  Company       Company?
 }
 
 model Profile {
@@ -67,4 +68,25 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Company {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  userId      String    @unique
+  owner       User      @relation(fields: [userId], references: [id])
+  JobPost     JobPost[]
+}
+
+model JobPost {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  companyId   Int
+  company     Company  @relation(fields: [companyId], references: [id])
 }

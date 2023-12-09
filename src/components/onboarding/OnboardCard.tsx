@@ -4,29 +4,13 @@ import {setOnboarding} from "@/app/actions";
 import {OnboardProps} from "../../../types/props";
 import {onboardingSchema} from "@/schemas/onboardingSchema";
 import * as z from "zod";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "../ui/card";
-import {CalendarIcon, Loader2} from "lucide-react";
-import {Calendar} from "@/components/ui/calendar";
-import {Button} from "@/components/ui/button";
-import { Input } from "../ui/input";
-import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
+import {Card, CardDescription} from "../ui/card";
+import {Form} from "@/components/ui/form";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
-import {format} from "date-fns";
-import {cn} from "@/lib/utils";
-import {useEffect} from "react";
 import {Separator} from "@/components/ui/separator";
 import GettingStarted from "@/components/onboarding/getting-started";
-import YourExperience from "@/components/onboarding/your-experience";
-
-type PageProps = {
-  state: OnboardProps,
-  setState: (o: OnboardProps) => void,
-  validate: () => void,
-  moveNext: () => void,
-  submit: () => Promise<void>
-}
+import FormSubmitButton from "@/components/onboarding/form-submit";
 
 export default function OnboardingCard() {
   const form = useForm<z.infer<typeof onboardingSchema>>({
@@ -46,7 +30,14 @@ export default function OnboardingCard() {
 
           <Separator/>
 
-          <YourExperience form={form}/>
+          {/*<YourExperience form={form}/>*/}
+
+          <Separator/>
+
+          <CardDescription>
+            <FormSubmitButton form={form}/>
+
+          </CardDescription>
         </Card>
       </form>
     </Form>

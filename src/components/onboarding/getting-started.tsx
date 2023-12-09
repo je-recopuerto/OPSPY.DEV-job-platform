@@ -21,7 +21,7 @@ export default function GettingStarted({form}: OnboardingCardProps) {
   return (
     <>
       <CardHeader>
-        <CardTitle>&gt; Getting started</CardTitle>
+        <CardTitle>Getting started</CardTitle>
         <CardDescription>First, we need to know a few basic things about you.</CardDescription>
       </CardHeader>
 
