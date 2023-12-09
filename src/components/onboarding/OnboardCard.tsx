@@ -37,7 +37,7 @@ export default function OnboardingCard() {
         duration: 3000,
       })
     }
-  }, [isSubmitSuccessful])
+  }, [isSubmitSuccessful, toast])
 
   return (
     <Form {...form}>

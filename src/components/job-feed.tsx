@@ -6,11 +6,11 @@ export default async function JobFeed() {
 
   return (
     <>
-      <h1 className="text-2xl font-semibold pb-6 pt-12">Jobs ({jobs.length})</h1>
+      <h1 className="text-2xl font-semibold pb-6">Jobs ({jobs.length})</h1>
 
       <div className={"flex flex-col gap-y-3"}>
         {jobs.map((job) => (
-          <JobListing job={job} key={job.id} />
+          <JobListing job={job} key={job.id}/>
         ))}
       </div>
     </>

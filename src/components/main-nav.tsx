@@ -17,6 +17,18 @@ export function MainNav() {
         </Button>
       </Link>
 
+      <Link href="jobs">
+        <Button variant="ghost">
+          Jobs
+        </Button>
+      </Link>
+
+      <Link href="companies">
+        <Button variant="ghost">
+          Companies
+        </Button>
+      </Link>
+
       <Link href="onboarding">
         <Button variant="ghost">
           (TEST) Onboarding

@@ -31,12 +31,27 @@ export default function JobListing(props: JobListingProps) {
             </CardDescription>
           </div>
           <div className={"flex justify-end"}>
-            {getSymbolFromCurrency(props.job.currency)}{props.job.minSalary}{props.job.maxSalary ? ` - ${props.job.maxSalary}` : ""}
+            <CardDescription>{getSalaryRangeString(props.job.minSalary, props.job.maxSalary, props.job.currency)}</CardDescription>
           </div>
         </div>
       </CardHeader>
     </Card>
   )
+}
+
+function getSalaryRangeString(minSalary: number, maxSalary: number, currencyCode?: string) {
+  const currencySymbol = getSymbolFromCurrency(currencyCode ?? "USD")
+
+  if (minSalary === maxSalary)
+    return `${currencySymbol}${formatCurrency(minSalary)}`
+
+  return `${currencySymbol}${formatCurrency(minSalary)} - ${currencySymbol}${formatCurrency(maxSalary)}`
+}
+
+// Input: 1234567.89
+// Output: "1,234,567.89"
+function formatCurrency(num: number): string {
+  return num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function getSymbolFromCurrency(currencyCode: string) {

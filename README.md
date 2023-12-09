@@ -25,6 +25,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 ## Helpful Commands
 - Reset database and apply migrations: `npx prisma migrate reset`
 - Generate Prisma client: `npx prisma generate`
+- Apply existing migrations: `npx prisma migrate dev`
 
 ## Learn More
 
