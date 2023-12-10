@@ -1,28 +1,27 @@
 "use client"
 
-import { Row } from "@tanstack/react-table"
+import {Row} from "@tanstack/react-table"
 
-import { Button } from "@/components/ui/button"
+import {Button} from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
 import {CircleEllipsisIcon} from "lucide-react";
+import {unsaveJob} from "@/app/actions";
+import {JobTrackerWithPost} from "@/services/jobTrackerService";
 
-interface DataTableRowActionsProps<TData> {
-  row: Row<TData>
+interface DataTableRowActionsProps {
+  row: Row<JobTrackerWithPost>
 }
 
-export function DataTableRowActions<TData>({
+export function DataTableRowActions({
   row,
-}: DataTableRowActionsProps<TData>) {
-  const task = row.original
-
+}: DataTableRowActionsProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -39,7 +38,7 @@ export function DataTableRowActions<TData>({
         {/*<DropdownMenuItem>Make a copy</DropdownMenuItem>*/}
         {/*<DropdownMenuItem>Favorite</DropdownMenuItem>*/}
         {/*<DropdownMenuSeparator />*/}
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={async () => await unsaveJob(row.original.id)}>
             Delete
             <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>

@@ -1,37 +1,19 @@
+'use client'
+
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {JobPostWithCompany} from "@/services/jobPostService";
 import {MapPin, SaveIcon} from "lucide-react";
 import {Button} from "@/components/ui/button";
-import prisma from "@/lib/db";
-import {auth} from "@/auth";
-import {getUserById} from "@/services/userService";
+import {toggleSaveJob} from "@/app/actions";
+import {toast} from "@/components/ui/use-toast";
 
 type JobListingProps = {
   job: JobPostWithCompany
+  isFollowing: boolean
 }
 
 export default function JobListing(props: JobListingProps) {
-
-  async function saveJob() {
-    'use server'
-
-    const session = await auth()
-    if (!session || !session.user) return
-
-    const user = await getUserById(session.user.id);
-    if (!user) return
-
-    console.log("Saving job with id: ", props.job.id)
-
-    await prisma.jobTracker.create({
-      data: {
-        jobId: props.job.id,
-        userId: user.id
-      }
-    })
-  }
-
   return (
     <Card className={"w-full"}>
       <CardHeader className={"flex flex-row gap-x-3 space-y-0"}>
@@ -61,10 +43,18 @@ export default function JobListing(props: JobListingProps) {
       </CardHeader>
 
       <CardContent>
-        <form action={saveJob}>
+        <form action={async () => {
+          const removed = await toggleSaveJob(props.job.id);
+
+          toast({
+            title: removed ? "Job Unsaved" : "Job Saved",
+            description: "You can view your saved jobs in your dashboard.",
+            duration: 1500,
+          })
+        }}>
           <Button>
-            <SaveIcon className={"h-4 w-4 mr-2"}/>
-            Save
+            <SaveIcon className={"h-4 w-4 mr-2"} />
+            {props.isFollowing ? "Unsave" : "Save"}
           </Button>
         </form>
       </CardContent>
@@ -81,8 +71,7 @@ function getSalaryRangeString(minSalary: number, maxSalary: number, currencyCode
   return `${currencySymbol}${formatCurrency(minSalary)} - ${currencySymbol}${formatCurrency(maxSalary)}`
 }
 
-// Input: 1234567.89
-// Output: "1,234,567.89"
+// 1234567.89 => "1,234,567.89"
 function formatCurrency(num: number): string {
   return num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

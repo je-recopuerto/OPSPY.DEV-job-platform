@@ -6,6 +6,7 @@ import {redirect} from "next/navigation";
 import {auth} from "@/auth";
 import * as z from "zod";
 import {getUserById} from "@/services/userService";
+import {revalidatePath} from "next/cache";
 
 export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
   // This will throw an error if the state is invalid
@@ -48,4 +49,56 @@ export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
 
   console.log("Successfully updated", user.name, "profile.")
   redirect("/")
+}
+
+export async function unsaveJob(id: number) {
+  const result = prisma.jobTracker.delete({
+    where: {
+      id: id,
+    }
+  })
+
+  revalidatePath("/dashboard")
+
+  return result
+}
+
+export async function saveJob(id: number, userId: string) {
+  return prisma.jobTracker.create({
+    data: {
+      jobId: id,
+      userId: userId
+    }
+  })
+}
+
+export async function toggleSaveJob(id: number) {
+  'use server'
+
+  const session = await auth()
+  if (!session || !session.user) return
+
+  const user = await getUserById(session.user.id);
+  if (!user) return
+
+  const existingTracker = await prisma.jobTracker.findFirst({
+    where: {
+      jobId: id,
+      userId: user.id
+    }
+  });
+
+  let removed = false;
+
+  if (existingTracker) {
+    const result = await unsaveJob(existingTracker.id)
+    console.log("Deleted existing tracker:", result)
+    removed = true;
+  } else {
+    const result = await saveJob(id, user.id)
+    console.log("Creating new tracker for job:", id)
+  }
+
+  revalidatePath("/dashboard")
+  return removed;
 }

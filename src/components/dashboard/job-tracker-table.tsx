@@ -2,12 +2,13 @@
 
 import {DataTable} from "@/components/table/data-table";
 import {ColumnDef} from "@tanstack/react-table";
-import { Checkbox } from "../ui/checkbox";
+import {Checkbox} from "../ui/checkbox";
 import {DataTableColumnHeader} from "@/components/table/data-table-column-header";
 import {JobTracker} from ".prisma/client";
 import {CheckIcon, CircleIcon, CrossIcon, LucideIcon, ShieldQuestionIcon, TimerIcon} from "lucide-react";
 import {DataTableRowActions} from "@/components/table/data-table-row-actions";
 import {JobTrackerWithPost} from "@/services/jobTrackerService";
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 
 type JobTrackerTableProps = {
   data: JobTrackerWithPost[]
@@ -99,7 +100,16 @@ export const columns: ColumnDef<JobTrackerWithPost>[] = [
       <DataTableColumnHeader column={column} title="Company" />
     ),
     cell: ({ row }) => {
-      return <div className="">{row.original.job.company.name}</div>;
+      return <div className={"flex flex-row"}>
+        <Avatar className={"w-4 h-4 my-auto mr-2"}>
+          <AvatarImage
+            src={row.original.job.company.logoUrl ?? "https://google.com/favicon.ico"}
+            alt={row.original.job.company.name}
+          />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+        {row.original.job.company.name}
+      </div>;
     },
     enableSorting: true,
     enableHiding: false,
