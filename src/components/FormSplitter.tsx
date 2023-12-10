@@ -5,11 +5,7 @@ export type FormSplitterProps = {
 
 export default function FormSplitter(props: FormSplitterProps) {
   return (
-    <div
-      className={`flex items-center gap-4 ${
-        props.className ? props.className : ""
-      }`}
-    >
+    <div className={`flex items-center gap-4 ${props.className || ""}`}>
       <div
         className={"flex-1 border-t-2 border-gray-200 dark:border-gray-700"}
       />
