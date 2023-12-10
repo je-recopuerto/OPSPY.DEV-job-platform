@@ -1,5 +1,7 @@
 import prisma from "@/lib/db";
 import {Prisma} from "@prisma/client";
+import {JobTracker} from ".prisma/client";
+import {JobTrackerWithPost} from "@/services/jobTrackerService";
 
 export type JobPostWithCompany = Prisma.JobPostGetPayload<{
   include: {

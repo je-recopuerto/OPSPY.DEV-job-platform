@@ -38,16 +38,17 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String       @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?      @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  isOnboarded   Boolean   @default(false)
+  isOnboarded   Boolean      @default(false)
   profile       Profile?
   Company       Company?
+  trackers      JobTracker[]
 }
 
 model Profile {
@@ -84,7 +85,7 @@ model Company {
 }
 
 model JobPost {
-  id          Int      @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   title       String
   description String?
   location    String?
@@ -93,10 +94,31 @@ model JobPost {
   currency    Currency
   type        JobType
   remote      Boolean
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
   companyId   Int
-  company     Company  @relation(fields: [companyId], references: [id])
+  company     Company      @relation(fields: [companyId], references: [id])
+  JobTracker  JobTracker[]
+}
+
+model JobTracker {
+  id        Int       @id @default(autoincrement())
+  userId    String
+  jobId     Int
+  status    JobStatus @default(INTERESTED)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  user      User      @relation(fields: [userId], references: [id])
+  job       JobPost   @relation(fields: [jobId], references: [id])
+}
+
+enum JobStatus {
+  INTERESTED
+  APPLIED
+  INTERVIEWING
+  REJECTED
+  OFFERED
+  ACCEPTED
 }
 
 enum Currency {

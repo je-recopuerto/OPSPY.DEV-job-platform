@@ -6,58 +6,42 @@ import {
 } from "./ui/navigation-menu"
 import React from "react"
 import Link from "next/link";
+import {usePathname} from "next/navigation";
 
 export function MainNav({
                           className,
                           ...props
                         }: React.HTMLAttributes<HTMLElement>) {
+
+  const currentPage = usePathname();
+
   return (
-    <nav className={cn("flex items-center space-x-2 lg:space-x-6", className)}>
-      <Link href="dashboard" className="text-sm font-medium transition-colors hover:text-primary">
-          Home
+    <nav className={`flex items-center space-x-2 lg:space-x-6`}>
+      <Link href="dashboard"
+            className={`${activeClass(currentPage, '/dashboard')} text-sm font-medium transition-colors hover:text-primary`}>
+        Home
       </Link>
 
-      <Link href="jobs" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
-          Jobs
+      <Link href="jobs"
+            className={`${activeClass(currentPage, '/jobs')} text-sm font-medium transition-colors hover:text-primary`}>
+        Jobs
       </Link>
 
-      <Link href="companies" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
-          Companies
+      <Link href="companies"
+            className={`${activeClass(currentPage, '/companies')} text-sm font-medium transition-colors hover:text-primary`}>
+        Companies
       </Link>
 
-      <Link href="onboarding" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
-          (TEST) Onboarding
+      <Link href="onboarding"
+            className={`${activeClass(currentPage, '/onboarding')} text-sm font-medium transition-colors hover:text-primary`}>
+        (TEST) Onboarding
       </Link>
-      {/*<NavigationMenu>*/}
-      {/*  <NavigationMenuList>*/}
-      {/*    <NavigationMenuItem>*/}
-      {/*      <NavigationMenuTrigger>Server Side</NavigationMenuTrigger>*/}
-      {/*      <NavigationMenuContent>*/}
-      {/*        <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">*/}
-      {/*          <ListItem href="/server-example" title="RSC Example">*/}
-      {/*            Protecting React Server Component.*/}
-      {/*          </ListItem>*/}
-      {/*          <ListItem href="/middleware-example" title="Middleware Example">*/}
-      {/*            Using Middleware to protect pages & APIs.*/}
-      {/*          </ListItem>*/}
-      {/*          <ListItem href="/api-example" title="Route Handler Example">*/}
-      {/*            Getting the session inside an API Route.*/}
-      {/*          </ListItem>*/}
-      {/*        </ul>*/}
-      {/*      </NavigationMenuContent>*/}
-      {/*    </NavigationMenuItem>*/}
-      {/*    <NavigationMenuItem>*/}
-      {/*      <NavigationMenuLink*/}
-      {/*        href="/client-example"*/}
-      {/*        className={navigationMenuTriggerStyle()}*/}
-      {/*      >*/}
-      {/*        Client Side*/}
-      {/*      </NavigationMenuLink>*/}
-      {/*    </NavigationMenuItem>*/}
-      {/*  </NavigationMenuList>*/}
-      {/*</NavigationMenu>*/}
     </nav>
   )
+}
+
+function activeClass(currentPage: string, page: string) {
+  return currentPage === page ? "" : "text-muted-foreground "
 }
 
 const ListItem = React.forwardRef<

@@ -1,0 +1,5 @@
+-- CreateEnum
+CREATE TYPE "JobStatus" AS ENUM ('INTERESTED', 'APPLIED', 'INTERVIEWING', 'REJECTED', 'OFFERED', 'ACCEPTED');
+
+-- AlterTable
+ALTER TABLE "JobTracker" ADD COLUMN     "status" "JobStatus" NOT NULL DEFAULT 'INTERESTED';
