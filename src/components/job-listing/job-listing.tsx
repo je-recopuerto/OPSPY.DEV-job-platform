@@ -9,10 +9,11 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { JobPostWithCompany } from "@/services/jobPostService";
-import { MapPin, SaveIcon } from "lucide-react";
+import { SaveIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toggleSaveJob } from "@/app/actions";
 import { toast } from "@/components/ui/use-toast";
+import { Badge } from "@/components/ui/badge";
 
 type JobListingProps = {
   job: JobPostWithCompany;
@@ -23,7 +24,7 @@ export default function JobListing(props: JobListingProps) {
   return (
     <Card className={"w-full"}>
       <CardHeader className={"flex flex-row gap-x-3 space-y-0"}>
-        <Avatar className={"h-14 w-14"}>
+        <Avatar className={"h-10 w-10"}>
           <AvatarImage
             src={props.job.company.logoUrl ?? "https://github.com/shadcn.png"}
             alt={props.job.company.name}
@@ -32,29 +33,51 @@ export default function JobListing(props: JobListingProps) {
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
 
-        <div className={"flex flex-row w-full justify-between"}>
-          <div>
-            <CardTitle>{props.job.title}</CardTitle>
-            <CardDescription>{props.job.company.name}</CardDescription>
-            <CardDescription className={"flex flex-row"}>
-              <MapPin size={15} className={"mr-1 my-auto"} />
-              {props.job.location}
-            </CardDescription>
-          </div>
-          <div className={"flex justify-end"}>
-            <CardDescription>
-              {getSalaryRangeString(
-                props.job.minSalary,
-                props.job.maxSalary,
-                props.job.currency,
-              )}
-            </CardDescription>
+        <div>
+          <CardTitle className={"text-md"}>{props.job.title}</CardTitle>
+          <CardDescription>{props.job.company.name}</CardDescription>
+        </div>
+
+        <div>
+          <div className={"flex flex-row gap-2"}>
+            <Badge>.NET</Badge>
+            <Badge>Postgres</Badge>
+            <Badge>Terraform</Badge>
+            <Badge>GCP</Badge>
           </div>
         </div>
       </CardHeader>
 
       <CardContent>
+        <div className={"flex flex-row gap-8 pb-6"}>
+          <CardDescription>
+            <small className="text-sm font-bold leading-none">Location</small>
+            <p className="text-sm font-normal leading-none">
+              {props.job.location}
+            </p>
+          </CardDescription>
+
+          <CardDescription>
+            <small className="text-sm font-bold leading-none">Salary</small>
+            <p className="text-sm font-normal leading-none">
+              {getSalaryRangeString(
+                props.job.minSalary,
+                props.job.maxSalary,
+                props.job.currency,
+              )}
+            </p>
+          </CardDescription>
+        </div>
+
+        <CardDescription>
+          <small className="text-sm font-bold leading-none">Description</small>
+          <p className="text-sm font-normal leading-none">
+            {props.job.description}
+          </p>
+        </CardDescription>
+
         <form
+          className={"mt-4"}
           action={async () => {
             const removed = await toggleSaveJob(props.job.id);
 
@@ -65,7 +88,7 @@ export default function JobListing(props: JobListingProps) {
             });
           }}
         >
-          <Button>
+          <Button variant={props.isFollowing ? "destructive" : "default"}>
             <SaveIcon className={"h-4 w-4 mr-2"} />
             {props.isFollowing ? "Unsave" : "Save"}
           </Button>
