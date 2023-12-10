@@ -35,7 +35,7 @@ export default function RootLayout({
         <NavigationProgressBar />
         <MainHeader/>
 
-        <div className={"max-w-[86rem] mx-auto mt-14"}>
+        <div className={"max-w-[90rem] mx-auto mt-14"}>
           {children}
         </div>
 
