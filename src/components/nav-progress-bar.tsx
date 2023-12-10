@@ -5,7 +5,7 @@ import NProgress from "nprogress";
 type PushStateInput = [
   data: any,
   unused: string,
-  url?: string | URL | null | undefined
+  url?: string | URL | null | undefined,
 ];
 
 export default function NavigationProgressBar() {
@@ -58,7 +58,7 @@ export default function NavigationProgressBar() {
     const handleMutation: MutationCallback = () => {
       const anchorElements = document.querySelectorAll("a");
       anchorElements.forEach((anchor) =>
-        anchor.addEventListener("click", handleAnchorClick)
+        anchor.addEventListener("click", handleAnchorClick),
       );
     };
 

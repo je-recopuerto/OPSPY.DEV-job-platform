@@ -1,4 +1,4 @@
-import {getCompaniesWithOpenings} from "@/services/companyService";
+import { getCompaniesWithOpenings } from "@/services/companyService";
 import CompanyProfile from "@/components/job-listing/company-profile";
 
 export default async function CompanyFeed() {
@@ -6,13 +6,15 @@ export default async function CompanyFeed() {
 
   return (
     <>
-      <h1 className="text-2xl font-semibold pb-6">Explore Companies ({companies.length})</h1>
+      <h1 className="text-2xl font-semibold pb-6">
+        Explore Companies ({companies.length})
+      </h1>
 
       <div className={"flex flex-col gap-y-3"}>
         {companies.map((company) => (
-          <CompanyProfile company={company} key={company.id}/>
+          <CompanyProfile company={company} key={company.id} />
         ))}
       </div>
     </>
-  )
+  );
 }

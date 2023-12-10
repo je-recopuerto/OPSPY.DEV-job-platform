@@ -1,27 +1,25 @@
-"use client"
+"use client";
 
-import {Row} from "@tanstack/react-table"
+import { Row } from "@tanstack/react-table";
 
-import {Button} from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
-import {CircleEllipsisIcon} from "lucide-react";
-import {unsaveJob} from "@/app/actions";
-import {JobTrackerWithPost} from "@/services/jobTrackerService";
+import { CircleEllipsisIcon } from "lucide-react";
+import { unsaveJob } from "@/app/actions";
+import { JobTrackerWithPost } from "@/services/jobTrackerService";
 
 interface DataTableRowActionsProps {
-  row: Row<JobTrackerWithPost>
+  row: Row<JobTrackerWithPost>;
 }
 
-export function DataTableRowActions({
-  row,
-}: DataTableRowActionsProps) {
+export function DataTableRowActions({ row }: DataTableRowActionsProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -38,11 +36,13 @@ export function DataTableRowActions({
         {/*<DropdownMenuItem>Make a copy</DropdownMenuItem>*/}
         {/*<DropdownMenuItem>Favorite</DropdownMenuItem>*/}
         {/*<DropdownMenuSeparator />*/}
-        <DropdownMenuItem onClick={async () => await unsaveJob(row.original.id)}>
-            Delete
-            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+        <DropdownMenuItem
+          onClick={async () => await unsaveJob(row.original.id)}
+        >
+          Delete
+          <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

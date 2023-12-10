@@ -1,7 +1,6 @@
-import { auth } from "@/auth"
 import UserButton from "@/components/user-button";
-import {MainNav} from "@/components/main-nav";
-import {ThemeToggle} from "@/components/theme-toggle";
+import { MainNav } from "@/components/main-nav";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default async function MainHeader() {
   return (
@@ -10,10 +9,10 @@ export default async function MainHeader() {
         <MainNav />
 
         <div className={"flex space-x-5 justify-end"}>
-          <ThemeToggle/>
-          <UserButton/>
+          <ThemeToggle />
+          <UserButton />
         </div>
       </div>
     </header>
-  )
+  );
 }

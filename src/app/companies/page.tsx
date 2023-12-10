@@ -1,6 +1,5 @@
-import {Suspense} from "react";
+import { Suspense } from "react";
 import CompanyFeed from "@/components/company-feed";
-import JobFeed from "@/components/job-feed";
 
 export default function CompaniesPage() {
   return (
@@ -9,5 +8,5 @@ export default function CompaniesPage() {
         <CompanyFeed />
       </Suspense>
     </main>
-  )
+  );
 }

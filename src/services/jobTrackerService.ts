@@ -1,45 +1,47 @@
 import prisma from "@/lib/db";
-import {Prisma} from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 export type JobTrackerWithPost = Prisma.JobTrackerGetPayload<{
   include: {
     job: {
       include: {
-        company: true
-      }
-    }
+        company: true;
+      };
+    };
   };
 }>;
 
 export function getJobTrackersWithPost(): Promise<JobTrackerWithPost[]> {
   return prisma.jobTracker.findMany({
     orderBy: {
-      createdAt: 'desc'
+      createdAt: "desc",
     },
     include: {
       job: {
         include: {
-          company: true
-        }
-      }
-    }
+          company: true,
+        },
+      },
+    },
   });
 }
 
-export function getJobTrackersForUserId(userId: string): Promise<JobTrackerWithPost[]> {
+export function getJobTrackersForUserId(
+  userId: string,
+): Promise<JobTrackerWithPost[]> {
   return prisma.jobTracker.findMany({
     where: {
-      userId: userId
+      userId: userId,
     },
     orderBy: {
-      createdAt: 'desc'
+      createdAt: "desc",
     },
     include: {
       job: {
         include: {
-          company: true
-        }
-      }
-    }
+          company: true,
+        },
+      },
+    },
   });
 }

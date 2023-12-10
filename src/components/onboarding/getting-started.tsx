@@ -1,28 +1,46 @@
-'use client'
+"use client";
 
-import {CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import {FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
-import {Input} from "@/components/ui/input";
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
-import {Button} from "@/components/ui/button";
-import {cn} from "@/lib/utils";
-import {format} from "date-fns";
-import {CalendarIcon} from "lucide-react";
-import {Calendar} from "@/components/ui/calendar";
-import {UseFormReturn} from "react-hook-form";
-import {onboardingSchema} from "@/schemas/onboardingSchema";
-import {z} from "zod";
+import {
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { UseFormReturn } from "react-hook-form";
+import { onboardingSchema } from "@/schemas/onboardingSchema";
+import { z } from "zod";
 
 export type OnboardingCardProps = {
-  form: UseFormReturn<z.infer<typeof onboardingSchema>>
-}
+  form: UseFormReturn<z.infer<typeof onboardingSchema>>;
+};
 
-export default function GettingStarted({form}: OnboardingCardProps) {
+export default function GettingStarted({ form }: OnboardingCardProps) {
   return (
     <>
       <CardHeader>
         <CardTitle>Getting started</CardTitle>
-        <CardDescription>First, we need to know a few basic things about you.</CardDescription>
+        <CardDescription>
+          First, we need to know a few basic things about you.
+        </CardDescription>
       </CardHeader>
 
       <CardContent>
@@ -31,32 +49,36 @@ export default function GettingStarted({form}: OnboardingCardProps) {
             <FormField
               control={form.control}
               name="firstName"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem className={"flex-grow"}>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
                     <Input placeholder="Saul" {...field} />
                   </FormControl>
-                  <FormMessage/>
+                  <FormMessage />
                 </FormItem>
               )}
             />
 
-            <FormField name={"lastName"} control={form.control} render={({field}) => (
-              <FormItem className={"flex-grow"}>
-                <FormLabel>Last Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Goodman" {...field} />
-                </FormControl>
-                <FormMessage/>
-              </FormItem>
-            )}/>
+            <FormField
+              name={"lastName"}
+              control={form.control}
+              render={({ field }) => (
+                <FormItem className={"flex-grow"}>
+                  <FormLabel>Last Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Goodman" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
 
           <FormField
             control={form.control}
             name="dateOfBirth"
-            render={({field}) => (
+            render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>Date of birth</FormLabel>
                 <Popover>
@@ -66,7 +88,7 @@ export default function GettingStarted({form}: OnboardingCardProps) {
                         variant={"outline"}
                         className={cn(
                           "w-[240px] pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
+                          !field.value && "text-muted-foreground",
                         )}
                       >
                         {field.value ? (
@@ -74,7 +96,7 @@ export default function GettingStarted({form}: OnboardingCardProps) {
                         ) : (
                           <span>Pick a date</span>
                         )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50"/>
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -93,12 +115,12 @@ export default function GettingStarted({form}: OnboardingCardProps) {
                 <FormDescription>
                   Your date of birth is used to calculate your age.
                 </FormDescription>
-                <FormMessage/>
+                <FormMessage />
               </FormItem>
             )}
           />
         </div>
       </CardContent>
     </>
-  )
+  );
 }

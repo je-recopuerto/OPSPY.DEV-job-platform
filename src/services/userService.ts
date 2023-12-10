@@ -1,11 +1,11 @@
 import prisma from "@/lib/db";
-import {Prisma} from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 export function getUserById(id: string) {
   return prisma.user.findFirst({
     where: {
-      id: id
-    }
+      id: id,
+    },
   });
 }
 
@@ -15,13 +15,15 @@ export type UserWithJobTrackers = Prisma.UserGetPayload<{
   };
 }>;
 
-export function getUserWithJobTrackersById(id: string): Promise<UserWithJobTrackers | null> {
+export function getUserWithJobTrackersById(
+  id: string,
+): Promise<UserWithJobTrackers | null> {
   return prisma.user.findFirst({
     where: {
-      id: id
+      id: id,
     },
     include: {
-      trackers: true
-    }
-  })
+      trackers: true,
+    },
+  });
 }

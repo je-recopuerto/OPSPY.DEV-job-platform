@@ -1,7 +1,5 @@
 import prisma from "@/lib/db";
-import {Prisma} from "@prisma/client";
-import {JobTracker} from ".prisma/client";
-import {JobTrackerWithPost} from "@/services/jobTrackerService";
+import { Prisma } from "@prisma/client";
 
 export type JobPostWithCompany = Prisma.JobPostGetPayload<{
   include: {
@@ -12,10 +10,10 @@ export type JobPostWithCompany = Prisma.JobPostGetPayload<{
 export function getJobPostsWithCompany(): Promise<JobPostWithCompany[]> {
   return prisma.jobPost.findMany({
     orderBy: {
-      createdAt: 'desc'
+      createdAt: "desc",
     },
     include: {
-      company: true
-    }
+      company: true,
+    },
   });
 }

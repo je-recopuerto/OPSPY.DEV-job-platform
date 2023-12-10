@@ -1,35 +1,40 @@
-'use server'
+"use server";
 
 import prisma from "@/lib/db";
-import {onboardingSchema} from "@/schemas/onboardingSchema";
-import {redirect} from "next/navigation";
-import {auth} from "@/auth";
+import { onboardingSchema } from "@/schemas/onboardingSchema";
+import { redirect } from "next/navigation";
+import { auth } from "@/auth";
 import * as z from "zod";
-import {getUserById} from "@/services/userService";
-import {revalidatePath} from "next/cache";
+import { getUserById } from "@/services/userService";
+import { revalidatePath } from "next/cache";
 
 export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
   // This will throw an error if the state is invalid
   const validatedState = onboardingSchema.parse(values);
 
   const session = await auth();
-  if (!session || !session.user) throw new Error("User not found")
+  if (!session || !session.user) throw new Error("User not found");
 
-  console.log("Setting onboarding:", values, "for user:", session?.user ?? "unknown")
+  console.log(
+    "Setting onboarding:",
+    values,
+    "for user:",
+    session?.user ?? "unknown",
+  );
   const user = await getUserById(session.user.id);
 
-  if (!user) throw new Error("User not found")
-  if (user.isOnboarded) throw new Error("User is already onboarded")
+  if (!user) throw new Error("User not found");
+  if (user.isOnboarded) throw new Error("User is already onboarded");
 
   await prisma.user.update({
     where: {
-      id: user.id
+      id: user.id,
     },
     data: {
       profile: {
         upsert: {
           where: {
-            userId: user.id
+            userId: user.id,
           },
           create: {
             firstName: validatedState.firstName,
@@ -40,65 +45,65 @@ export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
             firstName: validatedState.firstName,
             lastName: validatedState.lastName,
             dateOfBirth: validatedState.dateOfBirth,
-          }
-        }
+          },
+        },
       },
-      isOnboarded: true
-    }
+      isOnboarded: true,
+    },
   });
 
-  console.log("Successfully updated", user.name, "profile.")
-  redirect("/")
+  console.log("Successfully updated", user.name, "profile.");
+  redirect("/");
 }
 
 export async function unsaveJob(id: number) {
   const result = prisma.jobTracker.delete({
     where: {
       id: id,
-    }
-  })
+    },
+  });
 
-  revalidatePath("/dashboard")
+  revalidatePath("/dashboard");
 
-  return result
+  return result;
 }
 
 export async function saveJob(id: number, userId: string) {
   return prisma.jobTracker.create({
     data: {
       jobId: id,
-      userId: userId
-    }
-  })
+      userId: userId,
+    },
+  });
 }
 
 export async function toggleSaveJob(id: number) {
-  'use server'
+  "use server";
 
-  const session = await auth()
-  if (!session || !session.user) return
+  const session = await auth();
+  if (!session || !session.user) return;
 
   const user = await getUserById(session.user.id);
-  if (!user) return
+  if (!user) return;
 
   const existingTracker = await prisma.jobTracker.findFirst({
     where: {
       jobId: id,
-      userId: user.id
-    }
+      userId: user.id,
+    },
   });
 
   let removed = false;
 
   if (existingTracker) {
-    const result = await unsaveJob(existingTracker.id)
-    console.log("Deleted existing tracker:", result)
+    const result = await unsaveJob(existingTracker.id);
+    console.log("Deleted existing tracker:", result);
     removed = true;
   } else {
-    const result = await saveJob(id, user.id)
-    console.log("Creating new tracker for job:", id)
+    const result = await saveJob(id, user.id);
+    console.log("Creating new tracker for job:", id);
   }
 
-  revalidatePath("/dashboard")
+  revalidatePath("/dashboard");
   return removed;
 }

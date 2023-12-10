@@ -1,18 +1,21 @@
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
-import { Button } from "./ui/button"
-import { auth } from "@/auth"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Button } from "./ui/button";
+import { auth } from "@/auth";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu"
-import { SignIn, SignOut } from "./auth-components"
+} from "./ui/dropdown-menu";
+import { SignIn, SignOut } from "./auth-components";
 import {
   Cloud,
-  CreditCard, Github,
+  CreditCard,
+  Github,
   LifeBuoy,
   Settings,
   User,
@@ -20,12 +23,15 @@ import {
 import Link from "next/link";
 
 export default async function UserButton() {
-  const session = await auth()
-  if (!session?.user) return <SignIn />
+  const session = await auth();
+  if (!session?.user) return <SignIn />;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative w-8 h-8 rounded-full my-auto">
+        <Button
+          variant="ghost"
+          className="relative w-8 h-8 rounded-full my-auto"
+        >
           <Avatar className="w-8 h-8">
             {session.user.image && (
               <AvatarImage
@@ -38,14 +44,17 @@ export default async function UserButton() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel className={"my-0 pb-0"}>{session.user.name}</DropdownMenuLabel>
-        <DropdownMenuLabel className={"text-xs text-muted-foreground pt-0.5"}>{session.user.email}</DropdownMenuLabel>
-        <DropdownMenuSeparator/>
+        <DropdownMenuLabel className={"my-0 pb-0"}>
+          {session.user.name}
+        </DropdownMenuLabel>
+        <DropdownMenuLabel className={"text-xs text-muted-foreground pt-0.5"}>
+          {session.user.email}
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
         <DropdownMenuGroup>
-
           <DropdownMenuItem asChild>
             <Link href={"/profile"}>
-              <User className="mr-2 h-4 w-4"/>
+              <User className="mr-2 h-4 w-4" />
               <span>Profile</span>
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </Link>
@@ -53,18 +62,18 @@ export default async function UserButton() {
 
           <DropdownMenuItem asChild>
             <Link href={"/dashboard"}>
-            <CreditCard className="mr-2 h-4 w-4"/>
-            <span>Dashboard</span>
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+              <CreditCard className="mr-2 h-4 w-4" />
+              <span>Dashboard</span>
+              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Settings className="mr-2 h-4 w-4"/>
+            <Settings className="mr-2 h-4 w-4" />
             <span>Settings</span>
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator/>
+        <DropdownMenuSeparator />
         {/*<DropdownMenuGroup>*/}
         {/*  <DropdownMenuItem>*/}
         {/*    <Users className="mr-2 h-4 w-4"/>*/}
@@ -101,21 +110,21 @@ export default async function UserButton() {
         {/*</DropdownMenuGroup>*/}
         {/*<DropdownMenuSeparator/>*/}
         <DropdownMenuItem>
-          <Github className="mr-2 h-4 w-4"/>
+          <Github className="mr-2 h-4 w-4" />
           <span>GitHub</span>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <LifeBuoy className="mr-2 h-4 w-4"/>
+          <LifeBuoy className="mr-2 h-4 w-4" />
           <span>Support</span>
         </DropdownMenuItem>
         <DropdownMenuItem disabled>
-          <Cloud className="mr-2 h-4 w-4"/>
+          <Cloud className="mr-2 h-4 w-4" />
           <span>API</span>
         </DropdownMenuItem>
-        <DropdownMenuSeparator/>
+        <DropdownMenuSeparator />
 
-        <SignOut/>
+        <SignOut />
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

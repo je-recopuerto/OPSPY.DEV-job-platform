@@ -1,22 +1,22 @@
-"use client"
+"use client";
 
-import { Table } from "@tanstack/react-table"
+import { Table } from "@tanstack/react-table";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
-import { DataTableFacetedFilter } from "./data-table-faceted-filter"
+import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 import {
   ArrowDownIcon,
   ArrowRightIcon,
   ArrowUpIcon,
   Cross,
 } from "lucide-react";
-import {DataTableViewOptions} from "@/components/table/data-table-view-options";
-import {statuses} from "@/components/dashboard/job-tracker-table";
+import { DataTableViewOptions } from "@/components/table/data-table-view-options";
+import { statuses } from "@/components/dashboard/job-tracker-table";
 
 interface DataTableToolbarProps<TData> {
-  table: Table<TData>
+  table: Table<TData>;
 }
 
 export const priorities = [
@@ -35,12 +35,12 @@ export const priorities = [
     value: "high",
     icon: ArrowUpIcon,
   },
-]
+];
 
 export function DataTableToolbar<TData>({
-                                          table,
-                                        }: DataTableToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0
+  table,
+}: DataTableToolbarProps<TData>) {
+  const isFiltered = table.getState().columnFilters.length > 0;
 
   return (
     <div className="flex items-center justify-between">
@@ -74,11 +74,11 @@ export function DataTableToolbar<TData>({
             className="h-8 px-2 lg:px-3"
           >
             Reset
-            <Cross className="ml-2 h-4 w-4"/>
+            <Cross className="ml-2 h-4 w-4" />
           </Button>
         )}
       </div>
-      <DataTableViewOptions table={table}/>
+      <DataTableViewOptions table={table} />
     </div>
-  )
+  );
 }

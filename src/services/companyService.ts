@@ -1,5 +1,5 @@
 import prisma from "@/lib/db";
-import {Prisma} from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 export type CompanyWithOpenings = Prisma.CompanyGetPayload<{
   include: {
@@ -16,13 +16,13 @@ export function getCompaniesWithOpenings(): Promise<CompanyWithOpenings[]> {
 }
 
 export async function getCompanies({
-                                     include,
-                                   }: {
+  include,
+}: {
   include?: Prisma.CompanyInclude;
 }) {
   return prisma.company.findMany({
     orderBy: {
-      createdAt: 'desc',
+      createdAt: "desc",
     },
     include: include,
   });

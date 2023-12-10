@@ -23,9 +23,11 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Helpful Commands
+
 - Reset database and apply migrations: `npx prisma migrate reset`
 - Generate Prisma client: `npx prisma generate`
 - Apply existing migrations: `npx prisma migrate dev`
+- Fix linting errors: `yarn run format:fix`
 
 ## Learn More
 

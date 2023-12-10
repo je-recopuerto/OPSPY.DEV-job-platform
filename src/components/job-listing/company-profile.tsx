@@ -1,10 +1,15 @@
-import {Card, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
-import {CompanyWithOpenings} from "@/services/companyService";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CompanyWithOpenings } from "@/services/companyService";
 
 type CompanyProfileProps = {
-  company: CompanyWithOpenings
-}
+  company: CompanyWithOpenings;
+};
 
 export default function CompanyProfile(props: CompanyProfileProps) {
   return (
@@ -19,11 +24,12 @@ export default function CompanyProfile(props: CompanyProfileProps) {
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
 
-
         <div className={"flex flex-row w-full justify-between"}>
           <div>
             <CardTitle>{props.company.name}</CardTitle>
-            <CardDescription>{props.company.description?.slice(0, 100)}</CardDescription>
+            <CardDescription>
+              {props.company.description?.slice(0, 100)}
+            </CardDescription>
           </div>
           <div className={"flex justify-end"}>
             {props.company.openings.length} Jobs
@@ -31,5 +37,5 @@ export default function CompanyProfile(props: CompanyProfileProps) {
         </div>
       </CardHeader>
     </Card>
-  )
+  );
 }

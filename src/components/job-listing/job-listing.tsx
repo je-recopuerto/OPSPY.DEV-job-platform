@@ -1,17 +1,23 @@
-'use client'
+"use client";
 
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
-import {JobPostWithCompany} from "@/services/jobPostService";
-import {MapPin, SaveIcon} from "lucide-react";
-import {Button} from "@/components/ui/button";
-import {toggleSaveJob} from "@/app/actions";
-import {toast} from "@/components/ui/use-toast";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { JobPostWithCompany } from "@/services/jobPostService";
+import { MapPin, SaveIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { toggleSaveJob } from "@/app/actions";
+import { toast } from "@/components/ui/use-toast";
 
 type JobListingProps = {
-  job: JobPostWithCompany
-  isFollowing: boolean
-}
+  job: JobPostWithCompany;
+  isFollowing: boolean;
+};
 
 export default function JobListing(props: JobListingProps) {
   return (
@@ -26,7 +32,6 @@ export default function JobListing(props: JobListingProps) {
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
 
-
         <div className={"flex flex-row w-full justify-between"}>
           <div>
             <CardTitle>{props.job.title}</CardTitle>
@@ -37,21 +42,29 @@ export default function JobListing(props: JobListingProps) {
             </CardDescription>
           </div>
           <div className={"flex justify-end"}>
-            <CardDescription>{getSalaryRangeString(props.job.minSalary, props.job.maxSalary, props.job.currency)}</CardDescription>
+            <CardDescription>
+              {getSalaryRangeString(
+                props.job.minSalary,
+                props.job.maxSalary,
+                props.job.currency,
+              )}
+            </CardDescription>
           </div>
         </div>
       </CardHeader>
 
       <CardContent>
-        <form action={async () => {
-          const removed = await toggleSaveJob(props.job.id);
+        <form
+          action={async () => {
+            const removed = await toggleSaveJob(props.job.id);
 
-          toast({
-            title: removed ? "Job Unsaved" : "Job Saved",
-            description: "You can view your saved jobs in your dashboard.",
-            duration: 1500,
-          })
-        }}>
+            toast({
+              title: removed ? "Job Unsaved" : "Job Saved",
+              description: "You can view your saved jobs in your dashboard.",
+              duration: 1500,
+            });
+          }}
+        >
           <Button>
             <SaveIcon className={"h-4 w-4 mr-2"} />
             {props.isFollowing ? "Unsave" : "Save"}
@@ -59,16 +72,22 @@ export default function JobListing(props: JobListingProps) {
         </form>
       </CardContent>
     </Card>
-  )
+  );
 }
 
-function getSalaryRangeString(minSalary: number, maxSalary: number, currencyCode?: string) {
-  const currencySymbol = getSymbolFromCurrency(currencyCode ?? "USD")
+function getSalaryRangeString(
+  minSalary: number,
+  maxSalary: number,
+  currencyCode?: string,
+) {
+  const currencySymbol = getSymbolFromCurrency(currencyCode ?? "USD");
 
   if (minSalary === maxSalary)
-    return `${currencySymbol}${formatCurrency(minSalary)}`
+    return `${currencySymbol}${formatCurrency(minSalary)}`;
 
-  return `${currencySymbol}${formatCurrency(minSalary)} - ${currencySymbol}${formatCurrency(maxSalary)}`
+  return `${currencySymbol}${formatCurrency(
+    minSalary,
+  )} - ${currencySymbol}${formatCurrency(maxSalary)}`;
 }
 
 // 1234567.89 => "1,234,567.89"
