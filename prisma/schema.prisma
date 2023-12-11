@@ -99,6 +99,13 @@ model JobPost {
   companyId   Int
   company     Company      @relation(fields: [companyId], references: [id])
   JobTracker  JobTracker[]
+  tags        Tag[]
+}
+
+model Tag {
+  id   Int       @id @default(autoincrement())
+  name String    @unique
+  jobs JobPost[]
 }
 
 model JobTracker {

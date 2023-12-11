@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 export type JobPostWithCompany = Prisma.JobPostGetPayload<{
   include: {
     company: true;
+    tags: true;
   };
 }>;
 
@@ -14,6 +15,7 @@ export function getJobPostsWithCompany(): Promise<JobPostWithCompany[]> {
     },
     include: {
       company: true,
+      tags: true,
     },
   });
 }

@@ -35,46 +35,55 @@ export default function JobListing(props: JobListingProps) {
 
         <div>
           <CardTitle className={"text-md"}>{props.job.title}</CardTitle>
-          <CardDescription>{props.job.company.name}</CardDescription>
+          <CardDescription>
+            {props.job.company.name} | {props.job.location}
+          </CardDescription>
         </div>
 
         <div>
           <div className={"flex flex-row gap-2"}>
-            <Badge>.NET</Badge>
-            <Badge>Postgres</Badge>
-            <Badge>Terraform</Badge>
-            <Badge>GCP</Badge>
+            {props.job.tags.map((tag) => (
+              <Badge key={tag.id} variant={"default"}>
+                {tag.name}
+              </Badge>
+            ))}
           </div>
         </div>
       </CardHeader>
 
       <CardContent>
-        <div className={"flex flex-row gap-8 pb-6"}>
-          <CardDescription>
-            <small className="text-sm font-bold leading-none">Location</small>
-            <p className="text-sm font-normal leading-none">
-              {props.job.location}
+        <div className={"flex flex-row gap-6 pb-4"}>
+          <div>
+            <small className="text-sm font-bold leading-none">
+              Description
+            </small>
+            <p
+              className={
+                "text-sm font-normal leading-none text-muted-foreground"
+              }
+            >
+              {props.job.description}
             </p>
-          </CardDescription>
+          </div>
 
-          <CardDescription>
+          {/*<div>*/}
+          {/*  <small className="text-sm font-bold leading-none">Location</small>*/}
+          {/*  <p className="text-sm font-normal leading-none text-muted-foreground">*/}
+          {/*    {props.job.location}*/}
+          {/*  </p>*/}
+          {/*</div>*/}
+
+          <div className={"min-w-[6rem]"}>
             <small className="text-sm font-bold leading-none">Salary</small>
-            <p className="text-sm font-normal leading-none">
+            <p className="text-sm font-normal leading-none text-muted-foreground">
               {getSalaryRangeString(
                 props.job.minSalary,
                 props.job.maxSalary,
                 props.job.currency,
               )}
             </p>
-          </CardDescription>
+          </div>
         </div>
-
-        <CardDescription>
-          <small className="text-sm font-bold leading-none">Description</small>
-          <p className="text-sm font-normal leading-none">
-            {props.job.description}
-          </p>
-        </CardDescription>
 
         <form
           className={"mt-4"}
@@ -115,8 +124,23 @@ function getSalaryRangeString(
 
 // 1234567.89 => "1,234,567.89"
 function formatCurrency(num: number): string {
-  return num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  // return num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return formatToKForm(num);
 }
+
+function formatToKForm(num: number): string {
+  // Check if the number is less than 1000
+  if (num < 1000) {
+    throw new Error("Number should be larger than 1000");
+  }
+
+  // Round the number to nearest thousand and append 'k'
+  return `${Math.round(num / 1000)}k`;
+}
+
+// Example usage
+const formattedNumber = formatToKForm(50000); // Outputs: '50k'
+console.log(formattedNumber);
 
 function getSymbolFromCurrency(currencyCode: string) {
   return currencyCode

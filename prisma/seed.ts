@@ -2,7 +2,49 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+async function seedTags() {
+  const graphql = await prisma.tag.create({
+    data: {
+      name: "GraphQL",
+    },
+  });
+
+  const react = await prisma.tag.create({
+    data: {
+      name: "React",
+    },
+  });
+
+  const typescript = await prisma.tag.create({
+    data: {
+      name: "TypeScript",
+    },
+  });
+
+  const dotnet = await prisma.tag.create({
+    data: {
+      name: ".NET",
+    },
+  });
+
+  const rabbitmq = await prisma.tag.create({
+    data: {
+      name: "RabbitMQ",
+    },
+  });
+
+  const docker = await prisma.tag.create({
+    data: {
+      name: "Docker",
+    },
+  });
+
+  console.log({ graphql, react, typescript, dotnet, rabbitmq, docker });
+}
+
 async function main() {
+  await seedTags();
+
   const sam = await prisma.user.create({
     data: {
       email: "sam.smith@gmail.com",
@@ -73,6 +115,19 @@ async function main() {
             maxSalary: 60000.0,
             currency: "GBP",
             remote: true,
+            tags: {
+              connect: [
+                {
+                  name: "React",
+                },
+                {
+                  name: "TypeScript",
+                },
+                {
+                  name: "GraphQL",
+                },
+              ],
+            },
           },
           {
             title: "Senior Backend Developer",
@@ -84,6 +139,19 @@ async function main() {
             maxSalary: 60000.0,
             currency: "GBP",
             remote: true,
+            tags: {
+              connect: [
+                {
+                  name: ".NET",
+                },
+                {
+                  name: "RabbitMQ",
+                },
+                {
+                  name: "Docker",
+                },
+              ],
+            },
           },
           {
             title: "Senior Fullstack Developer",
@@ -95,6 +163,19 @@ async function main() {
             maxSalary: 60000.0,
             currency: "GBP",
             remote: true,
+            tags: {
+              connect: [
+                {
+                  name: "React",
+                },
+                {
+                  name: "TypeScript",
+                },
+                {
+                  name: "GraphQL",
+                },
+              ],
+            },
           },
           {
             title: "Senior Frontend Developer",
