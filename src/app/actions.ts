@@ -7,6 +7,7 @@ import { auth } from "@/auth";
 import * as z from "zod";
 import { getUserById } from "@/services/userService";
 import { revalidatePath } from "next/cache";
+import { JobStatus } from ".prisma/client";
 
 export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
   // This will throw an error if the state is invalid
@@ -54,6 +55,21 @@ export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
 
   console.log("Successfully updated", user.name, "profile.");
   redirect("/");
+}
+
+export async function setJobTrackerStatus(status: JobStatus, id: number) {
+  console.log("Setting job tracker status to", status, "for id", id);
+
+  await prisma.jobTracker.update({
+    where: {
+      id: id,
+    },
+    data: {
+      status: status,
+    },
+  });
+
+  revalidatePath("/dashboard");
 }
 
 export async function unsaveJob(id: number) {

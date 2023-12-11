@@ -8,11 +8,15 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import JobTrackerTable from "@/components/dashboard/job-tracker-table";
-import { getJobTrackersWithPost } from "@/services/jobTrackerService";
-import { PinIcon } from "lucide-react";
+import {
+  getJobTrackersWithPost,
+  JobTrackerWithPost,
+} from "@/services/jobTrackerService";
+import { CircleSlash2, PinIcon, Timer } from "lucide-react";
 import { auth } from "@/auth";
 import { getUserById } from "@/services/userService";
 import { redirect } from "next/navigation";
+import { JobTracker } from ".prisma/client";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -70,24 +74,18 @@ export default async function DashboardPage() {
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
-                    Applied Jobs
+                    Waiting for response
                   </CardTitle>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    className="h-4 w-4 text-muted-foreground"
-                  >
-                    <rect width="20" height="14" x="2" y="5" rx="2" />
-                    <path d="M2 10h20" />
-                  </svg>
+                  <Timer className={"h-4 w-4 text-muted-foreground"} />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">+12,234</div>
+                  <div className="text-2xl font-bold">
+                    {
+                      data.filter(
+                        (jobTracker) => jobTracker.status === "APPLIED",
+                      ).length
+                    }
+                  </div>
                   <p className="text-xs text-muted-foreground">
                     +19% from last month
                   </p>
@@ -96,7 +94,7 @@ export default async function DashboardPage() {
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
-                    Interviewing Jobs
+                    Interviewing
                   </CardTitle>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -129,24 +127,21 @@ export default async function DashboardPage() {
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">
-                    Lorem Ipsum
+                    Rejected
                   </CardTitle>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    className="h-4 w-4 text-muted-foreground"
-                  >
-                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-                  </svg>
+                  <CircleSlash2 className={"h-4 w-4 text-muted-foreground"} />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">-</div>
-                  <p className="text-xs text-muted-foreground"></p>
+                  <div className="text-2xl font-bold">
+                    {
+                      data.filter(
+                        (jobTracker) => jobTracker.status === "REJECTED",
+                      ).length
+                    }
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    {percentRejected(data)}% of your total jobs
+                  </p>
                 </CardContent>
               </Card>
             </div>
@@ -175,3 +170,11 @@ export default async function DashboardPage() {
     </>
   );
 }
+
+const percentRejected = (data: JobTrackerWithPost[]) => {
+  const rejected = data.filter(
+    (jobTracker) => jobTracker.status === "REJECTED",
+  ).length;
+  const total = data.length;
+  return (rejected / total) * 100;
+};

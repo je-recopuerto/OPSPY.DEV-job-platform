@@ -1,5 +1,6 @@
 import prisma from "@/lib/db";
 import { Prisma } from "@prisma/client";
+import { $Enums, JobStatus } from ".prisma/client";
 
 export type JobTrackerWithPost = Prisma.JobTrackerGetPayload<{
   include: {

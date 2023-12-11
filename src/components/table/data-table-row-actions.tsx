@@ -7,13 +7,20 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
   DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 import { CircleEllipsisIcon } from "lucide-react";
-import { unsaveJob } from "@/app/actions";
+import { setJobTrackerStatus, unsaveJob } from "@/app/actions";
 import { JobTrackerWithPost } from "@/services/jobTrackerService";
+import { JobStatus } from ".prisma/client";
 
 interface DataTableRowActionsProps {
   row: Row<JobTrackerWithPost>;
@@ -34,8 +41,28 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
       <DropdownMenuContent align="end" className="w-[160px]">
         {/*<DropdownMenuItem>Edit</DropdownMenuItem>*/}
         {/*<DropdownMenuItem>Make a copy</DropdownMenuItem>*/}
-        {/*<DropdownMenuItem>Favorite</DropdownMenuItem>*/}
-        {/*<DropdownMenuSeparator />*/}
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            <DropdownMenuRadioGroup value={row.original.status}>
+              {Object.keys(JobStatus).map((label) => (
+                <DropdownMenuRadioItem
+                  key={label}
+                  value={label}
+                  onClick={async () =>
+                    await setJobTrackerStatus(
+                      label as JobStatus,
+                      row.original.id,
+                    )
+                  }
+                >
+                  {formatJobStatus(label as JobStatus)}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+        <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={async () => await unsaveJob(row.original.id)}
         >
@@ -46,3 +73,8 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
     </DropdownMenu>
   );
 }
+
+const formatJobStatus = (status: JobStatus) => {
+  // Uppercase first character, lowercase rest
+  return status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
+};

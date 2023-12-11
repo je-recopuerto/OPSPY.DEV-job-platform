@@ -62,7 +62,7 @@ export default function JobListing(props: JobListingProps) {
                 "text-sm font-normal leading-none text-muted-foreground"
               }
             >
-              {props.job.description}
+              {props.job.description?.slice(0, 250)}
             </p>
           </div>
 
