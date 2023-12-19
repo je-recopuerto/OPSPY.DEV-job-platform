@@ -13,7 +13,6 @@ import {
   Cross,
 } from "lucide-react";
 import { DataTableViewOptions } from "@/components/table/data-table-view-options";
-import { statuses } from "@/components/dashboard/job-tracker-table";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -53,13 +52,13 @@ export function DataTableToolbar<TData>({
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {table.getColumn("status") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("status")}
-            title="Status"
-            options={statuses}
-          />
-        )}
+        {/*{table.getColumn("status") && (*/}
+        {/*  <DataTableFacetedFilter*/}
+        {/*    column={table.getColumn("status")}*/}
+        {/*    title="Status"*/}
+        {/*    options={statuses}*/}
+        {/*  />*/}
+        {/*)}*/}
         {table.getColumn("priority") && (
           <DataTableFacetedFilter
             column={table.getColumn("priority")}

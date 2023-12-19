@@ -15,7 +15,7 @@ export function MainNav({
   return (
     <nav className={`flex items-center space-x-2 lg:space-x-6`}>
       <Link
-        href="dashboard"
+        href="/dashboard"
         className={`${activeClass(
           currentPage,
           "/dashboard",
@@ -25,7 +25,7 @@ export function MainNav({
       </Link>
 
       <Link
-        href="jobs"
+        href="/jobs"
         className={`${activeClass(
           currentPage,
           "/jobs",
@@ -35,7 +35,7 @@ export function MainNav({
       </Link>
 
       <Link
-        href="companies"
+        href="/companies"
         className={`${activeClass(
           currentPage,
           "/companies",
@@ -45,7 +45,7 @@ export function MainNav({
       </Link>
 
       <Link
-        href="onboarding"
+        href="/onboarding"
         className={`${activeClass(
           currentPage,
           "/onboarding",

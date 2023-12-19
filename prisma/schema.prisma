@@ -38,17 +38,18 @@ model Session {
 }
 
 model User {
-  id            String       @id @default(cuid())
+  id            String           @id @default(cuid())
   name          String?
-  email         String?      @unique
+  email         String?          @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  isOnboarded   Boolean      @default(false)
+  isOnboarded   Boolean          @default(false)
   profile       Profile?
-  Company       Company?
+  company       Company?
   trackers      JobTracker[]
+  applications  JobApplication[]
 }
 
 model Profile {
@@ -85,21 +86,24 @@ model Company {
 }
 
 model JobPost {
-  id          Int          @id @default(autoincrement())
-  title       String
-  description String?
-  location    String?
-  minSalary   Float
-  maxSalary   Float
-  currency    Currency
-  type        JobType
-  remote      Boolean
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  companyId   Int
-  company     Company      @relation(fields: [companyId], references: [id])
-  JobTracker  JobTracker[]
-  tags        Tag[]
+  id           Int              @id @default(autoincrement())
+  title        String
+  description  String?
+  location     String?
+  minSalary    Float
+  maxSalary    Float
+  currency     Currency
+  type         JobType
+  isQuickApply Boolean          @default(false)
+  externalLink String?
+  isRemote     Boolean
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  companyId    Int
+  company      Company          @relation(fields: [companyId], references: [id])
+  JobTracker   JobTracker[]
+  tags         Tag[]
+  application  JobApplication[]
 }
 
 model Tag {
@@ -108,19 +112,28 @@ model Tag {
   jobs JobPost[]
 }
 
-model JobTracker {
-  id        Int       @id @default(autoincrement())
+model JobApplication {
+  id        Int               @id @default(autoincrement())
   userId    String
   jobId     Int
-  status    JobStatus @default(INTERESTED)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  user      User      @relation(fields: [userId], references: [id])
-  job       JobPost   @relation(fields: [jobId], references: [id])
+  status    ApplicationStatus @default(APPLIED)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  user      User              @relation(fields: [userId], references: [id])
+  job       JobPost           @relation(fields: [jobId], references: [id])
 }
 
-enum JobStatus {
-  INTERESTED
+model JobTracker {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  jobId     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+  job       JobPost  @relation(fields: [jobId], references: [id])
+}
+
+enum ApplicationStatus {
   APPLIED
   INTERVIEWING
   REJECTED

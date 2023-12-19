@@ -4,7 +4,6 @@ import { DataTable } from "@/components/table/data-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "../ui/checkbox";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
-import { JobTracker } from ".prisma/client";
 import {
   CheckIcon,
   CircleIcon,
@@ -13,28 +12,24 @@ import {
   ShieldQuestionIcon,
   TimerIcon,
 } from "lucide-react";
-import { DataTableRowActions } from "@/components/table/data-table-row-actions";
-import { JobTrackerWithPost } from "@/services/jobTrackerService";
+import { JobTrackerWithPost } from "@/services/JobService";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ApplicationStatus } from "@prisma/client";
+import { SavedJobDataTableRowActions } from "./saved-job-data-table-row-actions";
 
 type JobTrackerTableProps = {
   data: JobTrackerWithPost[];
 };
 
-export default function JobTrackerTable(props: JobTrackerTableProps) {
+export default function SavedJobTable(props: JobTrackerTableProps) {
   return <DataTable columns={columns} data={props.data} />;
 }
 
 export const statuses: {
-  value: JobTracker["status"];
+  value: ApplicationStatus;
   label: string;
   icon?: LucideIcon;
 }[] = [
-  {
-    value: "INTERESTED",
-    label: "Interested",
-    icon: ShieldQuestionIcon,
-  },
   {
     value: "APPLIED",
     label: "Applied",
@@ -125,34 +120,7 @@ export const columns: ColumnDef<JobTrackerWithPost>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Status" />
-    ),
-    cell: ({ row }) => {
-      const status = statuses.find(
-        (status) => status.value === row.original.status,
-      );
-
-      if (!status) {
-        return null;
-      }
-
-      return (
-        <div className="flex w-[100px] items-center">
-          {status.icon && (
-            <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-          )}
-          <span>{status.label}</span>
-        </div>
-      );
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
-  },
-  {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => <SavedJobDataTableRowActions row={row} />,
   },
 ];

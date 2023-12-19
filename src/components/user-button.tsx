@@ -21,10 +21,15 @@ import {
   User,
 } from "lucide-react";
 import Link from "next/link";
+import { getUserById, getUserWithCompanyById } from "@/services/userService";
 
 export default async function UserButton() {
   const session = await auth();
   if (!session?.user) return <SignIn />;
+
+  const user = await getUserWithCompanyById(session.user.id);
+  if (!user) return <SignIn />;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -53,62 +58,49 @@ export default async function UserButton() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href={"/profile"}>
-              <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
-              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-            </Link>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem asChild>
             <Link href={"/dashboard"}>
               <CreditCard className="mr-2 h-4 w-4" />
               <span>Dashboard</span>
               <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+          <DropdownMenuItem asChild>
+            <Link href={"settings"}>
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Settings</span>
+              <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
+
         <DropdownMenuSeparator />
-        {/*<DropdownMenuGroup>*/}
-        {/*  <DropdownMenuItem>*/}
-        {/*    <Users className="mr-2 h-4 w-4"/>*/}
-        {/*    <span>Team</span>*/}
-        {/*  </DropdownMenuItem>*/}
-        {/*  <DropdownMenuSub>*/}
-        {/*    <DropdownMenuSubTrigger>*/}
-        {/*      <UserPlus className="mr-2 h-4 w-4"/>*/}
-        {/*      <span>Invite users</span>*/}
-        {/*    </DropdownMenuSubTrigger>*/}
-        {/*    <DropdownMenuPortal>*/}
-        {/*      <DropdownMenuSubContent>*/}
-        {/*        <DropdownMenuItem>*/}
-        {/*          <Mail className="mr-2 h-4 w-4"/>*/}
-        {/*          <span>Email</span>*/}
-        {/*        </DropdownMenuItem>*/}
-        {/*        <DropdownMenuItem>*/}
-        {/*          <MessageSquare className="mr-2 h-4 w-4"/>*/}
-        {/*          <span>Message</span>*/}
-        {/*        </DropdownMenuItem>*/}
-        {/*        <DropdownMenuSeparator/>*/}
-        {/*        <DropdownMenuItem>*/}
-        {/*          <PlusCircle className="mr-2 h-4 w-4"/>*/}
-        {/*          <span>More...</span>*/}
-        {/*        </DropdownMenuItem>*/}
-        {/*      </DropdownMenuSubContent>*/}
-        {/*    </DropdownMenuPortal>*/}
-        {/*  </DropdownMenuSub>*/}
-        {/*  <DropdownMenuItem>*/}
-        {/*    <Plus className="mr-2 h-4 w-4"/>*/}
-        {/*    <span>New Team</span>*/}
-        {/*    <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>*/}
-        {/*  </DropdownMenuItem>*/}
-        {/*</DropdownMenuGroup>*/}
-        {/*<DropdownMenuSeparator/>*/}
+
+        <DropdownMenuGroup>
+          {user.company ? (
+            <>
+              <DropdownMenuItem asChild>
+                <Link href={"/dashboard/employer"}>
+                  <CreditCard className="mr-2 h-4 w-4" />
+                  <span>Employer Dashboard</span>
+                  <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+                </Link>
+              </DropdownMenuItem>
+            </>
+          ) : (
+            <>
+              <DropdownMenuItem asChild>
+                <Link href={"settings"}>
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Need a company</span>
+                  <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                </Link>
+              </DropdownMenuItem>
+            </>
+          )}
+        </DropdownMenuGroup>
+
+        <DropdownMenuSeparator />
+
         <DropdownMenuItem>
           <Github className="mr-2 h-4 w-4" />
           <span>GitHub</span>

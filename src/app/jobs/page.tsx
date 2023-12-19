@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import JobFeed from "@/components/job-feed";
+import JobFeed from "@/components/jobs/job-feed";
 
 export default function JobsPage() {
   return (

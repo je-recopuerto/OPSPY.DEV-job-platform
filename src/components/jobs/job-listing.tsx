@@ -8,12 +8,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { JobPostWithCompany } from "@/services/jobPostService";
 import { SaveIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toggleSaveJob } from "@/app/actions";
 import { toast } from "@/components/ui/use-toast";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import ApplyJobDialog from "@/components/jobs/apply-job-dialog";
+import { JobPostWithCompany } from "@/services/JobService";
 
 type JobListingProps = {
   job: JobPostWithCompany;
@@ -34,7 +36,9 @@ export default function JobListing(props: JobListingProps) {
         </Avatar>
 
         <div>
-          <CardTitle className={"text-md"}>{props.job.title}</CardTitle>
+          <CardTitle className={"text-md"}>
+            <Link href={`/jobs/${props.job.id}`}>{props.job.title}</Link>
+          </CardTitle>
           <CardDescription>
             {props.job.company.name} | {props.job.location}
           </CardDescription>
@@ -66,13 +70,6 @@ export default function JobListing(props: JobListingProps) {
             </p>
           </div>
 
-          {/*<div>*/}
-          {/*  <small className="text-sm font-bold leading-none">Location</small>*/}
-          {/*  <p className="text-sm font-normal leading-none text-muted-foreground">*/}
-          {/*    {props.job.location}*/}
-          {/*  </p>*/}
-          {/*</div>*/}
-
           <div className={"min-w-[6rem]"}>
             <small className="text-sm font-bold leading-none">Salary</small>
             <p className="text-sm font-normal leading-none text-muted-foreground">
@@ -85,23 +82,26 @@ export default function JobListing(props: JobListingProps) {
           </div>
         </div>
 
-        <form
-          className={"mt-4"}
-          action={async () => {
-            const removed = await toggleSaveJob(props.job.id);
+        <div className={"flex flex-row gap-4 p-1"}>
+          <ApplyJobDialog post={props.job} />
 
-            toast({
-              title: removed ? "Job Unsaved" : "Job Saved",
-              description: "You can view your saved jobs in your dashboard.",
-              duration: 1500,
-            });
-          }}
-        >
-          <Button variant={props.isFollowing ? "destructive" : "default"}>
-            <SaveIcon className={"h-4 w-4 mr-2"} />
-            {props.isFollowing ? "Unsave" : "Save"}
-          </Button>
-        </form>
+          <form
+            action={async () => {
+              const removed = await toggleSaveJob(props.job.id);
+
+              toast({
+                title: removed ? "Job Unsaved" : "Job Saved",
+                description: "You can view your saved jobs in your dashboard.",
+                duration: 1500,
+              });
+            }}
+          >
+            <Button variant={props.isFollowing ? "destructive" : "default"}>
+              <SaveIcon className={"h-4 w-4 mr-2"} />
+              {props.isFollowing ? "Unsave" : "Save"}
+            </Button>
+          </form>
+        </div>
       </CardContent>
     </Card>
   );

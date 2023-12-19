@@ -7,7 +7,7 @@ import { auth } from "@/auth";
 import * as z from "zod";
 import { getUserById } from "@/services/userService";
 import { revalidatePath } from "next/cache";
-import { JobStatus } from ".prisma/client";
+import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
 
 export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
   // This will throw an error if the state is invalid
@@ -16,12 +16,7 @@ export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
   const session = await auth();
   if (!session || !session.user) throw new Error("User not found");
 
-  console.log(
-    "Setting onboarding:",
-    values,
-    "for user:",
-    session?.user ?? "unknown",
-  );
+  console.log("Setting onboarding:", values, "for user:", session.user);
   const user = await getUserById(session.user.id);
 
   if (!user) throw new Error("User not found");
@@ -55,21 +50,6 @@ export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
 
   console.log("Successfully updated", user.name, "profile.");
   redirect("/");
-}
-
-export async function setJobTrackerStatus(status: JobStatus, id: number) {
-  console.log("Setting job tracker status to", status, "for id", id);
-
-  await prisma.jobTracker.update({
-    where: {
-      id: id,
-    },
-    data: {
-      status: status,
-    },
-  });
-
-  revalidatePath("/dashboard");
 }
 
 export async function unsaveJob(id: number) {
@@ -122,4 +102,113 @@ export async function toggleSaveJob(id: number) {
 
   revalidatePath("/dashboard");
   return removed;
+}
+
+export async function withdrawApplication(jobId: number) {
+  const session = await auth();
+  if (!session || !session.user) throw new Error("User not found");
+
+  const user = await getUserById(session.user.id);
+  if (!user) throw new Error("User not found");
+
+  try {
+    const result = await prisma.jobApplication.deleteMany({
+      where: {
+        id: jobId,
+        userId: user.id,
+      },
+    });
+
+    console.log(
+      "Deleted job application with id",
+      jobId,
+      "userId",
+      user.id,
+      ":",
+      result,
+    );
+
+    revalidatePath("/dashboard");
+    return true;
+  } catch (e) {
+    console.error("Error deleting job application:", e);
+    return false;
+  }
+}
+
+export async function quickApply(jobId: number) {
+  const session = await auth();
+  if (!session || !session.user) throw new Error("User not found");
+
+  const user = await getUserById(session.user.id);
+  if (!user) throw new Error("User not found");
+
+  try {
+    const exists = await prisma.jobApplication.findFirst({
+      where: {
+        jobId: jobId,
+        userId: user.id,
+      },
+    });
+
+    if (exists) throw new Error("Job application already exists");
+
+    const result = await prisma.jobApplication.create({
+      data: {
+        userId: user.id,
+        jobId: jobId,
+      },
+    });
+
+    console.log("Created new job application:", result);
+
+    revalidatePath("/dashboard");
+    return true;
+  } catch (e) {
+    console.error("Error creating job application:", e);
+    return false;
+  }
+}
+
+export async function updateProfile(
+  values: z.infer<typeof updateProfileFormSchema>,
+) {
+  // This will throw an error if the state is invalid
+  const validatedState = updateProfileFormSchema.parse(values);
+
+  const session = await auth();
+  if (!session || !session.user) throw new Error("User not found");
+
+  const user = await getUserById(session.user.id);
+  if (!user) throw new Error("User not found");
+
+  console.log("Updating profile:", validatedState, "for user:", user);
+
+  const result = await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      profile: {
+        upsert: {
+          where: {
+            userId: user.id,
+          },
+          create: {
+            firstName: validatedState.firstName,
+            lastName: validatedState.lastName,
+            dateOfBirth: validatedState.dateOfBirth,
+          },
+          update: {
+            firstName: validatedState.firstName,
+            lastName: validatedState.lastName,
+            dateOfBirth: validatedState.dateOfBirth,
+          },
+        },
+      },
+    },
+  });
+
+  console.log("Successfully updated", user.name, "profile.");
+  return result;
 }
