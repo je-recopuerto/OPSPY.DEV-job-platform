@@ -5,9 +5,40 @@ import { onboardingSchema } from "@/schemas/onboardingSchema";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import * as z from "zod";
-import { getUserById } from "@/services/userService";
+import { getUserById, getUserWithCompanyById } from "@/services/userService";
 import { revalidatePath } from "next/cache";
 import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
+import { createJobPostSchema } from "@/schemas/jobPost";
+
+export async function createJobPost(
+  values: z.infer<typeof createJobPostSchema>,
+) {
+  // This will throw an error if the state is invalid
+  const validatedState = createJobPostSchema.parse(values);
+
+  const session = await auth();
+  if (!session || !session.user) throw new Error("User not found");
+
+  const user = await getUserWithCompanyById(session.user.id);
+  if (!user) throw new Error("User not found");
+  if (!user.company) throw new Error("User does not have a company");
+
+  console.log("Creating job post:", validatedState, "for user:", user);
+
+  const result = await prisma.jobPost.create({
+    data: {
+      title: validatedState.title,
+      description: validatedState.description,
+      minSalary: validatedState.minSalary,
+      maxSalary: validatedState.maxSalary,
+      location: validatedState.location,
+      currency: "GBP", // validatedState.currency,
+      type: "FULL_TIME", // validatedState.type,
+      isRemote: validatedState.isRemote,
+      companyId: user.company.id,
+    },
+  });
+}
 
 export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
   // This will throw an error if the state is invalid

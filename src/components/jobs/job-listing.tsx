@@ -131,7 +131,7 @@ function formatCurrency(num: number): string {
 function formatToKForm(num: number): string {
   // Check if the number is less than 1000
   if (num < 1000) {
-    throw new Error("Number should be larger than 1000");
+    return num.toString();
   }
 
   // Round the number to nearest thousand and append 'k'

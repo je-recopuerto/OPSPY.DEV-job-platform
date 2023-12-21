@@ -9,13 +9,13 @@ import {
   CircleIcon,
   CrossIcon,
   LucideIcon,
-  ShieldQuestionIcon,
   TimerIcon,
 } from "lucide-react";
 import { JobTrackerWithPost } from "@/services/JobService";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ApplicationStatus } from "@prisma/client";
 import { SavedJobDataTableRowActions } from "./saved-job-data-table-row-actions";
+import Link from "next/link";
 
 type JobTrackerTableProps = {
   data: JobTrackerWithPost[];
@@ -88,7 +88,11 @@ export const columns: ColumnDef<JobTrackerWithPost>[] = [
       <DataTableColumnHeader column={column} title="Role" />
     ),
     cell: ({ row }) => {
-      return <div className="">{row.original.job.title}</div>;
+      return (
+        <Link href={`/jobs/${row.original.jobId}`}>
+          {row.original.job.title}
+        </Link>
+      );
     },
     enableSorting: true,
     enableHiding: false,

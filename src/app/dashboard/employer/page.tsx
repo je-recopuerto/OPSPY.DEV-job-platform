@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { getUserWithCompanyById } from "@/services/userService";
 import { SignIn } from "@/components/auth-components";
-import { CalendarIcon, CircleSlash2, PinIcon, Timer } from "lucide-react";
+import { CircleSlash2, PinIcon, PlusIcon, Timer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Link from "next/link";
 
 export default async function EmployerDashboardPage() {
   const session = await auth();
@@ -25,9 +26,11 @@ export default async function EmployerDashboardPage() {
         <div className="flex items-center justify-between space-y-2">
           <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
           <div className="flex items-center space-x-2">
-            <Button>
-              <CalendarIcon className={"w-4 h-4 mr-2"} />
-              View Applicants
+            <Button asChild>
+              <Link href={"/jobs/new"}>
+                <PlusIcon className={"w-4 h-4 mr-2"} />
+                Add Job Opening
+              </Link>
             </Button>
           </div>
         </div>

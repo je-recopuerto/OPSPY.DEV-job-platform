@@ -18,7 +18,7 @@ export default async function JobPage(props: JobPageParams) {
   }
 
   return (
-    <>
+    <main className="flex min-h-screen flex-col p-14">
       <h1 className={"text-2xl font-semibold"}>{post.title}</h1>
       <p className={"text-sm text-muted-foreground pb-6"}>
         {post.company.name}
@@ -27,6 +27,6 @@ export default async function JobPage(props: JobPageParams) {
       <p className={"text-sm text-muted-foreground pb-6 whitespace-pre-wrap"}>
         {post.description}
       </p>
-    </>
+    </main>
   );
 }
