@@ -2,6 +2,9 @@ import CreateJobForm from "@/components/jobs/create-job-form";
 import { getUserWithCompanyById } from "@/services/userService";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+import CompanyProfileWithOpenings from "@/components/jobs/company-profile-with-openings";
+import CompanyProfile from "@/components/jobs/company-profile";
+import { Separator } from "@/components/ui/separator";
 
 export default async function NewJobPage() {
   const session = await auth();
@@ -12,7 +15,13 @@ export default async function NewJobPage() {
   if (!user.company) return redirect("/");
 
   return (
-    <main className="flex flex-col max-w-3xl m-auto p-14">
+    <main className="flex flex-col max-w-3xl m-auto px-14 pb-[14rem]">
+      <CompanyProfile company={user.company} />
+
+      <Separator className={"my-8"} />
+
+      <h1 className="text-2xl font-semibold pb-6">Create a new job</h1>
+
       <CreateJobForm />
     </main>
   );

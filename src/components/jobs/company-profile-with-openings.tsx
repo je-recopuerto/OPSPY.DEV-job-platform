@@ -5,13 +5,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Company } from "@prisma/client";
+import { CompanyWithOpenings } from "@/services/companyService";
 
 type CompanyProfileProps = {
-  company: Company;
+  company: CompanyWithOpenings;
 };
 
-export default function CompanyProfile(props: CompanyProfileProps) {
+export default function CompanyProfileWithOpenings(props: CompanyProfileProps) {
   return (
     <Card className={"w-full"}>
       <CardHeader className={"flex flex-row gap-x-3 space-y-0"}>
@@ -30,6 +30,9 @@ export default function CompanyProfile(props: CompanyProfileProps) {
             <CardDescription>
               {props.company.description?.slice(0, 100)}
             </CardDescription>
+          </div>
+          <div className={"flex justify-end"}>
+            {props.company.openings.length} Jobs
           </div>
         </div>
       </CardHeader>

@@ -1,5 +1,5 @@
 import { getCompaniesWithOpenings } from "@/services/companyService";
-import CompanyProfile from "@/components/jobs/company-profile";
+import CompanyProfileWithOpenings from "@/components/jobs/company-profile-with-openings";
 
 export default async function CompanyFeed() {
   const companies = await getCompaniesWithOpenings();
@@ -12,7 +12,7 @@ export default async function CompanyFeed() {
 
       <div className={"flex flex-col gap-y-3"}>
         {companies.map((company) => (
-          <CompanyProfile company={company} key={company.id} />
+          <CompanyProfileWithOpenings company={company} key={company.id} />
         ))}
       </div>
     </>

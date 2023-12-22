@@ -96,7 +96,7 @@ model JobPost {
   type         JobType
   isQuickApply Boolean          @default(false)
   externalLink String?
-  isRemote     Boolean
+  workMode     WorkMode         @default(ONSITE)
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
   companyId    Int
@@ -104,6 +104,12 @@ model JobPost {
   JobTracker   JobTracker[]
   tags         Tag[]
   application  JobApplication[]
+}
+
+enum WorkMode {
+  REMOTE
+  ONSITE
+  HYBRID
 }
 
 model Tag {

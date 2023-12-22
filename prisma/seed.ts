@@ -126,7 +126,7 @@ async function main() {
             minSalary: 20000.0,
             maxSalary: 25000.0,
             currency: "GBP",
-            isRemote: false,
+            workMode: "REMOTE",
           },
           {
             title: "Software Development Engineer Apprentice (42 months)",
@@ -203,7 +203,7 @@ async function main() {
             minSalary: 20000.0,
             maxSalary: 25000.0,
             currency: "GBP",
-            isRemote: false,
+            workMode: "HYBRID",
           },
         ],
       },

@@ -26,8 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { JobType } from "@prisma/client";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Currency, JobType, WorkMode } from "@prisma/client";
 
 export default function CreateJobForm() {
   const { toast } = useToast();
@@ -40,14 +39,14 @@ export default function CreateJobForm() {
       minSalary: 0,
       maxSalary: 0,
       location: "",
-      currency: "",
-      type: "",
-      isRemote: false,
+      currency: Currency.GBP,
+      type: JobType.FULL_TIME,
+      workMode: WorkMode.HYBRID,
     },
   });
 
   const {
-    formState: { isSubmitSuccessful },
+    formState: { isSubmitSuccessful, isSubmitting },
   } = form;
 
   useEffect(() => {
@@ -75,7 +74,7 @@ export default function CreateJobForm() {
               <FormItem>
                 <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="Software Engineer L4" {...field} />
                 </FormControl>
                 <FormDescription>
                   This will be displayed to candidates
@@ -93,8 +92,7 @@ export default function CreateJobForm() {
                 <FormLabel>Description</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Tell us a little bit about yourself"
-                    className="resize-none"
+                    placeholder="(Tech stack: .NET Developer, .NET 7, C#, Azure, Angular 14, Multithreading, RESTful, Web API 2, JavaScript, Programmer, Full Stack Engineer, Architect, .NET Developer)"
                     {...field}
                   />
                 </FormControl>
@@ -111,11 +109,11 @@ export default function CreateJobForm() {
               control={form.control}
               name="currency"
               render={({ field }) => (
-                <FormItem className={"max-w-24"}>
+                <FormItem className={"w-24"}>
                   <FormLabel>Currency</FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
+                    defaultValue={field.value as string}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -123,9 +121,11 @@ export default function CreateJobForm() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="GBP">£</SelectItem>
-                      <SelectItem value="USD">$</SelectItem>
-                      <SelectItem value="EUR">€</SelectItem>
+                      {Object.keys(Currency).map((type) => (
+                        <SelectItem key={type} value={type}>
+                          {type}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -216,27 +216,35 @@ export default function CreateJobForm() {
 
           <FormField
             control={form.control}
-            name="isRemote"
+            name="workMode"
             render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>Is this job remote?</FormLabel>
-                  <FormDescription>
-                    If you select this, candidates will be able to filter by
-                    remote jobs
-                  </FormDescription>
-                </div>
+              <FormItem>
+                <FormLabel>Work Environment</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value as string}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder={field.value} />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {Object.keys(WorkMode).map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {type}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
               </FormItem>
             )}
           />
 
-          <Button type="submit">Create Job Post</Button>
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Loading..." : "Create Job Post"}
+          </Button>
         </div>
       </form>
     </Form>

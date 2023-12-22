@@ -32,12 +32,14 @@ export async function createJobPost(
       minSalary: validatedState.minSalary,
       maxSalary: validatedState.maxSalary,
       location: validatedState.location,
-      currency: "GBP", // validatedState.currency,
-      type: "FULL_TIME", // validatedState.type,
-      isRemote: validatedState.isRemote,
+      currency: validatedState.currency,
+      type: validatedState.type,
+      workMode: validatedState.workMode,
       companyId: user.company.id,
     },
   });
+
+  redirect("/dashboard/employer");
 }
 
 export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
