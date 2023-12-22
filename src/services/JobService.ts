@@ -46,6 +46,25 @@ export function getSavedJobsForUserId(
   });
 }
 
+export type CompanyWithOpenings = Prisma.CompanyGetPayload<{
+  include: {
+    openings: true;
+  };
+}>;
+
+export function getCompanyWithOpeningsById(
+  id: number,
+): Promise<CompanyWithOpenings | null> {
+  return prisma.company.findUnique({
+    where: {
+      id: id,
+    },
+    include: {
+      openings: true,
+    },
+  });
+}
+
 export type JobPostWithCompany = Prisma.JobPostGetPayload<{
   include: {
     company: true;

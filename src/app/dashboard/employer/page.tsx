@@ -4,14 +4,12 @@ import { SignIn } from "@/components/auth-components";
 import { CircleSlash2, PinIcon, PlusIcon, Timer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import CompanyProfile from "@/components/jobs/company-profile";
+import { getCompanyWithOpeningsById } from "@/services/JobService";
+import CompanyJobTable from "@/components/dashboard/employer/company-job-table";
+import { Suspense } from "react";
 
 export default async function EmployerDashboardPage() {
   const session = await auth();
@@ -23,13 +21,17 @@ export default async function EmployerDashboardPage() {
   return (
     <>
       <div className="flex-1 space-y-4 p-8 pt-6">
+        <CompanyProfile company={user.company} />
+
         <div className="flex items-center justify-between space-y-2">
-          <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+          <h2 className="text-3xl font-bold tracking-tight">
+            Employer Dashboard
+          </h2>
           <div className="flex items-center space-x-2">
             <Button asChild>
               <Link href={"/jobs/new"}>
                 <PlusIcon className={"w-4 h-4 mr-2"} />
-                Add Job Opening
+                Add Job
               </Link>
             </Button>
           </div>
@@ -120,23 +122,17 @@ export default async function EmployerDashboardPage() {
                 </CardContent>
               </Card>
             </div>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-              <Card className="col-span-4">
+            <div className="grid gap-4">
+              <Card>
                 <CardHeader>
                   <CardTitle>Overview</CardTitle>
                 </CardHeader>
                 <CardContent className="px-4">
                   {/*<JobTrackerTable data={data} />*/}
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <JobTable companyId={user.company.id} />
+                  </Suspense>
                 </CardContent>
-              </Card>
-              <Card className="col-span-3">
-                <CardHeader>
-                  <CardTitle>Lorem Ipsum</CardTitle>
-                  <CardDescription>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>{/*<RecentSales />*/}</CardContent>
               </Card>
             </div>
           </TabsContent>
@@ -144,4 +140,12 @@ export default async function EmployerDashboardPage() {
       </div>
     </>
   );
+}
+
+async function JobTable({ companyId }: { companyId: number }) {
+  const company = await getCompanyWithOpeningsById(companyId);
+
+  if (!company) return <div>Company not found.</div>;
+
+  return <CompanyJobTable data={company} />;
 }
