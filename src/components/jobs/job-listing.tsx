@@ -24,8 +24,8 @@ type JobListingProps = {
 
 export default function JobListing(props: JobListingProps) {
   return (
-    <Card className={"w-full"}>
-      <CardHeader className={"flex flex-row gap-x-3 space-y-0"}>
+    <Card>
+      <CardHeader className={"flex flex-row gap-x-4 space-y-0"}>
         <Avatar className={"h-10 w-10"}>
           <AvatarImage
             src={props.job.company.logoUrl ?? "https://github.com/shadcn.png"}
@@ -40,7 +40,12 @@ export default function JobListing(props: JobListingProps) {
             <Link href={`/jobs/${props.job.id}`}>{props.job.title}</Link>
           </CardTitle>
           <CardDescription>
-            {props.job.company.name} | {props.job.location}
+            {props.job.company.name} | {props.job.location} | {props.job.type} |{" "}
+            {getSalaryRangeString(
+              props.job.minSalary,
+              props.job.maxSalary,
+              props.job.currency,
+            )}
           </CardDescription>
         </div>
 
@@ -56,52 +61,56 @@ export default function JobListing(props: JobListingProps) {
       </CardHeader>
 
       <CardContent>
-        <div className={"flex flex-row gap-6 pb-4"}>
-          <div>
-            <small className="text-sm font-bold leading-none">
-              Description
-            </small>
-            <p
-              className={
-                "text-sm font-normal leading-none text-muted-foreground"
-              }
-            >
-              {props.job.description?.slice(0, 250)}
-            </p>
-          </div>
+        <p className={"text-sm font-normal leading-none text-muted-foreground"}>
+          {props.job.description?.slice(0, 125) + "..."}
+        </p>
 
-          <div className={"min-w-[6rem]"}>
-            <small className="text-sm font-bold leading-none">Salary</small>
-            <p className="text-sm font-normal leading-none text-muted-foreground">
-              {getSalaryRangeString(
-                props.job.minSalary,
-                props.job.maxSalary,
-                props.job.currency,
-              )}
-            </p>
-          </div>
-        </div>
+        {/*<div className={"flex flex-row gap-6 pb-4"}>*/}
+        {/*  <div>*/}
+        {/*    <small className="text-sm font-bold leading-none">*/}
+        {/*      Description*/}
+        {/*    </small>*/}
+        {/*    <p*/}
+        {/*      className={*/}
+        {/*        "text-sm font-normal leading-none text-muted-foreground"*/}
+        {/*      }*/}
+        {/*    >*/}
+        {/*      {props.job.description?.slice(0, 125)}*/}
+        {/*    </p>*/}
+        {/*  </div>*/}
 
-        <div className={"flex flex-row gap-4 p-1"}>
-          <ApplyJobDialog post={props.job} />
+        {/*  <div className={"min-w-[6rem]"}>*/}
+        {/*    <small className="text-sm font-bold leading-none">Salary</small>*/}
+        {/*    <p className="text-sm font-normal leading-none text-muted-foreground">*/}
+        {/*      {getSalaryRangeString(*/}
+        {/*        props.job.minSalary,*/}
+        {/*        props.job.maxSalary,*/}
+        {/*        props.job.currency,*/}
+        {/*      )}*/}
+        {/*    </p>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
 
-          <form
-            action={async () => {
-              const removed = await toggleSaveJob(props.job.id);
+        {/*<div className={"flex flex-row gap-4 p-1"}>*/}
+        {/*  <ApplyJobDialog post={props.job} />*/}
 
-              toast({
-                title: removed ? "Job Unsaved" : "Job Saved",
-                description: "You can view your saved jobs in your dashboard.",
-                duration: 1500,
-              });
-            }}
-          >
-            <Button variant={props.isFollowing ? "destructive" : "default"}>
-              <SaveIcon className={"h-4 w-4 mr-2"} />
-              {props.isFollowing ? "Unsave" : "Save"}
-            </Button>
-          </form>
-        </div>
+        {/*  <form*/}
+        {/*    action={async () => {*/}
+        {/*      const removed = await toggleSaveJob(props.job.id);*/}
+
+        {/*      toast({*/}
+        {/*        title: removed ? "Job Unsaved" : "Job Saved",*/}
+        {/*        description: "You can view your saved jobs in your dashboard.",*/}
+        {/*        duration: 1500,*/}
+        {/*      });*/}
+        {/*    }}*/}
+        {/*  >*/}
+        {/*    <Button variant={props.isFollowing ? "destructive" : "default"}>*/}
+        {/*      <SaveIcon className={"h-4 w-4 mr-2"} />*/}
+        {/*      {props.isFollowing ? "Unsave" : "Save"}*/}
+        {/*    </Button>*/}
+        {/*  </form>*/}
+        {/*</div>*/}
       </CardContent>
     </Card>
   );
