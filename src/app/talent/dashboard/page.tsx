@@ -25,10 +25,16 @@ import { redirect } from "next/navigation";
 import { JobApplication } from ".prisma/client";
 import SavedJobTab from "@/components/dashboard/saved-job-tab";
 import AppliedJobsTab from "@/components/dashboard/applied-jobs-tab";
+import { getUserWithCompanyById } from "@/services/userService";
 
 export default async function DashboardPage() {
   const session = await auth();
   if (!session) return redirect("/");
+
+  const user = await getUserWithCompanyById(session.user.id);
+  if (!user) return;
+
+  if (user.company) return redirect("/employer/dashboard");
 
   return (
     <>

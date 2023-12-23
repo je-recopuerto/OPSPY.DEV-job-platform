@@ -15,7 +15,7 @@ export function MainNav({
   return (
     <nav className={`flex items-center space-x-2 lg:space-x-6`}>
       <Link
-        href="/dashboard"
+        href="/talent/dashboard"
         className={`${activeClass(
           currentPage,
           "/dashboard",

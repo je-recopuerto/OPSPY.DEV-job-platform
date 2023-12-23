@@ -21,7 +21,7 @@ import {
   User,
 } from "lucide-react";
 import Link from "next/link";
-import { getUserById, getUserWithCompanyById } from "@/services/userService";
+import { getUserWithCompanyById } from "@/services/userService";
 
 export default async function UserButton() {
   const session = await auth();
@@ -58,14 +58,16 @@ export default async function UserButton() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href={"/dashboard"}>
+            <Link
+              href={user.company ? "/employer/dashboard" : "/talent/dashboard"}
+            >
               <CreditCard className="mr-2 h-4 w-4" />
               <span>Dashboard</span>
               <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={"settings"}>
+            <Link href={"/settings"}>
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
               <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
@@ -73,31 +75,31 @@ export default async function UserButton() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
 
-        <DropdownMenuSeparator />
+        {/*<DropdownMenuSeparator />*/}
 
-        <DropdownMenuGroup>
-          {user.company ? (
-            <>
-              <DropdownMenuItem asChild>
-                <Link href={"/dashboard/employer"}>
-                  <CreditCard className="mr-2 h-4 w-4" />
-                  <span>Employer Dashboard</span>
-                  <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-                </Link>
-              </DropdownMenuItem>
-            </>
-          ) : (
-            <>
-              <DropdownMenuItem asChild>
-                <Link href={"settings"}>
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span>Need a company</span>
-                  <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                </Link>
-              </DropdownMenuItem>
-            </>
-          )}
-        </DropdownMenuGroup>
+        {/*<DropdownMenuGroup>*/}
+        {/*  {user.company ? (*/}
+        {/*    <>*/}
+        {/*      <DropdownMenuItem asChild>*/}
+        {/*        <Link href={"/dashboard/employer"}>*/}
+        {/*          <CreditCard className="mr-2 h-4 w-4" />*/}
+        {/*          <span>Employer Dashboard</span>*/}
+        {/*          <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>*/}
+        {/*        </Link>*/}
+        {/*      </DropdownMenuItem>*/}
+        {/*    </>*/}
+        {/*  ) : (*/}
+        {/*    <>*/}
+        {/*      <DropdownMenuItem asChild>*/}
+        {/*        <Link href={"settings"}>*/}
+        {/*          <Settings className="mr-2 h-4 w-4" />*/}
+        {/*          <span>Need a company</span>*/}
+        {/*          <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>*/}
+        {/*        </Link>*/}
+        {/*      </DropdownMenuItem>*/}
+        {/*    </>*/}
+        {/*  )}*/}
+        {/*</DropdownMenuGroup>*/}
 
         <DropdownMenuSeparator />
 

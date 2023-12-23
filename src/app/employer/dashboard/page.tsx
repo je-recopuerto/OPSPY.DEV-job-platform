@@ -10,13 +10,14 @@ import CompanyProfile from "@/components/jobs/company-profile";
 import { getCompanyWithOpeningsById } from "@/services/JobService";
 import CompanyJobTable from "@/components/dashboard/employer/company-job-table";
 import { Suspense } from "react";
+import { redirect } from "next/navigation";
 
 export default async function EmployerDashboardPage() {
   const session = await auth();
   if (!session?.user) return <SignIn />;
 
   const user = await getUserWithCompanyById(session.user.id);
-  if (!user || !user.company) return <SignIn />;
+  if (!user || !user.company) return redirect("/employer");
 
   return (
     <>
