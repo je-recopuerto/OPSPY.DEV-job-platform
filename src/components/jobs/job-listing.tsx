@@ -14,7 +14,7 @@ import { toggleSaveJob } from "@/app/actions";
 import { toast } from "@/components/ui/use-toast";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import ApplyJobDialog from "@/components/jobs/apply-job-dialog";
+import ApplyJobButton from "@/components/jobs/apply-job-button";
 import { JobPostWithCompany } from "@/services/JobService";
 
 type JobListingProps = {

@@ -18,7 +18,7 @@ type ApplyJobDialogProps = {
   post: JobPostWithCompany;
 };
 
-export default function ApplyJobDialog(props: ApplyJobDialogProps) {
+export default function ApplyJobButton(props: ApplyJobDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
