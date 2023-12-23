@@ -9,6 +9,7 @@ import { AppliedJobDataTableRowActions } from "@/components/dashboard/applied-jo
 import { JobPost } from "@prisma/client";
 import Link from "next/link";
 import { CompanyJobDataTableRowActions } from "@/components/dashboard/employer/company-job-table-row-actions";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 
 type AppliedJobsTableProps = {
   data: CompanyWithOpenings;
@@ -52,6 +53,51 @@ export const columns: ColumnDef<JobPost>[] = [
       return (
         <Link href={`/jobs/${row.original.id}`}>{row.original.title}</Link>
       );
+    },
+    enableSorting: true,
+    enableHiding: false,
+    accessorFn: (row) => row.title,
+  },
+  {
+    accessorKey: "candidates",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Candidates" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className={"flex flex-row gap-2"}>
+          <Card>
+            <CardContent className={"flex flex-col text-center p-3"}>
+              <h1 className={"text-green-600 dark:text-green-500"}>Active</h1>
+              <div>{1}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className={"flex flex-col text-center p-3"}>
+              <h1 className={"text-destructive"}>Declined</h1>
+              <div>{4}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className={"flex flex-col text-center p-3"}>
+              <h1 className={""}>Review Now</h1>
+              <div>{7}</div>
+            </CardContent>
+          </Card>
+        </div>
+      );
+    },
+    enableSorting: true,
+    enableHiding: false,
+    accessorFn: (row) => row.title,
+  },
+  {
+    accessorKey: "job.status",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Status" />
+    ),
+    cell: ({ row }) => {
+      return <>Active</>;
     },
     enableSorting: true,
     enableHiding: false,
