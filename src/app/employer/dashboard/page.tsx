@@ -37,20 +37,12 @@ export default async function EmployerDashboardPage() {
             </Button>
           </div>
         </div>
-        <Tabs defaultValue="overview" className="space-y-4">
+        <Tabs defaultValue="jobs" className="space-y-4">
           <TabsList>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="analytics" disabled>
-              Analytics
-            </TabsTrigger>
-            <TabsTrigger value="reports" disabled>
-              Reports
-            </TabsTrigger>
-            <TabsTrigger value="notifications" disabled>
-              Notifications
-            </TabsTrigger>
+            <TabsTrigger value="jobs">Job Postings</TabsTrigger>
+            <TabsTrigger value="applications">Applications</TabsTrigger>
           </TabsList>
-          <TabsContent value="overview" className="space-y-4">
+          <TabsContent value="jobs" className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -136,6 +128,9 @@ export default async function EmployerDashboardPage() {
                 </CardContent>
               </Card>
             </div>
+          </TabsContent>
+          <TabsContent value={"applications"} className="space-y-4">
+            Applications
           </TabsContent>
         </Tabs>
       </div>

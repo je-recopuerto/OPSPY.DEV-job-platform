@@ -59,6 +59,7 @@ model Profile {
   dateOfBirth DateTime?
   bio         String?
   imageURL    String?
+  location    String?
   createdAt   DateTime  @default(now())
   userId      String    @unique
   user        User      @relation(fields: [userId], references: [id])
