@@ -51,7 +51,7 @@ export default async function UserButton() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href={user.company ? "/e/dashboard" : "/t/dashboard"}>
+            <Link href={user.company ? "/e/dash" : "/t/dash"}>
               <CreditCard className="mr-2 h-4 w-4" />
               <span>Dashboard</span>
               <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
@@ -72,7 +72,7 @@ export default async function UserButton() {
         {/*  {user.company ? (*/}
         {/*    <>*/}
         {/*      <DropdownMenuItem asChild>*/}
-        {/*        <Link href={"/dashboard/(e)"}>*/}
+        {/*        <Link href={"/dash/(e)"}>*/}
         {/*          <CreditCard className="mr-2 h-4 w-4" />*/}
         {/*          <span>Employer Dashboard</span>*/}
         {/*          <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>*/}

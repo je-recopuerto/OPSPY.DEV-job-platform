@@ -34,8 +34,7 @@ export default function ApplyJobButton(props: ApplyJobDialogProps) {
                 title: success
                   ? "Application sent"
                   : "Application failed to send",
-                description:
-                  "You can view your job applications in your dashboard.",
+                description: "You can view your job applications in your dash.",
                 duration: 1500,
               });
             }}

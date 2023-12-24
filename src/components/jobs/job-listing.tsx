@@ -8,13 +8,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { SaveIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { toggleSaveJob } from "@/app/actions";
-import { toast } from "@/components/ui/use-toast";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import ApplyJobButton from "@/components/jobs/apply-job-button";
 import { JobPostWithCompany } from "@/services/JobService";
 
 type JobListingProps = {
@@ -100,7 +95,7 @@ export default function JobListing(props: JobListingProps) {
 
         {/*      toast({*/}
         {/*        title: removed ? "Job Unsaved" : "Job Saved",*/}
-        {/*        description: "You can view your saved jobs in your dashboard.",*/}
+        {/*        description: "You can view your saved jobs in your dash.",*/}
         {/*        duration: 1500,*/}
         {/*      });*/}
         {/*    }}*/}

@@ -31,7 +31,7 @@ export default async function ApplicationPage({
   if (!session?.user) return <SignIn />;
 
   const user = await getUserWithCompanyById(session.user.id);
-  if (!user || !user.company) return redirect("/t/dashboard");
+  if (!user || !user.company) return redirect("/t/dash");
 
   // If applicationId isn't a number, return 404
   if (isNaN(parseInt(params.applicationId))) return notFound();
@@ -39,8 +39,7 @@ export default async function ApplicationPage({
   const application = await getApplicationById(parseInt(params.applicationId));
   if (!application) return notFound();
 
-  if (user.company.id !== application.job.companyId)
-    return redirect("/t/dashboard");
+  if (user.company.id !== application.job.companyId) return redirect("/t/dash");
 
   return (
     <>
@@ -49,7 +48,7 @@ export default async function ApplicationPage({
 
         <div className={"flex"}></div>
         <Link
-          href="/e/dashboard"
+          href="/e/dash"
           className={cn(buttonVariants({ variant: "ghost" }))}
         >
           <>

@@ -14,7 +14,7 @@ export default async function DashboardPage() {
   const user = await getUserWithCompanyById(session.user.id);
   if (!user) return;
 
-  if (user.company) return redirect("/e/dashboard");
+  if (user.company) return redirect("/e/dash");
 
   return (
     <>

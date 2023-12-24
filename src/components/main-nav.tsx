@@ -18,7 +18,7 @@ export function MainNav({
         href="/t/dashboard"
         className={`${activeClass(
           currentPage,
-          "/dashboard",
+          "/dash",
         )} text-sm font-medium transition-colors hover:text-primary`}
       >
         Home

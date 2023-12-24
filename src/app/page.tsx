@@ -11,6 +11,6 @@ export default async function Home() {
 
   const isEmployer = user.company !== undefined;
 
-  if (isEmployer) return redirect("/e/dashboard");
-  return redirect("/t/dashboard");
+  if (isEmployer) return redirect("/e/dash");
+  return redirect("/t/dash");
 }

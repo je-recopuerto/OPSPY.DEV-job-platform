@@ -24,7 +24,7 @@ export default function JobActions({
 
     toast({
       title: removed ? "Job Unsaved" : "Job Saved",
-      description: "You can view your saved jobs in your dashboard.",
+      description: "You can view your saved jobs in your dash.",
       duration: 1500,
     });
 

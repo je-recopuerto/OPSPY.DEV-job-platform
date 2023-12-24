@@ -39,7 +39,7 @@ export async function createJobPost(
     },
   });
 
-  redirect("/dashboard/e");
+  redirect("/dash/e");
 }
 
 export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
@@ -92,7 +92,7 @@ export async function unsaveJob(id: number) {
     },
   });
 
-  revalidatePath("/dashboard");
+  revalidatePath("/dash");
 
   return result;
 }
@@ -133,7 +133,7 @@ export async function toggleSaveJob(id: number) {
     console.log("Creating new tracker for job:", id);
   }
 
-  revalidatePath("/dashboard");
+  revalidatePath("/dash");
   return removed;
 }
 
@@ -161,7 +161,7 @@ export async function withdrawApplication(jobId: number) {
       result,
     );
 
-    revalidatePath("/dashboard");
+    revalidatePath("/dash");
     return true;
   } catch (e) {
     console.error("Error deleting job application:", e);
@@ -195,7 +195,7 @@ export async function quickApply(jobId: number) {
 
     console.log("Created new job application:", result);
 
-    revalidatePath("/dashboard");
+    revalidatePath("/dash");
     return true;
   } catch (e) {
     console.error("Error creating job application:", e);
