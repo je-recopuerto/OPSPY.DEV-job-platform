@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { ReactNode } from "react";
 import {
   Table,
   TableBody,
@@ -18,6 +18,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  Table as ReactTable,
   useReactTable,
 } from "@tanstack/react-table";
 import {
@@ -26,16 +27,17 @@ import {
   VisibilityState,
 } from "@tanstack/table-core";
 import { DataTablePagination } from "@/components/table/data-table-pagination";
-import { DataTableToolbar } from "@/components/table/data-table-toolbar";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  toolbar?: (table: ReactTable<TData>) => ReactNode;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  toolbar,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -69,7 +71,8 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} />
+      {toolbar && toolbar(table)}
+
       <div className="rounded-md border">
         <Table>
           <TableHeader>

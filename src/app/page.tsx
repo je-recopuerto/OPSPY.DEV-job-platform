@@ -1,6 +1,6 @@
 import { auth, signIn } from "@/auth";
 import { redirect } from "next/navigation";
-import { getUserById, getUserWithCompanyById } from "@/services/userService";
+import { getUserWithCompanyById } from "@/services/userService";
 
 export default async function Home() {
   const session = await auth();
@@ -11,6 +11,6 @@ export default async function Home() {
 
   const isEmployer = user.company !== undefined;
 
-  if (isEmployer) return redirect("/employer/dashboard");
-  return redirect("/talent/dashboard");
+  if (isEmployer) return redirect("/e/dashboard");
+  return redirect("/t/dashboard");
 }

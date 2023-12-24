@@ -39,7 +39,7 @@ export async function createJobPost(
     },
   });
 
-  redirect("/dashboard/employer");
+  redirect("/dashboard/e");
 }
 
 export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {

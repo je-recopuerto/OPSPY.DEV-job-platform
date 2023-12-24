@@ -12,14 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { SignIn, SignOut } from "./auth-components";
-import {
-  Cloud,
-  CreditCard,
-  Github,
-  LifeBuoy,
-  Settings,
-  User,
-} from "lucide-react";
+import { Cloud, CreditCard, Github, LifeBuoy, Settings } from "lucide-react";
 import Link from "next/link";
 import { getUserWithCompanyById } from "@/services/userService";
 
@@ -58,9 +51,7 @@ export default async function UserButton() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link
-              href={user.company ? "/employer/dashboard" : "/talent/dashboard"}
-            >
+            <Link href={user.company ? "/(e)/dashboard" : "/talent/dashboard"}>
               <CreditCard className="mr-2 h-4 w-4" />
               <span>Dashboard</span>
               <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
@@ -81,7 +72,7 @@ export default async function UserButton() {
         {/*  {user.company ? (*/}
         {/*    <>*/}
         {/*      <DropdownMenuItem asChild>*/}
-        {/*        <Link href={"/dashboard/employer"}>*/}
+        {/*        <Link href={"/dashboard/(e)"}>*/}
         {/*          <CreditCard className="mr-2 h-4 w-4" />*/}
         {/*          <span>Employer Dashboard</span>*/}
         {/*          <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>*/}

@@ -8,13 +8,23 @@ import Link from "next/link";
 import { ApplicationWithJob } from "@/services/ApplicationService";
 import { ApplicationsTableRowActions } from "@/components/dashboard/applications/applications-table-row-actions";
 import { applicationStatuses } from "@/components/dashboard/saved-job-table";
+import React from "react";
+import { ApplicationsTableToolbar } from "@/components/dashboard/applications/applications-table-toolbar";
 
 type JobTrackerTableProps = {
   data: ApplicationWithJob[];
 };
 
 export default function ApplicationsTable(props: JobTrackerTableProps) {
-  return <DataTable columns={columns} data={props.data} />;
+  return (
+    <DataTable
+      columns={columns}
+      data={props.data}
+      toolbar={(table) => {
+        return <ApplicationsTableToolbar table={table} />;
+      }}
+    />
+  );
 }
 
 const columns: ColumnDef<ApplicationWithJob>[] = [
@@ -43,23 +53,23 @@ const columns: ColumnDef<ApplicationWithJob>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "applicant.name",
+    accessorKey: "applicantName",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
     ),
     cell: ({ row }) => {
       return (
-        <Link href={`/employer/applications/${row.original.id}`}>
+        <Link href={`/e/applications/${row.original.id}`}>
           {row.original.user.name}
         </Link>
       );
     },
     enableSorting: true,
     enableHiding: false,
-    accessorFn: (row) => row.job.title,
+    accessorFn: (row) => row.user.name,
   },
   {
-    accessorKey: "application.job",
+    accessorKey: "applicationJob",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Job Post" />
     ),
@@ -74,7 +84,7 @@ const columns: ColumnDef<ApplicationWithJob>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "application.status",
+    accessorKey: "applicationStatus",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Status" />
     ),
@@ -96,7 +106,11 @@ const columns: ColumnDef<ApplicationWithJob>[] = [
         </div>
       );
     },
-
+    accessorFn: (row) => row.status.toString(),
+    filterFn: (row, id, value) => {
+      console.log("Filtering by status", row, id, value);
+      return value.includes(row.getValue(id));
+    },
     enableSorting: true,
     enableHiding: false,
   },

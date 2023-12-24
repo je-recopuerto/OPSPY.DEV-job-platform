@@ -19,7 +19,7 @@ export default async function EmployerDashboardPage() {
   if (!session?.user) return <SignIn />;
 
   const user = await getUserWithCompanyById(session.user.id);
-  if (!user || !user.company) return redirect("/employer");
+  if (!user || !user.company) return redirect("/e");
 
   return (
     <>

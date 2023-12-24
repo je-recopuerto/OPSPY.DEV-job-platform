@@ -1,9 +1,9 @@
-import { notFound, redirect, useParams } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { SignIn } from "@/components/auth-components";
 import { getUserWithCompanyById } from "@/services/userService";
 import { getApplicationById } from "@/services/ApplicationService";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import {
@@ -31,7 +31,7 @@ export default async function ApplicationPage({
   if (!session?.user) return <SignIn />;
 
   const user = await getUserWithCompanyById(session.user.id);
-  if (!user || !user.company) return redirect("/talent/dashboard");
+  if (!user || !user.company) return redirect("/t/dashboard");
 
   // If applicationId isn't a number, return 404
   if (isNaN(parseInt(params.applicationId))) return notFound();
@@ -40,7 +40,7 @@ export default async function ApplicationPage({
   if (!application) return notFound();
 
   if (user.company.id !== application.job.companyId)
-    return redirect("/talent/dashboard");
+    return redirect("/t/dashboard");
 
   return (
     <>
@@ -49,7 +49,7 @@ export default async function ApplicationPage({
 
         <div className={"flex"}></div>
         <Link
-          href="/employer/dashboard"
+          href="/e/dashboard"
           className={cn(buttonVariants({ variant: "ghost" }))}
         >
           <>
@@ -106,7 +106,9 @@ export default async function ApplicationPage({
               </div>
             </div>
           </CardHeader>
-          <CardContent>{JSON.stringify(application)}</CardContent>
+          <CardContent className={"whitespace-pre-wrap"}>
+            {JSON.stringify(application, null, 2)}
+          </CardContent>
         </Card>
 
         {/*<Tabs defaultValue="jobs" className="space-y-4">*/}

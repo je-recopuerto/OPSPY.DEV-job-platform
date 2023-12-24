@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { DataTableViewOptions } from "@/components/table/data-table-view-options";
 
-interface DataTableToolbarProps<TData> {
+export interface DataTableToolbarProps<TData> {
   table: Table<TData>;
 }
 
