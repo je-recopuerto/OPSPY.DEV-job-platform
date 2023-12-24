@@ -8,7 +8,7 @@ import Image from "next/image";
 
 export default async function EmployerPage() {
   const session = await auth();
-  if (!session) return redirect("/");
+  if (!session || !session.user) return redirect("/");
 
   const user = await getUserWithJobTrackersById(session.user.id);
   if (!user) return;
@@ -40,7 +40,7 @@ export default async function EmployerPage() {
                 Hire the best in the game.
               </h1>
               <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-                Connect with top talent and transform your team's future.
+                Connect with top talent and transform your team&apos;s future.
                 Simplify your hiring, amplify your results.
               </p>
               <div className="space-x-4">

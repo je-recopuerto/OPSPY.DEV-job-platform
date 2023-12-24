@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PinIcon } from "lucide-react";
 import SavedJobTable from "@/components/dashboard/saved-job-table";
 import { TabsContent } from "../ui/tabs";
-import AppliedJobsTable from "@/components/dashboard/applied-jobs-table";
 
 type SavedJobsTabProps = {
   value: string;
@@ -13,7 +12,7 @@ type SavedJobsTabProps = {
 
 export default async function SavedJobTab(props: SavedJobsTabProps) {
   const session = await auth();
-  if (!session) return redirect("/");
+  if (!session || !session.user) return redirect("/");
   const savedJobs = await getSavedJobsForUserId(session.user.id);
 
   return (

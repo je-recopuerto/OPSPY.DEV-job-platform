@@ -45,7 +45,7 @@ export function MainNav({
       </Link>
 
       <Link
-        href="/onboarding"
+        href="/t/onboarding"
         className={`${activeClass(
           currentPage,
           "/onboarding",

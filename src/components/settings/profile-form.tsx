@@ -18,7 +18,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
 import { updateProfile } from "@/app/actions";
-import { Profile } from ".prisma/client";
 import React from "react";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import { z } from "zod";
@@ -26,19 +25,20 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
+import { User } from "@prisma/client";
 
 type ProfileFormProps = {
-  profile: Profile;
+  user: User;
 };
 
 export function ProfileForm(props: ProfileFormProps) {
   const form = useForm<z.infer<typeof updateProfileFormSchema>>({
     resolver: zodResolver(updateProfileFormSchema),
     defaultValues: {
-      firstName: props.profile.firstName ?? "",
-      lastName: props.profile.lastName ?? "",
-      dateOfBirth: props.profile.dateOfBirth,
-      bio: props.profile.bio ?? "",
+      firstName: props.user.firstName ?? "",
+      lastName: props.user.lastName ?? "",
+      dateOfBirth: props.user.dateOfBirth,
+      bio: props.user.bio ?? "",
     },
   });
 
@@ -70,7 +70,7 @@ export function ProfileForm(props: ProfileFormProps) {
           <FormField
             control={form.control}
             name="lastName"
-            defaultValue={props.profile.lastName ?? ""}
+            defaultValue={props.user.lastName ?? ""}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Last Name</FormLabel>
@@ -91,7 +91,7 @@ export function ProfileForm(props: ProfileFormProps) {
               <FormLabel>Bio</FormLabel>
               <Textarea
                 onChange={field.onChange}
-                defaultValue={props.profile.bio ?? ""}
+                defaultValue={props.user.bio ?? ""}
               />
               <FormDescription>
                 You can manage verified email addresses in your{" "}

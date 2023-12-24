@@ -2,13 +2,12 @@ import CreateJobForm from "@/components/jobs/create-job-form";
 import { getUserWithCompanyById } from "@/services/userService";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
-import CompanyProfileWithOpenings from "@/components/jobs/company-profile-with-openings";
 import CompanyProfile from "@/components/jobs/company-profile";
 import { Separator } from "@/components/ui/separator";
 
 export default async function NewJobPage() {
   const session = await auth();
-  if (!session) return redirect("/");
+  if (!session || !session.user) return redirect("/");
 
   const user = await getUserWithCompanyById(session.user.id);
   if (!user) return;

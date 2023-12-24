@@ -1,10 +1,9 @@
 import { getJobPostFromId, JobPostWithCompany } from "@/services/JobService";
 import React from "react";
 import JobActions from "@/components/jobs/job-post-actions";
-import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardDescription, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-  getUserById,
   getUserWithJobTrackersById,
   UserWithJobTrackers,
 } from "@/services/userService";
@@ -18,10 +17,9 @@ type JobPageParams = {
 
 export default async function JobPage(props: JobPageParams) {
   const session = await auth();
-  if (!session) return;
+  if (!session || !session.user) return;
 
   const user = await getUserWithJobTrackersById(session.user.id);
-  if (!user) return;
 
   if (Number.isNaN(props.params.jobId)) {
     return <>Post with id &apos;{props.params.jobId}&apos; not found!</>;
@@ -62,6 +60,10 @@ export default async function JobPage(props: JobPageParams) {
   );
 }
 
-const isFollowing = (job: JobPostWithCompany, user: UserWithJobTrackers) => {
+const isFollowing = (
+  job: JobPostWithCompany,
+  user: UserWithJobTrackers | null,
+) => {
+  if (!user) return false;
   return user.trackers.find((t) => t.jobId === job.id) !== undefined;
 };

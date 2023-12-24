@@ -6,9 +6,6 @@ export function getUserById(id: string) {
     where: {
       id: id,
     },
-    include: {
-      profile: true,
-    },
   });
 }
 
@@ -21,14 +18,6 @@ export function getUserWithCompanyById(
     },
     include: {
       company: true,
-    },
-  });
-}
-
-export function getProfileByUserId(id: string) {
-  return prisma.profile.findFirst({
-    where: {
-      userId: id,
     },
   });
 }

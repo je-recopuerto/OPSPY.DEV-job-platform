@@ -18,14 +18,16 @@ export default async function JobsLayout(props: JobsLayoutProps) {
   console.log("JobsLayout rendered");
 
   const session = await auth();
-  if (!session) return;
+  if (!session || !session.user) return;
 
   const user = await getUserWithJobTrackersById(session.user.id);
-  if (!user) return;
-
   const jobs = await getJobPostsWithCompany();
 
-  const isFollowing = (job: JobPostWithCompany, user: UserWithJobTrackers) => {
+  const isFollowing = (
+    job: JobPostWithCompany,
+    user: UserWithJobTrackers | null,
+  ) => {
+    if (!user) return false;
     return user.trackers.find((t) => t.jobId === job.id) !== undefined;
   };
 

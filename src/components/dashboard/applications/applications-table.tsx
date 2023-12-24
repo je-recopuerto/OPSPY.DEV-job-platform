@@ -60,13 +60,13 @@ const columns: ColumnDef<ApplicationWithJob>[] = [
     cell: ({ row }) => {
       return (
         <Link href={`/e/applications/${row.original.id}`}>
-          {row.original.user.name}
+          {row.original.user.firstName + " " + row.original.user.lastName}
         </Link>
       );
     },
     enableSorting: true,
     enableHiding: false,
-    accessorFn: (row) => row.user.name,
+    accessorFn: (row) => row.user.firstName + " " + row.user.lastName,
   },
   {
     accessorKey: "applicationJob",

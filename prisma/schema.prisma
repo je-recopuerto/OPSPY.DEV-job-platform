@@ -9,68 +9,19 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Account {
-  id                       String  @id @default(cuid())
-  userId                   String
-  type                     String
-  provider                 String
-  providerAccountId        String
-  refresh_token            String? @db.Text
-  refresh_token_expires_in Int?
-  access_token             String? @db.Text
-  expires_at               Int?
-  token_type               String?
-  scope                    String?
-  id_token                 String? @db.Text
-  session_state            String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
 model User {
-  id            String           @id @default(cuid())
-  name          String?
-  email         String?          @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  isOnboarded   Boolean          @default(false)
-  profile       Profile?
-  company       Company?
-  trackers      JobTracker[]
-  applications  JobApplication[]
-}
-
-model Profile {
-  id          Int       @id @default(autoincrement())
-  firstName   String?
-  lastName    String?
-  dateOfBirth DateTime?
-  bio         String?
-  imageURL    String?
-  location    String?
-  createdAt   DateTime  @default(now())
-  userId      String    @unique
-  user        User      @relation(fields: [userId], references: [id])
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
+  id           String           @id @unique @default(cuid())
+  firstName    String?
+  lastName     String?
+  dateOfBirth  DateTime?
+  bio          String?
+  email        String           @unique
+  imageURL     String?
+  location     String?
+  createdAt    DateTime         @default(now())
+  company      Company?
+  trackers     JobTracker[]
+  applications JobApplication[]
 }
 
 model Company {
@@ -81,9 +32,9 @@ model Company {
   website     String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  userId      String    @unique
-  owner       User      @relation(fields: [userId], references: [id])
   openings    JobPost[]
+  owner       User      @relation(fields: [ownerId], references: [id])
+  ownerId     String    @unique
 }
 
 model JobPost {
@@ -132,10 +83,10 @@ model JobApplication {
 
 model JobTracker {
   id        Int      @id @default(autoincrement())
-  userId    String
   jobId     Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  userId    String
   user      User     @relation(fields: [userId], references: [id])
   job       JobPost  @relation(fields: [jobId], references: [id])
 }

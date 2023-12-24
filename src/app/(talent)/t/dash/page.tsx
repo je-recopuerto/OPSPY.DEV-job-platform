@@ -9,7 +9,7 @@ import { getUserWithCompanyById } from "@/services/userService";
 
 export default async function DashboardPage() {
   const session = await auth();
-  if (!session) return redirect("/");
+  if (!session || !session.user) return redirect("/");
 
   const user = await getUserWithCompanyById(session.user.id);
   if (!user) return;

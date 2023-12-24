@@ -53,35 +53,20 @@ export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
   const user = await getUserById(session.user.id);
 
   if (!user) throw new Error("User not found");
-  if (user.isOnboarded) throw new Error("User is already onboarded");
 
-  await prisma.user.update({
-    where: {
-      id: user.id,
-    },
+  await prisma.user.create({
     data: {
-      profile: {
-        upsert: {
-          where: {
-            userId: user.id,
-          },
-          create: {
-            firstName: validatedState.firstName,
-            lastName: validatedState.lastName,
-            dateOfBirth: validatedState.dateOfBirth,
-          },
-          update: {
-            firstName: validatedState.firstName,
-            lastName: validatedState.lastName,
-            dateOfBirth: validatedState.dateOfBirth,
-          },
-        },
-      },
-      isOnboarded: true,
+      id: user.id,
+      firstName: validatedState.firstName,
+      lastName: validatedState.lastName,
+      dateOfBirth: validatedState.dateOfBirth,
+      email: validatedState.email,
+      // bio: validatedState.bio,
+      // email: validatedState.email,
     },
   });
 
-  console.log("Successfully updated", user.name, "profile.");
+  console.log("Successfully updated", user.firstName, "profile.");
   redirect("/");
 }
 
@@ -174,10 +159,8 @@ export async function quickApply(jobId: number) {
   if (!session || !session.user) throw new Error("User not found");
 
   const user = await getUserById(session.user.id);
-  if (!user) throw new Error("User not found");
-
-  if (!user.profile) {
-    console.log("User does not have a profile");
+  if (!user) {
+    console.log("Unknown user trying to quick apply:", session.user);
     return redirect("/t/onboarding");
   }
 
@@ -222,31 +205,25 @@ export async function updateProfile(
 
   console.log("Updating profile:", validatedState, "for user:", user);
 
-  const result = await prisma.user.update({
+  const result = await prisma.user.upsert({
     where: {
       id: user.id,
     },
-    data: {
-      profile: {
-        upsert: {
-          where: {
-            userId: user.id,
-          },
-          create: {
-            firstName: validatedState.firstName,
-            lastName: validatedState.lastName,
-            dateOfBirth: validatedState.dateOfBirth,
-          },
-          update: {
-            firstName: validatedState.firstName,
-            lastName: validatedState.lastName,
-            dateOfBirth: validatedState.dateOfBirth,
-          },
-        },
-      },
+    create: {
+      id: user.id,
+      firstName: validatedState.firstName,
+      lastName: validatedState.lastName,
+      dateOfBirth: validatedState.dateOfBirth,
+      email: validatedState.email,
+    },
+    update: {
+      firstName: validatedState.firstName,
+      lastName: validatedState.lastName,
+      dateOfBirth: validatedState.dateOfBirth,
+      email: validatedState.email,
     },
   });
 
-  console.log("Successfully updated", user.name, "profile.");
+  console.log("Successfully updated", user.firstName, "profile.");
   return result;
 }

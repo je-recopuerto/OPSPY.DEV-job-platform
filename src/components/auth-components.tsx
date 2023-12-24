@@ -15,7 +15,7 @@ export function SignIn({
     <form
       action={async () => {
         "use server";
-        await signIn(provider);
+        await signIn(provider ?? "auth0");
       }}
     >
       <Button {...props}>Sign In</Button>

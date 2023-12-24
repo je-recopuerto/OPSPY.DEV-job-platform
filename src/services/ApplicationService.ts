@@ -8,11 +8,7 @@ export type ApplicationWithJob = Prisma.JobApplicationGetPayload<{
         company: true;
       };
     };
-    user: {
-      include: {
-        profile: true;
-      };
-    };
+    user: true;
   };
 }>;
 
@@ -31,11 +27,7 @@ export async function getApplicationsForCompanyId(
           company: true,
         },
       },
-      user: {
-        include: {
-          profile: true,
-        },
-      },
+      user: true,
     },
   });
 }
@@ -53,11 +45,7 @@ export async function getApplicationById(
           company: true,
         },
       },
-      user: {
-        include: {
-          profile: true,
-        },
-      },
+      user: true,
     },
   });
 }

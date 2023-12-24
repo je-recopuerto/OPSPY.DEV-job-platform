@@ -2,14 +2,14 @@ import { Separator } from "@/components/ui/separator";
 import { ProfileForm } from "@/components/settings/profile-form";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { getProfileByUserId } from "@/services/userService";
+import { getUserById } from "@/services/userService";
 
 export default async function SettingsProfilePage() {
   const session = await auth();
-  if (!session) return redirect("/");
+  if (!session || !session.user) return redirect("/");
 
-  const profile = await getProfileByUserId(session.user.id);
-  if (!profile) return redirect("/");
+  const user = await getUserById(session.user.id);
+  if (!user) return redirect("/");
 
   return (
     <div className="space-y-6">
@@ -20,7 +20,7 @@ export default async function SettingsProfilePage() {
         </p>
       </div>
       <Separator />
-      <ProfileForm profile={profile} />
+      <ProfileForm user={user} />
     </div>
   );
 }

@@ -18,10 +18,11 @@ import { getUserWithCompanyById } from "@/services/userService";
 
 export default async function UserButton() {
   const session = await auth();
+  console.log(JSON.stringify(session, null, 2));
   if (!session?.user) return <SignIn />;
 
   const user = await getUserWithCompanyById(session.user.id);
-  if (!user) return <SignIn />;
+  // if (!user) return <SignIn />;
 
   return (
     <DropdownMenu>
@@ -50,13 +51,16 @@ export default async function UserButton() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link href={user.company ? "/e/dash" : "/t/dash"}>
-              <CreditCard className="mr-2 h-4 w-4" />
-              <span>Dashboard</span>
-              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-            </Link>
-          </DropdownMenuItem>
+          {user && (
+            <DropdownMenuItem asChild>
+              <Link href={user.company ? "/e/dash" : "/t/dash"}>
+                <CreditCard className="mr-2 h-4 w-4" />
+                <span>Dashboard</span>
+                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+              </Link>
+            </DropdownMenuItem>
+          )}
+
           <DropdownMenuItem asChild>
             <Link href={"/settings"}>
               <Settings className="mr-2 h-4 w-4" />

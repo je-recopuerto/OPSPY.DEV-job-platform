@@ -83,25 +83,29 @@ export default async function ApplicationPage({
             <div className={"flex flex-row"}>
               <Avatar className={"h-24 w-24 mr-5  "}>
                 <AvatarImage
-                  src={application.user.image ?? ""}
+                  src={application.user.imageURL ?? ""}
                   alt={"Applicant's profile picture"}
                   sizes={"cover"}
                 />
                 <AvatarFallback>
-                  {application.user.name?.split(" ").map((name) => name[0])}
+                  {(
+                    application.user.firstName +
+                    " " +
+                    application.user.lastName
+                  )
+                    .split(" ")
+                    .map((name) => name[0])}
                 </AvatarFallback>
               </Avatar>
               <div>
                 <CardTitle className={"flex gap-x-4 items-center"}>
-                  {application.user.name}
+                  {application.user.firstName + " " + application.user.lastName}
                   <small className="text-sm text-muted-foreground font-medium leading-none">
                     <span className={"mr-2"}>{"🇬🇧"}</span>
-                    {application.user.profile?.location}
+                    {application.user?.location}
                   </small>
                 </CardTitle>
-                <CardDescription>
-                  {application.user.profile?.bio}
-                </CardDescription>
+                <CardDescription>{application.user.bio}</CardDescription>
               </div>
             </div>
           </CardHeader>
