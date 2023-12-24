@@ -3,19 +3,9 @@ import { auth } from "@/auth";
 import { SignIn } from "@/components/auth-components";
 import { getUserWithCompanyById } from "@/services/userService";
 import { getApplicationById } from "@/services/ApplicationService";
-import CompanyProfile from "@/components/jobs/company-profile";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
-import {
-  ChevronLast,
-  ChevronLeft,
-  CircleSlash2,
-  EyeIcon,
-  PinIcon,
-  PlusIcon,
-  Timer,
-} from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ChevronLeft } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -23,10 +13,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import React, { Suspense } from "react";
+import React from "react";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
+import { formatDistance } from "date-fns";
 
 type ApplicationPageProps = {
   params: {
@@ -67,7 +57,7 @@ export default async function ApplicationPage({
             Back
           </>
         </Link>
-        <div className="flex items-center justify-between space-y-2">
+        <div className="flex items-center justify-between space-y-2 pt-4 pb-2">
           <h2 className="text-3xl font-bold tracking-tight">
             <Link href={`/jobs/${application.jobId}`}>
               {application.job.title}
@@ -75,7 +65,17 @@ export default async function ApplicationPage({
           </h2>
 
           <small className="text-sm font-medium leading-none">
-            Date applied: {new Date(application.createdAt).toLocaleDateString()}
+            <span className={"mr-1"}>
+              Date applied:{" "}
+              {new Date(application.createdAt).toLocaleDateString()}
+            </span>
+            <span className={"mr-2"}>
+              (
+              {formatDistance(application.createdAt, new Date(), {
+                addSuffix: true,
+              })}
+              )
+            </span>
           </small>
         </div>
 
