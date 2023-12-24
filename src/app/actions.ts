@@ -39,7 +39,7 @@ export async function createJobPost(
     },
   });
 
-  redirect("/dash/e");
+  redirect("/e/dash");
 }
 
 export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
@@ -133,7 +133,7 @@ export async function toggleSaveJob(id: number) {
     console.log("Creating new tracker for job:", id);
   }
 
-  revalidatePath("/dash");
+  revalidatePath("/t/dash");
   return removed;
 }
 
@@ -175,6 +175,11 @@ export async function quickApply(jobId: number) {
 
   const user = await getUserById(session.user.id);
   if (!user) throw new Error("User not found");
+
+  if (!user.profile) {
+    console.log("User does not have a profile");
+    return redirect("/t/onboarding");
+  }
 
   try {
     const exists = await prisma.jobApplication.findFirst({
