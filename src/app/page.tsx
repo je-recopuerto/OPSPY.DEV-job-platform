@@ -4,7 +4,7 @@ import { getUserWithCompanyById } from "@/services/userService";
 
 export default async function Home() {
   const session = await auth();
-  if (!session) return signIn();
+  if (!session || !session.user) return signIn();
 
   const user = await getUserWithCompanyById(session.user.id);
   if (!user) return;

@@ -1,18 +1,13 @@
 import prisma from "@/lib/db";
-import { Company, Prisma } from "@prisma/client";
-
-export function userBelongsToCompany(user: UserWithCompany, company: Company) {
-  if (!user.company) {
-    return false;
-  }
-
-  return user.company.id === company.id;
-}
+import { Prisma } from "@prisma/client";
 
 export function getUserById(id: string) {
   return prisma.user.findFirst({
     where: {
       id: id,
+    },
+    include: {
+      profile: true,
     },
   });
 }
