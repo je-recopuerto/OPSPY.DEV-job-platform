@@ -16,6 +16,30 @@ export type ApplicationWithJob = Prisma.JobApplicationGetPayload<{
   };
 }>;
 
+export async function getApplicationsForCompanyId(
+  companyId: number,
+): Promise<ApplicationWithJob[]> {
+  return prisma.jobApplication.findMany({
+    where: {
+      job: {
+        companyId: companyId,
+      },
+    },
+    include: {
+      job: {
+        include: {
+          company: true,
+        },
+      },
+      user: {
+        include: {
+          profile: true,
+        },
+      },
+    },
+  });
+}
+
 export async function getApplicationById(
   id: number,
 ): Promise<ApplicationWithJob | null> {

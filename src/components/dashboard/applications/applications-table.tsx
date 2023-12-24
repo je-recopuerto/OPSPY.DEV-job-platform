@@ -4,20 +4,20 @@ import { DataTable } from "@/components/table/data-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Link from "next/link";
+import { ApplicationWithJob } from "@/services/ApplicationService";
+import { ApplicationsTableRowActions } from "@/components/dashboard/applications/applications-table-row-actions";
 import { applicationStatuses } from "@/components/dashboard/saved-job-table";
-import { AppliedJobDataTableRowActions } from "@/components/dashboard/applied-job-data-table-row-actions";
-import { JobApplicationWithCompany } from "@/services/JobService";
 
-type JobApplicationTableProps = {
-  data: JobApplicationWithCompany[];
+type JobTrackerTableProps = {
+  data: ApplicationWithJob[];
 };
 
-export default function AppliedJobsTable(props: JobApplicationTableProps) {
+export default function ApplicationsTable(props: JobTrackerTableProps) {
   return <DataTable columns={columns} data={props.data} />;
 }
 
-export const columns: ColumnDef<JobApplicationWithCompany>[] = [
+const columns: ColumnDef<ApplicationWithJob>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -43,44 +43,38 @@ export const columns: ColumnDef<JobApplicationWithCompany>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "job.title",
+    accessorKey: "applicant.name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Role" />
+      <DataTableColumnHeader column={column} title="Name" />
     ),
     cell: ({ row }) => {
-      return <div>{row.original.job.title}</div>;
+      return (
+        <Link href={`/employer/applications/${row.original.id}`}>
+          {row.original.user.name}
+        </Link>
+      );
     },
     enableSorting: true,
     enableHiding: false,
     accessorFn: (row) => row.job.title,
   },
   {
-    accessorKey: "company",
+    accessorKey: "application.job",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Company" />
+      <DataTableColumnHeader column={column} title="Job Post" />
     ),
     cell: ({ row }) => {
       return (
-        <div className={"flex flex-row"}>
-          <Avatar className={"w-4 h-4 my-auto mr-2"}>
-            <AvatarImage
-              src={
-                row.original.job.company.logoUrl ??
-                "https://google.com/favicon.ico"
-              }
-              alt={row.original.job.company.name}
-            />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          {row.original.job.company.name}
-        </div>
+        <Link href={`/jobs/${row.original.jobId}`}>
+          {row.original.job.title}
+        </Link>
       );
     },
     enableSorting: true,
     enableHiding: false,
   },
   {
-    accessorKey: "status",
+    accessorKey: "application.status",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Status" />
     ),
@@ -102,12 +96,12 @@ export const columns: ColumnDef<JobApplicationWithCompany>[] = [
         </div>
       );
     },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
+
+    enableSorting: true,
+    enableHiding: false,
   },
   {
     id: "actions",
-    cell: ({ row }) => <AppliedJobDataTableRowActions row={row} />,
+    cell: ({ row }) => <ApplicationsTableRowActions row={row} />,
   },
 ];

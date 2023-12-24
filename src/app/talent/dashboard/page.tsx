@@ -1,28 +1,8 @@
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import SavedJobTable from "@/components/dashboard/saved-job-table";
-import {
-  getJobApplications,
-  getJobTrackersWithPost,
-  JobTrackerWithPost,
-} from "@/services/JobService";
-import {
-  CalendarIcon,
-  CircleSlash2,
-  DownloadIcon,
-  PinIcon,
-  Timer,
-} from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DownloadIcon } from "lucide-react";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { JobApplication } from ".prisma/client";
 import SavedJobTab from "@/components/dashboard/saved-job-tab";
 import AppliedJobsTab from "@/components/dashboard/applied-jobs-tab";
 import { getUserWithCompanyById } from "@/services/userService";

@@ -25,7 +25,7 @@ export default function SavedJobTable(props: JobTrackerTableProps) {
   return <DataTable columns={columns} data={props.data} />;
 }
 
-export const statuses: {
+export const applicationStatuses: {
   value: ApplicationStatus;
   label: string;
   icon?: LucideIcon;
@@ -57,7 +57,7 @@ export const statuses: {
   },
 ];
 
-export const columns: ColumnDef<JobTrackerWithPost>[] = [
+const columns: ColumnDef<JobTrackerWithPost>[] = [
   {
     id: "select",
     header: ({ table }) => (

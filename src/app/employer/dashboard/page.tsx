@@ -11,6 +11,8 @@ import { getCompanyWithOpeningsById } from "@/services/JobService";
 import CompanyJobTable from "@/components/dashboard/employer/company-job-table";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
+import ApplicationsTable from "@/components/dashboard/applications/applications-table";
+import { getApplicationsForCompanyId } from "@/services/ApplicationService";
 
 export default async function EmployerDashboardPage() {
   const session = await auth();
@@ -130,7 +132,9 @@ export default async function EmployerDashboardPage() {
             </div>
           </TabsContent>
           <TabsContent value={"applications"} className="space-y-4">
-            Applications
+            <Suspense fallback={<div>Loading...</div>}>
+              <ServerApplicationsTable companyId={user.company.id} />
+            </Suspense>
           </TabsContent>
         </Tabs>
       </div>
@@ -144,4 +148,10 @@ async function JobTable({ companyId }: { companyId: number }) {
   if (!company) return <div>Company not found.</div>;
 
   return <CompanyJobTable data={company} />;
+}
+
+async function ServerApplicationsTable({ companyId }: { companyId: number }) {
+  const applications = await getApplicationsForCompanyId(companyId);
+
+  return <ApplicationsTable data={applications} />;
 }
