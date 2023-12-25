@@ -45,10 +45,10 @@ export function MainNav({
       </Link>
 
       <Link
-        href="/t/onboarding"
+        href="/t/welcome"
         className={`${activeClass(
           currentPage,
-          "/onboarding",
+          "/t/welcome",
         )} text-sm font-medium transition-colors hover:text-primary`}
       >
         (TEST) Onboarding
