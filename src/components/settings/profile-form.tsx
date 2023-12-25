@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
 import { updateProfile } from "@/app/actions";
-import React from "react";
+import React, { useEffect } from "react";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -26,25 +26,42 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { User } from "@prisma/client";
+import { useToast } from "@/components/ui/use-toast";
 
 type ProfileFormProps = {
   user: User;
 };
 
 export function ProfileForm(props: ProfileFormProps) {
+  const { toast } = useToast();
+
   const form = useForm<z.infer<typeof updateProfileFormSchema>>({
     resolver: zodResolver(updateProfileFormSchema),
     defaultValues: {
       firstName: props.user.firstName ?? "",
       lastName: props.user.lastName ?? "",
       dateOfBirth: props.user.dateOfBirth,
+      email: props.user.email ?? "",
       bio: props.user.bio ?? "",
     },
   });
 
   const {
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting, isSubmitSuccessful, isDirty, errors },
   } = form;
+
+  useEffect(() => {
+    if (!isSubmitting && isSubmitSuccessful) {
+      toast({
+        variant: "default",
+        title: "Success",
+        description: "✅ Successfully updated profile!",
+        duration: 3000,
+      });
+
+      form.reset();
+    }
+  }, [isSubmitSuccessful, toast, isSubmitting]);
 
   return (
     <Form {...form}>
@@ -70,7 +87,6 @@ export function ProfileForm(props: ProfileFormProps) {
           <FormField
             control={form.control}
             name="lastName"
-            defaultValue={props.user.lastName ?? ""}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Last Name</FormLabel>
@@ -82,6 +98,20 @@ export function ProfileForm(props: ProfileFormProps) {
             )}
           />
         </div>
+
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}
@@ -130,11 +160,14 @@ export function ProfileForm(props: ProfileFormProps) {
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
+                    captionLayout="dropdown-buttons"
                     selected={field.value ?? new Date("1900-01-01")}
                     onSelect={field.onChange}
                     disabled={(date) =>
                       date > new Date() || date < new Date("1900-01-01")
                     }
+                    fromYear={1900}
+                    toYear={new Date().getFullYear()}
                     initialFocus
                   />
                 </PopoverContent>
