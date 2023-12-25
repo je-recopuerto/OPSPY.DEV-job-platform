@@ -15,8 +15,6 @@ type JobsLayoutProps = {
 };
 
 export default async function JobsLayout(props: JobsLayoutProps) {
-  console.log("JobsLayout rendered");
-
   const session = await auth();
   if (!session || !session.user) return;
 
