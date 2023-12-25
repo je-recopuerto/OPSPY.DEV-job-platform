@@ -52,22 +52,22 @@ export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
   console.log("Setting onboarding:", values, "for user:", session.user);
   const user = await getUserById(session.user.id);
 
-  if (!user) throw new Error("User not found");
+  if (!user) {
+    const result = await prisma.user.create({
+      data: {
+        id: session.user.id,
+        firstName: validatedState.firstName,
+        lastName: validatedState.lastName,
+        dateOfBirth: validatedState.dateOfBirth,
+        email: validatedState.email,
+        bio: validatedState.bio,
+      },
+    });
 
-  await prisma.user.create({
-    data: {
-      id: user.id,
-      firstName: validatedState.firstName,
-      lastName: validatedState.lastName,
-      dateOfBirth: validatedState.dateOfBirth,
-      email: validatedState.email,
-      // bio: validatedState.bio,
-      // email: validatedState.email,
-    },
-  });
+    console.log("Successfully updated", result.firstName, "profile.");
+  }
 
-  console.log("Successfully updated", user.firstName, "profile.");
-  redirect("/");
+  redirect("/t/dash");
 }
 
 export async function unsaveJob(id: number) {
@@ -161,7 +161,7 @@ export async function quickApply(jobId: number) {
   const user = await getUserById(session.user.id);
   if (!user) {
     console.log("Unknown user trying to quick apply:", session.user);
-    return redirect("/t/onboarding");
+    return redirect("/t/welcome");
   }
 
   try {
@@ -194,6 +194,8 @@ export async function quickApply(jobId: number) {
 export async function updateProfile(
   values: z.infer<typeof updateProfileFormSchema>,
 ) {
+  console.log("Updating profile");
+
   // This will throw an error if the state is invalid
   const validatedState = updateProfileFormSchema.parse(values);
 
