@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { applicationStatuses } from "@/components/dashboard/saved-job-table";
 import { AppliedJobDataTableRowActions } from "@/components/dashboard/applied-job-data-table-row-actions";
 import { JobApplicationWithCompany } from "@/services/JobService";
+import Link from "next/link";
 
 type JobApplicationTableProps = {
   data: JobApplicationWithCompany[];
@@ -48,7 +49,11 @@ export const columns: ColumnDef<JobApplicationWithCompany>[] = [
       <DataTableColumnHeader column={column} title="Role" />
     ),
     cell: ({ row }) => {
-      return <div>{row.original.job.title}</div>;
+      return (
+        <Link href={`/jobs/${row.original.jobId}`}>
+          {row.original.job.title}
+        </Link>
+      );
     },
     enableSorting: true,
     enableHiding: false,
