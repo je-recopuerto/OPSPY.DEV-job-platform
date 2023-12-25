@@ -10,9 +10,9 @@ export default auth(async function middleware(req) {
   //   return NextResponse.next()
   // }
   //
-  // const endsWith = req.url.endsWith("/onboarding")
+  // const endsWith = req.url.endsWith("/welcome")
   // if(!session.user.isOnboarded && !endsWith) {
-  //   return NextResponse.redirect(new URL("/onboarding", req.url))
+  //   return NextResponse.redirect(new URL("/welcome", req.url))
   // }
   //
   // // if at /onboarding path and is already onboarded, redirect to home

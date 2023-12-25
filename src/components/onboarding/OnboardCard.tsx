@@ -13,7 +13,11 @@ import FormSubmitButton from "@/components/onboarding/form-submit";
 import { useToast } from "@/components/ui/use-toast";
 import { useEffect } from "react";
 
-export default function OnboardingCard() {
+type OnboardingCardProps = {
+  email: string;
+};
+
+export default function OnboardingCard(props: OnboardingCardProps) {
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof onboardingSchema>>({
@@ -22,6 +26,12 @@ export default function OnboardingCard() {
       firstName: "",
       lastName: "",
       dateOfBirth: new Date("November 12, 1960"),
+      email: props.email,
+      bio: "",
+      location: "",
+      linkedinUrl: "",
+      githubUrl: "",
+      portfolioUrl: "",
     },
   });
 
@@ -51,7 +61,7 @@ export default function OnboardingCard() {
 
           <Separator />
 
-          {/*<YourExperience form={form}/>*/}
+          {/*<YourExperience form={form} />*/}
 
           <Separator />
 

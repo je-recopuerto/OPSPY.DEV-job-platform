@@ -28,6 +28,8 @@ import { Calendar } from "@/components/ui/calendar";
 import { UseFormReturn } from "react-hook-form";
 import { onboardingSchema } from "@/schemas/onboardingSchema";
 import { z } from "zod";
+import { Textarea } from "@/components/ui/textarea";
+import { Separator } from "@/components/ui/separator";
 
 export type OnboardingCardProps = {
   form: UseFormReturn<z.infer<typeof onboardingSchema>>;
@@ -74,7 +76,6 @@ export default function GettingStarted({ form }: OnboardingCardProps) {
               )}
             />
           </div>
-
           <FormField
             control={form.control}
             name="dateOfBirth"
@@ -103,11 +104,14 @@ export default function GettingStarted({ form }: OnboardingCardProps) {
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
                       mode="single"
+                      captionLayout="dropdown-buttons"
                       selected={field.value}
                       onSelect={field.onChange}
                       disabled={(date) =>
                         date > new Date() || date < new Date("1900-01-01")
                       }
+                      toYear={new Date().getFullYear()}
+                      fromYear={1900}
                       initialFocus
                     />
                   </PopoverContent>
@@ -115,6 +119,94 @@ export default function GettingStarted({ form }: OnboardingCardProps) {
                 <FormDescription>
                   Your date of birth is used to calculate your age.
                 </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className={"flex-grow"}>
+                <FormLabel>E-mail</FormLabel>
+                <FormControl>
+                  <Input placeholder={"saul@gmail.com"} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Separator className={"mt-4"} />
+
+          {/*bio location linkedinUrl githubUrl portfolioUrl*/}
+
+          <FormField
+            control={form.control}
+            name="location"
+            render={({ field }) => (
+              <FormItem className={"flex-grow"}>
+                <FormLabel>Location</FormLabel>
+                <FormControl>
+                  <Input placeholder={"Albuquerque, NM"} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="bio"
+            render={({ field }) => (
+              <FormItem className={"flex-grow"}>
+                <FormLabel>Bio</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="The best lawyer" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="linkedinUrl"
+            render={({ field }) => (
+              <FormItem className={"flex-grow"}>
+                <FormLabel>LinkedIn Link</FormLabel>
+                <FormControl>
+                  <Input placeholder="The best lawyer" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="githubUrl"
+            render={({ field }) => (
+              <FormItem className={"flex-grow"}>
+                <FormLabel>GitHub Link</FormLabel>
+                <FormControl>
+                  <Input placeholder="The best lawyer" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="portfolioUrl"
+            render={({ field }) => (
+              <FormItem className={"flex-grow"}>
+                <FormLabel>Portfolio Link</FormLabel>
+                <FormControl>
+                  <Input placeholder="The best lawyer" {...field} />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

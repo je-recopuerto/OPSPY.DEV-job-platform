@@ -9,7 +9,7 @@ export default async function Home() {
   const user = await getUserWithCompanyById(session.user.id);
   if (!user) return;
 
-  const isEmployer = user.company !== undefined;
+  const isEmployer = !!user.company;
 
   if (isEmployer) return redirect("/e/dash");
   return redirect("/t/dash");
