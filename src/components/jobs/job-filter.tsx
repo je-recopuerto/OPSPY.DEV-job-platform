@@ -90,7 +90,7 @@ export default function JobFilter() {
               </FormItem>
             )}
           />
-          s{/*<FormField*/}
+          {/*<FormField*/}
           {/*  control={form.control}*/}
           {/*  name="minSalary"*/}
           {/*  render={({ field }) => (*/}
