@@ -34,15 +34,6 @@ export function ApplicationsTableRowActions({ row }: DataTableRowActionsProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        {/*<DropdownMenuItem>Edit</DropdownMenuItem>*/}
-        {/*<DropdownMenuItem>Make a copy</DropdownMenuItem>*/}
-        {/*<DropdownMenuSub>*/}
-        {/*  <DropdownMenuSubTrigger>Set Status</DropdownMenuSubTrigger>*/}
-        {/*  <DropdownMenuSubContent>*/}
-        {/*  </DropdownMenuSubContent>*/}
-        {/*</DropdownMenuSub>*/}
-        {/*<DropdownMenuSeparator />*/}
-
         <DropdownMenuItem asChild>
           <Link href={`/employer/applications/${row.original.id}`}>
             <EyeIcon className="h-4 w-4 mr-2" />

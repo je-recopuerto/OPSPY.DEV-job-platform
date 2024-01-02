@@ -42,6 +42,7 @@ export function CompanyJobDataTableRowActions({
           <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>
+
       <Dialog>
         <DropdownMenuContent align="end" className="w-[160px]">
           {/*<DropdownMenuItem>Edit</DropdownMenuItem>*/}

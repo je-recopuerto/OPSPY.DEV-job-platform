@@ -18,7 +18,6 @@ import { getUserWithCompanyById } from "@/services/userService";
 
 export default async function UserButton() {
   const session = await auth();
-  console.log(JSON.stringify(session, null, 2));
   if (!session?.user) return <SignIn />;
 
   const user = await getUserWithCompanyById(session.user.id);

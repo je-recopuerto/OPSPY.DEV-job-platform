@@ -143,8 +143,8 @@ function formatToKForm(num: number): string {
 }
 
 // Example usage
-const formattedNumber = formatToKForm(50000); // Outputs: '50k'
-console.log(formattedNumber);
+// const formattedNumber = formatToKForm(50000); // Outputs: '50k'
+// console.log(formattedNumber);
 
 function getSymbolFromCurrency(currencyCode: string) {
   return currencyCode
