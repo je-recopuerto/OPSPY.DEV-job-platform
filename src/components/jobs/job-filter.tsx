@@ -4,8 +4,6 @@ import { Input } from "@/components/ui/input";
 import { filterJobPostsSchema } from "@/schemas/jobPost";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { z } from "zod";
-import { useDebouncedCallback } from "use-debounce";
-import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -18,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
-export default function JobFilter({ placeholder }: { placeholder: string }) {
+export default function JobFilter() {
   const pathname = usePathname();
   const { replace } = useRouter();
   const searchParams = useSearchParams();
@@ -27,7 +25,9 @@ export default function JobFilter({ placeholder }: { placeholder: string }) {
     resolver: zodResolver(filterJobPostsSchema),
     defaultValues: {
       keywords: searchParams.get("keywords")?.toString(),
-      minSalary: Number.parseFloat(searchParams.get("minSalary") ?? "0"),
+      minSalary: searchParams.get("minSalary")
+        ? Number.parseFloat(searchParams.get("minSalary")!)
+        : undefined,
     },
   });
 
@@ -58,12 +58,12 @@ export default function JobFilter({ placeholder }: { placeholder: string }) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <div className={"flex flex-row gap-4"}>
+        <div className={"flex w-full items-center space-x-2"}>
           <FormField
             control={form.control}
             name="keywords"
             render={({ field }) => (
-              <FormItem className={"flex-grow"}>
+              <FormItem className={"max-w-lg w-full"}>
                 <FormLabel>Search</FormLabel>
                 <FormControl>
                   <Input placeholder="Search" {...field} />
@@ -72,7 +72,6 @@ export default function JobFilter({ placeholder }: { placeholder: string }) {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="minSalary"
@@ -82,7 +81,7 @@ export default function JobFilter({ placeholder }: { placeholder: string }) {
                 <FormControl>
                   <Input
                     type="number"
-                    min={100}
+                    placeholder="26000"
                     {...field}
                     onChange={(event) => field.onChange(+event.target.value)}
                   />
@@ -91,7 +90,26 @@ export default function JobFilter({ placeholder }: { placeholder: string }) {
               </FormItem>
             )}
           />
-
+          s{/*<FormField*/}
+          {/*  control={form.control}*/}
+          {/*  name="minSalary"*/}
+          {/*  render={({ field }) => (*/}
+          {/*    <FormItem>*/}
+          {/*      <FormLabel> </FormLabel>*/}
+          {/*      <FormControl>*/}
+          {/*        <MultiSelect*/}
+          {/*          values={[*/}
+          {/*            {*/}
+          {/*              key: "test",*/}
+          {/*              value: "test",*/}
+          {/*            },*/}
+          {/*          ]}*/}
+          {/*        />*/}
+          {/*      </FormControl>*/}
+          {/*      <FormMessage />*/}
+          {/*    </FormItem>*/}
+          {/*  )}*/}
+          {/*/>*/}
           <Button type="submit" className={"hidden"}>
             Submit
           </Button>

@@ -59,53 +59,6 @@ export default function JobListing(props: JobListingProps) {
         <p className={"text-sm font-normal leading-none text-muted-foreground"}>
           {props.job.description?.slice(0, 125) + "..."}
         </p>
-
-        {/*<div className={"flex flex-row gap-6 pb-4"}>*/}
-        {/*  <div>*/}
-        {/*    <small className="text-sm font-bold leading-none">*/}
-        {/*      Description*/}
-        {/*    </small>*/}
-        {/*    <p*/}
-        {/*      className={*/}
-        {/*        "text-sm font-normal leading-none text-muted-foreground"*/}
-        {/*      }*/}
-        {/*    >*/}
-        {/*      {props.job.description?.slice(0, 125)}*/}
-        {/*    </p>*/}
-        {/*  </div>*/}
-
-        {/*  <div className={"min-w-[6rem]"}>*/}
-        {/*    <small className="text-sm font-bold leading-none">Salary</small>*/}
-        {/*    <p className="text-sm font-normal leading-none text-muted-foreground">*/}
-        {/*      {getSalaryRangeString(*/}
-        {/*        props.job.minSalary,*/}
-        {/*        props.job.maxSalary,*/}
-        {/*        props.job.currency,*/}
-        {/*      )}*/}
-        {/*    </p>*/}
-        {/*  </div>*/}
-        {/*</div>*/}
-
-        {/*<div className={"flex flex-row gap-4 p-1"}>*/}
-        {/*  <ApplyJobDialog post={props.job} />*/}
-
-        {/*  <form*/}
-        {/*    action={async () => {*/}
-        {/*      const removed = await toggleSaveJob(props.job.id);*/}
-
-        {/*      toast({*/}
-        {/*        title: removed ? "Job Unsaved" : "Job Saved",*/}
-        {/*        description: "You can view your saved jobs in your dash.",*/}
-        {/*        duration: 1500,*/}
-        {/*      });*/}
-        {/*    }}*/}
-        {/*  >*/}
-        {/*    <Button variant={props.isFollowing ? "destructive" : "default"}>*/}
-        {/*      <SaveIcon className={"h-4 w-4 mr-2"} />*/}
-        {/*      {props.isFollowing ? "Unsave" : "Save"}*/}
-        {/*    </Button>*/}
-        {/*  </form>*/}
-        {/*</div>*/}
       </CardContent>
     </Card>
   );

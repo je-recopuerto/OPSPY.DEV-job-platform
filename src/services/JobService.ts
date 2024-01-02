@@ -42,6 +42,14 @@ export function getJobPostsWithCompany(
                     mode: "insensitive",
                   },
                 },
+                {
+                  company: {
+                    name: {
+                      contains: filter.keywords,
+                      mode: "insensitive",
+                    },
+                  },
+                },
               ],
             }
           : {},
