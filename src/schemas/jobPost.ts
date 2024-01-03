@@ -5,6 +5,7 @@ export const filterJobPostsSchema = z.object({
   keywords: z.string().max(255).optional(),
   tags: z.array(z.string()).optional(),
   minSalary: z.number().min(0).max(500000).optional(),
+  type: z.array(z.nativeEnum(JobType)).optional(),
 });
 
 export const createJobPostSchema = z

@@ -44,7 +44,7 @@ export default async function JobPage(props: JobPageParams) {
 
   return (
     <>
-      <JobFilter placeholder={"Search"} />
+      <JobFilter />
 
       <div className={"flex columns-2 gap-2 max-h-[70vh]"}>
         <ScrollArea className={"w-[40%]"}>
