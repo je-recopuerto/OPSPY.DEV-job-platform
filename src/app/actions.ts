@@ -9,6 +9,7 @@ import { getUserById, getUserWithCompanyById } from "@/services/userService";
 import { revalidatePath } from "next/cache";
 import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
 import { createJobPostSchema } from "@/schemas/jobPost";
+import knock, { applicationCreatedKnock } from "@/lib/knock";
 
 export async function createJobPost(
   values: z.infer<typeof createJobPostSchema>,
@@ -179,9 +180,33 @@ export async function quickApply(jobId: number) {
         userId: user.id,
         jobId: jobId,
       },
+      include: {
+        job: {
+          include: {
+            company: true,
+          },
+        },
+      },
     });
 
     console.log("Created new job application:", result);
+
+    const knockResult = await knock.notify(applicationCreatedKnock, {
+      actor: user.id,
+      recipients: [user.id],
+      data: {
+        // prettier-ignore
+        "companyName": {
+          // prettier-ignore
+          "value": result.job.company.name,
+        },
+        // prettier-ignore
+        "jobName": {
+          // prettier-ignore
+          "value": result.job.title,
+        },
+      },
+    });
 
     revalidatePath("/dash");
     return true;
