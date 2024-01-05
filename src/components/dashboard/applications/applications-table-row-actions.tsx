@@ -35,7 +35,7 @@ export function ApplicationsTableRowActions({ row }: DataTableRowActionsProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem asChild>
-          <Link href={`/employer/applications/${row.original.id}`}>
+          <Link href={`/e/applications/${row.original.id}`}>
             <EyeIcon className="h-4 w-4 mr-2" />
             View
           </Link>
