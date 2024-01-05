@@ -2,9 +2,6 @@ import { auth } from "@/auth";
 
 type JobsLayoutProps = {
   children: React.ReactNode;
-  searchParams?: {
-    keywords?: string;
-  };
 };
 
 export default async function JobsLayout(props: JobsLayoutProps) {
