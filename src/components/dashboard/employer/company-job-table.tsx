@@ -1,15 +1,14 @@
 "use client";
 
 import { DataTable } from "@/components/table/data-table";
-import { CompanyWithOpenings } from "@/services/companyService";
+import { CompanyWithOpenings } from "@/services/CompanyService";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
-import { AppliedJobDataTableRowActions } from "@/components/dashboard/applied-job-data-table-row-actions";
 import { JobPost } from "@prisma/client";
 import Link from "next/link";
 import { CompanyJobDataTableRowActions } from "@/components/dashboard/employer/company-job-table-row-actions";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 type AppliedJobsTableProps = {
   data: CompanyWithOpenings;

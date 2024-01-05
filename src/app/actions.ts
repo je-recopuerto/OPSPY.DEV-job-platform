@@ -5,7 +5,7 @@ import { onboardingSchema } from "@/schemas/onboardingSchema";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import * as z from "zod";
-import { getUserById, getUserWithCompanyById } from "@/services/userService";
+import { getUserById, getUserWithCompanyById } from "@/services/UserService";
 import { revalidatePath } from "next/cache";
 import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
 import { createJobPostSchema } from "@/schemas/jobPost";

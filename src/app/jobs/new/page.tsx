@@ -1,5 +1,5 @@
 import CreateJobForm from "@/components/jobs/create-job-form";
-import { getUserWithCompanyById } from "@/services/userService";
+import { getUserWithCompanyById } from "@/services/UserService";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import CompanyProfile from "@/components/jobs/company-profile";

@@ -5,7 +5,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import SavedJobTab from "@/components/dashboard/saved-job-tab";
 import AppliedJobsTab from "@/components/dashboard/applied-jobs-tab";
-import { getUserWithCompanyById } from "@/services/userService";
+import { getUserWithCompanyById } from "@/services/UserService";
 
 export default async function DashboardPage() {
   const session = await auth();

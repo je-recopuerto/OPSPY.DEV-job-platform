@@ -5,7 +5,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CompanyWithOpenings } from "@/services/companyService";
+import { CompanyWithOpenings } from "@/services/CompanyService";
 
 type CompanyProfileProps = {
   company: CompanyWithOpenings;

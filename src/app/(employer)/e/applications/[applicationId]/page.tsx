@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { SignIn } from "@/components/auth-components";
-import { getUserWithCompanyById } from "@/services/userService";
+import { getUserWithCompanyById } from "@/services/UserService";
 import { getApplicationById } from "@/services/ApplicationService";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";

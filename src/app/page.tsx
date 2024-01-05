@@ -1,6 +1,6 @@
 import { auth, signIn } from "@/auth";
 import { redirect } from "next/navigation";
-import { getUserWithCompanyById } from "@/services/userService";
+import { getUserWithCompanyById } from "@/services/UserService";
 
 export default async function Home() {
   const session = await auth();

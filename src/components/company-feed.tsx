@@ -1,4 +1,4 @@
-import { getCompaniesWithOpenings } from "@/services/companyService";
+import { getCompaniesWithOpenings } from "@/services/CompanyService";
 import CompanyProfileWithOpenings from "@/components/jobs/company-profile-with-openings";
 
 export default async function CompanyFeed() {

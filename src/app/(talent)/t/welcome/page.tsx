@@ -1,6 +1,6 @@
 import OnboardingForm from "@/components/onboarding/OnboardCard";
 import { auth } from "@/auth";
-import { getUserById } from "@/services/userService";
+import { getUserById } from "@/services/UserService";
 import { redirect } from "next/navigation";
 
 export default async function OnboardingPage() {

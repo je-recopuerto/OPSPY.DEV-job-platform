@@ -1,4 +1,4 @@
-import { getUserWithJobTrackersById } from "@/services/userService";
+import { getUserWithJobTrackersById } from "@/services/UserService";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import Link from "next/link";

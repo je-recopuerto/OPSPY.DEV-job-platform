@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { getUserWithCompanyById } from "@/services/userService";
+import { getUserWithCompanyById } from "@/services/UserService";
 import { SignIn } from "@/components/auth-components";
 import { PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";

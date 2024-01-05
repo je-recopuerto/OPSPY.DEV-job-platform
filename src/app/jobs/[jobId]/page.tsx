@@ -10,7 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   getUserWithJobTrackersById,
   UserWithJobTrackers,
-} from "@/services/userService";
+} from "@/services/UserService";
 import { auth } from "@/auth";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import JobListing from "@/components/jobs/job-listing";

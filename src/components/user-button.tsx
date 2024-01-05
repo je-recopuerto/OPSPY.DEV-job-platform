@@ -14,7 +14,7 @@ import {
 import { SignIn, SignOut } from "./auth-components";
 import { Cloud, CreditCard, Github, LifeBuoy, Settings } from "lucide-react";
 import Link from "next/link";
-import { getUserWithCompanyById } from "@/services/userService";
+import { getUserWithCompanyById } from "@/services/UserService";
 
 export default async function UserButton() {
   const session = await auth();
