@@ -26,15 +26,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
-  let knockUser;
 
   if (session && session.user) {
-    knockUser = await knock.users.identify(session?.user.id, {
+    await knock.users.identify(session?.user.id, {
       name: session?.user.name ?? undefined,
       email: session?.user.email ?? undefined,
     });
-
-    console.log(knockUser);
   }
 
   return (
