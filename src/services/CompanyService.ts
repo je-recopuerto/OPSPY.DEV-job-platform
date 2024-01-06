@@ -1,11 +1,6 @@
 import prisma from "@/lib/db";
 import { Prisma } from "@prisma/client";
-
-export type CompanyWithOpenings = Prisma.CompanyGetPayload<{
-  include: {
-    openings: true;
-  };
-}>;
+import { CompanyWithOpenings } from "@/services/JobService";
 
 export function getCompaniesWithOpenings(): Promise<CompanyWithOpenings[]> {
   return prisma.company.findMany({

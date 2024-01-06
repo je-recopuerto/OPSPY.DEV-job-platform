@@ -3,6 +3,16 @@ import { Prisma } from "@prisma/client";
 import { filterJobPostsSchema } from "@/schemas/jobPost";
 import { z } from "zod";
 
+export type JobPostWithCandidates = Prisma.JobPostGetPayload<{
+  include: {
+    application: {
+      include: {
+        user: true;
+      };
+    };
+  };
+}>;
+
 export type JobTrackerWithPost = Prisma.JobTrackerGetPayload<{
   include: {
     job: {
@@ -124,6 +134,22 @@ export type CompanyWithOpenings = Prisma.CompanyGetPayload<{
   };
 }>;
 
+export type CompanyWithOpeningsAndApplications = Prisma.CompanyGetPayload<{
+  include: {
+    openings: {
+      include: {
+        application: true;
+      };
+    };
+  };
+}>;
+
+export type JobPostWithApplications = Prisma.JobPostGetPayload<{
+  include: {
+    application: true;
+  };
+}>;
+
 export function getCompanyWithOpeningsById(
   id: number,
 ): Promise<CompanyWithOpenings | null> {
@@ -133,6 +159,23 @@ export function getCompanyWithOpeningsById(
     },
     include: {
       openings: true,
+    },
+  });
+}
+
+export function getCompanyWithOpeningsAndApplicationsById(
+  id: number,
+): Promise<CompanyWithOpeningsAndApplications | null> {
+  return prisma.company.findUnique({
+    where: {
+      id: id,
+    },
+    include: {
+      openings: {
+        include: {
+          application: true,
+        },
+      },
     },
   });
 }

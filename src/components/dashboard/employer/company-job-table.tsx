@@ -1,24 +1,28 @@
 "use client";
 
 import { DataTable } from "@/components/table/data-table";
-import { CompanyWithOpenings } from "@/services/CompanyService";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
-import { JobPost } from "@prisma/client";
 import Link from "next/link";
 import { CompanyJobDataTableRowActions } from "@/components/dashboard/employer/company-job-table-row-actions";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  CompanyWithOpeningsAndApplications,
+  JobPostWithApplications,
+} from "@/services/JobService";
+import { ApplicationStatus } from "@prisma/client";
+import { JobApplication } from ".prisma/client";
 
 type AppliedJobsTableProps = {
-  data: CompanyWithOpenings;
+  data: CompanyWithOpeningsAndApplications;
 };
 
 export default function CompanyJobTable(props: AppliedJobsTableProps) {
   return <DataTable columns={columns} data={props.data.openings} />;
 }
 
-export const columns: ColumnDef<JobPost>[] = [
+export const columns: ColumnDef<JobPostWithApplications>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -68,19 +72,34 @@ export const columns: ColumnDef<JobPost>[] = [
           <Card>
             <CardContent className={"flex flex-col text-center p-3"}>
               <h1 className={"text-green-600 dark:text-green-500"}>Active</h1>
-              <div>{1}</div>
+              <div>
+                {countOfStatuses(
+                  [ApplicationStatus.APPLIED, ApplicationStatus.INTERVIEWING],
+                  row.original.application,
+                )}
+              </div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className={"flex flex-col text-center p-3"}>
               <h1 className={"text-destructive"}>Declined</h1>
-              <div>{4}</div>
+              <div>
+                {countOfStatuses(
+                  [ApplicationStatus.REJECTED],
+                  row.original.application,
+                )}
+              </div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className={"flex flex-col text-center p-3"}>
               <h1 className={""}>Review Now</h1>
-              <div>{7}</div>
+              <div>
+                {countOfStatuses(
+                  [ApplicationStatus.APPLIED],
+                  row.original.application,
+                )}
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -107,3 +126,10 @@ export const columns: ColumnDef<JobPost>[] = [
     cell: ({ row }) => <CompanyJobDataTableRowActions row={row} />,
   },
 ];
+
+const countOfStatuses = (
+  statuses: ApplicationStatus[],
+  applications: JobApplication[],
+) => {
+  return applications.filter((x) => statuses.includes(x.status)).length;
+};

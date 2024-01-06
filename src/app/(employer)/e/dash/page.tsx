@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import CompanyProfile from "@/components/jobs/company-profile";
-import { getCompanyWithOpeningsById } from "@/services/JobService";
+import { getCompanyWithOpeningsAndApplicationsById } from "@/services/JobService";
 import CompanyJobTable from "@/components/dashboard/employer/company-job-table";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
@@ -143,8 +143,7 @@ export default async function EmployerDashboardPage() {
 }
 
 async function JobTable({ companyId }: { companyId: number }) {
-  const company = await getCompanyWithOpeningsById(companyId);
-
+  const company = await getCompanyWithOpeningsAndApplicationsById(companyId);
   if (!company) return <div>Company not found.</div>;
 
   return <CompanyJobTable data={company} />;
