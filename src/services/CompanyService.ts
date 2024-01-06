@@ -1,6 +1,6 @@
 import prisma from "@/lib/db";
-import { Prisma } from "@prisma/client";
 import { CompanyWithOpenings } from "@/services/JobService";
+import { Prisma } from "@prisma/client";
 
 export function getCompaniesWithOpenings(): Promise<CompanyWithOpenings[]> {
   return prisma.company.findMany({

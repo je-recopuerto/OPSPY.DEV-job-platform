@@ -1,11 +1,11 @@
+import { auth } from "@/auth";
+import AppliedJobsTab from "@/components/dashboard/applied-jobs-tab";
+import SavedJobTab from "@/components/dashboard/saved-job-tab";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DownloadIcon } from "lucide-react";
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
-import SavedJobTab from "@/components/dashboard/saved-job-tab";
-import AppliedJobsTab from "@/components/dashboard/applied-jobs-tab";
 import { getUserWithCompanyById } from "@/services/UserService";
+import { DownloadIcon } from "lucide-react";
+import { redirect } from "next/navigation";
 
 export default async function DashboardPage() {
   const session = await auth();

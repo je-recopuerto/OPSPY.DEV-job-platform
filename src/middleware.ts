@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import { auth } from "@/auth";
+import { NextResponse } from "next/server";
 
 export default auth(async function middleware(req) {
   return NextResponse.next();

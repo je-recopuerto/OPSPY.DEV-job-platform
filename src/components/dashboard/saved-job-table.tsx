@@ -1,9 +1,11 @@
 "use client";
 
 import { DataTable } from "@/components/table/data-table";
-import { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "../ui/checkbox";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { JobTrackerWithPost } from "@/services/JobService";
+import { ApplicationStatus } from "@prisma/client";
+import { ColumnDef } from "@tanstack/react-table";
 import {
   CheckIcon,
   CircleIcon,
@@ -11,11 +13,9 @@ import {
   LucideIcon,
   TimerIcon,
 } from "lucide-react";
-import { JobTrackerWithPost } from "@/services/JobService";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ApplicationStatus } from "@prisma/client";
-import { SavedJobDataTableRowActions } from "./saved-job-data-table-row-actions";
 import Link from "next/link";
+import { Checkbox } from "../ui/checkbox";
+import { SavedJobDataTableRowActions } from "./saved-job-data-table-row-actions";
 
 type JobTrackerTableProps = {
   data: JobTrackerWithPost[];

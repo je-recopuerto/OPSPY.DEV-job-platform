@@ -1,19 +1,19 @@
 "use client";
 
-import { DataTable } from "@/components/table/data-table";
-import { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "@/components/ui/checkbox";
-import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
-import Link from "next/link";
+import { JobApplication } from ".prisma/client";
 import { CompanyJobDataTableRowActions } from "@/components/dashboard/employer/company-job-table-row-actions";
+import { DataTable } from "@/components/table/data-table";
+import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
+import { Checkbox } from "@/components/ui/checkbox";
+import { cn } from "@/lib/utils";
 import {
   CompanyWithOpeningsAndApplications,
   JobPostWithApplications,
 } from "@/services/JobService";
 import { ApplicationStatus, JobStatus } from "@prisma/client";
-import { JobApplication } from ".prisma/client";
+import { ColumnDef } from "@tanstack/react-table";
 import { CheckIcon, LucideIcon, XIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 type AppliedJobsTableProps = {
   data: CompanyWithOpeningsAndApplications;

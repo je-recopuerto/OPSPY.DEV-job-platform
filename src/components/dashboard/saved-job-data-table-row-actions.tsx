@@ -11,9 +11,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { CircleEllipsisIcon } from "lucide-react";
 import { unsaveJob } from "@/app/actions";
 import { JobTrackerWithPost } from "@/services/JobService";
+import { CircleEllipsisIcon } from "lucide-react";
 
 interface DataTableRowActionsProps {
   row: Row<JobTrackerWithPost>;

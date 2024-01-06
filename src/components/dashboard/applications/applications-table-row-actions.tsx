@@ -12,9 +12,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { CircleEllipsisIcon, EyeIcon, TrashIcon } from "lucide-react";
 import { unsaveJob } from "@/app/actions";
 import { ApplicationWithJob } from "@/services/ApplicationService";
+import { CircleEllipsisIcon, EyeIcon, TrashIcon } from "lucide-react";
 import Link from "next/link";
 
 interface DataTableRowActionsProps {

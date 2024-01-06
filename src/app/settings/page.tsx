@@ -1,8 +1,8 @@
-import { Separator } from "@/components/ui/separator";
-import { ProfileForm } from "@/components/settings/profile-form";
 import { auth } from "@/auth";
-import { redirect } from "next/navigation";
+import { ProfileForm } from "@/components/settings/profile-form";
+import { Separator } from "@/components/ui/separator";
 import { getUserById } from "@/services/UserService";
+import { redirect } from "next/navigation";
 
 export default async function SettingsProfilePage() {
   const session = await auth();

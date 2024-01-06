@@ -1,8 +1,8 @@
-import UserButton from "@/components/user-button";
-import { MainNav } from "@/components/main-nav";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { NotificationsMenu } from "@/components/notifications/NotificationsMenu";
 import { auth } from "@/auth";
+import { MainNav } from "@/components/main-nav";
+import { NotificationsMenu } from "@/components/notifications/NotificationsMenu";
+import { ThemeToggle } from "@/components/theme-toggle";
+import UserButton from "@/components/user-button";
 
 export default async function MainHeader() {
   const session = await auth();

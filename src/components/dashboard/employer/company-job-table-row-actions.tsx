@@ -11,9 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { CircleEllipsisIcon } from "lucide-react";
 import { withdrawApplication } from "@/app/actions";
-import { JobPost } from "@prisma/client";
 import {
   Dialog,
   DialogContent,
@@ -23,6 +21,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { JobPost } from "@prisma/client";
+import { CircleEllipsisIcon } from "lucide-react";
 
 interface DataTableRowActionsProps {
   row: Row<JobPost>;

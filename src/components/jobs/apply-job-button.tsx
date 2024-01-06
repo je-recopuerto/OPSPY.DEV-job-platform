@@ -1,3 +1,4 @@
+import { quickApply } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,11 +9,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Gauge } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { JobPostWithCompany } from "@/services/JobService";
-import { quickApply } from "@/app/actions";
 import { toast } from "@/components/ui/use-toast";
+import { JobPostWithCompany } from "@/services/JobService";
+import { Gauge } from "lucide-react";
 
 type ApplyJobDialogProps = {
   post: JobPostWithCompany;

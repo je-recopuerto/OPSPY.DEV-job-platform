@@ -1,5 +1,5 @@
-import { Suspense } from "react";
 import CompanyFeed from "@/components/company-feed";
+import { Suspense } from "react";
 
 export default function CompaniesPage() {
   return (

@@ -1,9 +1,9 @@
-import CreateJobForm from "@/components/jobs/create-job-form";
-import { getUserWithCompanyById } from "@/services/UserService";
-import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import CompanyProfile from "@/components/jobs/company-profile";
+import CreateJobForm from "@/components/jobs/create-job-form";
 import { Separator } from "@/components/ui/separator";
+import { getUserWithCompanyById } from "@/services/UserService";
+import { redirect } from "next/navigation";
 
 export default async function NewJobPage() {
   const session = await auth();

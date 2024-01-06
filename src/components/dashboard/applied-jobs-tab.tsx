@@ -1,9 +1,9 @@
-import { TabsContent } from "@/components/ui/tabs";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CircleSlash2, Timer } from "lucide-react";
-import { getJobApplications } from "@/services/JobService";
 import { JobApplication } from ".prisma/client";
 import AppliedJobsTable from "@/components/dashboard/applied-jobs-table";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { TabsContent } from "@/components/ui/tabs";
+import { getJobApplications } from "@/services/JobService";
+import { CircleSlash2, Timer } from "lucide-react";
 
 type AppliedJobsTabProps = {
   value: string;

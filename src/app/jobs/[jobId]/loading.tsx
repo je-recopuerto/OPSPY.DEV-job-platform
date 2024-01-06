@@ -1,5 +1,3 @@
-import JobActions from "@/components/jobs/job-post-actions";
-import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function LoadingJobPage() {

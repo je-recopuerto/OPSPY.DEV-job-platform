@@ -1,12 +1,12 @@
 "use client";
 
 import { toggleSaveJob } from "@/app/actions";
-import { toast } from "@/components/ui/use-toast";
-import { Button } from "@/components/ui/button";
-import { Pin, PinOff } from "lucide-react";
-import React, { useState } from "react";
 import ApplyJobButton from "@/components/jobs/apply-job-button";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 import { JobPostWithCompany } from "@/services/JobService";
+import { Pin, PinOff } from "lucide-react";
+import { useState } from "react";
 
 export default function JobActions({
   job,

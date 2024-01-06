@@ -1,5 +1,7 @@
 "use client";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -7,10 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
 import { JobPostWithCompany } from "@/services/JobService";
+import Link from "next/link";
 
 type JobListingProps = {
   job: JobPostWithCompany;

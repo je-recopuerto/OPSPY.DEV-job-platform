@@ -1,6 +1,6 @@
 import prisma from "@/lib/db";
-import { Prisma } from "@prisma/client";
 import { filterJobPostsSchema } from "@/schemas/jobPost";
+import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
 export type JobPostWithCandidates = Prisma.JobPostGetPayload<{

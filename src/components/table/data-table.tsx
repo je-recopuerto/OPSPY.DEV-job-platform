@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode } from "react";
+import { DataTablePagination } from "@/components/table/data-table-pagination";
 import {
   Table,
   TableBody,
@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import {
   ColumnDef,
+  Table as ReactTable,
   flexRender,
   getCoreRowModel,
   getFacetedRowModel,
@@ -18,7 +19,6 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  Table as ReactTable,
   useReactTable,
 } from "@tanstack/react-table";
 import {
@@ -26,7 +26,7 @@ import {
   SortingState,
   VisibilityState,
 } from "@tanstack/table-core";
-import { DataTablePagination } from "@/components/table/data-table-pagination";
+import React, { ReactNode } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

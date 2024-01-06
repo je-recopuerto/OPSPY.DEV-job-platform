@@ -1,17 +1,17 @@
 "use client";
 
 import { setOnboarding } from "@/app/actions";
+import FormSubmitButton from "@/components/onboarding/form-submit";
+import GettingStarted from "@/components/onboarding/getting-started";
+import { Form } from "@/components/ui/form";
+import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/components/ui/use-toast";
 import { onboardingSchema } from "@/schemas/onboardingSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Card, CardDescription } from "../ui/card";
-import { Form } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Separator } from "@/components/ui/separator";
-import GettingStarted from "@/components/onboarding/getting-started";
-import FormSubmitButton from "@/components/onboarding/form-submit";
-import { useToast } from "@/components/ui/use-toast";
-import { useEffect } from "react";
 
 type OnboardingCardProps = {
   email: string;

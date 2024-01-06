@@ -1,13 +1,13 @@
 "use client";
 
+import { AppliedJobDataTableRowActions } from "@/components/dashboard/applied-job-data-table-row-actions";
+import { applicationStatuses } from "@/components/dashboard/saved-job-table";
 import { DataTable } from "@/components/table/data-table";
-import { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { applicationStatuses } from "@/components/dashboard/saved-job-table";
-import { AppliedJobDataTableRowActions } from "@/components/dashboard/applied-job-data-table-row-actions";
+import { Checkbox } from "@/components/ui/checkbox";
 import { JobApplicationWithCompany } from "@/services/JobService";
+import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 
 type JobApplicationTableProps = {

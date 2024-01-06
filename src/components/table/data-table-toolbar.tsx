@@ -5,14 +5,14 @@ import { Table } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import { DataTableFacetedFilter } from "./data-table-faceted-filter";
+import { DataTableViewOptions } from "@/components/table/data-table-view-options";
 import {
   ArrowDownIcon,
   ArrowRightIcon,
   ArrowUpIcon,
   Cross,
 } from "lucide-react";
-import { DataTableViewOptions } from "@/components/table/data-table-view-options";
+import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 
 export interface DataTableToolbarProps<TData> {
   table: Table<TData>;

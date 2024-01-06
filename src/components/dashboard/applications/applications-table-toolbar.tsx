@@ -1,15 +1,15 @@
-import { Input } from "@/components/ui/input";
 import { DataTableFacetedFilter } from "@/components/table/data-table-faceted-filter";
+import { DataTableToolbarProps } from "@/components/table/data-table-toolbar";
+import { DataTableViewOptions } from "@/components/table/data-table-view-options";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ApplicationStatus } from "@prisma/client";
 import {
   ArrowDownIcon,
   ArrowRightIcon,
   ArrowUpIcon,
   Cross,
 } from "lucide-react";
-import { DataTableViewOptions } from "@/components/table/data-table-view-options";
-import { DataTableToolbarProps } from "@/components/table/data-table-toolbar";
-import { ApplicationStatus } from "@prisma/client";
 
 export const applicationStatuses: {
   label: string;

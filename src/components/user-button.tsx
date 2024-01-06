@@ -1,6 +1,10 @@
+import { auth } from "@/auth";
+import { getUserWithCompanyById } from "@/services/UserService";
+import { Cloud, CreditCard, Github, LifeBuoy, Settings } from "lucide-react";
+import Link from "next/link";
+import { SignIn, SignOut } from "./auth-components";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
-import { auth } from "@/auth";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,10 +15,6 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { SignIn, SignOut } from "./auth-components";
-import { Cloud, CreditCard, Github, LifeBuoy, Settings } from "lucide-react";
-import Link from "next/link";
-import { getUserWithCompanyById } from "@/services/UserService";
 
 export default async function UserButton() {
   const session = await auth();

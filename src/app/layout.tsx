@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google";
-import "@/styles/globals.css";
-import NextAuthSessionProvider from "@/providers/SessionProvider";
+import { auth } from "@/auth";
 import MainHeader from "@/components/MainHeader";
-import { cn } from "@/lib/utils";
+import NavigationProgressBar from "@/components/nav-progress-bar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
-import NavigationProgressBar from "@/components/nav-progress-bar";
-import { auth } from "@/auth";
 import knock from "@/lib/knock";
+import { cn } from "@/lib/utils";
+import NextAuthSessionProvider from "@/providers/SessionProvider";
+import "@/styles/globals.css";
+import type { Metadata } from "next";
+import { Inter as FontSans } from "next/font/google";
 
 const fontSans = FontSans({
   subsets: ["latin"],

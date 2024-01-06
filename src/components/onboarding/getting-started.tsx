@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   CardContent,
   CardDescription,
@@ -20,16 +22,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { onboardingSchema } from "@/schemas/onboardingSchema";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
 import { UseFormReturn } from "react-hook-form";
-import { onboardingSchema } from "@/schemas/onboardingSchema";
 import { z } from "zod";
-import { Textarea } from "@/components/ui/textarea";
-import { Separator } from "@/components/ui/separator";
 
 export type OnboardingCardProps = {
   form: UseFormReturn<z.infer<typeof onboardingSchema>>;

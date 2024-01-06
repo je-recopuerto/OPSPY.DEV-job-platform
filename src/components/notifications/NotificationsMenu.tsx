@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useRef } from "react";
 import {
   KnockFeedProvider,
-  NotificationIconButton,
   NotificationFeedPopover,
+  NotificationIconButton,
 } from "@knocklabs/react-notification-feed";
+import { useRef, useState } from "react";
 
 // Required CSS import, unless you're overriding the styling
 import "@knocklabs/react-notification-feed/dist/index.css";

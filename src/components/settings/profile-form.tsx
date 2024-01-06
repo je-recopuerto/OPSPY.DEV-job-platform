@@ -1,10 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 
+import { updateProfile } from "@/app/actions";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -16,17 +18,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
-import { updateProfile } from "@/app/actions";
-import React, { useEffect } from "react";
+import { User } from "@prisma/client";
+import { format } from "date-fns";
 import { CalendarIcon, Loader2 } from "lucide-react";
+import { useEffect } from "react";
 import { z } from "zod";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
-import { User } from "@prisma/client";
-import { useToast } from "@/components/ui/use-toast";
 
 type ProfileFormProps = {
   user: User;

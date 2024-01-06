@@ -5,7 +5,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Company } from "@prisma/client";
-import React from "react";
 import Image from "next/image";
 
 type CompanyProfileProps = {

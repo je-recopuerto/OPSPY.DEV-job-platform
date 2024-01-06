@@ -1,11 +1,6 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { filterJobPostsSchema } from "@/schemas/jobPost";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,7 +9,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { filterJobPostsSchema } from "@/schemas/jobPost";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 export default function JobFilter() {
   const pathname = usePathname();

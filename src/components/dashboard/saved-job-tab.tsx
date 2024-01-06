@@ -1,9 +1,9 @@
 import { auth } from "@/auth";
-import { redirect } from "next/navigation";
-import { getSavedJobsForUserId } from "@/services/JobService";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PinIcon } from "lucide-react";
 import SavedJobTable from "@/components/dashboard/saved-job-table";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getSavedJobsForUserId } from "@/services/JobService";
+import { PinIcon } from "lucide-react";
+import { redirect } from "next/navigation";
 import { TabsContent } from "../ui/tabs";
 
 type SavedJobsTabProps = {

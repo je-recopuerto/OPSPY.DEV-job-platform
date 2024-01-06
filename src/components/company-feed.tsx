@@ -1,5 +1,5 @@
-import { getCompaniesWithOpenings } from "@/services/CompanyService";
 import CompanyProfileWithOpenings from "@/components/jobs/company-profile-with-openings";
+import { getCompaniesWithOpenings } from "@/services/CompanyService";
 
 export default async function CompanyFeed() {
   const companies = await getCompaniesWithOpenings();

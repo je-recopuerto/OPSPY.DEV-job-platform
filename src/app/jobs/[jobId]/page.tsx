@@ -1,22 +1,22 @@
+import { auth } from "@/auth";
+import JobFilter from "@/components/jobs/job-filter";
+import JobListing from "@/components/jobs/job-listing";
+import JobActions from "@/components/jobs/job-post-actions";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CardDescription, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { filterJobPostsSchema } from "@/schemas/jobPost";
 import {
   getJobPostFromId,
   getJobPostsWithCompany,
   JobPostWithCompany,
 } from "@/services/JobService";
-import React from "react";
-import JobActions from "@/components/jobs/job-post-actions";
-import { CardDescription, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   getUserWithJobTrackersById,
   UserWithJobTrackers,
 } from "@/services/UserService";
-import { auth } from "@/auth";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import JobListing from "@/components/jobs/job-listing";
+import React from "react";
 import { z } from "zod";
-import { filterJobPostsSchema } from "@/schemas/jobPost";
-import JobFilter from "@/components/jobs/job-filter";
 
 type JobPageParams = {
   params: {

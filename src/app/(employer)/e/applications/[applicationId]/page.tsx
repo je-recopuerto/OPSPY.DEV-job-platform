@@ -1,11 +1,7 @@
-import { notFound, redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { SignIn } from "@/components/auth-components";
-import { getUserWithCompanyById } from "@/services/UserService";
-import { getApplicationById } from "@/services/ApplicationService";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -13,10 +9,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import React from "react";
 import { cn } from "@/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getApplicationById } from "@/services/ApplicationService";
+import { getUserWithCompanyById } from "@/services/UserService";
 import { formatDistance } from "date-fns";
+import { ChevronLeft } from "lucide-react";
+import Link from "next/link";
+import { notFound, redirect } from "next/navigation";
 
 type ApplicationPageProps = {
   params: {

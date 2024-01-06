@@ -1,10 +1,7 @@
 "use client";
 
-import { useToast } from "@/components/ui/use-toast";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { createJobPost } from "@/app/actions";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,11 +11,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { createJobPost } from "@/app/actions";
-import { createJobPostSchema } from "@/schemas/jobPost";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
+import { createJobPostSchema } from "@/schemas/jobPost";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Currency, JobType, WorkMode } from "@prisma/client";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 import {
   Select,
   SelectContent,
@@ -26,7 +27,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Currency, JobType, WorkMode } from "@prisma/client";
 
 export default function CreateJobForm() {
   const { toast } = useToast();

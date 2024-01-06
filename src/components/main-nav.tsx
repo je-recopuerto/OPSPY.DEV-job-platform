@@ -1,10 +1,10 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { NavigationMenuLink } from "./ui/navigation-menu";
-import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import React from "react";
+import { NavigationMenuLink } from "./ui/navigation-menu";
 
 export function MainNav({
   className,

@@ -1,16 +1,16 @@
 "use server";
 
-import prisma from "@/lib/db";
-import { onboardingSchema } from "@/schemas/onboardingSchema";
-import { redirect } from "next/navigation";
 import { auth } from "@/auth";
-import * as z from "zod";
+import prisma from "@/lib/db";
+import { createJobPostSchema } from "@/schemas/jobPost";
+import { onboardingSchema } from "@/schemas/onboardingSchema";
+import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
+import { JobPostWithCompany } from "@/services/JobService";
+import { notifyApplicationCreated } from "@/services/KnockService";
 import { getUserById, getUserWithCompanyById } from "@/services/UserService";
 import { revalidatePath } from "next/cache";
-import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
-import { createJobPostSchema } from "@/schemas/jobPost";
-import { notifyApplicationCreated } from "@/services/KnockService";
-import { JobPostWithCompany } from "@/services/JobService";
+import { redirect } from "next/navigation";
+import * as z from "zod";
 
 export async function createJobPost(
   values: z.infer<typeof createJobPostSchema>,

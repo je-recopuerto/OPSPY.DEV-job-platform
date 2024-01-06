@@ -11,9 +11,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { CircleEllipsisIcon } from "lucide-react";
-import { unsaveJob, withdrawApplication } from "@/app/actions";
 import { JobApplication } from ".prisma/client";
+import { withdrawApplication } from "@/app/actions";
+import { CircleEllipsisIcon } from "lucide-react";
 import {
   Dialog,
   DialogContent,

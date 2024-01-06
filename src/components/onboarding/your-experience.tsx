@@ -1,11 +1,11 @@
 import { OnboardingCardProps } from "@/components/onboarding/getting-started";
+import { Button } from "@/components/ui/button";
 import {
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { MinusIcon, PlusIcon } from "lucide-react";
 
 export default function YourExperience({ form }: OnboardingCardProps) {

@@ -1,15 +1,14 @@
 "use client";
 
-import { DataTable } from "@/components/table/data-table";
-import { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "@/components/ui/checkbox";
-import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
-import Link from "next/link";
-import { ApplicationWithJob } from "@/services/ApplicationService";
 import { ApplicationsTableRowActions } from "@/components/dashboard/applications/applications-table-row-actions";
-import { applicationStatuses } from "@/components/dashboard/saved-job-table";
-import React from "react";
 import { ApplicationsTableToolbar } from "@/components/dashboard/applications/applications-table-toolbar";
+import { applicationStatuses } from "@/components/dashboard/saved-job-table";
+import { DataTable } from "@/components/table/data-table";
+import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ApplicationWithJob } from "@/services/ApplicationService";
+import { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
 
 type JobTrackerTableProps = {
   data: ApplicationWithJob[];

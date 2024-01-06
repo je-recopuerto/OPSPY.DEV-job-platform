@@ -1,11 +1,11 @@
 import { signIn, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
-import React from "react";
 import {
   DropdownMenuItem,
   DropdownMenuShortcut,
 } from "@/components/ui/dropdown-menu";
 import { LogOut } from "lucide-react";
+import React from "react";
 
 export function SignIn({
   provider,

@@ -1,6 +1,6 @@
 import knock, { applicationCreatedKnock } from "@/lib/knock";
-import { JobPost, User } from "@prisma/client";
 import { JobPostWithCompany } from "@/services/JobService";
+import { User } from "@prisma/client";
 
 export async function notifyApplicationCreated(
   user: User,

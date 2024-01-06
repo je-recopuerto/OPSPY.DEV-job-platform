@@ -1,5 +1,5 @@
-import OnboardingForm from "@/components/onboarding/OnboardCard";
 import { auth } from "@/auth";
+import OnboardingForm from "@/components/onboarding/OnboardCard";
 import { getUserById } from "@/services/UserService";
 import { redirect } from "next/navigation";
 
