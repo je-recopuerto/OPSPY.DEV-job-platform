@@ -52,6 +52,7 @@ model JobPost {
   workMode     WorkMode         @default(ONSITE)
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
+  expiresAt    DateTime?
   companyId    Int
   company      Company          @relation(fields: [companyId], references: [id])
   JobTracker   JobTracker[]

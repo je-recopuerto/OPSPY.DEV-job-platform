@@ -12,6 +12,7 @@ import {
 } from "@/services/JobService";
 import { ApplicationStatus, JobStatus } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
 import { CheckIcon, LucideIcon, XIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -56,6 +57,36 @@ export const columns: ColumnDef<JobPostWithApplications>[] = [
     cell: ({ row }) => {
       return (
         <Link href={`/jobs/${row.original.id}`}>{row.original.title}</Link>
+      );
+    },
+    enableSorting: true,
+    enableHiding: false,
+    accessorFn: (row) => row.title,
+  },
+  {
+    accessorKey: "createdAt",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Posted At" />
+    ),
+    cell: ({ row }) => {
+      return <>{format(row.original.createdAt, "MMM dd, yyyy HH:mm")}</>;
+    },
+    enableSorting: true,
+    enableHiding: false,
+    accessorFn: (row) => row.title,
+  },
+  {
+    accessorKey: "expiresAt",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Expires At" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <>
+          {row.original.expiresAt
+            ? format(row.original.expiresAt, "MMM dd, yyyy HH:mm")
+            : "-"}
+        </>
       );
     },
     enableSorting: true,
