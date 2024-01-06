@@ -21,7 +21,6 @@ export default async function UserButton() {
   if (!session?.user) return <SignIn />;
 
   const user = await getUserWithCompanyById(session.user.id);
-  // if (!user) return <SignIn />;
 
   return (
     <DropdownMenu>
@@ -68,32 +67,6 @@ export default async function UserButton() {
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-
-        {/*<DropdownMenuSeparator />*/}
-
-        {/*<DropdownMenuGroup>*/}
-        {/*  {user.company ? (*/}
-        {/*    <>*/}
-        {/*      <DropdownMenuItem asChild>*/}
-        {/*        <Link href={"/dash/(e)"}>*/}
-        {/*          <CreditCard className="mr-2 h-4 w-4" />*/}
-        {/*          <span>Employer Dashboard</span>*/}
-        {/*          <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>*/}
-        {/*        </Link>*/}
-        {/*      </DropdownMenuItem>*/}
-        {/*    </>*/}
-        {/*  ) : (*/}
-        {/*    <>*/}
-        {/*      <DropdownMenuItem asChild>*/}
-        {/*        <Link href={"settings"}>*/}
-        {/*          <Settings className="mr-2 h-4 w-4" />*/}
-        {/*          <span>Need a company</span>*/}
-        {/*          <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>*/}
-        {/*        </Link>*/}
-        {/*      </DropdownMenuItem>*/}
-        {/*    </>*/}
-        {/*  )}*/}
-        {/*</DropdownMenuGroup>*/}
 
         <DropdownMenuSeparator />
 
