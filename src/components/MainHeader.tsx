@@ -12,10 +12,17 @@ export default async function MainHeader() {
       <div className="flex items-center justify-between w-full h-16 max-w-7xl px-4 mx-auto sm:px-6">
         <MainNav />
 
-        <div className={"flex space-x-5 justify-end"}>
-          <ThemeToggle />
-          <NotificationsMenu userId={session?.user!.id!} />
-          <UserButton />
+        <div className={"flex space-x-3 justify-end"}>
+          <div>
+            <ThemeToggle />
+          </div>
+
+          <div>
+            <NotificationsMenu userId={session?.user!.id!} />
+          </div>
+          <div>
+            <UserButton />
+          </div>
         </div>
       </div>
     </header>
