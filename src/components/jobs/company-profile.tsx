@@ -4,9 +4,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Company } from "@prisma/client";
 import React from "react";
+import Image from "next/image";
 
 type CompanyProfileProps = {
   company: Company;
@@ -15,17 +15,17 @@ type CompanyProfileProps = {
 export default function CompanyProfile(props: CompanyProfileProps) {
   return (
     <Card className={"w-full"}>
-      <CardHeader className={"flex flex-row gap-x-3 space-y-0"}>
-        <Avatar className={"h-14 w-14"}>
-          <AvatarImage
-            src={props.company.logoUrl ?? "https://github.com/shadcn.png"}
-            alt={props.company.name}
-            sizes={"cover"}
-          />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+      <CardHeader className={"flex flex-row gap-x-3 space-y-0 p-2"}>
+        <Image
+          className={"h-full rounded-sm"}
+          width={72}
+          height={72}
+          src={props.company.logoUrl ?? "https://github.com/shadcn.png"}
+          alt={props.company.name}
+          sizes={"cover"}
+        />
 
-        <div className={"flex flex-row w-full justify-between"}>
+        <div className={"flex flex-row w-full justify-between p-2"}>
           <div>
             <CardTitle>{props.company.name}</CardTitle>
             <CardDescription>
