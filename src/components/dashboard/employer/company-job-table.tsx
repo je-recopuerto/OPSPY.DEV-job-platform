@@ -22,6 +22,7 @@ import {
   PlayCircleIcon,
   PlayIcon,
   TimerIcon,
+  XIcon,
   XOctagonIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -45,7 +46,7 @@ export const columns: ColumnDef<JobPostWithApplications>[] = [
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
-        className="translate-y-[2px]"
+        className="translate-y-[2px] inline-flex mt-2"
       />
     ),
     cell: ({ row }) => (
@@ -53,7 +54,7 @@ export const columns: ColumnDef<JobPostWithApplications>[] = [
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
-        className="translate-y-[2px]"
+        className="translate-y-[2px] inline-flex mt-2"
       />
     ),
     enableSorting: false,
@@ -81,39 +82,50 @@ export const columns: ColumnDef<JobPostWithApplications>[] = [
     cell: ({ row }) => {
       return (
         <div className={"flex flex-row gap-2"}>
-          <Card>
-            <CardContent className={"flex flex-col text-center p-3"}>
-              <h1 className={"text-green-600 dark:text-green-500"}>Active</h1>
-              <div>
-                {countOfStatuses(
-                  [ApplicationStatus.APPLIED, ApplicationStatus.INTERVIEWING],
-                  row.original.application,
-                )}
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className={"flex flex-col text-center p-3"}>
-              <h1 className={"text-destructive"}>Declined</h1>
-              <div>
-                {countOfStatuses(
-                  [ApplicationStatus.REJECTED],
-                  row.original.application,
-                )}
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className={"flex flex-col text-center p-3"}>
-              <h1 className={""}>Review Now</h1>
-              <div>
-                {countOfStatuses(
-                  [ApplicationStatus.APPLIED],
-                  row.original.application,
-                )}
-              </div>
-            </CardContent>
-          </Card>
+          <p className={"text-sm"}>
+            {row.original.application.length} applications
+            <span className={"text-muted-foreground"}>
+              {" / "}
+              {countOfStatuses(
+                [ApplicationStatus.APPLIED, ApplicationStatus.INTERVIEWING],
+                row.original.application,
+              )}{" "}
+              pending
+            </span>
+          </p>
+          {/*<Card>*/}
+          {/*  <CardContent className={"flex flex-col text-center p-3"}>*/}
+          {/*    <h1 className={"text-green-600 dark:text-green-500"}>Active</h1>*/}
+          {/*    <div>*/}
+          {/*      {countOfStatuses(*/}
+          {/*        [ApplicationStatus.APPLIED, ApplicationStatus.INTERVIEWING],*/}
+          {/*        row.original.application,*/}
+          {/*      )}*/}
+          {/*    </div>*/}
+          {/*  </CardContent>*/}
+          {/*</Card>*/}
+          {/*<Card>*/}
+          {/*  <CardContent className={"flex flex-col text-center p-3"}>*/}
+          {/*    <h1 className={"text-destructive"}>Declined</h1>*/}
+          {/*    <div>*/}
+          {/*      {countOfStatuses(*/}
+          {/*        [ApplicationStatus.REJECTED],*/}
+          {/*        row.original.application,*/}
+          {/*      )}*/}
+          {/*    </div>*/}
+          {/*  </CardContent>*/}
+          {/*</Card>*/}
+          {/*<Card>*/}
+          {/*  <CardContent className={"flex flex-col text-center p-3"}>*/}
+          {/*    <h1>Review Now</h1>*/}
+          {/*    <div>*/}
+          {/*      {countOfStatuses(*/}
+          {/*        [ApplicationStatus.APPLIED],*/}
+          {/*        row.original.application,*/}
+          {/*      )}*/}
+          {/*    </div>*/}
+          {/*  </CardContent>*/}
+          {/*</Card>*/}
         </div>
       );
     },
@@ -172,13 +184,13 @@ const jobStatuses: {
   {
     value: "ACTIVE",
     label: "Active",
-    icon: PlayCircleIcon,
+    icon: CheckIcon,
     color: "text-green-600",
   },
   {
     value: "INACTIVE",
     label: "Inactive",
-    icon: XOctagonIcon,
+    icon: XIcon,
     color: "text-destructive",
   },
 ];
