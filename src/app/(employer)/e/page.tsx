@@ -1,10 +1,10 @@
-import { getUserWithJobTrackersById } from "@/services/UserService";
-import { redirect } from "next/navigation";
 import { auth } from "@/auth";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { getUserWithJobTrackersById } from "@/services/UserService";
 import Image from "next/image";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function EmployerPage() {
   const session = await auth();

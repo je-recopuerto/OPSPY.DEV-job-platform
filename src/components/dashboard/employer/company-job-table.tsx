@@ -6,25 +6,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
 import Link from "next/link";
 import { CompanyJobDataTableRowActions } from "@/components/dashboard/employer/company-job-table-row-actions";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   CompanyWithOpeningsAndApplications,
   JobPostWithApplications,
 } from "@/services/JobService";
 import { ApplicationStatus, JobStatus } from "@prisma/client";
 import { JobApplication } from ".prisma/client";
-import { applicationStatuses } from "@/components/dashboard/saved-job-table";
-import {
-  CheckIcon,
-  CircleIcon,
-  CrossIcon,
-  LucideIcon,
-  PlayCircleIcon,
-  PlayIcon,
-  TimerIcon,
-  XIcon,
-  XOctagonIcon,
-} from "lucide-react";
+import { CheckIcon, LucideIcon, XIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type AppliedJobsTableProps = {
