@@ -1,19 +1,14 @@
 import { JobApplication } from ".prisma/client";
 import AppliedJobsTable from "@/components/dashboard/applied-jobs-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TabsContent } from "@/components/ui/tabs";
 import { getJobApplications } from "@/services/JobService";
 import { CircleSlash2, Timer } from "lucide-react";
 
-type AppliedJobsTabProps = {
-  value: string;
-};
-
-export default async function AppliedJobsTab(props: AppliedJobsTabProps) {
+export default async function AppliedJobsTab() {
   const applications = await getJobApplications();
 
   return (
-    <TabsContent value={props.value} className="space-y-4">
+    <>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -84,16 +79,9 @@ export default async function AppliedJobsTab(props: AppliedJobsTabProps) {
         </Card>
       </div>
       <div className="grid gap-4">
-        <Card className="col-span-4">
-          <CardHeader>
-            <CardTitle>Job Applications</CardTitle>
-          </CardHeader>
-          <CardContent className="px-4">
-            <AppliedJobsTable data={applications} />
-          </CardContent>
-        </Card>
+        <AppliedJobsTable data={applications} />
       </div>
-    </TabsContent>
+    </>
   );
 }
 

@@ -1,11 +1,13 @@
 import { auth } from "@/auth";
+import Spinner from "@/components/cui/Spinner";
 import AppliedJobsTab from "@/components/dashboard/applied-jobs-tab";
 import SavedJobTab from "@/components/dashboard/saved-job-tab";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getUserWithCompanyById } from "@/services/UserService";
 import { DownloadIcon } from "lucide-react";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -33,8 +35,17 @@ export default async function DashboardPage() {
             <TabsTrigger value="savedjobs">Saved Jobs</TabsTrigger>
           </TabsList>
 
-          <AppliedJobsTab value={"applications"} />
-          <SavedJobTab value={"savedjobs"} />
+          <Suspense fallback={<Spinner />}>
+            <TabsContent value={"applications"} className="space-y-4">
+              <AppliedJobsTab />
+            </TabsContent>
+          </Suspense>
+
+          <Suspense fallback={<Spinner />}>
+            <TabsContent value={"savedjobs"} className="space-y-4">
+              <SavedJobTab />
+            </TabsContent>
+          </Suspense>
         </Tabs>
       </div>
     </>

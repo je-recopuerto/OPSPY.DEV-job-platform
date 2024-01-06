@@ -112,39 +112,6 @@ export const columns: ColumnDef<JobPostWithApplications>[] = [
               pending
             </span>
           </p>
-          {/*<Card>*/}
-          {/*  <CardContent className={"flex flex-col text-center p-3"}>*/}
-          {/*    <h1 className={"text-green-600 dark:text-green-500"}>Active</h1>*/}
-          {/*    <div>*/}
-          {/*      {countOfStatuses(*/}
-          {/*        [ApplicationStatus.APPLIED, ApplicationStatus.INTERVIEWING],*/}
-          {/*        row.original.application,*/}
-          {/*      )}*/}
-          {/*    </div>*/}
-          {/*  </CardContent>*/}
-          {/*</Card>*/}
-          {/*<Card>*/}
-          {/*  <CardContent className={"flex flex-col text-center p-3"}>*/}
-          {/*    <h1 className={"text-destructive"}>Declined</h1>*/}
-          {/*    <div>*/}
-          {/*      {countOfStatuses(*/}
-          {/*        [ApplicationStatus.REJECTED],*/}
-          {/*        row.original.application,*/}
-          {/*      )}*/}
-          {/*    </div>*/}
-          {/*  </CardContent>*/}
-          {/*</Card>*/}
-          {/*<Card>*/}
-          {/*  <CardContent className={"flex flex-col text-center p-3"}>*/}
-          {/*    <h1>Review Now</h1>*/}
-          {/*    <div>*/}
-          {/*      {countOfStatuses(*/}
-          {/*        [ApplicationStatus.APPLIED],*/}
-          {/*        row.original.application,*/}
-          {/*      )}*/}
-          {/*    </div>*/}
-          {/*  </CardContent>*/}
-          {/*</Card>*/}
         </div>
       );
     },
