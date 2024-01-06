@@ -11,8 +11,20 @@ import {
   CompanyWithOpeningsAndApplications,
   JobPostWithApplications,
 } from "@/services/JobService";
-import { ApplicationStatus } from "@prisma/client";
+import { ApplicationStatus, JobStatus } from "@prisma/client";
 import { JobApplication } from ".prisma/client";
+import { applicationStatuses } from "@/components/dashboard/saved-job-table";
+import {
+  CheckIcon,
+  CircleIcon,
+  CrossIcon,
+  LucideIcon,
+  PlayCircleIcon,
+  PlayIcon,
+  TimerIcon,
+  XOctagonIcon,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type AppliedJobsTableProps = {
   data: CompanyWithOpeningsAndApplications;
@@ -115,7 +127,24 @@ export const columns: ColumnDef<JobPostWithApplications>[] = [
       <DataTableColumnHeader column={column} title="Status" />
     ),
     cell: ({ row }) => {
-      return <>Active</>;
+      const status = jobStatuses.find(
+        (status) => status.value === row.original.status,
+      );
+
+      if (!status) {
+        return null;
+      }
+
+      return (
+        <div className="flex w-[100px] items-center">
+          {status.icon && (
+            <status.icon
+              className={cn("mr-2 h-4 w-4 text-muted-foreground", status.color)}
+            />
+          )}
+          <span>{status.label}</span>
+        </div>
+      );
     },
     enableSorting: true,
     enableHiding: false,
@@ -133,3 +162,23 @@ const countOfStatuses = (
 ) => {
   return applications.filter((x) => statuses.includes(x.status)).length;
 };
+
+const jobStatuses: {
+  value: JobStatus;
+  label: string;
+  icon?: LucideIcon;
+  color?: string;
+}[] = [
+  {
+    value: "ACTIVE",
+    label: "Active",
+    icon: PlayCircleIcon,
+    color: "text-green-600",
+  },
+  {
+    value: "INACTIVE",
+    label: "Inactive",
+    icon: XOctagonIcon,
+    color: "text-destructive",
+  },
+];

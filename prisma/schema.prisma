@@ -46,6 +46,7 @@ model JobPost {
   maxSalary    Float
   currency     Currency
   type         JobType
+  status       JobStatus        @default(ACTIVE)
   isQuickApply Boolean          @default(false)
   externalLink String?
   workMode     WorkMode         @default(ONSITE)
@@ -56,6 +57,11 @@ model JobPost {
   JobTracker   JobTracker[]
   tags         Tag[]
   application  JobApplication[]
+}
+
+enum JobStatus {
+  ACTIVE
+  INACTIVE
 }
 
 enum WorkMode {
