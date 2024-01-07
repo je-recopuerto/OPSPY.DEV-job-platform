@@ -1,6 +1,5 @@
 "use client";
 
-import { createJobPost } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,7 +13,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import { JobTypeReadable, WorkModeReadable } from "@/lib/enums";
 import { createJobPostSchema } from "@/schemas/jobPost";
+import { createJobPost } from "@/services/actions/job";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Currency, JobType, WorkMode } from "@prisma/client";
 import { useEffect } from "react";
@@ -66,7 +67,7 @@ export default function CreateJobForm() {
         onSubmit={form.handleSubmit((data) => createJobPost(data))}
         className="space-y-8"
       >
-        <div className={"space-y-8"}>
+        <div className={"space-y-6"}>
           <FormField
             control={form.control}
             name="title"
@@ -204,7 +205,7 @@ export default function CreateJobForm() {
                   <SelectContent>
                     {Object.keys(JobType).map((type) => (
                       <SelectItem key={type} value={type}>
-                        {type}
+                        {JobTypeReadable[type as JobType]}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -232,7 +233,7 @@ export default function CreateJobForm() {
                   <SelectContent>
                     {Object.keys(WorkMode).map((type) => (
                       <SelectItem key={type} value={type}>
-                        {type}
+                        {WorkModeReadable[type as WorkMode]}
                       </SelectItem>
                     ))}
                   </SelectContent>

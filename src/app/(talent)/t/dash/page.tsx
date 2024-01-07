@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import ProfileSetupAlert from "@/components/ alerts/profile-setup-alert";
+import ProfileSetupAlert from "@/components/alerts/profile-setup-alert";
 import Spinner from "@/components/cui/Spinner";
 import AppliedJobsTab from "@/components/dashboard/applied-jobs-tab";
 import SavedJobTab from "@/components/dashboard/saved-job-tab";

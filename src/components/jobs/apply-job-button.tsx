@@ -1,4 +1,3 @@
-import { quickApply } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,6 +11,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
 import { JobPostWithCompany } from "@/services/JobService";
+import { quickApply } from "@/services/actions/application";
 import { Gauge } from "lucide-react";
 
 type ApplyJobDialogProps = {

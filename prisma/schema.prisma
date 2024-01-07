@@ -85,7 +85,7 @@ model JobApplication {
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
   user      User              @relation(fields: [userId], references: [id])
-  job       JobPost           @relation(fields: [jobId], references: [id])
+  job       JobPost           @relation(fields: [jobId], references: [id], onDelete: Cascade)
 }
 
 model JobTracker {
@@ -95,7 +95,7 @@ model JobTracker {
   updatedAt DateTime @updatedAt
   userId    String
   user      User     @relation(fields: [userId], references: [id])
-  job       JobPost  @relation(fields: [jobId], references: [id])
+  job       JobPost  @relation(fields: [jobId], references: [id], onDelete: Cascade)
 }
 
 enum ApplicationStatus {

@@ -11,7 +11,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { withdrawApplication } from "@/app/actions";
 import {
   Dialog,
   DialogContent,
@@ -21,16 +20,21 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { JobPost } from "@prisma/client";
-import { CircleEllipsisIcon } from "lucide-react";
+import { JobPostWithApplications } from "@/services/JobService";
+import { deleteJobPost } from "@/services/actions/job";
+import { CircleEllipsisIcon, TrashIcon } from "lucide-react";
+import { useState } from "react";
 
 interface DataTableRowActionsProps {
-  row: Row<JobPost>;
+  row: Row<JobPostWithApplications>;
 }
 
 export function CompanyJobDataTableRowActions({
   row,
 }: DataTableRowActionsProps) {
+  const [open, setOpen] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -43,39 +47,37 @@ export function CompanyJobDataTableRowActions({
         </Button>
       </DropdownMenuTrigger>
 
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DropdownMenuContent align="end" className="w-[160px]">
-          {/*<DropdownMenuItem>Edit</DropdownMenuItem>*/}
-          {/*<DropdownMenuItem>Make a copy</DropdownMenuItem>*/}
-          {/*<DropdownMenuSub>*/}
-          {/*  <DropdownMenuSubTrigger>Set Status</DropdownMenuSubTrigger>*/}
-          {/*  <DropdownMenuSubContent>*/}
-          {/*  </DropdownMenuSubContent>*/}
-          {/*</DropdownMenuSub>*/}
-          {/*<DropdownMenuSeparator />*/}
           <DialogTrigger asChild>
             <DropdownMenuItem>
-              Withdraw
+              <TrashIcon className={"w-4 h-4 mr-2"} />
+              Delete
               <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
             </DropdownMenuItem>
           </DialogTrigger>
         </DropdownMenuContent>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Are you sure you want to withdraw?</DialogTitle>
-            <DialogDescription>
-              If you have applied through quick apply,{" "}
-              <b>you will not be able to apply again</b>, and{" "}
-              <b>your application will no longer be visible to the company.</b>
-            </DialogDescription>
+            <DialogTitle>
+              Are you sure you want to delete this job post?
+            </DialogTitle>
+            <DialogDescription>This action cannot be undone.</DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button
               type="submit"
               variant={"destructive"}
-              onClick={async () => await withdrawApplication(row.original.id)}
+              onClick={async () => {
+                setDeleting(true);
+                await deleteJobPost(row.original.id);
+                setDeleting(false);
+                setOpen(false);
+              }}
+              disabled={deleting}
             >
-              Withdraw
+              <TrashIcon className={"w-4 h-4 mr-2"} />
+              {deleting ? "Deleting..." : "Delete"}
             </Button>
           </DialogFooter>
         </DialogContent>

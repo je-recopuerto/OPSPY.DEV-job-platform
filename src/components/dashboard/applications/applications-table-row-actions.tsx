@@ -12,8 +12,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { unsaveJob } from "@/app/actions";
 import { ApplicationWithJob } from "@/services/ApplicationService";
+import { unsaveJob } from "@/services/actions/job";
 import { CircleEllipsisIcon, EyeIcon, TrashIcon } from "lucide-react";
 import Link from "next/link";
 

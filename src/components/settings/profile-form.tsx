@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { updateProfile } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -19,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
+import { updateProfile } from "@/services/actions/profile";
 import { User } from "@prisma/client";
 import { format } from "date-fns";
 import { CalendarIcon, Loader2 } from "lucide-react";

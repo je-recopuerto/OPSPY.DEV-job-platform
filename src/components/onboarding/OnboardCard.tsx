@@ -1,12 +1,12 @@
 "use client";
 
-import { setOnboarding } from "@/app/actions";
 import FormSubmitButton from "@/components/onboarding/form-submit";
 import GettingStarted from "@/components/onboarding/getting-started";
 import { Form } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/components/ui/use-toast";
 import { onboardingSchema } from "@/schemas/onboardingSchema";
+import { setOnboarding } from "@/services/actions/onboarding";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";

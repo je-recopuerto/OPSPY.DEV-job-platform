@@ -12,8 +12,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { JobApplication } from ".prisma/client";
-import { withdrawApplication } from "@/app/actions";
+import { withdrawApplication } from "@/services/actions/application";
 import { CircleEllipsisIcon } from "lucide-react";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -21,7 +22,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "../ui/dialog";
 
 interface DataTableRowActionsProps {
@@ -31,6 +31,8 @@ interface DataTableRowActionsProps {
 export function AppliedJobDataTableRowActions({
   row,
 }: DataTableRowActionsProps) {
+  const [open, setOpen] = useState(false);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -42,14 +44,14 @@ export function AppliedJobDataTableRowActions({
           <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DropdownMenuContent align="end" className="w-[160px]">
-          <DialogTrigger asChild>
-            <DropdownMenuItem>
-              Withdraw
-              <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-            </DropdownMenuItem>
-          </DialogTrigger>
+          {/*<DialogTrigger asChild>*/}
+          <DropdownMenuItem onClick={() => setOpen(true)}>
+            Withdraw
+            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          {/*</DialogTrigger>*/}
         </DropdownMenuContent>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -64,7 +66,10 @@ export function AppliedJobDataTableRowActions({
             <Button
               type="submit"
               variant={"destructive"}
-              onClick={async () => await withdrawApplication(row.original.id)}
+              onClick={async () => {
+                await withdrawApplication(row.original.id);
+                setOpen(false);
+              }}
             >
               Withdraw
             </Button>
