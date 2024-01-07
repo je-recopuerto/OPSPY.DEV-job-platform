@@ -6,6 +6,7 @@ import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
 import { PreferenceSet } from "@knocklabs/node";
 import { ChannelType } from "@knocklabs/node/dist/src/common/interfaces";
+import { ChannelTypePreferences } from "@knocklabs/node/dist/src/resources/preferences/interfaces";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
@@ -72,6 +73,15 @@ export default function PreferencesForm(props: PreferencesFormProps) {
     }
   }, [isSubmitSuccessful, toast, isSubmitting]);
 
+  const isChecked = (
+    channelTypes: ChannelTypePreferences | null,
+    type: ChannelType,
+  ): boolean => {
+    if (!channelTypes) return false;
+    if (!channelTypes[type]) return false;
+    return channelTypes[type] as boolean;
+  };
+
   return (
     <Form {...form}>
       <form
@@ -91,11 +101,10 @@ export default function PreferencesForm(props: PreferencesFormProps) {
                   <input
                     type="checkbox"
                     className="form-checkbox"
-                    defaultChecked={
-                      props.preferences.channel_types[
-                        preferenceType.code
-                      ] as boolean
-                    }
+                    defaultChecked={isChecked(
+                      props.preferences.channel_types,
+                      preferenceType.code,
+                    )}
                     {...form.register(`channel_types.${preferenceType.code}`)}
                   />
                   <span className="text-sm">{preferenceType.name}</span>

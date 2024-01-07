@@ -17,9 +17,6 @@ export default async function JobPage(props: JobPageParams) {
   const session = await auth();
   if (!session || !session.user) return;
 
-  // wait 10 seconds
-  // await new Promise((resolve) => setTimeout(resolve, 10000));
-
   const result = await getJobPostFromIdUserScoped(
     props.params.jobId,
     session.user.id,
