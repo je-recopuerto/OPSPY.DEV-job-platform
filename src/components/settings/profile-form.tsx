@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
 
 import { updateProfile } from "@/app/actions";
@@ -10,7 +9,6 @@ import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -67,7 +65,7 @@ export function ProfileForm(props: ProfileFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(async (data) => await updateProfile(data))}
-        className="space-y-8"
+        className="space-y-5"
       >
         <div className={"grid gap-4 w-full grid-cols-2"}>
           <FormField
@@ -123,10 +121,6 @@ export function ProfileForm(props: ProfileFormProps) {
                 onChange={field.onChange}
                 defaultValue={props.user.bio ?? ""}
               />
-              <FormDescription>
-                You can manage verified email addresses in your{" "}
-                <Link href="/examples/forms">email settings</Link>.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -172,9 +166,6 @@ export function ProfileForm(props: ProfileFormProps) {
                   />
                 </PopoverContent>
               </Popover>
-              <FormDescription>
-                Your date of birth is used to calculate your age.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
