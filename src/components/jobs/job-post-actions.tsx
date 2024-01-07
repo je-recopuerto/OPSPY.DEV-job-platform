@@ -10,13 +10,15 @@ import { useState } from "react";
 
 export default function JobActions({
   job,
-  isFollowingInitial,
+  isSavedInitial,
+  isApplied,
 }: {
   job: JobPostWithCompany;
-  isFollowingInitial: boolean;
+  isSavedInitial: boolean;
+  isApplied: boolean;
 }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [isFollowing, setIsFollowing] = useState(isFollowingInitial);
+  const [isSaved, setIsSaved] = useState(isSavedInitial);
 
   const toggle = async () => {
     setIsLoading(true);
@@ -28,20 +30,20 @@ export default function JobActions({
       duration: 1500,
     });
 
-    setIsFollowing(!removed);
+    setIsSaved(!removed);
     setIsLoading(false);
   };
 
   return (
     <div className={"flex flex-row gap-2"}>
-      <ApplyJobButton post={job} />
+      <ApplyJobButton post={job} hasApplied={isApplied} />
 
       <Button
         onClick={() => toggle()}
-        variant={isFollowing ? "destructive" : "default"}
+        variant={isSaved ? "destructive" : "default"}
         disabled={isLoading}
       >
-        {isFollowing ? (
+        {isSaved ? (
           <PinOff className={"h-5 w-5"} />
         ) : (
           <Pin className={"h-5 w-5"} />

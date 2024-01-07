@@ -16,13 +16,23 @@ import { Gauge } from "lucide-react";
 
 type ApplyJobDialogProps = {
   post: JobPostWithCompany;
+  hasApplied: boolean;
 };
 
 export default function ApplyJobButton(props: ApplyJobDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Apply Now</Button>
+        <Button variant="outline" disabled={props.hasApplied}>
+          {props.hasApplied ? (
+            <>
+              <Gauge className={"h-4 w-4 mr-2"} />
+              Applied
+            </>
+          ) : (
+            "Apply"
+          )}
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         {props.post.isQuickApply && (

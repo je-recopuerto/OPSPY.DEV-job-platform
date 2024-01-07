@@ -167,14 +167,11 @@ export async function quickApply(jobId: number) {
   }
 
   try {
-    const exists = await prisma.jobApplication.findFirst({
-      where: {
-        jobId: jobId,
-        userId: user.id,
-      },
-    });
-
-    if (exists) throw new Error("Job application already exists");
+    const alreadyApplied = await isUserAppliedToJob(user.id, jobId);
+    if (alreadyApplied) {
+      console.log("User already applied to job:", jobId);
+      return false;
+    }
 
     const result = await prisma.jobApplication.create({
       data: {
@@ -200,6 +197,20 @@ export async function quickApply(jobId: number) {
     console.error("Error creating job application:", e);
     return false;
   }
+}
+
+export async function isUserAppliedToJob(
+  userId: string,
+  jobId: number,
+): Promise<boolean> {
+  const count = await prisma.jobApplication.count({
+    where: {
+      userId: userId,
+      jobId: jobId,
+    },
+  });
+
+  return count > 0;
 }
 
 export async function updateProfile(

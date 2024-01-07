@@ -199,6 +199,45 @@ export function getJobPostFromId(id: number) {
   });
 }
 
+export async function getJobPostFromIdUserScoped(
+  id: number,
+  userId: string,
+): Promise<{
+  jobPost?: JobPostWithCompany;
+  isSaved: boolean;
+  hasApplied: boolean;
+} | null> {
+  const result = (await prisma.$transaction([
+    prisma.jobPost.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        company: true,
+        tags: true,
+      },
+    }),
+    prisma.jobApplication.findFirst({
+      where: {
+        userId: userId,
+        jobId: id,
+      },
+    }),
+    prisma.jobTracker.findFirst({
+      where: {
+        userId: userId,
+        jobId: id,
+      },
+    }),
+  ])) as any;
+
+  return {
+    jobPost: result[0],
+    hasApplied: result[1] !== null,
+    isSaved: result[2] !== null,
+  };
+}
+
 export type JobApplicationWithCompany = Prisma.JobApplicationGetPayload<{
   include: {
     job: {
