@@ -43,16 +43,6 @@ export function MainNav({
       >
         Companies
       </Link>
-
-      <Link
-        href="/t/welcome"
-        className={`${activeClass(
-          currentPage,
-          "/t/welcome",
-        )} text-sm font-medium transition-colors hover:text-primary`}
-      >
-        (TEST) Onboarding
-      </Link>
     </nav>
   );
 }
