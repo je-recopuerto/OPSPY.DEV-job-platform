@@ -4,8 +4,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getJobApplications } from "@/services/JobService";
 import { CircleSlash2, Timer } from "lucide-react";
 
-export default async function AppliedJobsTab() {
-  const applications = await getJobApplications();
+type AppliedJobsTabProps = {
+  userId: string;
+};
+
+export default async function AppliedJobsTab(props: AppliedJobsTabProps) {
+  const applications = await getJobApplications(props.userId);
 
   return (
     <>

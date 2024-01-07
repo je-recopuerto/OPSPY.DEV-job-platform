@@ -6,8 +6,15 @@ import { DataTable } from "@/components/table/data-table";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { JobApplicationWithCompany } from "@/services/JobService";
 import { ColumnDef } from "@tanstack/react-table";
+import { format, formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 
 type JobApplicationTableProps = {
@@ -83,6 +90,40 @@ export const columns: ColumnDef<JobApplicationWithCompany>[] = [
     },
     enableSorting: true,
     enableHiding: false,
+  },
+  {
+    accessorKey: "appliedAt",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Applied At" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span>
+                {format(row.original.createdAt, "MMM dd, yyyy HH:mm")}
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <div>
+                {formatDistanceToNow(row.original.createdAt, {
+                  addSuffix: true,
+                })}
+              </div>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+    sortingFn: (rowA, rowB, id) => {
+      return (
+        rowA.original.createdAt.getTime() - rowB.original.createdAt.getTime()
+      );
+    },
   },
   {
     accessorKey: "status",

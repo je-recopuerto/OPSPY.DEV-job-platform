@@ -209,10 +209,15 @@ export type JobApplicationWithCompany = Prisma.JobApplicationGetPayload<{
   };
 }>;
 
-export function getJobApplications(): Promise<JobApplicationWithCompany[]> {
+export function getJobApplications(
+  userId: string,
+): Promise<JobApplicationWithCompany[]> {
   return prisma.jobApplication.findMany({
     orderBy: {
       createdAt: "desc",
+    },
+    where: {
+      userId: userId,
     },
     include: {
       job: {
