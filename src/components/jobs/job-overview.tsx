@@ -17,11 +17,11 @@ type JobListingProps = {
   isFollowing: boolean;
 };
 
-export default function JobListing(props: JobListingProps) {
+export default function JobOverview(props: JobListingProps) {
   return (
     <Card>
       <CardHeader className={"flex flex-row gap-x-4 space-y-0"}>
-        <Avatar className={"h-10 w-10"}>
+        <Avatar className={"h-10 w-10 rounded-sm"}>
           <AvatarImage
             src={props.job.company.logoUrl ?? "https://github.com/shadcn.png"}
             alt={props.job.company.name}

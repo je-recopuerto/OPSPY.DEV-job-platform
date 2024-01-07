@@ -1,8 +1,11 @@
+import JobFilterSkeleton from "@/components/jobs/job-filter-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function LoadingJobPage() {
   return (
     <div className={"p-8"}>
+      <JobFilterSkeleton />
+
       <div className={"flex flex-col gap-4"}>
         <div className="flex items-center space-x-4">
           <Skeleton className="h-12 w-12 rounded-full" />

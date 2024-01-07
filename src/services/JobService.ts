@@ -187,7 +187,7 @@ export type JobPostWithCompany = Prisma.JobPostGetPayload<{
   };
 }>;
 
-export function getJobPostFromId(id: number) {
+export function getJobPostFromId(id: string) {
   return prisma.jobPost.findUnique({
     where: {
       id: id,
@@ -200,7 +200,7 @@ export function getJobPostFromId(id: number) {
 }
 
 export async function getJobPostFromIdUserScoped(
-  id: number,
+  id: string,
   userId: string,
 ): Promise<{
   jobPost?: JobPostWithCompany;

@@ -39,7 +39,7 @@ export default function JobActions({
       <ApplyJobButton post={job} hasApplied={isApplied} />
 
       <Button
-        onClick={() => toggle()}
+        onClick={toggle}
         variant={isSaved ? "destructive" : "default"}
         disabled={isLoading}
       >

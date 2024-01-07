@@ -1,5 +1,6 @@
 "use server";
 
+import { JobApplication } from ".prisma/client";
 import { auth } from "@/auth";
 import prisma from "@/lib/db";
 import { createJobPostSchema } from "@/schemas/jobPost";
@@ -8,6 +9,7 @@ import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
 import { JobPostWithCompany } from "@/services/JobService";
 import { notifyApplicationCreated } from "@/services/KnockService";
 import { getUserById, getUserWithCompanyById } from "@/services/UserService";
+import { JobPost, User } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import * as z from "zod";
@@ -79,12 +81,12 @@ export async function unsaveJob(id: number) {
     },
   });
 
-  revalidatePath("/dash");
+  // revalidatePath("/dash");
 
   return result;
 }
 
-export async function saveJob(id: number, userId: string) {
+export async function saveJob(id: JobPost["id"], userId: User["id"]) {
   return prisma.jobTracker.create({
     data: {
       jobId: id,
@@ -93,7 +95,7 @@ export async function saveJob(id: number, userId: string) {
   });
 }
 
-export async function toggleSaveJob(id: number) {
+export async function toggleSaveJob(id: JobPost["id"]) {
   "use server";
 
   const session = await auth();
@@ -120,11 +122,11 @@ export async function toggleSaveJob(id: number) {
     console.log("Creating new tracker for job:", id);
   }
 
-  revalidatePath("/t/dash");
+  // revalidatePath("/t/dash");
   return removed;
 }
 
-export async function withdrawApplication(jobId: number) {
+export async function withdrawApplication(jobId: JobApplication["id"]) {
   const session = await auth();
   if (!session || !session.user) throw new Error("User not found");
 
@@ -156,7 +158,7 @@ export async function withdrawApplication(jobId: number) {
   }
 }
 
-export async function quickApply(jobId: number) {
+export async function quickApply(jobId: JobPost["id"]) {
   const session = await auth();
   if (!session || !session.user) throw new Error("User not found");
 
@@ -200,8 +202,8 @@ export async function quickApply(jobId: number) {
 }
 
 export async function isUserAppliedToJob(
-  userId: string,
-  jobId: number,
+  userId: User["id"],
+  jobId: JobPost["id"],
 ): Promise<boolean> {
   const count = await prisma.jobApplication.count({
     where: {
