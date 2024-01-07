@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { getUserWithCompanyById } from "@/services/UserService";
-import { Cloud, CreditCard, Github, LifeBuoy, Settings } from "lucide-react";
+import { Cloud, CreditCard, Github, Settings } from "lucide-react";
 import Link from "next/link";
 import { SignIn, SignOut } from "./auth-components";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -70,14 +70,14 @@ export default async function UserButton() {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem>
+        <DropdownMenuItem disabled>
           <Github className="mr-2 h-4 w-4" />
           <span>GitHub</span>
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          <LifeBuoy className="mr-2 h-4 w-4" />
-          <span>Support</span>
-        </DropdownMenuItem>
+        {/*<DropdownMenuItem>*/}
+        {/*  <LifeBuoy className="mr-2 h-4 w-4" />*/}
+        {/*  <span>Support</span>*/}
+        {/*</DropdownMenuItem>*/}
         <DropdownMenuItem disabled>
           <Cloud className="mr-2 h-4 w-4" />
           <span>API</span>

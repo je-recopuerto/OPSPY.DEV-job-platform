@@ -44,14 +44,6 @@ export function AppliedJobDataTableRowActions({
       </DropdownMenuTrigger>
       <Dialog>
         <DropdownMenuContent align="end" className="w-[160px]">
-          {/*<DropdownMenuItem>Edit</DropdownMenuItem>*/}
-          {/*<DropdownMenuItem>Make a copy</DropdownMenuItem>*/}
-          {/*<DropdownMenuSub>*/}
-          {/*  <DropdownMenuSubTrigger>Set Status</DropdownMenuSubTrigger>*/}
-          {/*  <DropdownMenuSubContent>*/}
-          {/*  </DropdownMenuSubContent>*/}
-          {/*</DropdownMenuSub>*/}
-          {/*<DropdownMenuSeparator />*/}
           <DialogTrigger asChild>
             <DropdownMenuItem>
               Withdraw
