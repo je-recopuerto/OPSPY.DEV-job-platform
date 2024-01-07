@@ -51,7 +51,6 @@ const preferenceTypes: {
 ];
 
 export default function PreferencesForm(props: PreferencesFormProps) {
-  // TODO: Not working
   const { toast } = useToast();
 
   const form = useForm<PreferenceSet>({
@@ -70,43 +69,41 @@ export default function PreferencesForm(props: PreferencesFormProps) {
         description: "✅ Successfully updated notification settings!",
         duration: 3000,
       });
-
-      form.reset();
     }
   }, [isSubmitSuccessful, toast, isSubmitting]);
 
   return (
     <Form {...form}>
-      <p className={"text-sm text-muted-foreground"}>
-        {Math.floor(Math.random() * 10) + 1}
-      </p>
       <form
-        onSubmit={form.handleSubmit(
-          async (data) => await updateNotificationSettings(data),
-        )}
+        onSubmit={form.handleSubmit(async (data) => {
+          const result = await updateNotificationSettings(data);
+
+          // Set the form values to the result
+          form.reset(result);
+        })}
         className="space-y-5"
       >
-        {/*<div className={"grid gap-4 w-full grid-cols-2"}>*/}
-        {/*  {preferenceTypes.map((preferenceType) => {*/}
-        {/*    return (*/}
-        {/*      <div key={preferenceType.code}>*/}
-        {/*        <label className="flex items-center space-x-2">*/}
-        {/*          <input*/}
-        {/*            type="checkbox"*/}
-        {/*            className="form-checkbox"*/}
-        {/*            defaultChecked={*/}
-        {/*              props.preferences.channel_types[*/}
-        {/*                preferenceType.code*/}
-        {/*              ] as boolean*/}
-        {/*            }*/}
-        {/*            {...form.register(preferenceType.code)}*/}
-        {/*          />*/}
-        {/*          <span className="text-sm">{preferenceType.name}</span>*/}
-        {/*        </label>*/}
-        {/*      </div>*/}
-        {/*    );*/}
-        {/*  })}*/}
-        {/*</div>*/}
+        <div className={"grid gap-4 w-full grid-cols-2"}>
+          {preferenceTypes.map((preferenceType) => {
+            return (
+              <div key={preferenceType.code}>
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    className="form-checkbox"
+                    defaultChecked={
+                      props.preferences.channel_types[
+                        preferenceType.code
+                      ] as boolean
+                    }
+                    {...form.register(`channel_types.${preferenceType.code}`)}
+                  />
+                  <span className="text-sm">{preferenceType.name}</span>
+                </label>
+              </div>
+            );
+          })}
+        </div>
 
         <div className="flex justify-end">
           <Button

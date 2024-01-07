@@ -12,7 +12,6 @@ export default async function NotificationsPage() {
   const user = await getUserById(session.user.id);
   if (!user) return redirect("/");
 
-  console.log("Getting preferences for user", user.id);
   const preferences = await knock.users.getPreferences(user.id, {
     preferenceSet: "default",
   });
@@ -29,8 +28,6 @@ export default async function NotificationsPage() {
       <Separator />
 
       <PreferencesForm preferences={preferences} />
-
-      {/*<ProfileForm user={user} />*/}
     </div>
   );
 }

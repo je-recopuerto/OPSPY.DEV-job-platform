@@ -19,7 +19,9 @@ export default async function ProfilePage() {
           This is how others will see you on the site.
         </p>
       </div>
+
       <Separator />
+
       <ProfileForm user={user} />
     </div>
   );
