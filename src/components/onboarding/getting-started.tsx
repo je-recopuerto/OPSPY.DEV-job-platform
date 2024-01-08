@@ -53,7 +53,7 @@ export default function GettingStarted({ form }: OnboardingCardProps) {
               name="firstName"
               render={({ field }) => (
                 <FormItem className={"flex-grow"}>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>First Name</FormLabel>
                   <FormControl>
                     <Input placeholder="Saul" {...field} />
                   </FormControl>

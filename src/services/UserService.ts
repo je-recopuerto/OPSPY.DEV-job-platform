@@ -1,10 +1,21 @@
 import prisma from "@/lib/db";
-import { Prisma, User } from "@prisma/client";
+import { Prisma, UploadedCv, User } from "@prisma/client";
 
 export function getUserById(id: string): Promise<User | null> {
   return prisma.user.findFirst({
     where: {
       id: id,
+    },
+  });
+}
+
+export function getUserWithCvsById(id: string): Promise<UserWithCvs | null> {
+  return prisma.user.findFirst({
+    where: {
+      id: id,
+    },
+    include: {
+      cv: true,
     },
   });
 }
@@ -21,6 +32,12 @@ export function getUserWithCompanyById(
     },
   });
 }
+
+export type UserWithCvs = Prisma.UserGetPayload<{
+  include: {
+    cv: true;
+  };
+}>;
 
 export type UserWithJobTrackers = Prisma.UserGetPayload<{
   include: {
@@ -43,6 +60,14 @@ export function getUserWithJobTrackersById(
     },
     include: {
       trackers: true,
+    },
+  });
+}
+
+export function getCvById(id: UploadedCv["id"]) {
+  return prisma.uploadedCv.findUnique({
+    where: {
+      id: id,
     },
   });
 }

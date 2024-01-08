@@ -3,6 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { updateProfile } from "@/app/settings/_actions";
+import CvInput from "@/components/settings/cv-input";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -14,12 +16,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
-import { updateProfile } from "@/services/actions/profile";
-import { User } from "@prisma/client";
+import { UserWithCvs } from "@/services/UserService";
 import { format } from "date-fns";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import { useEffect } from "react";
@@ -27,7 +29,7 @@ import { z } from "zod";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 type ProfileFormProps = {
-  user: User;
+  user: UserWithCvs;
 };
 
 export function ProfileForm(props: ProfileFormProps) {
@@ -35,6 +37,7 @@ export function ProfileForm(props: ProfileFormProps) {
 
   const form = useForm<z.infer<typeof updateProfileFormSchema>>({
     resolver: zodResolver(updateProfileFormSchema),
+    mode: "onChange",
     defaultValues: {
       firstName: props.user.firstName ?? "",
       lastName: props.user.lastName ?? "",
@@ -56,8 +59,6 @@ export function ProfileForm(props: ProfileFormProps) {
         description: "✅ Successfully updated profile!",
         duration: 3000,
       });
-
-      form.reset();
     }
   }, [isSubmitSuccessful, toast, isSubmitting]);
 
@@ -65,7 +66,7 @@ export function ProfileForm(props: ProfileFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(async (data) => await updateProfile(data))}
-        className="space-y-5"
+        className="space-y-4"
       >
         <div className={"grid gap-4 w-full grid-cols-2"}>
           <FormField
@@ -202,16 +203,27 @@ export function ProfileForm(props: ProfileFormProps) {
         {/*    Add URL*/}
         {/*  </Button>*/}
         {/*</div>*/}
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Please wait
-            </>
-          ) : (
-            <>Update profile</>
-          )}
-        </Button>
+
+        <div className={"flex flex-col space-y-2"}>
+          <Label htmlFor="terms">CV</Label>
+          <CvInput cv={props.user.cv} />
+          <p className={"text-sm text-muted-foreground"}>
+            Companies will be able to see your CV.
+          </p>
+        </div>
+
+        <div className="flex justify-end">
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Please wait
+              </>
+            ) : (
+              <>Save</>
+            )}
+          </Button>
+        </div>
       </form>
     </Form>
   );

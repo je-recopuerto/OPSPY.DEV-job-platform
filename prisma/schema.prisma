@@ -22,6 +22,17 @@ model User {
   company      Company?
   trackers     JobTracker[]
   applications JobApplication[]
+  cv           UploadedCv?
+}
+
+model UploadedCv {
+  id        Int      @id @default(autoincrement())
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+  name      String
+  file      String
 }
 
 model Company {

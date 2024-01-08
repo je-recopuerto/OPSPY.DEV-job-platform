@@ -23,6 +23,22 @@ export type JobTrackerWithPost = Prisma.JobTrackerGetPayload<{
   };
 }>;
 
+export async function getRandomJobPost() {
+  const result = await prisma.jobPost.findMany({
+    take: 3,
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      company: true,
+    },
+  });
+
+  // pick one of the three
+  const randomIndex = Math.floor(Math.random() * result.length);
+  return result[randomIndex];
+}
+
 export function getJobPostsWithCompany(
   filter?: z.infer<typeof filterJobPostsSchema>,
 ) {

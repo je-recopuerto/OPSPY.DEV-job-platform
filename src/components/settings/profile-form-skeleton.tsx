@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ProfileFormSkeleton() {
   return (
-    <>
+    <div className={"space-y-6"}>
       <div className={"flex flex-row w-full gap-4"}>
         <div className={"w-full"}>
           {/* Skeleton for FormLabel */}
@@ -186,6 +186,6 @@ export default function ProfileFormSkeleton() {
       {/*    <>Update profile</>*/}
       {/*  )}*/}
       {/*</Button>*/}
-    </>
+    </div>
   );
 }
