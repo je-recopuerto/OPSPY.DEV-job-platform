@@ -57,9 +57,6 @@ async function NotificationsPage({ className }: { className?: string }) {
     preferenceSet: "default",
   });
 
-  // Wait 4 seconds
-  // await new Promise((resolve) => setTimeout(resolve, 4000));
-
   return (
     <div className={cn("space-y-6", className)}>
       <div>

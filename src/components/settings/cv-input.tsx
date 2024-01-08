@@ -1,25 +1,11 @@
 "use client";
 
 import { uploadCv } from "@/app/settings/_actions";
-import CvCard from "@/components/settings/cv-card";
 import { Card, CardContent } from "@/components/ui/card";
-import { UploadedCv } from "@prisma/client";
 import { Plus } from "lucide-react";
 import React, { useRef, useState } from "react";
 
-type CvInputProps = {
-  cv: UploadedCv | null;
-};
-
-export default function CvInput(props: CvInputProps) {
-  return (
-    <div className={"flex flex-col gap-4"}>
-      {props.cv ? <CvCard cv={props.cv} /> : <AddCvButton />}
-    </div>
-  );
-}
-
-const AddCvButton = () => {
+export default function AddCvButton() {
   const [uploading, setUploading] = useState(false);
 
   const upload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,4 +68,4 @@ const AddCvButton = () => {
       />
     </Card>
   );
-};
+}

@@ -5,6 +5,7 @@ import { cvTag } from "@/lib/cache-tags";
 import prisma from "@/lib/db";
 import knock from "@/lib/knock";
 import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
+import { deleteFile, getUrlFor, uploadFile } from "@/services/BlobService";
 import {
   getCvById,
   getUserById,
@@ -13,6 +14,7 @@ import {
 import { PreferenceSet } from "@knocklabs/node";
 import { UploadedCv } from "@prisma/client";
 import { revalidatePath, revalidateTag } from "next/cache";
+import { v4 as uuidv4 } from "uuid";
 import * as z from "zod";
 
 export async function updateNotificationSettings(preferences: PreferenceSet) {
@@ -39,6 +41,15 @@ export async function deleteCv(cvId: UploadedCv["id"]) {
   if (!cv) return;
 
   console.log("Deleting cv", cvId, "for user", user.id);
+
+  // Try to delete from blob storage
+  const fileName = cv.file.split("/").pop()?.split("?")[0] ?? "";
+
+  console.log("Deleting cv from blob storage:", fileName);
+  const result = await deleteFile("cvs", fileName);
+  if (result.errorCode) {
+    console.error("Failed to delete cv from blob storage", result);
+  }
 
   await prisma.uploadedCv.delete({
     where: {
@@ -92,6 +103,11 @@ export async function updateProfile(
 
 export async function uploadCv(formData: FormData) {
   const cv = formData.get("cv") as File;
+  const buffer = await cv.arrayBuffer();
+
+  console.log("Uploading cv", cv, buffer);
+
+  if (!cv) throw new Error("No cv found in form data");
 
   const session = await auth();
   if (!session || !session.user) throw new Error("User not found");
@@ -99,11 +115,22 @@ export async function uploadCv(formData: FormData) {
   const user = await getUserWithCvsById(session.user.id);
   if (!user) throw new Error("User not found");
 
+  // Upload cv to blob storage
+  console.log("Uploading file:", cv);
+
+  const fileName = uuidv4() + cv.name;
+  const response = await uploadFile("cvs", buffer, cv.type, fileName);
+  const url = getUrlFor("cvs", fileName);
+
+  console.log("Successfully uploaded cv to blob storage", url);
+
+  console.log("Uploading cv to blob storage");
+
   // Create cv object on user
   const result = await prisma.uploadedCv.create({
     data: {
       name: cv.name,
-      file: "test",
+      file: url,
       user: {
         connect: {
           id: user.id,

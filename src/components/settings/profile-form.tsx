@@ -4,7 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { updateProfile } from "@/app/settings/_actions";
-import CvInput from "@/components/settings/cv-input";
+import CvCard from "@/components/settings/cv-card";
+import AddCvButton from "@/components/settings/cv-input";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -206,7 +207,9 @@ export function ProfileForm(props: ProfileFormProps) {
 
         <div className={"flex flex-col space-y-2"}>
           <Label htmlFor="terms">CV</Label>
-          <CvInput cv={props.user.cv} />
+          <div className={"flex flex-col gap-4"}>
+            {props.user.cv ? <CvCard cv={props.user.cv} /> : <AddCvButton />}
+          </div>
           <p className={"text-sm text-muted-foreground"}>
             Companies will be able to see your CV.
           </p>
