@@ -32,7 +32,7 @@ export default async function UserButton() {
           <Avatar className="w-8 h-8">
             {session.user.image && (
               <AvatarImage
-                src={session.user.image}
+                src={user?.imageURL ?? session.user.image ?? ""}
                 alt={session.user.name ?? ""}
               />
             )}

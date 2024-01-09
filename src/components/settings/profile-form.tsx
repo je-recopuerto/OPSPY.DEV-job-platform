@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { updateProfile } from "@/app/settings/_actions";
 import CvCard from "@/components/settings/cv-card";
 import AddCvButton from "@/components/settings/cv-input";
+import ProfilePictureInput from "@/components/settings/profile-picture-input";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -38,7 +39,6 @@ export function ProfileForm(props: ProfileFormProps) {
 
   const form = useForm<z.infer<typeof updateProfileFormSchema>>({
     resolver: zodResolver(updateProfileFormSchema),
-    mode: "onChange",
     defaultValues: {
       firstName: props.user.firstName ?? "",
       lastName: props.user.lastName ?? "",
@@ -69,49 +69,55 @@ export function ProfileForm(props: ProfileFormProps) {
         onSubmit={form.handleSubmit(async (data) => await updateProfile(data))}
         className="space-y-4"
       >
-        <div className={"grid gap-4 w-full grid-cols-2"}>
-          <FormField
-            control={form.control}
-            name="firstName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>First Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="shadcn" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <div className={"flex flex-row space-y-2 space-x-8 mb-4"}>
+          <ProfilePictureInput user={props.user} />
 
-          <FormField
-            control={form.control}
-            name="lastName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Last Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="shadcn" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className={"flex flex-col space-y-2"}>
+            <div className={"flex flex-row gap-4"}>
+              <FormField
+                control={form.control}
+                name="firstName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>First Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="shadcn" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Last Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="shadcn" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="shadcn" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
         </div>
-
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
         <FormField
           control={form.control}
@@ -122,6 +128,7 @@ export function ProfileForm(props: ProfileFormProps) {
               <Textarea
                 onChange={field.onChange}
                 defaultValue={props.user.bio ?? ""}
+                placeholder="I'm a software engineer with experience in..."
               />
               <FormMessage />
             </FormItem>
@@ -211,7 +218,8 @@ export function ProfileForm(props: ProfileFormProps) {
             {props.user.cv ? <CvCard cv={props.user.cv} /> : <AddCvButton />}
           </div>
           <p className={"text-sm text-muted-foreground"}>
-            Companies will be able to see your CV.
+            Companies will be able to see your CV. Max size{" "}
+            {process.env.NEXT_PUBLIC_MAX_CV_FILE_SIZE}
           </p>
         </div>
 

@@ -2,10 +2,13 @@
 
 import { uploadCv } from "@/app/settings/_actions";
 import { Card, CardContent } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
 import { Plus } from "lucide-react";
 import React, { useRef, useState } from "react";
 
 export default function AddCvButton() {
+  const { toast } = useToast();
+
   const [uploading, setUploading] = useState(false);
 
   const upload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,8 +23,16 @@ export default function AddCvButton() {
 
       await uploadCv(formData);
     } catch (error) {
+      if (!(error instanceof Error)) return;
+
       console.error("Error uploading CV:", error);
       // Handle error appropriately
+
+      toast({
+        variant: "default",
+        title: "Error",
+        description: "❌ " + error.message,
+      });
     } finally {
       setUploading(false);
     }
@@ -34,7 +45,12 @@ export default function AddCvButton() {
   };
 
   return (
-    <Card className={"cursor-pointer border-dashed"} onClick={handleCardClick}>
+    <Card
+      className={
+        "cursor-pointer border-dashed hover:bg-secondary transition-colors"
+      }
+      onClick={handleCardClick}
+    >
       <CardContent className={"flex flex-row pt-6 gap-4"}>
         {uploading ? (
           <>

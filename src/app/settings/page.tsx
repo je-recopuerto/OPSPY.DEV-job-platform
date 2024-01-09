@@ -4,27 +4,11 @@ import { ProfileForm } from "@/components/settings/profile-form";
 import ProfileFormSkeleton from "@/components/settings/profile-form-skeleton";
 import { Separator } from "@/components/ui/separator";
 import knock from "@/lib/knock";
-import { cn } from "@/lib/utils";
-import { getUserById, getUserWithCvsById } from "@/services/UserService";
+import { getUserWithCvsById, UserWithCvs } from "@/services/UserService";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 export default async function SettingsProfilePage() {
-  return (
-    <>
-      <Suspense fallback={<ProfileFormSkeleton />}>
-        <ProfilePage />
-      </Suspense>
-
-      <Suspense fallback={<>Loading...</>}>
-        <NotificationsPage className={"mt-6"} />
-      </Suspense>
-    </>
-  );
-}
-
-// Server component
-async function ProfilePage() {
   const session = await auth();
   if (!session || !session.user) return redirect("/");
 
@@ -32,7 +16,21 @@ async function ProfilePage() {
   if (!user) return redirect("/t/welcome");
 
   return (
-    <div className="max-w-2xl">
+    <div className={"space-y-8"}>
+      <Suspense fallback={<ProfileFormSkeleton />}>
+        <ProfilePage user={user} />
+      </Suspense>
+
+      <Suspense fallback={<>Loading...</>}>
+        <NotificationsPage user={user} />
+      </Suspense>
+    </div>
+  );
+}
+
+async function ProfilePage({ user }: PageProps) {
+  return (
+    <div>
       <div>
         <h3 className="text-2xl font-bold tracking-tight">Profile</h3>
         <p className="text-sm text-muted-foreground">
@@ -40,25 +38,20 @@ async function ProfilePage() {
         </p>
       </div>
 
-      <Separator className={"my-5"} />
+      <Separator className={"mt-3 mb-6"} />
 
       <ProfileForm user={user} />
     </div>
   );
 }
-async function NotificationsPage({ className }: { className?: string }) {
-  const session = await auth();
-  if (!session || !session.user) return redirect("/");
 
-  const user = await getUserById(session.user.id);
-  if (!user) return redirect("/");
-
+async function NotificationsPage({ user }: PageProps) {
   const preferences = await knock.users.getPreferences(user.id, {
     preferenceSet: "default",
   });
 
   return (
-    <div className={cn("space-y-6", className)}>
+    <div>
       <div>
         <h3 className="text-2xl font-bold tracking-tight">Notifications</h3>
         <p className="text-sm text-muted-foreground">
@@ -66,9 +59,13 @@ async function NotificationsPage({ className }: { className?: string }) {
         </p>
       </div>
 
-      <Separator />
+      <Separator className={"mt-3 mb-6"} />
 
       <PreferencesForm preferences={preferences} />
     </div>
   );
 }
+
+type PageProps = {
+  user: UserWithCvs;
+};

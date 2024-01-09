@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { cvTag } from "@/lib/cache-tags";
 import prisma from "@/lib/db";
 import knock from "@/lib/knock";
+import { fileSizeToBytes } from "@/lib/utils";
 import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
 import { deleteFile, getUrlFor, uploadFile } from "@/services/BlobService";
 import {
@@ -105,9 +106,20 @@ export async function uploadCv(formData: FormData) {
   const cv = formData.get("cv") as File;
   const buffer = await cv.arrayBuffer();
 
+  const maxSize = process.env.NEXT_PUBLIC_MAX_CV_FILE_SIZE ?? "10MB";
+  console.log(
+    "Got file of length",
+    buffer.byteLength,
+    "bytes with max size",
+    fileSizeToBytes(maxSize),
+  );
+  if (buffer.byteLength > fileSizeToBytes(maxSize)) {
+    throw new Error(`File is too large. Please upload a file under ${maxSize}`);
+  }
+
   console.log("Uploading cv", cv, buffer);
 
-  if (!cv) throw new Error("No cv found in form data");
+  if (!cv) throw new Error("No CV found in form");
 
   const session = await auth();
   if (!session || !session.user) throw new Error("User not found");
@@ -116,8 +128,6 @@ export async function uploadCv(formData: FormData) {
   if (!user) throw new Error("User not found");
 
   // Upload cv to blob storage
-  console.log("Uploading file:", cv);
-
   const fileName = uuidv4() + cv.name;
   const response = await uploadFile("cvs", buffer, cv.type, fileName);
   const url = getUrlFor("cvs", fileName);
@@ -144,30 +154,46 @@ export async function uploadCv(formData: FormData) {
   console.log(user, "is uploading cv", cv, "with result:", result);
 }
 
-// export async function uploadProfilePicture(formData: FormData) {
-//   console.log("Uploading profile picture");
-//
-//   const session = await auth();
-//   if (!session || !session.user) throw new Error("User not found");
-//
-//   const user = await getUserById(session.user.id);
-//   if (!user) throw new Error("User not found");
-//
-//   console.log("Uploading profile picture for user:", user);
-//
-//   const result = await prisma.user.upsert({
-//     where: {
-//       id: user.id,
-//     },
-//     create: {
-//       id: user.id,
-//       profilePicture: file,
-//     },
-//     update: {
-//       profilePicture: file,
-//     },
-//   });
-//
-//   console.log("Successfully uploaded profile picture for", user.firstName);
-//   return result;
-// }
+export async function uploadProfilePicture(formData: FormData) {
+  console.log("Uploading profile picture");
+
+  const session = await auth();
+  if (!session || !session.user) throw new Error("User not found");
+
+  const user = await getUserById(session.user.id);
+  if (!user) throw new Error("User not found");
+
+  console.log("Uploading profile picture for user:", user);
+
+  const picture = formData.get("profilePicture") as File;
+  const buffer = await picture.arrayBuffer();
+
+  const maxSize = process.env.NEXT_PUBLIC_MAX_PROFILE_PICTURE_SIZE ?? "10MB";
+  if (buffer.byteLength > fileSizeToBytes(maxSize)) {
+    throw new Error(`File is too large. Please upload a file under ${maxSize}`);
+  }
+
+  const fileName = uuidv4() + picture.name;
+  const blobResponse = await uploadFile(
+    "profile-pictures",
+    buffer,
+    picture.type,
+    fileName,
+  );
+
+  const blobUrl = getUrlFor("profile-pictures", fileName);
+
+  const result = await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      imageURL: blobUrl,
+    },
+  });
+
+  revalidatePath("/settings/profile");
+
+  console.log("Successfully uploaded profile picture for", user.firstName);
+  return result;
+}
