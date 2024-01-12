@@ -6,7 +6,12 @@ import prisma from "@/lib/db";
 import knock from "@/lib/knock";
 import { fileSizeToBytes } from "@/lib/utils";
 import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
-import { deleteFile, getUrlFor, uploadFile } from "@/services/BlobService";
+import {
+  deleteFile,
+  getExpirableUrlFor,
+  getUrlFor,
+  uploadFile,
+} from "@/services/BlobService";
 import {
   getCvById,
   getUserById,
@@ -43,11 +48,8 @@ export async function deleteCv(cvId: UploadedCv["id"]) {
 
   console.log("Deleting cv", cvId, "for user", user.id);
 
-  // Try to delete from blob storage
-  const fileName = cv.file.split("/").pop()?.split("?")[0] ?? "";
-
-  console.log("Deleting cv from blob storage:", fileName);
-  const result = await deleteFile("cvs", fileName);
+  console.log("Deleting cv from blob storage:", cv.fileName);
+  const result = await deleteFile("cvs", cv.fileName);
   if (result.errorCode) {
     console.error("Failed to delete cv from blob storage", result);
   }
@@ -128,19 +130,16 @@ export async function uploadCv(formData: FormData) {
   if (!user) throw new Error("User not found");
 
   // Upload cv to blob storage
-  const fileName = uuidv4() + cv.name;
-  const response = await uploadFile("cvs", buffer, cv.type, fileName);
-  const url = getUrlFor("cvs", fileName);
-
-  console.log("Successfully uploaded cv to blob storage", url);
+  const blobName = uuidv4() + cv.name;
+  const _ = await uploadFile("cvs", buffer, cv.type, blobName);
 
   console.log("Uploading cv to blob storage");
 
   // Create cv object on user
   const result = await prisma.uploadedCv.create({
     data: {
-      name: cv.name,
-      file: url,
+      friendlyName: cv.name,
+      fileName: blobName,
       user: {
         connect: {
           id: user.id,
@@ -152,6 +151,22 @@ export async function uploadCv(formData: FormData) {
   revalidatePath("/settings/profile");
 
   console.log(user, "is uploading cv", cv, "with result:", result);
+}
+
+export async function requestCvUrl(cvId: UploadedCv["id"]) {
+  const session = await auth();
+  if (!session || !session.user) throw new Error("User not found");
+
+  const user = await getUserById(session.user.id);
+  if (!user) throw new Error("User not found");
+
+  const cv = await getCvById(cvId);
+  if (!cv) throw new Error("CV not found");
+
+  console.log("Requesting cv url for", cvId, "for user", user.id);
+
+  const expiresAt = new Date(new Date().valueOf() + 60 * 60 * 1000); // 1 hour from now
+  return getExpirableUrlFor("cvs", cv.fileName, expiresAt);
 }
 
 export async function uploadProfilePicture(formData: FormData) {

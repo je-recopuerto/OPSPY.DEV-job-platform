@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteCv } from "@/app/settings/_actions";
+import { deleteCv, requestCvUrl } from "@/app/settings/_actions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -19,11 +19,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { UploadedCv } from "@prisma/client";
 import { MoreVertical } from "lucide-react";
-import Link from "next/link";
 import { useState } from "react";
 
 export default function CvCardActions({ cv }: { cv: UploadedCv }) {
   const [open, setOpen] = useState(false);
+
+  const viewCv = async () => {
+    const url = await requestCvUrl(cv.id);
+    window.open(url, "_blank");
+  };
 
   return (
     <DropdownMenu>
@@ -38,9 +42,7 @@ export default function CvCardActions({ cv }: { cv: UploadedCv }) {
       </DropdownMenuTrigger>
       <Dialog open={open} onOpenChange={setOpen}>
         <DropdownMenuContent align="end" className="w-[160px]">
-          <Link href={cv.file} target={"_blank"}>
-            <DropdownMenuItem>View</DropdownMenuItem>
-          </Link>
+          <DropdownMenuItem onClick={viewCv}>View</DropdownMenuItem>
           <DropdownMenuItem onClick={() => setOpen(true)}>
             Delete
             <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
@@ -55,9 +57,7 @@ export default function CvCardActions({ cv }: { cv: UploadedCv }) {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Link href={cv.file} target={"_blank"}>
-              <Button variant={"secondary"}>View</Button>
-            </Link>
+            <Button variant={"secondary"}>View</Button>
             <Button
               type="submit"
               variant={"destructive"}

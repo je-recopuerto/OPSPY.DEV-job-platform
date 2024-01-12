@@ -11,7 +11,7 @@ export default function CvCard({ cv }: { cv: UploadedCv }) {
           <FileText />
         </div>
         <div className={"my-auto"}>
-          <p className={"text-sm"}>{shortenString(cv.name, 25)}</p>
+          <p className={"text-sm"}>{shortenString(cv.friendlyName, 25)}</p>
         </div>
         <div className={"ml-auto"}>
           <CvCardActions cv={cv} />
