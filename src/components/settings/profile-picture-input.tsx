@@ -66,7 +66,7 @@ export default function ProfilePictureInput(props: ProfilePictureInputProps) {
       <div className={"flex flex-col gap-2"}>
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger type={"button"}>
               <Avatar
                 className={"h-48 w-48 cursor-pointer"}
                 onClick={handleCardClick}
