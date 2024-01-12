@@ -50,14 +50,11 @@ export function getExpirableUrlFor(
   const containerClient = blobService.getContainerClient(containerName);
   const blobClient = containerClient.getBlobClient(fileName);
 
-  // Start date
-  const startsOn = new Date();
-
   const sasOptions: BlobSASSignatureValues = {
     containerName,
-    // blobName: fileName,
+    blobName: fileName,
     permissions: BlobSASPermissions.parse("r"),
-    startsOn: startsOn,
+    startsOn: new Date(),
     expiresOn: expiresAt,
     ipRange: { start: "0.0.0.0", end: "255.255.255.255" },
   };
