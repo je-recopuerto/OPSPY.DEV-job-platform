@@ -38,16 +38,23 @@ export default async function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen bg-background font-sans antialiased flex flex-col",
           fontSans.variable,
         )}
       >
         <NextAuthSessionProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
             <NavigationProgressBar />
             <MainHeader />
 
-            <div className={"max-w-[90rem] mx-auto mt-14"}>{children}</div>
+            <div className={"max-w-[90rem] mx-auto mt-14 flex-grow"}>
+              {children}
+            </div>
 
             <Toaster />
           </ThemeProvider>

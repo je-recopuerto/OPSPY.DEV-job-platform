@@ -50,6 +50,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.49.3",
     "react-textarea-autosize": "^8.5.3",
+    "react-wrap-balancer": "^1.1.0",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
     "use-debounce": "^10.0.0",
