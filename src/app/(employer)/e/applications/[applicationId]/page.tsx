@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { SignIn } from "@/components/auth-components";
+import ViewCvButton from "@/components/request-cv-button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -13,7 +14,7 @@ import { cn } from "@/lib/utils";
 import { getApplicationById } from "@/services/ApplicationService";
 import { getUserWithCompanyById } from "@/services/UserService";
 import { formatDistance } from "date-fns";
-import { ChevronLeft, FileSearch } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
@@ -112,10 +113,7 @@ export default async function ApplicationPage({
               >
                 <Button variant={"destructive"}>Reject</Button>
                 <Button className={"bg-green-500"}>Accept</Button>
-                <Button variant={"default"}>
-                  <FileSearch className={"mr-2 h-4 w-4"} />
-                  View CV
-                </Button>
+                <ViewCvButton cvId={application.user.cv?.id} />
               </div>
             </div>
           </CardHeader>
