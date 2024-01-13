@@ -17,7 +17,7 @@ export default async function JobFeed({
   searchParams,
   className,
 }: {
-  userId: string;
+  userId?: string;
   searchParams: z.infer<typeof filterJobPostsSchema>;
   className?: string;
 }) {

@@ -15,11 +15,10 @@ type JobPageParams = {
 
 export default async function JobPage(props: JobPageParams) {
   const session = await auth();
-  if (!session || !session.user) return;
 
   const result = await getJobPostFromIdUserScoped(
     props.params.jobId,
-    session.user.id,
+    session?.user?.id,
   );
 
   if (!result || !result.jobPost) {
@@ -33,7 +32,7 @@ export default async function JobPage(props: JobPageParams) {
       <div className={"flex columns-2 gap-2 max-h-[70vh]"}>
         <JobFeed
           className={"w-[40%]"}
-          userId={session.user.id}
+          userId={session?.user?.id}
           searchParams={props.searchParams}
         />
 

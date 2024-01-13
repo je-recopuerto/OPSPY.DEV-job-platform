@@ -217,7 +217,7 @@ export function getJobPostFromId(id: string) {
 
 export async function getJobPostFromIdUserScoped(
   id: string,
-  userId: string,
+  userId?: string,
 ): Promise<{
   jobPost?: JobPostWithCompany;
   isSaved: boolean;

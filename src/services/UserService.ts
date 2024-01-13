@@ -54,7 +54,7 @@ export type UserWithCompany = Prisma.UserGetPayload<{
 }>;
 
 export function getUserWithJobTrackersById(
-  id: string,
+  id?: string,
 ): Promise<UserWithJobTrackers | null> {
   return prisma.user.findFirst({
     where: {
