@@ -1,11 +1,9 @@
 import { auth } from "@/auth";
 import MainHeader from "@/components/MainHeader";
-import NavigationProgressBar from "@/components/nav-progress-bar";
-import { ThemeProvider } from "@/components/theme-provider";
+import { Providers } from "@/components/providers/providers";
 import { Toaster } from "@/components/ui/toaster";
 import knock from "@/lib/knock";
 import { cn } from "@/lib/utils";
-import NextAuthSessionProvider from "@/providers/SessionProvider";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
@@ -42,23 +40,15 @@ export default async function RootLayout({
           fontSans.variable,
         )}
       >
-        <NextAuthSessionProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <NavigationProgressBar />
-            <MainHeader />
+        <Providers>
+          <MainHeader />
 
-            <div className={"max-w-[90rem] mx-auto mt-14 flex-grow"}>
-              {children}
-            </div>
+          <div className={"max-w-[90rem] mx-auto mt-14 flex-grow"}>
+            {children}
+          </div>
 
-            <Toaster />
-          </ThemeProvider>
-        </NextAuthSessionProvider>
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );
