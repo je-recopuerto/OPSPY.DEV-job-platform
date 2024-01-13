@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { SignIn } from "@/components/auth-components";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 import { getApplicationById } from "@/services/ApplicationService";
 import { getUserWithCompanyById } from "@/services/UserService";
 import { formatDistance } from "date-fns";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, FileSearch } from "lucide-react";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
@@ -105,6 +105,17 @@ export default async function ApplicationPage({
                   </small>
                 </CardTitle>
                 <CardDescription>{application.user.bio}</CardDescription>
+              </div>
+
+              <div
+                className={"flex flex-row gap-4 justify-end ml-auto mb-auto"}
+              >
+                <Button variant={"destructive"}>Reject</Button>
+                <Button className={"bg-green-500"}>Accept</Button>
+                <Button variant={"default"}>
+                  <FileSearch className={"mr-2 h-4 w-4"} />
+                  View CV
+                </Button>
               </div>
             </div>
           </CardHeader>

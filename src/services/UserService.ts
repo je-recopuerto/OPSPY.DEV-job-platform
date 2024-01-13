@@ -16,6 +16,7 @@ export function getUserWithCvsById(id: string): Promise<UserWithCvs | null> {
     },
     include: {
       cv: true,
+      workExperience: true,
     },
   });
 }
@@ -36,6 +37,7 @@ export function getUserWithCompanyById(
 export type UserWithCvs = Prisma.UserGetPayload<{
   include: {
     cv: true;
+    workExperience: true;
   };
 }>;
 

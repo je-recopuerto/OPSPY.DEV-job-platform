@@ -10,19 +10,37 @@ generator client {
 }
 
 model User {
-  id           String           @id @unique @default(cuid())
-  firstName    String?
-  lastName     String?
-  dateOfBirth  DateTime?
-  bio          String?
-  email        String           @unique
-  imageURL     String?
-  location     String?
-  createdAt    DateTime         @default(now())
-  company      Company?
-  trackers     JobTracker[]
-  applications JobApplication[]
-  cv           UploadedCv?
+  id             String           @id @unique @default(cuid())
+  firstName      String?
+  lastName       String?
+  dateOfBirth    DateTime?
+  bio            String?
+  email          String           @unique
+  imageURL       String?
+  location       String?
+  createdAt      DateTime         @default(now())
+  company        Company?
+  trackers       JobTracker[]
+  applications   JobApplication[]
+  cv             UploadedCv?
+  githubLink     String?
+  linkedinLink   String?
+  twitterLink    String?
+  workExperience WorkExperience[]
+}
+
+model WorkExperience {
+  id          Int       @id @default(autoincrement())
+  userId      String
+  title       String
+  company     String
+  location    String?
+  startDate   DateTime
+  endDate     DateTime?
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  user        User      @relation(fields: [userId], references: [id])
 }
 
 model UploadedCv {

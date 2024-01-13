@@ -4,39 +4,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { updateProfile } from "@/app/settings/_actions";
-import CvCard from "@/components/settings/cv-card";
-import AddCvButton from "@/components/settings/cv-input";
-import ProfilePictureInput from "@/components/settings/profile-picture-input";
+import BasicProfile from "@/components/settings/basic-profile";
+import LinksForm from "@/components/settings/links-form";
+import WorkExperienceForm from "@/components/settings/work-experience-form";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/components/ui/use-toast";
-import { cn } from "@/lib/utils";
+import { Form } from "@/components/ui/form";
+import { toast } from "@/components/ui/use-toast";
 import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
 import { UserWithCvs } from "@/services/UserService";
-import { format } from "date-fns";
-import { CalendarIcon, Loader2 } from "lucide-react";
+import { Loader2, SaveIcon } from "lucide-react";
 import { useEffect } from "react";
 import { z } from "zod";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 type ProfileFormProps = {
   user: UserWithCvs;
 };
 
 export function ProfileForm(props: ProfileFormProps) {
-  const { toast } = useToast();
-
   const form = useForm<z.infer<typeof updateProfileFormSchema>>({
     resolver: zodResolver(updateProfileFormSchema),
     defaultValues: {
@@ -45,6 +29,18 @@ export function ProfileForm(props: ProfileFormProps) {
       dateOfBirth: props.user.dateOfBirth,
       email: props.user.email ?? "",
       bio: props.user.bio ?? "",
+      githubLink: props.user.githubLink ?? "",
+      linkedInLink: props.user.linkedinLink ?? "",
+      twitterLink: props.user.twitterLink ?? "",
+      workExperience:
+        props.user.workExperience.map((experience) => ({
+          jobTitle: experience.title,
+          company: experience.company,
+          location: experience.location ?? "",
+          startDate: new Date(experience.startDate),
+          endDate: experience.endDate ? new Date(experience.endDate) : null,
+          description: experience.description ?? "",
+        })) ?? [],
     },
   });
 
@@ -67,174 +63,26 @@ export function ProfileForm(props: ProfileFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(async (data) => await updateProfile(data))}
-        className="space-y-4"
+        className="space-y-14"
       >
-        <div className={"flex flex-row space-y-2 space-x-8 mb-4"}>
-          <ProfilePictureInput user={props.user} />
+        <BasicProfile form={form} user={props.user} />
 
-          <div className={"flex flex-col space-y-2"}>
-            <div className={"flex flex-row gap-4"}>
-              <FormField
-                control={form.control}
-                name="firstName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>First Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="shadcn" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+        <LinksForm form={form} />
+        <WorkExperienceForm form={form} />
 
-              <FormField
-                control={form.control}
-                name="lastName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Last Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="shadcn" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="shadcn" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-
-        <FormField
-          control={form.control}
-          name="bio"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bio</FormLabel>
-              <Textarea
-                onChange={field.onChange}
-                defaultValue={props.user.bio ?? ""}
-                placeholder="I'm a software engineer with experience in..."
-              />
-              <FormMessage />
-            </FormItem>
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </>
+          ) : (
+            <>
+              <SaveIcon className="mr-2 h-4 w-4" />
+              Save Profile
+            </>
           )}
-        />
-
-        <FormField
-          control={form.control}
-          name="dateOfBirth"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Date of birth</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground",
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    captionLayout="dropdown-buttons"
-                    selected={field.value ?? new Date("1900-01-01")}
-                    onSelect={field.onChange}
-                    disabled={(date) =>
-                      date > new Date() || date < new Date("1900-01-01")
-                    }
-                    fromYear={1900}
-                    toYear={new Date().getFullYear()}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {/*<div>*/}
-        {/*  {fields.map((field, index) => (*/}
-        {/*    <FormField*/}
-        {/*      control={form.control}*/}
-        {/*      key={field.id}*/}
-        {/*      name={`urls.${index}.value`}*/}
-        {/*      render={({ field }) => (*/}
-        {/*        <FormItem>*/}
-        {/*          <FormLabel className={cn(index !== 0 && "sr-only")}>*/}
-        {/*            URLs*/}
-        {/*          </FormLabel>*/}
-        {/*          <FormDescription className={cn(index !== 0 && "sr-only")}>*/}
-        {/*            Add links to your website, blog, or social media profiles.*/}
-        {/*          </FormDescription>*/}
-        {/*          <FormControl>*/}
-        {/*            <Input {...field} />*/}
-        {/*          </FormControl>*/}
-        {/*          <FormMessage />*/}
-        {/*        </FormItem>*/}
-        {/*      )}*/}
-        {/*    />*/}
-        {/*  ))}*/}
-        {/*  <Button*/}
-        {/*    type="button"*/}
-        {/*    variant="outline"*/}
-        {/*    size="sm"*/}
-        {/*    className="mt-2"*/}
-        {/*    onClick={() => append({ value: "" })}*/}
-        {/*  >*/}
-        {/*    Add URL*/}
-        {/*  </Button>*/}
-        {/*</div>*/}
-
-        <div className={"flex flex-col space-y-2"}>
-          <Label htmlFor="terms">CV</Label>
-          <div className={"flex flex-col gap-4"}>
-            {props.user.cv ? <CvCard cv={props.user.cv} /> : <AddCvButton />}
-          </div>
-          <p className={"text-sm text-muted-foreground"}>
-            Companies will be able to see your CV. Max size{" "}
-            {process.env.NEXT_PUBLIC_MAX_CV_FILE_SIZE}
-          </p>
-        </div>
-
-        <div className="flex justify-end">
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Please wait
-              </>
-            ) : (
-              <>Save</>
-            )}
-          </Button>
-        </div>
+        </Button>
       </form>
     </Form>
   );

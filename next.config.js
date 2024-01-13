@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  experimental: {
+    // Fixes: https://github.com/vercel/next.js/issues/59432
+    serverComponentsExternalPackages: ["@azure/storage-blob"],
+  },
   images: {
     remotePatterns: [
       {

@@ -5,13 +5,13 @@ import { FileText } from "lucide-react";
 
 export default function CvCard({ cv }: { cv: UploadedCv }) {
   return (
-    <Card className={"cursor-pointer"}>
+    <Card className={"cursor-default"}>
       <CardContent className={"flex flex-row pt-6 gap-4"}>
         <div className={"my-auto"}>
           <FileText />
         </div>
         <div className={"my-auto"}>
-          <p className={"text-sm"}>{shortenString(cv.friendlyName, 25)}</p>
+          <p className={"text-sm"}>{shortenString(cv.friendlyName, 50)}</p>
         </div>
         <div className={"ml-auto"}>
           <CvCardActions cv={cv} />

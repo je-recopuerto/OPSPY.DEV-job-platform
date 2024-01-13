@@ -89,12 +89,43 @@ export async function updateProfile(
       lastName: validatedState.lastName,
       dateOfBirth: validatedState.dateOfBirth,
       email: validatedState.email,
+      githubLink: validatedState.githubLink,
+      linkedinLink: validatedState.linkedInLink,
+      twitterLink: validatedState.twitterLink,
+      workExperience: {
+        create: [
+          ...(validatedState.workExperience ?? []).map((experience) => ({
+            title: experience.jobTitle,
+            company: experience.company,
+            location: experience.location,
+            startDate: experience.startDate,
+            endDate: experience.endDate,
+            description: experience.description,
+          })),
+        ],
+      },
     },
     update: {
       firstName: validatedState.firstName,
       lastName: validatedState.lastName,
       dateOfBirth: validatedState.dateOfBirth,
       email: validatedState.email,
+      githubLink: validatedState.githubLink,
+      linkedinLink: validatedState.linkedInLink,
+      twitterLink: validatedState.twitterLink,
+      workExperience: {
+        deleteMany: {},
+        create: [
+          ...(validatedState.workExperience ?? []).map((experience) => ({
+            title: experience.jobTitle,
+            company: experience.company,
+            location: experience.location,
+            startDate: experience.startDate,
+            endDate: experience.endDate,
+            description: experience.description,
+          })),
+        ],
+      },
     },
   });
 
