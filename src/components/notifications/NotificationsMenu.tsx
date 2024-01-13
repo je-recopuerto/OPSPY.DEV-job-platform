@@ -11,13 +11,17 @@ import { useRef, useState } from "react";
 import "@knocklabs/react-notification-feed/dist/index.css";
 
 type NotificationsMenuProps = {
-  userId: string;
+  userId?: string;
 };
 
 // Source: https://knock.app/blog/how-to-send-in-app-notifications-nextjs13
 export const NotificationsMenu = (props: NotificationsMenuProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const notifButtonRef = useRef(null);
+
+  if (!props.userId) {
+    return null;
+  }
 
   return (
     <KnockFeedProvider
