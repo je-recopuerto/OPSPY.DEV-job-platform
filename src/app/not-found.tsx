@@ -6,7 +6,7 @@ export default function Component() {
       <div className="max-w-md w-full space-y-8 text-center">
         <div className="text-9xl">😞</div>
         <h2 className="mt-6 text-3xl font-extrabold text-gray-900 dark:text-gray-100">
-          Oops! The page you're looking for could not be found.
+          Oops! The page you&apos;re looking for could not be found.
         </h2>
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
           The page you are looking for might have been removed, had its name

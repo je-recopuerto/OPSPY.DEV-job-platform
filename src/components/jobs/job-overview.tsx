@@ -33,7 +33,7 @@ function JobOverview(props: JobListingProps) {
 
         <div>
           <CardTitle className={"text-md"}>
-            <Link href={`/jobs/${props.job.id}`}>{props.job.title}</Link>
+            <Link href={`/jobs?jid=${props.job.id}`}>{props.job.title}</Link>
           </CardTitle>
           <CardDescription>
             {props.job.company.name} | {props.job.location} | {props.job.type} |{" "}

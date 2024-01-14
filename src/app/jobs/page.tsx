@@ -1,6 +1,5 @@
+import { JobPost } from "@/components/jobs/job-post";
 import { getRandomJobPost } from "@/services/JobService";
-import { redirect } from "next/navigation";
-import serialize from "query-string";
 
 export const metadata = {
   title: "Jobs",
@@ -13,14 +12,17 @@ type JobPageParams = {
 };
 
 export default async function JobsPage({ searchParams }: JobPageParams) {
-  const job = await getRandomJobPost();
-
-  // Serialize the searchParams object into a query string
-  const p  = new URLSearchParams();
-  for(const [key, value] of Object.entries(searchParams)) {
-    p.append(key, value.toString());
+  const jobId = firstString(searchParams["jid"]);
+  if (!jobId) {
+    const jobPost = await getRandomJobPost();
+    return <JobPost jobId={jobPost.id} />;
   }
 
   // Append the query string to the redirect URL
-  return redirect(`/jobs/${job.id}?${p.toString()}`);
+  return <JobPost jobId={jobId} />;
 }
+
+const firstString = (value: string | string[]) => {
+  if (Array.isArray(value)) return value[0];
+  return value;
+};

@@ -2,6 +2,7 @@ import { Currency, JobType, WorkMode } from "@prisma/client";
 import { z } from "zod";
 
 export const filterJobPostsSchema = z.object({
+  jid: z.string().optional(),
   keywords: z.string().max(255).optional(),
   tags: z.array(z.string()).optional(),
   minSalary: z.number().min(0).max(500000).optional(),

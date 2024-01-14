@@ -19,8 +19,8 @@ export default async function FeaturedJobs({ count }: { count: number }) {
           Featured Jobs
         </h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {jobs.map((job) => (
-            <Card>
+          {jobs.map((job, key) => (
+            <Card key={key}>
               {/*<img*/}
               {/*  alt="Property 1"*/}
               {/*  className="aspect-[5/3] object-cover w-full"*/}
