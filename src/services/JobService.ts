@@ -54,9 +54,6 @@ export async function getRandomJobPost() {
 export async function getJobPostsWithCompany(
   filter?: z.infer<typeof filterJobPostsSchema>,
 ) {
-  // Wait 10 seconds
-  await new Promise((resolve) => setTimeout(resolve, 10000));
-
   // Coerce string to number. This is currently a workaround
   if (filter?.minSalary) {
     filter.minSalary = Number(filter.minSalary);

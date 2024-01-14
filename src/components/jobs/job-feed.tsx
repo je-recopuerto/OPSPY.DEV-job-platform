@@ -48,6 +48,12 @@ async function JobFeed({
               isFollowing={isFollowing(job, user)}
             />
           ))}
+
+          {jobs.length === 0 && (
+            <p className={"text-center text-sm text-muted-foreground"}>
+              No jobs found. Try changing your filters.
+            </p>
+          )}
         </div>
       </ScrollArea>
     </>
