@@ -14,6 +14,10 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
+export const metadata = {
+  title: "Dashboard",
+};
+
 export default async function EmployerDashboardPage() {
   const session = await auth();
   if (!session?.user) return <SignIn />;

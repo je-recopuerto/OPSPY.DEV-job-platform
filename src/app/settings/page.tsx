@@ -8,6 +8,10 @@ import { getUserWithCvsById, UserWithCvs } from "@/services/UserService";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
+export const metadata = {
+  title: "Settings",
+};
+
 export default async function SettingsProfilePage() {
   const session = await auth();
   if (!session || !session.user) return redirect("/");

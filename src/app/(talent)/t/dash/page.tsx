@@ -10,6 +10,10 @@ import { DownloadIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
+export const metadata = {
+  title: "Dashboard",
+};
+
 export default async function DashboardPage() {
   const session = await auth();
   if (!session || !session.user) return redirect("/");

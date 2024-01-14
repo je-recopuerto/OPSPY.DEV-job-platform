@@ -6,6 +6,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+export const metadata = {
+  title: "Employer",
+};
+
 export default async function EmployerPage() {
   const session = await auth();
   if (!session || !session.user) return redirect("/");

@@ -1,3 +1,5 @@
+import FeaturedJobs from "@/components/home/featured-jobs";
+import FindNextJobCta from "@/components/home/find-next-job";
 import JobFilter from "@/components/home/job-filter";
 import {
   PageActions,
@@ -8,11 +10,11 @@ import {
 
 export default async function Home() {
   return (
-    <div className="container relative">
+    <div>
       <PageHeader>
         {/*<Announcement />*/}
 
-        <PageHeaderHeading> Find your next job </PageHeaderHeading>
+        <PageHeaderHeading>Find your next job</PageHeaderHeading>
         <PageHeaderDescription>
           Search for jobs and apply directly from our platform.
         </PageHeaderDescription>
@@ -20,6 +22,11 @@ export default async function Home() {
           <JobFilter />
         </PageActions>
       </PageHeader>
+
+      <FindNextJobCta />
+
+      <FeaturedJobs count={3} />
+
       {/*<ExamplesNav className="[&>a:first-child]:text-primary" />*/}
       {/*<section className="overflow-hidden rounded-lg border bg-background shadow-md md:hidden md:shadow-xl">*/}
       {/*  <Image*/}

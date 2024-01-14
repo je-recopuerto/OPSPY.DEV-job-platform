@@ -13,6 +13,10 @@ type JobPageParams = {
   searchParams: z.infer<typeof filterJobPostsSchema>;
 };
 
+export const metadata = {
+  title: "Job",
+};
+
 export default async function JobPage(props: JobPageParams) {
   const session = await auth();
 

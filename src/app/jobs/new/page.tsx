@@ -5,6 +5,10 @@ import { Separator } from "@/components/ui/separator";
 import { getUserWithCompanyById } from "@/services/UserService";
 import { redirect } from "next/navigation";
 
+export const metadata = {
+  title: "New Job",
+};
+
 export default async function NewJobPage() {
   const session = await auth();
   if (!session || !session.user) return redirect("/");

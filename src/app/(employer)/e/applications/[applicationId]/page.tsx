@@ -24,6 +24,10 @@ type ApplicationPageProps = {
   };
 };
 
+export const metadata = {
+  title: "Application",
+};
+
 export default async function ApplicationPage({
   params,
 }: ApplicationPageProps) {

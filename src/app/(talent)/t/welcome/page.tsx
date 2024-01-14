@@ -3,6 +3,10 @@ import OnboardingForm from "@/components/onboarding/OnboardCard";
 import { getUserById } from "@/services/UserService";
 import { redirect } from "next/navigation";
 
+export const metadata = {
+  title: "Welcome",
+};
+
 export default async function OnboardingPage() {
   const session = await auth();
   if (!session || !session.user) {
