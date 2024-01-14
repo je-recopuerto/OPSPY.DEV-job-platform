@@ -36,7 +36,7 @@ export default async function EmployerDashboardPage() {
           </h2>
           <div className="flex items-center space-x-2">
             <Button asChild>
-              <Link href={"/jobs/new"}>
+              <Link href={"/e/new-job"}>
                 <PlusIcon className={"w-4 h-4 mr-2"} />
                 Add Job
               </Link>
