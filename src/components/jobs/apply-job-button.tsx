@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -13,6 +13,7 @@ import { toast } from "@/components/ui/use-toast";
 import { JobPostWithCompany } from "@/services/JobService";
 import { quickApply } from "@/services/actions/application";
 import { Gauge } from "lucide-react";
+import Link from "next/link";
 
 type ApplyJobDialogProps = {
   post: JobPostWithCompany;
@@ -82,9 +83,13 @@ export default function ApplyJobButton(props: ApplyJobDialogProps) {
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
-              <Button type={"button"} className={"mx-auto"}>
+              <Link
+                href={props.post.externalLink}
+                className={`${buttonVariants()} mx-auto`}
+                target="_blank"
+              >
                 Apply Externally
-              </Button>
+              </Link>
             </DialogFooter>
           </>
         )}
