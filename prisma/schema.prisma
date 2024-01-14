@@ -54,7 +54,7 @@ model UploadedCv {
 }
 
 model Company {
-  id          Int       @id @default(autoincrement())
+  id          String    @id @default(cuid())
   name        String
   description String?
   logoUrl     String?
@@ -62,8 +62,8 @@ model Company {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   openings    JobPost[]
-  owner       User      @relation(fields: [ownerId], references: [id])
-  ownerId     String    @unique
+  owner       User?     @relation(fields: [ownerId], references: [id])
+  ownerId     String?   @unique
 }
 
 model JobPost {
@@ -82,7 +82,7 @@ model JobPost {
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
   expiresAt    DateTime?
-  companyId    Int
+  companyId    String
   company      Company          @relation(fields: [companyId], references: [id])
   JobTracker   JobTracker[]
   tags         Tag[]
