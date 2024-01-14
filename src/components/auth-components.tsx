@@ -33,7 +33,7 @@ export function SignOut() {
       className="w-full"
     >
       <DropdownMenuItem>
-        <button className="flex flex-row my-auto w-full p-1 items-center">
+        <button className="flex flex-row my-auto w-full items-center">
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

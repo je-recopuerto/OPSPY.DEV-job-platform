@@ -14,7 +14,12 @@ export default async function Home() {
       <PageHeader>
         {/*<Announcement />*/}
 
-        <PageHeaderHeading>Find your next job</PageHeaderHeading>
+        <PageHeaderHeading>
+          Job Hunting,{" "}
+          <h1 className="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">
+            Simplified.
+          </h1>
+        </PageHeaderHeading>
         <PageHeaderDescription>
           Search for jobs and apply directly from our platform.
         </PageHeaderDescription>
