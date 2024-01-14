@@ -18,7 +18,7 @@ export const metadata = {
 export default async function JobPage({ params, searchParams }: JobPageParams) {
   return (
     <>
-      <div className={"flex columns-2 gap-2 max-h-[70vh]"}>
+      <div className={"flex columns-2 gap-2"}>
         <div className={"w-[40%]"}>
           <Suspense fallback={<JobFeedSkeleton />}>
             <JobFeed searchParams={searchParams} />

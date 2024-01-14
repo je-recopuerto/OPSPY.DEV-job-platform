@@ -13,9 +13,6 @@ type JobPostProps = {
 };
 
 async function JobPost({ jobId }: JobPostProps) {
-  // wait 5 seconds
-  // await new Promise((resolve) => setTimeout(resolve, 5000));
-
   const session = await auth();
   const { jobPost, isSaved, hasApplied } = await getJobPostFromIdUserScoped(
     jobId,
