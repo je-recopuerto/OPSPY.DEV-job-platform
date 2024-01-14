@@ -1,9 +1,7 @@
-import { auth } from "@/auth";
-import JobFeed from "@/components/jobs/job-feed";
-import JobFilter from "@/components/jobs/job-filter";
-import JobPost from "@/components/jobs/job-post";
+import { JobFeed, JobFeedSkeleton } from "@/components/jobs/job-feed";
+import { JobPost, JobSkeleton } from "@/components/jobs/job-post";
 import { filterJobPostsSchema } from "@/schemas/jobPost";
-import { getJobPostFromIdUserScoped } from "@/services/JobService";
+import { Suspense } from "react";
 import { z } from "zod";
 
 type JobPageParams = {
@@ -14,37 +12,24 @@ type JobPageParams = {
 };
 
 export const metadata = {
-  title: "Job",
+  title: "Jobs",
 };
 
-export default async function JobPage(props: JobPageParams) {
-  const session = await auth();
-
-  const result = await getJobPostFromIdUserScoped(
-    props.params.jobId,
-    session?.user?.id,
-  );
-
-  if (!result || !result.jobPost) {
-    return <>Post not found!</>;
-  }
-
+export default async function JobPage({ params, searchParams }: JobPageParams) {
   return (
     <>
-      <JobFilter />
-
       <div className={"flex columns-2 gap-2 max-h-[70vh]"}>
-        <JobFeed
-          className={"w-[40%]"}
-          userId={session?.user?.id}
-          searchParams={props.searchParams}
-        />
+        <div className={"w-[40%]"}>
+          <Suspense fallback={<JobFeedSkeleton />}>
+            <JobFeed searchParams={searchParams} />
+          </Suspense>
+        </div>
 
-        <JobPost
-          job={result.jobPost}
-          isSavedInitial={result.isSaved}
-          isApplied={result.hasApplied}
-        />
+        <div className={"w-[60%]"}>
+          <Suspense fallback={<JobSkeleton />}>
+            <JobPost jobId={params.jobId} />
+          </Suspense>
+        </div>
       </div>
     </>
   );

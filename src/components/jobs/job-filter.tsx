@@ -18,7 +18,7 @@ import { z } from "zod";
 
 export default function JobFilter() {
   const pathname = usePathname();
-  const { replace } = useRouter();
+  const router = useRouter();
   const searchParams = useSearchParams();
 
   const form = useForm<z.infer<typeof filterJobPostsSchema>>({
@@ -50,9 +50,8 @@ export default function JobFilter() {
     }
 
     // Redirect to new URL.
-    replace(`${pathname}?${params.toString()}`);
-
-    console.log(values);
+    console.log("Going to redirect to", `${pathname}?${params.toString()}`);
+    router.push(`${pathname}?${params.toString()}`);
   }
 
   return (

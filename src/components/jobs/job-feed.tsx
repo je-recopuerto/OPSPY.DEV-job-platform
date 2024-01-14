@@ -1,29 +1,32 @@
-import JobOverview from "@/components/jobs/job-overview";
+import { auth } from "@/auth";
+import {
+  JobOverview,
+  JobOverviewSkeleton,
+} from "@/components/jobs/job-overview";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { filterJobPostsSchema } from "@/schemas/jobPost";
 import {
-  getJobPostsWithCompany,
   JobPostWithCompany,
+  getJobPostsWithCompany,
 } from "@/services/JobService";
 import {
-  getUserWithJobTrackersById,
   UserWithJobTrackers,
+  getUserWithJobTrackersById,
 } from "@/services/UserService";
 import { z } from "zod";
 
-export default async function JobFeed({
-  userId,
+async function JobFeed({
   searchParams,
   className,
 }: {
-  userId?: string;
   searchParams: z.infer<typeof filterJobPostsSchema>;
   className?: string;
 }) {
+  const session = await auth();
   const [jobs, user] = await Promise.all([
     getJobPostsWithCompany(searchParams),
-    getUserWithJobTrackersById(userId),
+    getUserWithJobTrackersById(session?.user?.id),
   ]);
 
   const isFollowing = (
@@ -50,3 +53,19 @@ export default async function JobFeed({
     </>
   );
 }
+
+function JobFeedSkeleton() {
+  return (
+    <>
+      <ScrollArea className={"w-full"}>
+        <div className={"flex flex-col gap-4"}>
+          {Array.from({ length: 3 }).map((_, i) => (
+            <JobOverviewSkeleton key={i} />
+          ))}
+        </div>
+      </ScrollArea>
+    </>
+  );
+}
+
+export { JobFeed, JobFeedSkeleton };

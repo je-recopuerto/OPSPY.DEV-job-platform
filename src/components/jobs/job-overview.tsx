@@ -11,13 +11,14 @@ import {
 } from "@/components/ui/card";
 import { JobPostWithCompany } from "@/services/JobService";
 import Link from "next/link";
+import { Skeleton } from "../ui/skeleton";
 
 type JobListingProps = {
   job: JobPostWithCompany;
   isFollowing: boolean;
 };
 
-export default function JobOverview(props: JobListingProps) {
+function JobOverview(props: JobListingProps) {
   return (
     <Card>
       <CardHeader className={"flex flex-row gap-x-4 space-y-0"}>
@@ -63,6 +64,37 @@ export default function JobOverview(props: JobListingProps) {
     </Card>
   );
 }
+
+function JobOverviewSkeleton() {
+  return (
+    <Card>
+      <CardHeader className={"flex flex-row gap-x-4 space-y-0"}>
+        <Skeleton className="h-10 w-10 rounded-sm" />
+
+        <div>
+          <div className={"flex flex-col gap-2"}>
+            <Skeleton className="h-4 w-64" />
+            <Skeleton className="h-4 w-32" />
+          </div>
+        </div>
+
+        <div>
+          <div className={"flex flex-row gap-2"}>
+            <Skeleton className="h-4 w-16" />
+            <Skeleton className="h-4 w-16" />
+          </div>
+        </div>
+      </CardHeader>
+
+      <CardContent className={"flex flex-col gap-2"}>
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-full" />
+      </CardContent>
+    </Card>
+  );
+}
+
+export { JobOverview, JobOverviewSkeleton };
 
 function getSalaryRangeString(
   minSalary: number,

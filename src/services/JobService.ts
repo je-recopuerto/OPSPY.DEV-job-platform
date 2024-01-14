@@ -51,9 +51,12 @@ export async function getRandomJobPost() {
   return result[randomIndex];
 }
 
-export function getJobPostsWithCompany(
+export async function getJobPostsWithCompany(
   filter?: z.infer<typeof filterJobPostsSchema>,
 ) {
+  // Wait 10 seconds
+  await new Promise((resolve) => setTimeout(resolve, 10000));
+
   // Coerce string to number. This is currently a workaround
   if (filter?.minSalary) {
     filter.minSalary = Number(filter.minSalary);
@@ -234,7 +237,10 @@ export async function getJobPostFromIdUserScoped(
   jobPost?: JobPostWithCompany;
   isSaved: boolean;
   hasApplied: boolean;
-} | null> {
+}> {
+  // Wait 10 seconds
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   const result = (await prisma.$transaction([
     prisma.jobPost.findUnique({
       where: {
