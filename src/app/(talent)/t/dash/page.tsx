@@ -16,7 +16,7 @@ export const metadata = {
 
 export default async function DashboardPage() {
   const session = await auth();
-  if (!session || !session.user) return redirect("/");
+  if (!session || !session.user || !session.user.id) return redirect("/");
 
   const user = await getUserWithCompanyById(session.user.id);
   // if (!user) return redirect("/t/welcome");

@@ -12,7 +12,8 @@ import { redirect } from "next/navigation";
 
 export async function withdrawApplication(jobId: JobApplication["id"]) {
   const session = await auth();
-  if (!session || !session.user) throw new Error("User not found");
+  if (!session || !session.user || !session.user.id)
+    throw new Error("User not found");
 
   const user = await getUserById(session.user.id);
   if (!user) throw new Error("User not found");
@@ -44,7 +45,8 @@ export async function withdrawApplication(jobId: JobApplication["id"]) {
 
 export async function quickApply(jobId: JobPost["id"]) {
   const session = await auth();
-  if (!session || !session.user) throw new Error("User not found");
+  if (!session || !session.user || !session.user.id)
+    throw new Error("User not found");
 
   const user = await getUserById(session.user.id);
   if (!user) {

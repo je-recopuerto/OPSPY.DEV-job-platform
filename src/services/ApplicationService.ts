@@ -1,5 +1,5 @@
 import prisma from "@/lib/db";
-import { Prisma } from "@prisma/client";
+import { Company, Prisma } from "@prisma/client";
 
 export type ApplicationWithJob = Prisma.JobApplicationGetPayload<{
   include: {
@@ -17,7 +17,7 @@ export type ApplicationWithJob = Prisma.JobApplicationGetPayload<{
 }>;
 
 export async function getApplicationsForCompanyId(
-  companyId: number,
+  companyId: Company["id"],
 ): Promise<ApplicationWithJob[]> {
   return prisma.jobApplication.findMany({
     where: {

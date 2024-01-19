@@ -16,7 +16,8 @@ export async function createJobPost(
   const validatedState = createJobPostSchema.parse(values);
 
   const session = await auth();
-  if (!session || !session.user) throw new Error("User not found");
+  if (!session || !session.user || !session.user.id)
+    throw new Error("User not found");
 
   const user = await getUserWithCompanyById(session.user.id);
   if (!user) throw new Error("User not found");
@@ -66,7 +67,7 @@ export async function toggleSaveJob(id: JobPost["id"]) {
   "use server";
 
   const session = await auth();
-  if (!session || !session.user) return;
+  if (!session || !session.user || !session.user.id) return;
 
   const user = await getUserById(session.user.id);
   if (!user) return;
