@@ -22,7 +22,7 @@ export function getUserWithCvsById(id: string): Promise<UserWithCvs | null> {
 }
 
 export function getUserWithCompanyById(
-  id: string,
+  id?: User["id"],
 ): Promise<UserWithCompany | null> {
   return prisma.user.findFirst({
     where: {

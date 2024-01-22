@@ -58,8 +58,8 @@ export default async function RootLayout({
 }) {
   const session = await auth();
 
-  if (session && session.user) {
-    await knock.users.identify(session?.user.id, {
+  if (session && session.user && session.user.id) {
+    await knock.users.identify(session.user.id, {
       name: session?.user.name ?? undefined,
       email: session?.user.email ?? undefined,
     });

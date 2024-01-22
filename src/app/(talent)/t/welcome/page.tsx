@@ -9,7 +9,7 @@ export const metadata = {
 
 export default async function OnboardingPage() {
   const session = await auth();
-  if (!session || !session.user) {
+  if (!session || !session.user || !session.user.id) {
     return <p>Access denied</p>;
   }
 

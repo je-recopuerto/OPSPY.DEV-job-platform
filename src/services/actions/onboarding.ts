@@ -12,7 +12,8 @@ export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
   const validatedState = onboardingSchema.parse(values);
 
   const session = await auth();
-  if (!session || !session.user) throw new Error("User not found");
+  if (!session || !session.user || !session.user.id)
+    throw new Error("User not found");
 
   console.log("Setting onboarding:", values, "for user:", session.user);
   const user = await getUserById(session.user.id);

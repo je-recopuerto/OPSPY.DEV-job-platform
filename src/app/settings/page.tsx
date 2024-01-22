@@ -14,7 +14,7 @@ export const metadata = {
 
 export default async function SettingsProfilePage() {
   const session = await auth();
-  if (!session || !session.user) return redirect("/");
+  if (!session || !session.user || !session.user.id) return redirect("/");
 
   const user = await getUserWithCvsById(session.user.id);
   if (!user) return redirect("/t/welcome");

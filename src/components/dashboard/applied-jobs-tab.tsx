@@ -2,10 +2,11 @@ import { JobApplication } from ".prisma/client";
 import AppliedJobsTable from "@/components/dashboard/applied-jobs-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getJobApplications } from "@/services/JobService";
+import { User } from "@prisma/client";
 import { CircleSlash2, Timer } from "lucide-react";
 
 type AppliedJobsTabProps = {
-  userId: string;
+  userId: User["id"];
 };
 
 export default async function AppliedJobsTab(props: AppliedJobsTabProps) {

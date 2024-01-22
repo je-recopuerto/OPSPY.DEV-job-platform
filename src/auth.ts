@@ -27,10 +27,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       user && (token.user = user);
       return token;
     },
-    session: async ({ session, token }) => {
-      // @ts-ignore
-      session.user = token.user;
-      return session;
-    },
+    // session: async ({ session }) => {
+    //   // @ts-ignore
+    //   // session.user = token.user;
+    //   return session;
+    // },
   },
 });

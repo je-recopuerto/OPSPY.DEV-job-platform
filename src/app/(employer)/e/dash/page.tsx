@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getApplicationsForCompanyId } from "@/services/ApplicationService";
 import { getCompanyWithOpeningsAndApplicationsById } from "@/services/JobService";
 import { getUserWithCompanyById } from "@/services/UserService";
+import { Company } from "@prisma/client";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -64,14 +65,14 @@ export default async function EmployerDashboardPage() {
   );
 }
 
-async function JobTable({ companyId }: { companyId: number }) {
+async function JobTable({ companyId }: { companyId: Company["id"] }) {
   const company = await getCompanyWithOpeningsAndApplicationsById(companyId);
   if (!company) return <div>Company not found.</div>;
 
   return <CompanyJobTable data={company} />;
 }
 
-async function ServerApplicationsTable({ companyId }: { companyId: number }) {
+async function ServerApplicationsTable({ companyId }: { companyId: string }) {
   const applications = await getApplicationsForCompanyId(companyId);
 
   return <ApplicationsTable data={applications} />;

@@ -25,7 +25,7 @@ import * as z from "zod";
 
 export async function updateNotificationSettings(preferences: PreferenceSet) {
   const session = await auth();
-  if (!session || !session.user) return;
+  if (!session || !session.user || !session.user.id) return;
 
   console.log(
     "Updating notification settings for user",
@@ -38,7 +38,7 @@ export async function updateNotificationSettings(preferences: PreferenceSet) {
 
 export async function deleteCv(cvId: UploadedCv["id"]) {
   const session = await auth();
-  if (!session || !session.user) return;
+  if (!session || !session.user || !session.user.id) return;
 
   const user = await getUserById(session.user.id);
   if (!user) return;
@@ -72,7 +72,8 @@ export async function updateProfile(
   const validatedState = updateProfileFormSchema.parse(values);
 
   const session = await auth();
-  if (!session || !session.user) throw new Error("User not found");
+  if (!session || !session.user || !session.user.id)
+    throw new Error("User not found");
 
   const user = await getUserById(session.user.id);
   if (!user) throw new Error("User not found");
@@ -155,7 +156,8 @@ export async function uploadCv(formData: FormData) {
   if (!cv) throw new Error("No CV found in form");
 
   const session = await auth();
-  if (!session || !session.user) throw new Error("User not found");
+  if (!session || !session.user || !session.user.id)
+    throw new Error("User not found");
 
   const user = await getUserWithCvsById(session.user.id);
   if (!user) throw new Error("User not found");
@@ -186,7 +188,8 @@ export async function uploadCv(formData: FormData) {
 
 export async function requestCvUrl(cvId: UploadedCv["id"]) {
   const session = await auth();
-  if (!session || !session.user) throw new Error("User not found");
+  if (!session || !session.user || !session.user.id)
+    throw new Error("User not found");
 
   const user = await getUserById(session.user.id);
   if (!user) throw new Error("User not found");
@@ -204,7 +207,8 @@ export async function uploadProfilePicture(formData: FormData) {
   console.log("Uploading profile picture");
 
   const session = await auth();
-  if (!session || !session.user) throw new Error("User not found");
+  if (!session || !session.user || !session.user.id)
+    throw new Error("User not found");
 
   const user = await getUserById(session.user.id);
   if (!user) throw new Error("User not found");
