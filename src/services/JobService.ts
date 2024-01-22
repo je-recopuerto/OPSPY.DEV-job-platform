@@ -1,6 +1,6 @@
 import prisma from "@/lib/db";
 import { filterJobPostsSchema } from "@/schemas/jobPost";
-import { Prisma } from "@prisma/client";
+import { Company, Prisma } from "@prisma/client";
 import { z } from "zod";
 
 export type JobPostWithCandidates = Prisma.JobPostGetPayload<{
@@ -179,7 +179,7 @@ export type JobPostWithApplications = Prisma.JobPostGetPayload<{
 }>;
 
 export function getCompanyWithOpeningsById(
-  id: number,
+  id: Company["id"],
 ): Promise<CompanyWithOpenings | null> {
   return prisma.company.findUnique({
     where: {
@@ -192,7 +192,7 @@ export function getCompanyWithOpeningsById(
 }
 
 export function getCompanyWithOpeningsAndApplicationsById(
-  id: number,
+  id: Company["id"],
 ): Promise<CompanyWithOpeningsAndApplications | null> {
   return prisma.company.findUnique({
     where: {

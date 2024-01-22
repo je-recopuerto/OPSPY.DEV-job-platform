@@ -91,6 +91,7 @@ model JobPost {
 
 enum JobStatus {
   ACTIVE
+  IN_REVIEW
   INACTIVE
 }
 
