@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { JobPostWithCompany } from "@/services/JobService";
-import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Skeleton } from "../ui/skeleton";
 
 type JobListingProps = {
@@ -19,6 +19,15 @@ type JobListingProps = {
 };
 
 function JobOverview(props: JobListingProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const navigateToJob = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("jid", props.job.id);
+    window.history.pushState(null, "", `?${params.toString()}`);
+  };
+
   return (
     <Card>
       <CardHeader className={"flex flex-row gap-x-4 space-y-0"}>
@@ -33,7 +42,9 @@ function JobOverview(props: JobListingProps) {
 
         <div>
           <CardTitle className={"text-md"}>
-            <Link href={`/jobs?jid=${props.job.id}`}>{props.job.title}</Link>
+            <div className={"cursor-pointer"} onClick={navigateToJob}>
+              {props.job.title}
+            </div>
           </CardTitle>
           <CardDescription>
             {props.job.company.name} | {props.job.location} | {props.job.type} |{" "}

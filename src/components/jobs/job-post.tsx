@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import JobDescription from "@/components/jobs/job-description";
 import JobActions from "@/components/jobs/job-post-actions";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CardDescription, CardTitle } from "@/components/ui/card";
@@ -46,15 +47,15 @@ async function JobPost({ jobId }: JobPostProps) {
           isApplied={hasApplied}
         />
 
-        <p className={"text-sm text-muted-foreground pb-6 whitespace-pre-wrap"}>
-          {jobPost.description}
-        </p>
+        {/*<h4 className={"text-sm font-semibold"}>Description</h4>*/}
+
+        <JobDescription description={jobPost.description} />
       </div>
     </ScrollArea>
   );
 }
 
-function JobSkeleton() {
+function JobPostSkeleton() {
   return (
     <div className={"p-6 rounded-lg border"}>
       <div className={"flex flex-col gap-4"}>
@@ -84,4 +85,4 @@ function JobSkeleton() {
   );
 }
 
-export { JobPost, JobSkeleton };
+export { JobPost, JobPostSkeleton };

@@ -73,6 +73,10 @@
   body {
     @apply bg-background text-foreground;
   }
+  ul, ol {
+    list-style: revert;
+    list-style: inside;
+  }
 }
 
 /* Reference: https://gist.github.com/mjbalcueva/1fbcb1be9ef68a82c14d778b686a04fa */
