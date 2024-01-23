@@ -1,5 +1,6 @@
 "use client";
 
+import { Search } from "@/components/cui/search-input";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -62,10 +63,14 @@ export default function JobFilter() {
             control={form.control}
             name="keywords"
             render={({ field }) => (
-              <FormItem className={"max-w-lg w-full"}>
-                <FormLabel>Search</FormLabel>
+              <FormItem className={"w-full"}>
+                <FormLabel>&nbsp;</FormLabel>
                 <FormControl>
-                  <Input placeholder="Search" {...field} />
+                  <Search
+                    className={"w-full"}
+                    placeholder={"Job title, keywords or company"}
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -12,7 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
 import { JobPostWithCompany } from "@/services/JobService";
 import { quickApply } from "@/services/actions/application";
-import { Gauge } from "lucide-react";
+import { ExternalLink, Gauge } from "lucide-react";
 import Link from "next/link";
 
 type ApplyJobDialogProps = {
@@ -89,6 +89,7 @@ export default function ApplyJobButton(props: ApplyJobDialogProps) {
                 target="_blank"
               >
                 Apply Externally
+                <ExternalLink className={"h-4 w-4 ml-2"} />
               </Link>
             </DialogFooter>
           </>

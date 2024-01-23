@@ -10,7 +10,7 @@ export default async function JobsLayout({
   search,
 }: JobsLayoutProps) {
   return (
-    <main className="flex-1 space-y-4 p-8 pt-6 min-h-screen">
+    <main className="flex-1 space-y-4 p-8 pt-6 min-h-screen max-w-[84rem] mx-auto">
       <h1 className="text-2xl font-semibold pb-6">Jobs</h1>
 
       <JobFilter />
