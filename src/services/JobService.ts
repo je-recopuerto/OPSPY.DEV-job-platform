@@ -41,6 +41,9 @@ export async function getRandomJobPost() {
     orderBy: {
       createdAt: "desc",
     },
+    where: {
+      status: "ACTIVE",
+    },
     include: {
       company: true,
     },
@@ -64,6 +67,7 @@ export async function getJobPostsWithCompany(
 
   return prisma.jobPost.findMany({
     where: {
+      status: "ACTIVE",
       AND: [
         filter?.keywords
           ? {
