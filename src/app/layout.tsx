@@ -76,7 +76,7 @@ export default async function RootLayout({
         <Providers>
           <MainHeader />
 
-          {children}
+          <main className={"my-8"}>{children}</main>
 
           <Toaster />
         </Providers>
