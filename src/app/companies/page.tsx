@@ -1,3 +1,8 @@
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+} from "@/components/cui/breadcrumb";
 import CompanyProfileWithOpenings from "@/components/jobs/company-profile-with-openings";
 import { getCompaniesWithOpenings } from "@/services/CompanyService";
 import { Suspense } from "react";
@@ -8,7 +13,16 @@ export const metadata = {
 
 export default function CompaniesPage() {
   return (
-    <main className="flex min-h-screen flex-col p-14">
+    <main className="flex container min-h-screen flex-col p-14">
+      <Breadcrumb className={"mb-4"}>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbItem isCurrentPage>
+          <BreadcrumbLink href="/components">Companies</BreadcrumbLink>
+        </BreadcrumbItem>
+      </Breadcrumb>
+
       <Suspense fallback={<p>Loading feed...</p>}>
         <CompanyFeed />
       </Suspense>

@@ -1,6 +1,11 @@
 import { auth } from "@/auth";
 import ProfileSetupAlert from "@/components/alerts/profile-setup-alert";
 import Spinner from "@/components/cui/Spinner";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+} from "@/components/cui/breadcrumb";
 import AppliedJobsTab from "@/components/dashboard/applied-jobs-tab";
 import SavedJobTab from "@/components/dashboard/saved-job-tab";
 import { Button } from "@/components/ui/button";
@@ -24,12 +29,22 @@ export default async function DashboardPage() {
 
   return (
     <>
-      <div className={"px-8"}>
+      <div className={"container min-h-screen"}>
         {!user && <ProfileSetupAlert />}
 
         <div className="flex-1 space-y-4 py-8 pt-6">
+          <Breadcrumb>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbItem isCurrentPage>
+              <BreadcrumbLink href="/components">Dashboard</BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
+
           <div className="flex items-center justify-between space-y-2">
             <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+
             <div className="flex items-center space-x-2">
               <Button>
                 <DownloadIcon className={"h-4 w-4 mr-2"} />

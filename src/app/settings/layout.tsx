@@ -12,7 +12,7 @@ interface SettingsLayoutProps {
 
 export default function SettingsLayout({ children }: SettingsLayoutProps) {
   return (
-    <div className="flex-1 lg:max-w-2xl mx-auto pb-44 lg:px-0 px-8">
+    <div className="flex-1 lg:max-w-2xl mx-auto min-h-screen lg:px-0 px-8">
       {children}
     </div>
   );
