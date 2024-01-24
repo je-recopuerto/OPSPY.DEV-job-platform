@@ -15,7 +15,7 @@ export default function JobPagination({ totalPages }: { totalPages: number }) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const currentPage = Number(searchParams.get("page")) ?? 1;
+  const currentPage = Math.max(Number(searchParams.get("page")), 1);
 
   const lastPage = Math.min(Math.max(currentPage + 2, 5), totalPages);
   const firstPage = Math.max(1, currentPage - 4);
@@ -28,8 +28,6 @@ export default function JobPagination({ totalPages }: { totalPages: number }) {
 
     params.set("page", page.toString());
     router.push(`${pathname}?${params.toString()}`);
-
-    console.log("Setting page to", page);
   };
 
   return (
@@ -45,10 +43,11 @@ export default function JobPagination({ totalPages }: { totalPages: number }) {
 
         {/* Page Numbers */}
         {range(firstPage, lastPage).map((page) => (
-          <PaginationItem key={page} className={""}>
+          <PaginationItem key={page}>
             <PaginationLink
               onClick={() => handlePageChange(page)}
               disabled={page === currentPage}
+              isActive={page === currentPage}
             >
               {page}
             </PaginationLink>

@@ -1,5 +1,6 @@
 "use client";
 
+import OpportunifyLogo from "@/components/opportunify-logo";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -14,6 +15,8 @@ export function MainNav({
 
   return (
     <nav className={`flex items-center space-x-2 lg:space-x-6`}>
+      <OpportunifyLogo />
+
       <Link
         href="/"
         className={`${activeClass(
