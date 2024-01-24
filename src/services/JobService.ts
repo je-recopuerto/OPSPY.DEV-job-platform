@@ -3,6 +3,8 @@ import { filterJobPostsSchema } from "@/schemas/jobPost";
 import { Company, Prisma } from "@prisma/client";
 import { z } from "zod";
 
+export const JOB_PAGE_SIZE = 8;
+
 export type JobPostWithCandidates = Prisma.JobPostGetPayload<{
   include: {
     application: {
@@ -35,31 +37,39 @@ export function getRandomJobPosts(count: number) {
   });
 }
 
-export async function getRandomJobPost() {
-  const result = await prisma.jobPost.findMany({
-    take: 3,
-    orderBy: {
-      createdAt: "desc",
-    },
-    where: {
-      status: "ACTIVE",
-    },
-    include: {
-      company: true,
-    },
-  });
-
-  // pick one of the three
-  const randomIndex = Math.floor(Math.random() * result.length);
-  return result[randomIndex];
-}
+// export async function getRandomJobPost() {
+//   const result = await prisma.jobPost.findMany({
+//     take: 3,
+//     orderBy: {
+//       createdAt: "desc",
+//     },
+//     where: {
+//       status: "ACTIVE",
+//     },
+//     include: {
+//       company: true,
+//     },
+//   });
+//
+//   // pick one of the three
+//   const randomIndex = Math.floor(Math.random() * result.length);
+//   return result[randomIndex];
+// }
 
 export async function getJobPostsWithCompany(
   filter?: z.infer<typeof filterJobPostsSchema>,
 ) {
+  // Wait 5 seconds
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
   // Coerce string to number. This is currently a workaround
   if (filter?.minSalary) {
     filter.minSalary = Number(filter.minSalary);
+  }
+
+  // Coerce page to number. This is currently a workaround
+  if (filter?.page) {
+    filter.page = Number(filter.page);
   }
 
   // Make sure the schema is valid
@@ -118,6 +128,9 @@ export async function getJobPostsWithCompany(
     orderBy: {
       createdAt: "desc",
     },
+    // Add page
+    skip: filter?.page ? (filter.page - 1) * JOB_PAGE_SIZE : undefined,
+    take: JOB_PAGE_SIZE,
     include: {
       company: true,
       tags: true,

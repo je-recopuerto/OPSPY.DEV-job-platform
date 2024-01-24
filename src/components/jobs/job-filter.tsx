@@ -37,7 +37,7 @@ export default function JobFilter() {
     // ✅ This will be type-safe and validated.
 
     // Write to URL as search params.
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(window.location.search);
     if (values.keywords) {
       params.set("keywords", values.keywords);
     } else {

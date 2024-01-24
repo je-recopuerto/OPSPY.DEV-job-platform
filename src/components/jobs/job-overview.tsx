@@ -19,7 +19,11 @@ type JobListingProps = {
 };
 
 function JobOverview(props: JobListingProps) {
-  const jobUrl = `/jobs?jid=${props.job.id}`;
+  const searchParams = new URLSearchParams(window.location.search);
+  const newSearchParams = new URLSearchParams(searchParams);
+  newSearchParams.set("jid", props.job.id.toString());
+
+  const jobUrl = `/jobs?${newSearchParams.toString()}`;
 
   return (
     <Link href={jobUrl}>

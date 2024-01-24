@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "target": "es5",
+    // Fixes: Type IterableIterator<number> can only be iterated through when using the --downlevelIteration flag or with a --target of es2015 or higher
+    "downlevelIteration": true,
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
