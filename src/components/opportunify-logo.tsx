@@ -10,9 +10,10 @@ export default function OpportunifyLogo({
   height?: number;
   width?: number;
 }) {
-  const { theme } = useTheme();
+  const { theme, systemTheme } = useTheme();
+  const flatTheme = theme === "system" ? systemTheme : theme;
 
-  return theme === "light" ? (
+  return flatTheme === "light" ? (
     <Image
       src={"/opportunify-logo-black.svg"}
       alt={"Black logo"}
