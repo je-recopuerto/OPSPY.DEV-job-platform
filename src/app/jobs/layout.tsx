@@ -1,5 +1,4 @@
 import JobFilter from "@/components/jobs/job-filter";
-import JobPagination from "@/components/jobs/job-pagination";
 
 type JobsLayoutProps = {
   children: React.ReactNode;
@@ -14,11 +13,7 @@ export default async function JobsLayout({ children, jobs }: JobsLayoutProps) {
       <JobFilter />
 
       <div className={"flex columns-2 gap-2"}>
-        <div className={"w-[40%]"}>
-          {jobs}
-
-          <JobPagination totalPages={100} />
-        </div>
+        <div className={"w-[40%]"}>{jobs}</div>
         <div className={"w-[60%]"}>{children}</div>
       </div>
     </main>

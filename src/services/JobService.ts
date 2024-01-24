@@ -56,12 +56,78 @@ export function getRandomJobPosts(count: number) {
 //   return result[randomIndex];
 // }
 
+export async function fetchJobsPages(
+  filter?: z.infer<typeof filterJobPostsSchema>,
+): Promise<number> {
+  // Coerce string to number. This is currently a workaround
+  if (filter?.minSalary) {
+    filter.minSalary = Number(filter.minSalary);
+  }
+
+  // Coerce page to number. This is currently a workaround
+  if (filter?.page) {
+    filter.page = Number(filter.page);
+  }
+
+  // Make sure the schema is valid
+  filterJobPostsSchema.parse(filter);
+
+  return prisma.jobPost.count({
+    where: {
+      status: "ACTIVE",
+      AND: [
+        filter?.keywords
+          ? {
+              OR: [
+                {
+                  title: {
+                    contains: filter.keywords,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  description: {
+                    contains: filter.keywords,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  company: {
+                    name: {
+                      contains: filter.keywords,
+                      mode: "insensitive",
+                    },
+                  },
+                },
+              ],
+            }
+          : {},
+        filter?.tags?.length
+          ? {
+              tags: {
+                some: {
+                  name: {
+                    in: filter.tags,
+                  },
+                },
+              },
+            }
+          : {},
+        filter?.minSalary
+          ? {
+              minSalary: {
+                gte: filter.minSalary,
+              },
+            }
+          : {},
+      ],
+    },
+  });
+}
+
 export async function getJobPostsWithCompany(
   filter?: z.infer<typeof filterJobPostsSchema>,
 ) {
-  // Wait 5 seconds
-  await new Promise((resolve) => setTimeout(resolve, 500));
-
   // Coerce string to number. This is currently a workaround
   if (filter?.minSalary) {
     filter.minSalary = Number(filter.minSalary);

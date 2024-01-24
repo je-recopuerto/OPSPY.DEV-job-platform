@@ -8,7 +8,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { cn } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function JobPagination({ totalPages }: { totalPages: number }) {
@@ -23,7 +22,7 @@ export default function JobPagination({ totalPages }: { totalPages: number }) {
 
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(window.location.search);
-    if (page === 1 || page === totalPages) {
+    if (page < 1 || page === totalPages) {
       return;
     }
 
@@ -40,20 +39,17 @@ export default function JobPagination({ totalPages }: { totalPages: number }) {
         <PaginationItem>
           <PaginationPrevious
             onClick={() => handlePageChange(currentPage - 1)}
-            // disabled={currentPage === 1}
+            disabled={currentPage === 1}
           />
         </PaginationItem>
 
         {/* Page Numbers */}
         {range(firstPage, lastPage).map((page) => (
-          <PaginationItem
-            key={page}
-            className={cn(
-              "cursor-pointer",
-              currentPage == page ? "bg-accent rounded-md font-extrabold" : "",
-            )}
-          >
-            <PaginationLink onClick={() => handlePageChange(page)}>
+          <PaginationItem key={page} className={""}>
+            <PaginationLink
+              onClick={() => handlePageChange(page)}
+              disabled={page === currentPage}
+            >
               {page}
             </PaginationLink>
           </PaginationItem>
@@ -63,7 +59,7 @@ export default function JobPagination({ totalPages }: { totalPages: number }) {
         <PaginationItem>
           <PaginationNext
             onClick={() => handlePageChange(currentPage + 1)}
-            // disabled={currentPage === totalPages}
+            disabled={currentPage >= totalPages}
           />
         </PaginationItem>
       </PaginationContent>
