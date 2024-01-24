@@ -43,15 +43,11 @@ export async function createJobPost(
 }
 
 export async function unsaveJob(id: number) {
-  const result = prisma.jobTracker.delete({
+  return prisma.jobTracker.delete({
     where: {
       id: id,
     },
   });
-
-  // revalidatePath("/dash");
-
-  return result;
 }
 
 export async function saveJob(id: JobPost["id"], userId: User["id"]) {
@@ -70,12 +66,12 @@ export async function toggleSaveJob(id: JobPost["id"]) {
   if (!session || !session.user || !session.user.id) return;
 
   const user = await getUserById(session.user.id);
-  if (!user) return;
+  if (!user) return redirect("/t/welcome");
 
   const existingTracker = await prisma.jobTracker.findFirst({
     where: {
       jobId: id,
-      userId: user.id,
+      userId: session.user.id,
     },
   });
 
@@ -86,7 +82,7 @@ export async function toggleSaveJob(id: JobPost["id"]) {
     console.log("Deleted existing tracker:", result);
     removed = true;
   } else {
-    const result = await saveJob(id, user.id);
+    const result = await saveJob(id, session.user.id);
     console.log("Creating new tracker for job:", id);
   }
 

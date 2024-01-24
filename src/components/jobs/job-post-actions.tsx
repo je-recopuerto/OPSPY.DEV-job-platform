@@ -24,6 +24,8 @@ export default function JobActions({
     setIsLoading(true);
     const removed = await toggleSaveJob(job.id);
 
+    if (removed === undefined) return;
+
     toast({
       title: removed ? "Job Unsaved" : "Job Saved",
       description: "You can view your saved jobs in your dash.",

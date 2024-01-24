@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Auth0Provider from "next-auth/providers/auth0";
 
+// @ts-ignore
 export const { handlers, auth, signIn, signOut } = NextAuth({
   theme: {
     logo: "https://next-auth.js.org/img/logo/logo-sm.png",
@@ -27,10 +28,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       user && (token.user = user);
       return token;
     },
-    // session: async ({ session }) => {
-    //   // @ts-ignore
-    //   // session.user = token.user;
-    //   return session;
-    // },
+    // @ts-ignore
+    session: async ({ session, token }) => {
+      // @ts-ignore
+      // session.user = token.user;
+
+      // @ts-ignore
+      session.user.id = token.sub;
+
+      // params.session.user?.id = params.token.user?.id;
+
+      return session;
+    },
   },
 });
