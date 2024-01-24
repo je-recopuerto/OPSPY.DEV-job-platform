@@ -49,15 +49,13 @@ export default async function UserButton() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          {user && (
-            <DropdownMenuItem asChild>
-              <Link href={user.company ? "/e/dash" : "/t/dash"}>
-                <CreditCard className="mr-2 h-4 w-4" />
-                <span>Dashboard</span>
-                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-              </Link>
-            </DropdownMenuItem>
-          )}
+          <DropdownMenuItem asChild>
+            <Link href={user?.company ? "/e/dash" : "/t/dash"}>
+              <CreditCard className="mr-2 h-4 w-4" />
+              <span>Dashboard</span>
+              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+            </Link>
+          </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
             <Link href={"/settings"}>
