@@ -12,6 +12,12 @@ import {
 export default async function FeaturedJobs({ count }: { count: number }) {
   const jobs = await getRandomJobPosts(count);
 
+  const getJobUrl = (jobId: string) => {
+    const searchParams = new URLSearchParams();
+    searchParams.append("jid", jobId);
+    return `/jobs?${searchParams.toString()}`;
+  };
+
   return (
     <section className="py-12 md:py-24 lg:py-32">
       <div className="container px-4 md:px-6">
@@ -42,7 +48,7 @@ export default async function FeaturedJobs({ count }: { count: number }) {
 
                 <Link
                   className={buttonVariants({ variant: "outline" })}
-                  href={`/jobs/${job.id}`}
+                  href={getJobUrl(job.id)}
                 >
                   View Details
                 </Link>
