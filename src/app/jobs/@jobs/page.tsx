@@ -1,17 +1,10 @@
-import { auth } from "@/auth";
-import { JobOverview } from "@/components/jobs/job-overview";
-import JobPagination from "@/components/jobs/job-pagination";
+import JobList from "@/components/jobs/job-list";
+import { JobOverviewSkeleton } from "@/components/jobs/job-overview";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { filterJobPostsSchema } from "@/schemas/jobPost";
-import {
-  fetchJobsPages,
-  getJobPostsWithCompany,
-  JobPostWithCompany,
-} from "@/services/JobService";
-import {
-  getUserWithJobTrackersById,
-  UserWithJobTrackers,
-} from "@/services/UserService";
+import { JobPostWithCompany } from "@/services/JobService";
+import { UserWithJobTrackers } from "@/services/UserService";
+import { Suspense } from "react";
 import { z } from "zod";
 
 type JobPageParams = {
@@ -19,35 +12,22 @@ type JobPageParams = {
 };
 
 export default async function SearchPage({ searchParams }: JobPageParams) {
-  const session = await auth();
-  const [jobs, user] = await Promise.all([
-    getJobPostsWithCompany(searchParams),
-    getUserWithJobTrackersById(session?.user?.id),
-  ]);
-  const maxPages = await fetchJobsPages(searchParams);
-
   return (
-    <>
-      <ScrollArea>
-        <div className={"flex flex-col gap-4"}>
-          {jobs.map((job) => (
-            <JobOverview
-              job={job}
-              key={job.id}
-              isFollowing={isFollowing(job, user)}
-            />
-          ))}
+    <Suspense fallback={<Skeleton />} key={searchParams.page}>
+      <JobList searchParams={searchParams} />
+    </Suspense>
+  );
+}
 
-          {jobs.length === 0 && (
-            <p className={"text-center text-sm text-muted-foreground"}>
-              No jobs found. Try changing your filters.
-            </p>
-          )}
-        </div>
-      </ScrollArea>
-
-      <JobPagination totalPages={maxPages} />
-    </>
+function Skeleton() {
+  return (
+    <ScrollArea className={"w-full"}>
+      <div className={"flex flex-col gap-4"}>
+        {Array.from({ length: 3 }).map((_, i) => (
+          <JobOverviewSkeleton key={i} />
+        ))}
+      </div>
+    </ScrollArea>
   );
 }
 

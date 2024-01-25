@@ -17,7 +17,7 @@ export default async function JobsPage({
   if (!jid) return null;
 
   return (
-    <Suspense fallback={<JobSkeleton />} key={jid}>
+    <Suspense fallback={<JobSkeleton />}>
       <JobPost jobId={jid} />
     </Suspense>
   );
