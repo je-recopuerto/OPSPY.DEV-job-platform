@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { JobPostWithCompany } from "@/services/JobService";
+import { JobType } from "@prisma/client";
 import Link from "next/link";
 import { Skeleton } from "../ui/skeleton";
 
@@ -45,8 +46,8 @@ function JobOverview(props: JobListingProps) {
               </Link>
             </CardTitle>
             <CardDescription>
-              {props.job.company.name} | {props.job.location} | {props.job.type}{" "}
-              |{" "}
+              {props.job.company.name} | {props.job.location} |{" "}
+              {jobTypes[props.job.type]} |{" "}
               {getSalaryRangeString(
                 props.job.minSalary,
                 props.job.maxSalary,
@@ -77,6 +78,13 @@ function JobOverview(props: JobListingProps) {
     </Link>
   );
 }
+
+const jobTypes = {
+  [JobType.FULL_TIME]: "Full Time",
+  [JobType.PART_TIME]: "Part Time",
+  [JobType.CONTRACT]: "Contract",
+  [JobType.INTERNSHIP]: "Internship",
+};
 
 function JobOverviewSkeleton() {
   return (
