@@ -76,7 +76,7 @@ export default async function RootLayout({
         <Providers>
           <MainHeader />
 
-          <main className={"my-8"}>{children}</main>
+          <main className={"py-8"}>{children}</main>
 
           <Toaster />
         </Providers>

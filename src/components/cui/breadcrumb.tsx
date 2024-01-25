@@ -2,7 +2,9 @@ import { ChevronRight } from "lucide-react";
 import * as React from "react";
 
 import { cn, getValidChildren } from "@/lib/utils";
+import Link from "next/link";
 
+// Source: https://github.com/shadcn-ui/ui/pull/133
 export interface BreadcrumbProps extends React.ComponentPropsWithoutRef<"nav"> {
   /* The visual separator between each breadcrumb item */
   separator?: React.ReactNode;
@@ -113,18 +115,31 @@ export const BreadcrumbLink = React.forwardRef<
   HTMLAnchorElement,
   BreadcrumbLinkProps
 >(({ className, as: asComp, isCurrentPage, ...props }, forwardedRef) => {
-  const Comp = (isCurrentPage ? "span" : asComp || "a") as "a";
+  if (isCurrentPage) {
+    return (
+      <span
+        className={cn(
+          "text-sm font-medium underline-offset-4 aria-[current]:opacity-60",
+          className,
+        )}
+        aria-current="page"
+        {...props}
+        ref={forwardedRef}
+      />
+    );
+  }
 
   return (
-    <Comp
+    <Link
+      href={props.href as string}
+      passHref
+      {...props}
       className={cn(
-        "text-sm font-medium underline-offset-4 aria-[current]:opacity-60 [&:not([aria-current])]:hover:underline",
+        "text-sm font-medium underline-offset-4 [&:not([aria-current])]:hover:underline",
         className,
       )}
-      aria-current={isCurrentPage ? "page" : undefined}
-      {...props}
       ref={forwardedRef}
-    />
+    ></Link>
   );
 });
 BreadcrumbLink.displayName = "BreadcrumbLink";

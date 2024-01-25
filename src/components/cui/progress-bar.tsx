@@ -8,7 +8,7 @@ type PushStateInput = [
   url?: string | URL | null | undefined,
 ];
 
-export default function NavigationProgressBar() {
+export default function ProgressBar() {
   const height = "2px";
   const color = "#fff";
 

@@ -6,9 +6,11 @@ import Image from "next/image";
 export default function OpportunifyLogo({
   height,
   width,
+  className,
 }: {
   height?: number;
   width?: number;
+  className?: string;
 }) {
   const { theme, systemTheme } = useTheme();
   const flatTheme = theme === "system" ? systemTheme : theme;
@@ -19,6 +21,7 @@ export default function OpportunifyLogo({
       alt={"Black logo"}
       height={height || 24}
       width={width || 24}
+      className={className}
     />
   ) : (
     <Image
@@ -26,6 +29,7 @@ export default function OpportunifyLogo({
       alt={"White logo"}
       height={height || 24}
       width={width || 24}
+      className={className}
     />
   );
 }

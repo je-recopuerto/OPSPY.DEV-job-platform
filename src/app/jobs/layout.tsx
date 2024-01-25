@@ -10,9 +10,9 @@ type JobsLayoutProps = {
   jobs: React.ReactNode;
 };
 
-export default async function JobsLayout({ children, jobs }: JobsLayoutProps) {
+export default function JobsLayout({ children, jobs }: JobsLayoutProps) {
   return (
-    <main className="flex-1 space-y-4 p-8 pt-6 min-h-screen max-w-[84rem] mx-auto">
+    <main className=" space-y-4 min-h-screen container">
       <Breadcrumb>
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Home</BreadcrumbLink>
@@ -21,8 +21,6 @@ export default async function JobsLayout({ children, jobs }: JobsLayoutProps) {
           <BreadcrumbLink href="/components">Jobs</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
-
-      {/*<h1 className="text-2xl font-semibold pb-6">Jobs</h1>*/}
 
       <JobFilter />
 

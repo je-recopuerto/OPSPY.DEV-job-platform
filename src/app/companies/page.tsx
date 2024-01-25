@@ -13,7 +13,7 @@ export const metadata = {
 
 export default function CompaniesPage() {
   return (
-    <main className="flex container min-h-screen flex-col p-14">
+    <main className=" container min-h-screen ">
       <Breadcrumb className={"mb-4"}>
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Home</BreadcrumbLink>
