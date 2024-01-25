@@ -1,4 +1,5 @@
-import { JobPost } from "@/components/jobs/job-post";
+import { JobPost, JobSkeleton } from "@/components/jobs/job-post";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Jobs",
@@ -13,5 +14,9 @@ type JobPageParams = {
 export default async function JobsPage({
   searchParams: { jid },
 }: JobPageParams) {
-  return jid && <JobPost jobId={jid} />;
+  return (
+    <Suspense fallback={<JobSkeleton />} key={jid}>
+      <JobPost jobId={jid} />
+    </Suspense>
+  );
 }
