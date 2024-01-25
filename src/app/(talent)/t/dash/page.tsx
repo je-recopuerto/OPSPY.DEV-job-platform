@@ -32,7 +32,7 @@ export default async function DashboardPage() {
       <div className={"container min-h-screen"}>
         {!user && <ProfileSetupAlert />}
 
-        <div className="flex-1 space-y-4 py-8 pt-6">
+        <div className="flex-1 space-y-4">
           <Breadcrumb>
             <BreadcrumbItem>
               <BreadcrumbLink href="/">Home</BreadcrumbLink>
@@ -42,7 +42,7 @@ export default async function DashboardPage() {
             </BreadcrumbItem>
           </Breadcrumb>
 
-          <div className="flex items-center justify-between space-y-2">
+          <div className="flex items-center justify-between">
             <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
 
             <div className="flex items-center space-x-2">
