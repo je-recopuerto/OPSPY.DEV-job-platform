@@ -1,68 +1,151 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useState } from "react";
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { Check, ChevronsUpDown, X } from "lucide-react";
+import * as React from "react";
+import { Popover, PopoverContent } from "../ui/popover";
 
-interface ISelectProps {
-  values: {
-    key: string;
-    value: string;
-  }[];
+export type OptionType = Record<"value" | "label", string>;
+
+interface MultiSelectProps {
+  options: Record<"value" | "label", string>[];
+  selected: Record<"value" | "label", string>[];
+  onChange: React.Dispatch<
+    React.SetStateAction<Record<"value" | "label", string>[]>
+  >;
+  className?: string;
+  placeholder?: string;
 }
-export const MultiSelect = ({ values }: ISelectProps) => {
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const handleSelectChange = (value: string) => {
-    if (!selectedItems.includes(value)) {
-      setSelectedItems((prev) => [...prev, value]);
-    } else {
-      const referencedArray = [...selectedItems];
-      const indexOfItemToBeRemoved = referencedArray.indexOf(value);
-      referencedArray.splice(indexOfItemToBeRemoved, 1);
-      setSelectedItems(referencedArray);
-    }
-  };
 
-  const isOptionSelected = (value: string): boolean => {
-    return selectedItems.includes(value);
-  };
-  return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="flex gap-2 font-bold">
-            <span>Select Values</span>
+const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
+  ({ options, selected, onChange, className, ...props }, ref) => {
+    const [open, setOpen] = React.useState(false);
+
+    const handleUnselect = (item: Record<"value" | "label", string>) => {
+      onChange(selected.filter((i) => i.value !== item.value));
+    };
+
+    // on delete key press, remove last selected item
+    React.useEffect(() => {
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Backspace" && selected.length > 0) {
+          onChange(
+            selected.filter((_, index) => index !== selected.length - 1),
+          );
+        }
+
+        // close on escape
+        if (e.key === "Escape") {
+          setOpen(false);
+        }
+      };
+
+      document.addEventListener("keydown", handleKeyDown);
+
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [onChange, selected]);
+
+    return (
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild className={className}>
+          <Button
+            ref={ref}
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className={`group w-full justify-between ${
+              selected.length > 1 ? "h-full" : "h-10"
+            }`}
+            onClick={() => setOpen(!open)}
+          >
+            <div className="flex flex-wrap items-center gap-1">
+              {selected.map((item) => (
+                <Badge
+                  variant="outline"
+                  key={item.value}
+                  className="flex items-center gap-1 group-hover:bg-background"
+                  onClick={() => handleUnselect(item)}
+                >
+                  {item.label}
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="icon"
+                    className="border-none"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleUnselect(item);
+                      }
+                    }}
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleUnselect(item);
+                    }}
+                  >
+                    <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                  </Button>
+                </Badge>
+              ))}
+              {selected.length === 0 && (
+                <span>{props.placeholder ?? "Select ..."}</span>
+              )}
+            </div>
+            <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
           </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent
-          className="w-56"
-          onCloseAutoFocus={(e) => e.preventDefault()}
-        >
-          <DropdownMenuLabel>Appearance</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          {values.map((value: ISelectProps["values"][0], index: number) => {
-            return (
-              <DropdownMenuCheckboxItem
-                onSelect={(e) => e.preventDefault()}
-                key={index}
-                checked={isOptionSelected(value.key)}
-                onCheckedChange={() => handleSelectChange(value.key)}
-              >
-                {value.value}
-              </DropdownMenuCheckboxItem>
-            );
-          })}
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </>
-  );
-};
+        </PopoverTrigger>
+        <PopoverContent className="w-full p-0">
+          <Command className={className}>
+            <CommandInput placeholder="Search ..." />
+            <CommandEmpty>No item found.</CommandEmpty>
+            <CommandGroup className="max-h-64 overflow-auto">
+              {options.map((option) => (
+                <CommandItem
+                  key={option.value}
+                  onSelect={() => {
+                    onChange(
+                      selected.some((item) => item.value === option.value)
+                        ? selected.filter((item) => item.value !== option.value)
+                        : [...selected, option],
+                    );
+                    setOpen(true);
+                  }}
+                >
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      selected.some((item) => item.value === option.value)
+                        ? "opacity-100"
+                        : "opacity-0",
+                    )}
+                  />
+                  {option.label}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    );
+  },
+);
 
-export default MultiSelect;
+MultiSelect.displayName = "MultiSelect";
+
+export { MultiSelect };

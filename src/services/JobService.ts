@@ -69,6 +69,14 @@ export async function fetchJobsPages(
     filter.page = Number(filter.page);
   }
 
+  // // Coerce list of keys to array. This is currently a workaround
+  // console.log("countries:", filter.countries);
+  //
+  // if (filter?.countries) {
+  //   const keys = filter.countries.split(",");
+  //   console.log(keys);
+  // }
+
   // Make sure the schema is valid
   filterJobPostsSchema.parse(filter);
 

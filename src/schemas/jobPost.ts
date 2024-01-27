@@ -1,6 +1,12 @@
 import { Currency, JobType, WorkMode } from "@prisma/client";
 import { z } from "zod";
 
+// OptionType is a custom type that is used for the multi-select component
+const optionTypeSchema = z.object({
+  label: z.string(),
+  value: z.string(),
+});
+
 export const filterJobPostsSchema = z.object({
   jid: z.string().optional(),
   keywords: z.string().max(255).optional(),
@@ -8,6 +14,7 @@ export const filterJobPostsSchema = z.object({
   minSalary: z.number().min(0).max(500000).optional(),
   type: z.array(z.nativeEnum(JobType)).optional(),
   page: z.number().min(1).optional(),
+  countries: z.array(optionTypeSchema).optional(),
 });
 
 export const createJobPostSchema = z

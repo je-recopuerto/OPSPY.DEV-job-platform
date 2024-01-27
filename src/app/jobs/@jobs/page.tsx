@@ -2,8 +2,6 @@ import JobList from "@/components/jobs/job-list";
 import { JobOverviewSkeleton } from "@/components/jobs/job-overview";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { filterJobPostsSchema } from "@/schemas/jobPost";
-import { JobPostWithCompany } from "@/services/JobService";
-import { UserWithJobTrackers } from "@/services/UserService";
 import { Suspense } from "react";
 import { z } from "zod";
 
@@ -30,11 +28,3 @@ function Skeleton() {
     </ScrollArea>
   );
 }
-
-const isFollowing = (
-  job: JobPostWithCompany,
-  user: UserWithJobTrackers | null,
-) => {
-  if (!user) return false;
-  return user.trackers.find((t) => t.jobId === job.id) !== undefined;
-};

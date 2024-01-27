@@ -1,5 +1,6 @@
 "use client";
 
+import { OptionType } from "@/components/cui/multi-select";
 import { Search } from "@/components/cui/search-input";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +18,21 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+const countries: OptionType[] = [
+  {
+    label: "United States",
+    value: "us",
+  },
+  {
+    label: "United Kingdom",
+    value: "uk",
+  },
+  {
+    label: "Canada",
+    value: "ca",
+  },
+];
+
 export default function JobFilter() {
   const pathname = usePathname();
   const router = useRouter();
@@ -29,6 +45,7 @@ export default function JobFilter() {
       minSalary: searchParams.get("minSalary")
         ? Number.parseFloat(searchParams.get("minSalary")!)
         : undefined,
+      // countries: countries,
     },
   });
 
@@ -49,6 +66,13 @@ export default function JobFilter() {
     } else {
       params.delete("minSalary");
     }
+
+    // if (values.countries) {
+    //   const keys = values.countries.map((c) => c.value).join(",");
+    //   params.set("countries", keys);
+    // } else {
+    //   params.delete("countries");
+    // }
 
     // Redirect to new URL.
     console.log("Going to redirect to", `${pathname}?${params.toString()}`);
@@ -94,6 +118,23 @@ export default function JobFilter() {
               </FormItem>
             )}
           />
+
+          {/*<FormField*/}
+          {/*  control={form.control}*/}
+          {/*  name="countries"*/}
+          {/*  render={({ field }) => (*/}
+          {/*    <FormItem className="flex flex-col">*/}
+          {/*      /!*<FormLabel>Language</FormLabel>*!/*/}
+          {/*      <MultiSelect*/}
+          {/*        selected={countries}*/}
+          {/*        options={countries}*/}
+          {/*        {...field}*/}
+          {/*      />*/}
+          {/*      <FormMessage />*/}
+          {/*    </FormItem>*/}
+          {/*  )}*/}
+          {/*/>*/}
+
           {/*<FormField*/}
           {/*  control={form.control}*/}
           {/*  name="minSalary"*/}
