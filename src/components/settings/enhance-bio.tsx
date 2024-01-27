@@ -10,11 +10,13 @@ import {
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { DialogProps } from "@radix-ui/react-dialog";
+import { Dispatch, SetStateAction } from "react";
 
 type Props = Omit<DialogProps, "children"> & {
   trigger?: React.ReactNode;
   bioSuggestion: string;
   onAccepted?: () => void;
+  onChange: Dispatch<SetStateAction<string>>;
 };
 
 export default function EnhanceBio({
@@ -36,6 +38,7 @@ export default function EnhanceBio({
           <Label htmlFor="bio">Suggested bio</Label>
           <Textarea
             defaultValue={bioSuggestion}
+            onChange={(e) => props.onChange(e.target.value)}
             // disabled={true}
             className={"border-green-500"}
           />

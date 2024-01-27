@@ -132,6 +132,7 @@ export default function BasicProfile({ form, user }: ProfileFormProps) {
                 open={enhanceOpen}
                 onOpenChange={setEnhanceOpen}
                 bioSuggestion={enhanceBioSuggestion}
+                onChange={setEnhanceBioSuggestion}
                 onAccepted={() => {
                   setEnhanceOpen(false);
                   form.setValue("bio", enhanceBioSuggestion);
