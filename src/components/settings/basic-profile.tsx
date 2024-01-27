@@ -1,7 +1,9 @@
 "use client";
 
+import { getEnhancedBio } from "@/app/settings/_actions";
 import CvCard from "@/components/settings/cv-card";
 import AddCvButton from "@/components/settings/cv-input";
+import EnhanceBio from "@/components/settings/enhance-bio";
 import ProfilePictureInput from "@/components/settings/profile-picture-input";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -20,11 +22,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
 import { UserWithCvs } from "@/services/UserService";
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Loader2 } from "lucide-react";
+import { useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 
@@ -34,6 +38,37 @@ type ProfileFormProps = {
 };
 
 export default function BasicProfile({ form, user }: ProfileFormProps) {
+  const { toast } = useToast();
+
+  const [enhanceOpen, setEnhanceOpen] = useState(false);
+  const [enhanceBioSuggestion, setEnhanceBioSuggestion] = useState<string>("");
+  const [enhanceBioLoading, setEnhanceBioLoading] = useState(false);
+
+  const enhanceBio = async () => {
+    const bio = form.getValues("bio");
+    if (!bio) return;
+
+    setEnhanceBioLoading(true);
+
+    const { error, data } = await getEnhancedBio(bio);
+
+    if (error) {
+      toast({
+        variant: "default",
+        title: "Error",
+        description: "❌ " + error,
+      });
+    } else {
+      if (data) {
+        setEnhanceBioSuggestion(data);
+        setEnhanceOpen(true);
+      }
+    }
+
+    // Open dialog with new bio
+    setEnhanceBioLoading(false);
+  };
+
   return (
     <div className={"space-y-4"}>
       <div className={"flex flex-row space-y-2 space-x-8 mb-4"}>
@@ -91,10 +126,39 @@ export default function BasicProfile({ form, user }: ProfileFormProps) {
         name="bio"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Bio</FormLabel>
+            <FormLabel className={"flex"}>
+              <label className={"my-auto"}>Bio</label>
+              <EnhanceBio
+                open={enhanceOpen}
+                onOpenChange={setEnhanceOpen}
+                bioSuggestion={enhanceBioSuggestion}
+                onAccepted={() => {
+                  setEnhanceOpen(false);
+                  form.setValue("bio", enhanceBioSuggestion);
+                }}
+              />
+              <Button
+                disabled={!field.value || enhanceBioLoading}
+                className={"ml-auto"}
+                size={"sm"}
+                variant={"ghost"}
+                type={"button"}
+                onClick={enhanceBio}
+              >
+                {enhanceBioLoading ? (
+                  <>
+                    <span className={"mr-2"}>Processing</span>
+                    <Loader2 className={"h-4 w-4 animate-spin"} />
+                  </>
+                ) : (
+                  "✨ Enhance with AI (2 credits left)"
+                )}
+              </Button>
+            </FormLabel>
             <Textarea
               onChange={field.onChange}
-              defaultValue={user.bio ?? ""}
+              defaultValue={field.value ?? ""}
+              value={field.value ?? ""}
               placeholder="I'm a software engineer with experience in..."
             />
             <FormMessage />

@@ -1,5 +1,6 @@
 import * as z from "zod";
 
+export const bioSchema = z.string().max(1_000).optional();
 export const workExperienceSchema = z.object({
   jobTitle: z.string().min(1).max(35),
   company: z.string().min(1).max(35),
@@ -18,7 +19,7 @@ export const updateProfileFormSchema = z.object({
     .min(new Date(1900, 1, 1))
     .max(new Date())
     .nullable(),
-  bio: z.string().max(255).nullish(),
+  bio: bioSchema,
   githubLink: z
     .string()
     .url()

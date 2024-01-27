@@ -5,13 +5,17 @@ import { cvTag } from "@/lib/cache-tags";
 import prisma from "@/lib/db";
 import knock from "@/lib/knock";
 import { fileSizeToBytes } from "@/lib/utils";
-import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
+import {
+  bioSchema,
+  updateProfileFormSchema,
+} from "@/schemas/updateProfileSchema";
 import {
   deleteFile,
   getExpirableUrlFor,
   getUrlFor,
   uploadFile,
 } from "@/services/BlobService";
+import { improveBio } from "@/services/OpemAiService";
 import {
   getCvById,
   getUserById,
@@ -20,8 +24,59 @@ import {
 import { PreferenceSet } from "@knocklabs/node";
 import { UploadedCv } from "@prisma/client";
 import { revalidatePath, revalidateTag } from "next/cache";
+import { RateLimitError } from "openai";
 import { v4 as uuidv4 } from "uuid";
 import * as z from "zod";
+
+export async function getEnhancedBio(bio: string): Promise<{
+  data?: string;
+  error?: string;
+}> {
+  const response = bioSchema.safeParse(bio);
+  if (!response.success) {
+    return {
+      error: response.error.message,
+    };
+  }
+
+  if (!response.data) throw new Error("No data in zod parse response");
+
+  const session = await auth();
+  if (!session || !session.user || !session.user.id) {
+    return {
+      error: "User not found",
+    };
+  }
+
+  const user = await getUserById(session.user.id);
+  if (!user) {
+    return {
+      error: "User not found",
+    };
+  }
+
+  try {
+    const result = await improveBio(response.data);
+    return {
+      data: result,
+    };
+  } catch (error) {
+    if (error instanceof RateLimitError) {
+      return {
+        error:
+          "OpenAI rate limit exceeded - This is an issue with our site. Please try again later.",
+      };
+    } else if (error instanceof Error) {
+      return {
+        error: error.message,
+      };
+    }
+  }
+
+  return {
+    error: "Unknown error",
+  };
+}
 
 export async function updateNotificationSettings(preferences: PreferenceSet) {
   const session = await auth();
@@ -89,6 +144,7 @@ export async function updateProfile(
       firstName: validatedState.firstName,
       lastName: validatedState.lastName,
       dateOfBirth: validatedState.dateOfBirth,
+      bio: validatedState.bio,
       email: validatedState.email,
       githubLink: validatedState.githubLink,
       linkedinLink: validatedState.linkedInLink,
@@ -110,6 +166,7 @@ export async function updateProfile(
       firstName: validatedState.firstName,
       lastName: validatedState.lastName,
       dateOfBirth: validatedState.dateOfBirth,
+      bio: validatedState.bio,
       email: validatedState.email,
       githubLink: validatedState.githubLink,
       linkedinLink: validatedState.linkedInLink,
