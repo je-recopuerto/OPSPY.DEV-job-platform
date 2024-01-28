@@ -1,24 +1,24 @@
 import prisma from "@/lib/db";
+import { companyFilterSchema } from "@/schemas/company";
 import { CompanyWithOpenings } from "@/services/JobService";
-import { Prisma } from "@prisma/client";
+import { z } from "zod";
 
-export function getCompaniesWithOpenings(): Promise<CompanyWithOpenings[]> {
+export const COMPANY_PAGE_SIZE = 10;
+
+export function getCompaniesWithOpenings(
+  searchParams: z.infer<typeof companyFilterSchema>,
+): Promise<CompanyWithOpenings[]> {
   return prisma.company.findMany({
     include: {
       openings: true,
     },
-  });
-}
-
-export async function getCompanies({
-  include,
-}: {
-  include?: Prisma.CompanyInclude;
-}) {
-  return prisma.company.findMany({
-    orderBy: {
-      createdAt: "desc",
+    where: {
+      name: {
+        contains: searchParams.name,
+        mode: "insensitive",
+      },
     },
-    include: include,
+    take: COMPANY_PAGE_SIZE,
+    skip: ((searchParams.page ?? 1) - 1) * COMPANY_PAGE_SIZE,
   });
 }
