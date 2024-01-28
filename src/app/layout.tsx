@@ -1,11 +1,11 @@
+import "@/app/globals.css";
 import { auth } from "@/auth";
-import MainHeader from "@/components/MainHeader";
+import Header from "@/components/header";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/config/site";
 import knock from "@/lib/knock";
 import { cn } from "@/lib/utils";
-import "@/styles/globals.css";
 import { Viewport } from "next";
 import { Inter as FontSans } from "next/font/google";
 import Link from "next/link";
@@ -96,33 +96,31 @@ export default async function RootLayout({
         )}
       >
         <Providers>
-          <MainHeader />
+          <Header />
 
           <main className={"py-8"}>{children}</main>
 
           <Toaster />
         </Providers>
 
-        <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            © 2024 {siteConfig.name} Inc. All rights reserved.
-          </p>
-          <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-            <Link
-              className="text-xs hover:underline underline-offset-4"
-              href="#"
-            >
-              Terms of Service
-            </Link>
-            <Link
-              className="text-xs hover:underline underline-offset-4"
-              href="#"
-            >
-              Privacy
-            </Link>
-          </nav>
-        </footer>
+        <Footer />
       </body>
     </html>
   );
 }
+
+const Footer = () => (
+  <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
+    <p className="text-xs text-gray-500 dark:text-gray-400">
+      © 2024 {siteConfig.name} Inc. All rights reserved.
+    </p>
+    <nav className="sm:ml-auto flex gap-4 sm:gap-6">
+      <Link className="text-xs hover:underline underline-offset-4" href="#">
+        Terms of Service
+      </Link>
+      <Link className="text-xs hover:underline underline-offset-4" href="#">
+        Privacy
+      </Link>
+    </nav>
+  </footer>
+);

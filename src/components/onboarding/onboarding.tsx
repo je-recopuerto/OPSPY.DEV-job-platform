@@ -1,13 +1,14 @@
 "use client";
 
-import FormSubmitButton from "@/components/onboarding/form-submit";
 import GettingStarted from "@/components/onboarding/getting-started";
+import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/components/ui/use-toast";
 import { onboardingSchema } from "@/schemas/onboardingSchema";
 import { setOnboarding } from "@/services/actions/onboarding";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -36,7 +37,7 @@ export default function OnboardingCard(props: OnboardingCardProps) {
   });
 
   const {
-    formState: { isSubmitSuccessful },
+    formState: { isSubmitSuccessful, isSubmitting },
   } = form;
 
   useEffect(() => {
@@ -63,10 +64,19 @@ export default function OnboardingCard(props: OnboardingCardProps) {
 
           {/*<YourExperience form={form} />*/}
 
-          <Separator />
+          {/*<Separator />*/}
 
           <CardDescription>
-            <FormSubmitButton form={form} />
+            <Button className={"w-full"} disabled={isSubmitting}>
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </>
+              ) : (
+                <>Climb aboard!</>
+              )}
+            </Button>
           </CardDescription>
         </Card>
       </form>

@@ -1,5 +1,5 @@
 import { buttonVariants } from "@/components/ui/button";
-import { getJobUrl } from "@/lib/utils";
+import { jobUrl } from "@/lib/pages";
 import { JobPostWithCompany } from "@/services/JobService";
 import Link from "next/link";
 import {
@@ -49,7 +49,7 @@ export default function FeaturedJobs({ jobs }: FeaturedJobsProps) {
 
               <Link
                 className={buttonVariants({ variant: "outline" })}
-                href={getJobUrl(job.id)}
+                href={jobUrl(job.id)}
               >
                 View Details
               </Link>

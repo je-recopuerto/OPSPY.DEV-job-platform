@@ -1,4 +1,4 @@
-import { SignIn } from "@/components/auth-components";
+import { SignIn } from "@/components/auth";
 import Image from "next/image";
 
 export const metadata = {

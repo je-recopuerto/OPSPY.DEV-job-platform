@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { SignIn } from "@/components/auth-components";
+import { SignIn } from "@/components/auth";
 import ViewCvButton from "@/components/request-cv-button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";

@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { SignIn } from "@/components/auth-components";
+import { SignIn } from "@/components/auth";
 import Spinner from "@/components/cui/Spinner";
 import ApplicationsTable from "@/components/dashboard/applications/applications-table";
 import CompanyJobTable from "@/components/dashboard/employer/company-job-table";

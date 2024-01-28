@@ -1,4 +1,4 @@
-import { SubscriptionPlan } from "@/types";
+import { SubscriptionPlan } from "@/lib/stripe";
 
 export const talentFreePlan: SubscriptionPlan = {
   name: "Free",

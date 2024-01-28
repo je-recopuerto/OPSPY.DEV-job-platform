@@ -8,7 +8,7 @@ import { getUserWithCompanyById } from "@/services/UserService";
 import { Cloud, CreditCard, Github, Settings } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { SignIn, SignOut } from "./auth-components";
+import { SignIn, SignOut } from "./auth";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import {
