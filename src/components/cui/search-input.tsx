@@ -17,11 +17,11 @@ export type SearchProps = React.InputHTMLAttributes<HTMLInputElement>;
 // );
 
 const Search = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, ...props }) => {
+  ({ className, ...props }, ref) => {
     return (
       <div className={cn(className, "flex items-center relative")}>
         <SearchIcon className="w-4 h-4 text-muted-foreground absolute left-3" />
-        <Input className="pl-10" {...props} />
+        <Input className="pl-10" {...props} ref={ref} />
       </div>
     );
   },

@@ -4,10 +4,16 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
 } from "@/components/cui/breadcrumb";
-import CompanyProfileWithOpenings from "@/components/jobs/company-profile-with-openings";
+import {
+  CompanyProfileSkeleton,
+  CompanyProfileWithOpenings,
+} from "@/components/jobs/company-profile-with-openings";
 import JobPagination from "@/components/jobs/job-pagination";
 import { companyFilterSchema } from "@/schemas/company";
-import { getCompaniesWithOpenings } from "@/services/CompanyService";
+import {
+  getCompaniesPageCount,
+  getCompaniesWithOpenings,
+} from "@/services/CompanyService";
 import { Suspense } from "react";
 import { z } from "zod";
 
@@ -19,7 +25,9 @@ type Props = {
   searchParams: z.infer<typeof companyFilterSchema>;
 };
 
-export default function ({ searchParams }: Props) {
+export default async function ({ searchParams }: Props) {
+  const totalPages = await getCompaniesPageCount(searchParams);
+
   return (
     <main className=" container min-h-screen ">
       <Breadcrumb className={"mb-4"}>
@@ -31,14 +39,36 @@ export default function ({ searchParams }: Props) {
         </BreadcrumbItem>
       </Breadcrumb>
 
-      <Suspense fallback={<p>Loading feed...</p>}>
-        <CompanyFeed searchParams={searchParams} />
-      </Suspense>
+      <h1 className="text-2xl font-semibold pb-6">Explore Companies</h1>
+
+      <div className="grid flex-1 space-x-2 md:grid-cols-[300px_1fr]">
+        <aside className="hidden flex-col md:flex">
+          <CompanyFilter />
+        </aside>
+
+        <Suspense
+          fallback={<CompaniesSkeleton />}
+          key={`${searchParams.page}${searchParams.name}`}
+        >
+          <Companies searchParams={searchParams} />
+        </Suspense>
+      </div>
+      <JobPagination totalPages={totalPages} />
     </main>
   );
 }
 
-async function CompanyFeed({
+function CompaniesSkeleton() {
+  return (
+    <main className="flex flex-1 flex-col w-full overflow-hidden gap-y-3">
+      {Array.from({ length: 3 }).map((_, i) => (
+        <CompanyProfileSkeleton key={i} />
+      ))}
+    </main>
+  );
+}
+
+async function Companies({
   searchParams,
 }: {
   searchParams: z.infer<typeof companyFilterSchema>;
@@ -46,24 +76,15 @@ async function CompanyFeed({
   const companies = await getCompaniesWithOpenings(searchParams);
 
   return (
-    <>
-      <h1 className="text-2xl font-semibold pb-6">
-        Explore Companies ({companies.length})
-      </h1>
-
-      <div className="grid flex-1 space-x-2 md:grid-cols-[300px_1fr]">
-        <aside className="hidden flex-col md:flex">
-          <CompanyFilter />
-        </aside>
-
-        <main className="flex flex-1 flex-col w-full overflow-hidden gap-y-3">
-          {companies.map((company) => (
-            <CompanyProfileWithOpenings company={company} key={company.id} />
-          ))}{" "}
-        </main>
-      </div>
-
-      <JobPagination totalPages={10} />
-    </>
+    <main className="flex flex-1 flex-col w-full overflow-hidden gap-y-3">
+      {companies.map((company) => (
+        <CompanyProfileWithOpenings company={company} key={company.id} />
+      ))}{" "}
+      {companies.length === 0 && (
+        <p className="text-sm text-center text-muted-foreground">
+          No companies found.
+        </p>
+      )}
+    </main>
   );
 }
