@@ -25,7 +25,9 @@ export type JobTrackerWithPost = Prisma.JobTrackerGetPayload<{
   };
 }>;
 
-export function getRandomJobPosts(count: number) {
+export function getRandomJobPosts(
+  count: number,
+): Promise<JobPostWithCompany[]> {
   return prisma.jobPost.findMany({
     take: count,
     orderBy: {
@@ -33,6 +35,7 @@ export function getRandomJobPosts(count: number) {
     },
     include: {
       company: true,
+      tags: true,
     },
   });
 }

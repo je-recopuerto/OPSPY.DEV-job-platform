@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-import ProfileSetupAlert from "@/components/alerts/profile-setup-alert";
 import Spinner from "@/components/cui/Spinner";
 import {
   Breadcrumb,
@@ -7,6 +6,7 @@ import {
   BreadcrumbLink,
 } from "@/components/cui/breadcrumb";
 import AppliedJobsTab from "@/components/dashboard/applied-jobs-tab";
+import ProfileSetupAlert from "@/components/dashboard/profile-setup-alert";
 import SavedJobTab from "@/components/dashboard/saved-job-tab";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

@@ -1,18 +1,21 @@
+import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 
 type SpinnerProps = {
   text?: string;
+  className?: string;
 };
 
-export default function Spinner(props: SpinnerProps) {
+export default function Spinner({ className, text }: SpinnerProps) {
   return (
     <p
-      className={
-        "flex flex-row ml-2 text-sm text-muted-foreground items-center"
-      }
+      className={cn(
+        className,
+        "flex flex-row ml-2 text-sm text-muted-foreground items-center",
+      )}
     >
       <Loader2 className="h-4 w-4 animate-spin mr-2" />
-      {props.text ?? "Loading..."}
+      {text ?? "Loading..."}
     </p>
   );
 }

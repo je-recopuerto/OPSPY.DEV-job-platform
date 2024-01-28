@@ -1,3 +1,4 @@
+import Spinner from "@/components/cui/Spinner";
 import FeaturedJobs from "@/components/home/featured-jobs";
 import FindNextJobCta from "@/components/home/find-next-job";
 import JobFilter from "@/components/home/job-filter";
@@ -7,6 +8,8 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/home/page-header";
+import { getRandomJobPosts } from "@/services/JobService";
+import { Suspense } from "react";
 
 export default async function Home() {
   return (
@@ -30,30 +33,19 @@ export default async function Home() {
 
       <FindNextJobCta />
 
-      <FeaturedJobs count={3} />
-
-      {/*<ExamplesNav className="[&>a:first-child]:text-primary" />*/}
-      {/*<section className="overflow-hidden rounded-lg border bg-background shadow-md md:hidden md:shadow-xl">*/}
-      {/*  <Image*/}
-      {/*    src="/examples/mail-dark.png"*/}
-      {/*    width={1280}*/}
-      {/*    height={727}*/}
-      {/*    alt="Mail"*/}
-      {/*    className="hidden dark:block"*/}
-      {/*  />*/}
-      {/*  <Image*/}
-      {/*    src="/examples/mail-light.png"*/}
-      {/*    width={1280}*/}
-      {/*    height={727}*/}
-      {/*    alt="Mail"*/}
-      {/*    className="block dark:hidden"*/}
-      {/*  />*/}
-      {/*</section>*/}
-      {/*<section className="hidden md:block">*/}
-      {/*  <div className="overflow-hidden rounded-lg border bg-background shadow-lg">*/}
-      {/*    <MailPage />*/}
-      {/*  </div>*/}
-      {/*</section>*/}
+      <section className="py-12 md:py-24 lg:py-32">
+        <div className="container px-4 md:px-6">
+          <Suspense fallback={<Spinner className={"mx-auto"} />}>
+            <FeaturedJobsSection />
+          </Suspense>
+        </div>
+      </section>
     </div>
   );
+}
+
+async function FeaturedJobsSection() {
+  const jobs = await getRandomJobPosts(4);
+
+  return <FeaturedJobs jobs={jobs} />;
 }

@@ -66,24 +66,26 @@ export function ProfileForm(props: ProfileFormProps) {
         className="space-y-14"
       >
         <BasicProfile form={form} user={props.user} />
-
         <LinksForm form={form} />
         <WorkExperienceForm form={form} />
-
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Please wait
-            </>
-          ) : (
-            <>
-              <SaveIcon className="mr-2 h-4 w-4" />
-              Save Profile
-            </>
-          )}
-        </Button>
+        <SubmitButton isSubmitting={isSubmitting} />{" "}
       </form>
     </Form>
   );
 }
+
+const SubmitButton = ({ isSubmitting }: { isSubmitting: boolean }) => (
+  <Button type="submit" disabled={isSubmitting}>
+    {isSubmitting ? (
+      <>
+        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        Please wait
+      </>
+    ) : (
+      <>
+        <SaveIcon className="mr-2 h-4 w-4" />
+        Save Profile
+      </>
+    )}
+  </Button>
+);

@@ -10,6 +10,12 @@ export function absoluteUrl(path: string) {
   return `${process.env.NEXT_PUBLIC_APP_URL}${path}`;
 }
 
+export const getJobUrl = (jobId: string) => {
+  const searchParams = new URLSearchParams();
+  searchParams.append("jid", jobId);
+  return `/jobs?${searchParams.toString()}`;
+};
+
 export function getValidChildren(children: React.ReactNode) {
   return React.Children.toArray(children).filter((child) =>
     React.isValidElement(child),
