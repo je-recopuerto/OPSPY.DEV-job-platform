@@ -10,6 +10,17 @@ import {
 } from "@/services/UserService";
 import { User } from "@prisma/client";
 
+export declare type AuthorizeSuccess<Output> = {
+  authorized: true;
+  data: Output;
+};
+export declare type AuthorizeError = {
+  authorized: false;
+};
+export declare type AuthorizeReturnType<Success> =
+  | AuthorizeSuccess<Success>
+  | AuthorizeError;
+
 export const newJobUrl = absoluteUrl("/e/new-job");
 export const employerDashboardUrl = absoluteUrl("/e/dash");
 export const employerHomepageUrl = absoluteUrl("/e");
@@ -50,17 +61,6 @@ export async function isAuthorizedForApplications(
   };
 }
 
-export declare type AuthorizeSuccess<Output> = {
-  authorized: true;
-  data: Output;
-};
-export declare type AuthorizeError = {
-  authorized: false;
-};
-export declare type AuthorizeReturnType<Success> =
-  | AuthorizeSuccess<Success>
-  | AuthorizeError;
-
 export async function isAuthorizedForEmployerDash(userId: User["id"]): Promise<
   AuthorizeReturnType<{
     user: UserWithCompany;
@@ -71,6 +71,29 @@ export async function isAuthorizedForEmployerDash(userId: User["id"]): Promise<
   const isAuthorized = user !== null && user.company !== null;
 
   if (!isAuthorized) {
+    return {
+      authorized: false,
+    };
+  }
+
+  return {
+    data: {
+      user,
+    },
+    authorized: true,
+  };
+}
+
+export async function canCreateNewJobPost(userId: User["id"]): Promise<
+  AuthorizeReturnType<{
+    user: UserWithCompany;
+  }>
+> {
+  const user = await getUserWithCompanyById(userId);
+
+  let isAuthorized = user !== null && user.company !== null;
+
+  if (!isAuthorized || !user) {
     return {
       authorized: false,
     };

@@ -1,25 +1,14 @@
-import { auth } from "@/auth";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { getUserWithJobTrackersById } from "@/services/UserService";
+import { SignIn } from "@/components/auth-components";
 import Image from "next/image";
-import Link from "next/link";
-import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Employer",
 };
 
-export default async function EmployerPage() {
-  const session = await auth();
-  if (!session || !session.user) return redirect("/");
-
-  const user = await getUserWithJobTrackersById(session.user.id);
-  if (!user) return;
-
+export default function EmployerPage() {
   return (
     <>
-      <section className="flex flex-row space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
+      <section className="flex flex-row space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32 min-h-screen">
         <div className={"w-2/5"}>
           <Image
             src={"/employerdashboard_dark.png"}
@@ -48,12 +37,7 @@ export default async function EmployerPage() {
                 Simplify your hiring, amplify your results.
               </p>
               <div className="space-x-4">
-                <Link
-                  href="/login"
-                  className={cn(buttonVariants({ size: "lg" }))}
-                >
-                  Get Started
-                </Link>
+                <SignIn />
               </div>
             </div>
           </div>

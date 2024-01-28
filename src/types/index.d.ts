@@ -11,4 +11,5 @@ export type SubscriptionPlan = {
   description: string;
   stripePriceId: string;
   bioGenerationsPerDay: number;
+  maxJobPosts: number;
 };
