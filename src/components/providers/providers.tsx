@@ -11,12 +11,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <SessionProvider>
       <NextTopLoader />
 
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         {children}
       </ThemeProvider>
     </SessionProvider>
