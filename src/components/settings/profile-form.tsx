@@ -57,7 +57,7 @@ export function ProfileForm(props: ProfileFormProps) {
         duration: 3000,
       });
     }
-  }, [isSubmitSuccessful, toast, isSubmitting]);
+  }, [isSubmitSuccessful, isSubmitting]);
 
   return (
     <Form {...form}>

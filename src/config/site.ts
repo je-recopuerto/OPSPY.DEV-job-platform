@@ -1,11 +1,7 @@
 export const siteConfig = {
   name: "opportunify",
   description:
-    "An open source application built using the new router, server components and everything new in Next.js 13.",
-  url: "https://tx.shadcn.com",
+    "With opportunify, you can find the best opportunities for you from our wide array of opportunities. Try today for free!",
+  url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   ogImage: "https://tx.shadcn.com/og.jpg",
-  links: {
-    twitter: "https://twitter.com/shadcn",
-    github: "https://github.com/shadcn/taxonomy",
-  },
 };

@@ -24,7 +24,6 @@ export default async function DashboardPage() {
   if (!session || !session.user || !session.user.id) return redirect("/");
 
   const user = await getUserWithCompanyById(session.user.id);
-  // if (!user) return redirect("/t/welcome");
   if (user?.company) return redirect("/e/dash");
 
   return (

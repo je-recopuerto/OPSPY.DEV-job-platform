@@ -1,6 +1,6 @@
 "use client";
 
-import { getEnhancedBio } from "@/app/settings/_actions";
+import { getEnhancedBio, getMyGenerationsLeft } from "@/app/settings/_actions";
 import CvCard from "@/components/settings/cv-card";
 import AddCvButton from "@/components/settings/cv-input";
 import EnhanceBio from "@/components/settings/enhance-bio";
@@ -28,7 +28,7 @@ import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
 import { UserWithCvs } from "@/services/UserService";
 import { format } from "date-fns";
 import { CalendarIcon, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 
@@ -43,6 +43,17 @@ export default function BasicProfile({ form, user }: ProfileFormProps) {
   const [enhanceOpen, setEnhanceOpen] = useState(false);
   const [enhanceBioSuggestion, setEnhanceBioSuggestion] = useState<string>("");
   const [enhanceBioLoading, setEnhanceBioLoading] = useState(false);
+  const [generationsLeft, setGenerationsLeft] = useState<number | undefined>();
+
+  useEffect(() => {
+    const getGenerationsLeft = async () => {
+      const generationsLeft = await getMyGenerationsLeft();
+      console.log("generationsLeft", generationsLeft);
+      setGenerationsLeft(generationsLeft);
+    };
+
+    getGenerationsLeft();
+  }, [enhanceOpen]);
 
   const enhanceBio = async () => {
     const bio = form.getValues("bio");
@@ -139,7 +150,7 @@ export default function BasicProfile({ form, user }: ProfileFormProps) {
                 }}
               />
               <Button
-                disabled={!field.value || enhanceBioLoading}
+                disabled={!field.value || enhanceBioLoading || !generationsLeft}
                 className={"ml-auto"}
                 size={"sm"}
                 variant={"ghost"}
@@ -152,7 +163,7 @@ export default function BasicProfile({ form, user }: ProfileFormProps) {
                     <Loader2 className={"h-4 w-4 animate-spin"} />
                   </>
                 ) : (
-                  "✨ Enhance with AI (2 credits left)"
+                  `✨ Enhance with AI (${generationsLeft === undefined ? "-" : generationsLeft} credits left)`
                 )}
               </Button>
             </FormLabel>

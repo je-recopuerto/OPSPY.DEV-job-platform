@@ -10,23 +10,29 @@ generator client {
 }
 
 model User {
-  id             String           @id @unique @default(cuid())
-  firstName      String?
-  lastName       String?
-  dateOfBirth    DateTime?
-  bio            String?
-  email          String           @unique
-  imageURL       String?
-  location       String?
-  createdAt      DateTime         @default(now())
-  company        Company?
-  trackers       JobTracker[]
-  applications   JobApplication[]
-  cv             UploadedCv?
-  githubLink     String?
-  linkedinLink   String?
-  twitterLink    String?
-  workExperience WorkExperience[]
+  id                     String           @id @unique @default(cuid())
+  firstName              String?
+  lastName               String?
+  dateOfBirth            DateTime?
+  bio                    String?
+  email                  String           @unique
+  imageURL               String?
+  location               String?
+  createdAt              DateTime         @default(now())
+  company                Company?
+  trackers               JobTracker[]
+  applications           JobApplication[]
+  cv                     UploadedCv?
+  githubLink             String?
+  linkedinLink           String?
+  twitterLink            String?
+  workExperience         WorkExperience[]
+  bioCompletions         Int              @default(0)
+  lastBioReset           DateTime?        @default(now())
+  stripeCustomerId       String?          @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId   String?          @unique @map(name: "stripe_subscription_id")
+  stripePriceId          String?          @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd DateTime?        @map(name: "stripe_current_period_end")
 }
 
 model WorkExperience {

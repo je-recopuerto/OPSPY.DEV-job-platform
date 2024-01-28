@@ -3,7 +3,7 @@ import { ArrowRight, HammerIcon } from "lucide-react";
 
 export default function ProfileSetupAlert() {
   return (
-    <Alert>
+    <Alert className={"mb-6"}>
       <HammerIcon className="h-4 w-4" />
       <AlertTitle>Heads up!</AlertTitle>
       <AlertDescription>

@@ -117,6 +117,16 @@ export function MainNav({
       >
         Companies
       </Link>
+
+      <Link
+        href="/pricing"
+        className={`${activeClass(
+          currentPage,
+          "/companies",
+        )} text-sm font-medium transition-colors hover:text-primary`}
+      >
+        Pricing
+      </Link>
     </nav>
   );
 }

@@ -22,6 +22,19 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+## Running Stripe locally
+When running the app locally, you can use the Stripe CLI to easily test your integration without having to deploy to a live environment. The Stripe CLI is a developer tool to help you interact with Stripe from the command line.
+
+Download it [here](https://stripe.com/docs/stripe-cli#install).
+
+Once installed, you can start the CLI in listen mode:
+
+```bash
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+```
+
+The CLI will print a webhook secret key to the console. Copy this key and add it to your `.env.local` file as `STRIPE_WEBHOOK_SECRET`.
+
 ## Helpful Commands
 
 - Reset database and apply migrations: `npx prisma migrate reset`

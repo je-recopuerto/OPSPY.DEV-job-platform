@@ -18,15 +18,61 @@ import {
 import { improveBio } from "@/services/OpemAiService";
 import {
   getCvById,
+  getUserBioGenerationsLeft,
   getUserById,
+  getUserSubscriptionPlan,
   getUserWithCvsById,
 } from "@/services/UserService";
 import { PreferenceSet } from "@knocklabs/node";
-import { UploadedCv } from "@prisma/client";
+import { UploadedCv, User } from "@prisma/client";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { RateLimitError } from "openai";
 import { v4 as uuidv4 } from "uuid";
 import * as z from "zod";
+
+export async function getMyGenerationsLeft(): Promise<number> {
+  const session = await auth();
+  if (!session || !session.user || !session.user.id) return 0;
+
+  const user = await getUserById(session.user.id);
+  if (!user) return 0;
+
+  return await getUserBioGenerationsLeft(user.id);
+}
+
+export async function canUserGenerateBio(userId: User["id"]): Promise<boolean> {
+  const user = await getUserById(userId);
+  if (!user) return false;
+
+  const { plan } = await getUserSubscriptionPlan(userId);
+
+  const { bioCompletions, lastBioReset } = user;
+
+  const now = Date.now();
+  const lastReset = lastBioReset?.getTime() || now;
+
+  const daysSinceLastReset = Math.floor((now - lastReset) / 86_400_000);
+  // If the user's reset date isn't within a day, then they have all their generations left.
+  if (daysSinceLastReset >= 1) {
+    return true;
+  } else {
+    const left = plan.bioGenerationsPerDay - bioCompletions;
+    return left > 0;
+  }
+}
+
+export async function consumeBioGeneration(userId: User["id"]) {
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      bioCompletions: {
+        increment: 1,
+      },
+    },
+  });
+}
 
 export async function getEnhancedBio(bio: string): Promise<{
   data?: string;
@@ -56,10 +102,20 @@ export async function getEnhancedBio(bio: string): Promise<{
   }
 
   try {
-    const result = await improveBio(response.data);
-    return {
-      data: result,
-    };
+    // Remove one
+    const canGenerate = await canUserGenerateBio(user.id);
+    if (canGenerate) {
+      const result = await improveBio(response.data);
+      await consumeBioGeneration(user.id);
+
+      return {
+        data: result,
+      };
+    } else {
+      return {
+        error: "You have reached your daily limit for bio generations.",
+      };
+    }
   } catch (error) {
     if (error instanceof RateLimitError) {
       return {

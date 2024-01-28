@@ -20,13 +20,26 @@ export const metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: ["Job", "Job board"],
+  keywords: [
+    "Job",
+    "Job board",
+    "Job board template",
+    "Job board theme",
+    "software jobs",
+    "software",
+    "devops",
+    "devops jobs",
+    "remote jobs",
+    "remote",
+    "remote software jobs",
+  ],
   authors: [
     {
       name: "Jonny Ruffles",
       url: "https://ruffles.pw/",
     },
   ],
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? ""),
   creator: "Jonny",
   openGraph: {
     type: "website",
