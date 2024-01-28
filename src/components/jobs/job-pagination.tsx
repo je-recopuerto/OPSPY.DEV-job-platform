@@ -22,7 +22,8 @@ export default function JobPagination({ totalPages }: { totalPages: number }) {
 
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(window.location.search);
-    if (page < 1 || page === totalPages) {
+    console.log("Page:", page, "Total:", totalPages);
+    if (page < 1 || page > totalPages) {
       return;
     }
 
