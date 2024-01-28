@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import React from "react";
 
 export type ThemeToggleProps = {
   className?: string;
@@ -12,6 +13,12 @@ export type ThemeToggleProps = {
 
 export function ThemeToggle({ ...props }: ThemeToggleProps) {
   const { theme, setTheme } = useTheme();
+
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
 
   const toggleTheme = () => {
     if (theme === "system") {

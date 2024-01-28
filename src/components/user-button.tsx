@@ -6,6 +6,7 @@ import {
 } from "@/lib/pages";
 import { getUserWithCompanyById } from "@/services/UserService";
 import { Cloud, CreditCard, Github, Settings } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { SignIn, SignOut } from "./auth-components";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -35,13 +36,21 @@ export default async function UserButton() {
           className="relative w-8 h-8 rounded-full my-auto"
         >
           <Avatar className="w-8 h-8">
-            {session.user.image && (
-              <AvatarImage
-                src={user?.imageURL ?? session.user.image ?? ""}
-                alt={session.user.name ?? ""}
+            <AvatarImage
+              src={user?.imageURL ?? "default_profile_picture.svg"}
+              alt={"Profile picture"}
+              height={0}
+              width={0}
+              asChild
+            >
+              <Image
+                src={user?.imageURL ?? "default_profile_picture.svg"}
+                alt={"Profile picture"}
+                width={0}
+                height={0}
               />
-            )}
-            <AvatarFallback>{session.user.email}</AvatarFallback>
+            </AvatarImage>
+            <AvatarFallback>N</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>

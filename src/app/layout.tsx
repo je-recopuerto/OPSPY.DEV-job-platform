@@ -1,11 +1,12 @@
 import { auth } from "@/auth";
 import MainHeader from "@/components/MainHeader";
-import { Providers } from "@/components/providers/providers";
+import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/config/site";
 import knock from "@/lib/knock";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
+import { Viewport } from "next";
 import { Inter as FontSans } from "next/font/google";
 import Link from "next/link";
 
@@ -13,6 +14,13 @@ const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+};
 
 export const metadata = {
   title: {
@@ -78,8 +86,9 @@ export default async function RootLayout({
     });
   }
 
+  // We use suppressHydrationWarning here because of this: https://github.com/WITS/next-themes#server-component
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
