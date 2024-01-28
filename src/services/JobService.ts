@@ -2,6 +2,7 @@ import prisma from "@/lib/db";
 import { filterJobPostsSchema } from "@/schemas/jobPost";
 import { Company, Prisma } from "@prisma/client";
 import { z } from "zod";
+import JobPostWhereInput = Prisma.JobPostWhereInput;
 
 export const JOB_PAGE_SIZE = 8;
 
@@ -40,24 +41,58 @@ export function getRandomJobPosts(
   });
 }
 
-// export async function getRandomJobPost() {
-//   const result = await prisma.jobPost.findMany({
-//     take: 3,
-//     orderBy: {
-//       createdAt: "desc",
-//     },
-//     where: {
-//       status: "ACTIVE",
-//     },
-//     include: {
-//       company: true,
-//     },
-//   });
-//
-//   // pick one of the three
-//   const randomIndex = Math.floor(Math.random() * result.length);
-//   return result[randomIndex];
-// }
+const generateFilter = (
+  filter?: z.infer<typeof filterJobPostsSchema>,
+): JobPostWhereInput => {
+  return {
+    AND: [
+      filter?.keywords
+        ? {
+            OR: [
+              {
+                title: {
+                  contains: filter.keywords,
+                  mode: "insensitive",
+                },
+              },
+              {
+                description: {
+                  contains: filter.keywords,
+                  mode: "insensitive",
+                },
+              },
+              {
+                company: {
+                  name: {
+                    contains: filter.keywords,
+                    mode: "insensitive",
+                  },
+                },
+              },
+            ],
+          }
+        : {},
+      filter?.tags?.length
+        ? {
+            tags: {
+              some: {
+                name: {
+                  in: filter.tags,
+                },
+              },
+            },
+          }
+        : {},
+      filter?.minSalary
+        ? {
+            minSalary: {
+              gte: filter.minSalary,
+            },
+          }
+        : {},
+    ],
+  };
+};
 
 export async function fetchJobsPages(
   filter?: z.infer<typeof filterJobPostsSchema>,
@@ -83,57 +118,14 @@ export async function fetchJobsPages(
   // Make sure the schema is valid
   filterJobPostsSchema.parse(filter);
 
-  return prisma.jobPost.count({
+  const totalJobs = await prisma.jobPost.count({
     where: {
       status: "ACTIVE",
-      AND: [
-        filter?.keywords
-          ? {
-              OR: [
-                {
-                  title: {
-                    contains: filter.keywords,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  description: {
-                    contains: filter.keywords,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  company: {
-                    name: {
-                      contains: filter.keywords,
-                      mode: "insensitive",
-                    },
-                  },
-                },
-              ],
-            }
-          : {},
-        filter?.tags?.length
-          ? {
-              tags: {
-                some: {
-                  name: {
-                    in: filter.tags,
-                  },
-                },
-              },
-            }
-          : {},
-        filter?.minSalary
-          ? {
-              minSalary: {
-                gte: filter.minSalary,
-              },
-            }
-          : {},
-      ],
+      ...generateFilter(filter),
     },
   });
+
+  return Math.ceil(totalJobs / JOB_PAGE_SIZE);
 }
 
 export async function getJobPostsWithCompany(
@@ -155,52 +147,7 @@ export async function getJobPostsWithCompany(
   return prisma.jobPost.findMany({
     where: {
       status: "ACTIVE",
-      AND: [
-        filter?.keywords
-          ? {
-              OR: [
-                {
-                  title: {
-                    contains: filter.keywords,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  description: {
-                    contains: filter.keywords,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  company: {
-                    name: {
-                      contains: filter.keywords,
-                      mode: "insensitive",
-                    },
-                  },
-                },
-              ],
-            }
-          : {},
-        filter?.tags?.length
-          ? {
-              tags: {
-                some: {
-                  name: {
-                    in: filter.tags,
-                  },
-                },
-              },
-            }
-          : {},
-        filter?.minSalary
-          ? {
-              minSalary: {
-                gte: filter.minSalary,
-              },
-            }
-          : {},
-      ],
+      ...generateFilter(filter),
     },
     orderBy: {
       createdAt: "desc",
