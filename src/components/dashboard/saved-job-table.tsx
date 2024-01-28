@@ -3,6 +3,7 @@
 import { DataTable } from "@/components/table/data-table";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { jobUrl } from "@/lib/pages";
 import { JobTrackerWithPost } from "@/services/JobService";
 import { ApplicationStatus } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
@@ -89,9 +90,7 @@ const columns: ColumnDef<JobTrackerWithPost>[] = [
     ),
     cell: ({ row }) => {
       return (
-        <Link href={`/jobs/${row.original.jobId}`}>
-          {row.original.job.title}
-        </Link>
+        <Link href={jobUrl(row.original.jobId)}>{row.original.job.title}</Link>
       );
     },
     enableSorting: true,

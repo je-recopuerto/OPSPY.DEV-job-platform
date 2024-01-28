@@ -114,7 +114,7 @@ model Tag {
 }
 
 model JobApplication {
-  id        Int               @id @default(autoincrement())
+  id        String            @id @default(uuid())
   userId    String
   jobId     String
   status    ApplicationStatus @default(APPLIED)

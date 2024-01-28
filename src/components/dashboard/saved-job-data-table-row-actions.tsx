@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { JobTrackerWithPost } from "@/services/JobService";
-import { unsaveJob } from "@/services/actions/job";
+import { deleteJobTracker } from "@/services/actions/job";
 import { CircleEllipsisIcon } from "lucide-react";
 
 interface DataTableRowActionsProps {
@@ -33,7 +33,7 @@ export function SavedJobDataTableRowActions({ row }: DataTableRowActionsProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem
-          onClick={async () => await unsaveJob(row.original.id)}
+          onClick={async () => await deleteJobTracker(row.original.id)}
         >
           Delete
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>

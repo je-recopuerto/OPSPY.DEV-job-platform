@@ -1,3 +1,4 @@
+import { JobApplication } from ".prisma/client";
 import prisma from "@/lib/db";
 import { Company, Prisma } from "@prisma/client";
 
@@ -41,7 +42,7 @@ export async function getApplicationsForCompanyId(
 }
 
 export async function getApplicationById(
-  id: number,
+  id: JobApplication["id"],
 ): Promise<ApplicationWithJob | null> {
   return prisma.jobApplication.findFirst({
     where: {

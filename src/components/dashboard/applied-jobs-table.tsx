@@ -12,6 +12,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { jobUrl } from "@/lib/pages";
 import { JobApplicationWithCompany } from "@/services/JobService";
 import { ColumnDef } from "@tanstack/react-table";
 import { format, formatDistanceToNow } from "date-fns";
@@ -57,9 +58,7 @@ export const columns: ColumnDef<JobApplicationWithCompany>[] = [
     ),
     cell: ({ row }) => {
       return (
-        <Link href={`/jobs/${row.original.jobId}`}>
-          {row.original.job.title}
-        </Link>
+        <Link href={jobUrl(row.original.jobId)}>{row.original.job.title}</Link>
       );
     },
     enableSorting: true,

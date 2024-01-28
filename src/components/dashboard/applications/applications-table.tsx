@@ -6,6 +6,7 @@ import { applicationStatuses } from "@/components/dashboard/saved-job-table";
 import { DataTable } from "@/components/table/data-table";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
 import { Checkbox } from "@/components/ui/checkbox";
+import { applicationUrl, jobUrl } from "@/lib/pages";
 import { ApplicationWithJob } from "@/services/ApplicationService";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
@@ -58,7 +59,7 @@ const columns: ColumnDef<ApplicationWithJob>[] = [
     ),
     cell: ({ row }) => {
       return (
-        <Link href={`/e/applications/${row.original.id}`}>
+        <Link href={applicationUrl(row.original.id)}>
           {row.original.user.firstName + " " + row.original.user.lastName}
         </Link>
       );
@@ -74,9 +75,7 @@ const columns: ColumnDef<ApplicationWithJob>[] = [
     ),
     cell: ({ row }) => {
       return (
-        <Link href={`/jobs/${row.original.jobId}`}>
-          {row.original.job.title}
-        </Link>
+        <Link href={jobUrl(row.original.job.id)}>{row.original.job.title}</Link>
       );
     },
     enableSorting: true,

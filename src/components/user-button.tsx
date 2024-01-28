@@ -1,4 +1,9 @@
 import { auth } from "@/auth";
+import {
+  employerDashboardUrl,
+  settingsUrl,
+  talentDashboardUrl,
+} from "@/lib/pages";
 import { getUserWithCompanyById } from "@/services/UserService";
 import { Cloud, CreditCard, Github, Settings } from "lucide-react";
 import Link from "next/link";
@@ -50,7 +55,9 @@ export default async function UserButton() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href={user?.company ? "/e/dash" : "/t/dash"}>
+            <Link
+              href={user?.company ? employerDashboardUrl : talentDashboardUrl}
+            >
               <CreditCard className="mr-2 h-4 w-4" />
               <span>Dashboard</span>
               <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
@@ -58,7 +65,7 @@ export default async function UserButton() {
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
-            <Link href={"/settings"}>
+            <Link href={settingsUrl}>
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
               <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>

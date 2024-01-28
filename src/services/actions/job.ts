@@ -4,7 +4,7 @@ import { auth } from "@/auth";
 import prisma from "@/lib/db";
 import { createJobPostSchema } from "@/schemas/jobPost";
 import { getUserById, getUserWithCompanyById } from "@/services/UserService";
-import { JobPost, User } from "@prisma/client";
+import { JobPost, JobTracker, User } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import * as z from "zod";
@@ -42,10 +42,10 @@ export async function createJobPost(
   redirect("/e/dash");
 }
 
-export async function unsaveJob(id: number) {
+export async function deleteJobTracker(trackerId: JobTracker["id"]) {
   return prisma.jobTracker.delete({
     where: {
-      id: id,
+      id: trackerId,
     },
   });
 }
@@ -78,7 +78,7 @@ export async function toggleSaveJob(id: JobPost["id"]) {
   let removed = false;
 
   if (existingTracker) {
-    const result = await unsaveJob(existingTracker.id);
+    const result = await deleteJobTracker(existingTracker.id);
     console.log("Deleted existing tracker:", result);
     removed = true;
   } else {

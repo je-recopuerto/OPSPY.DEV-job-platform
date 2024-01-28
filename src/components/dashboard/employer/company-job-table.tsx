@@ -5,6 +5,7 @@ import { CompanyJobDataTableRowActions } from "@/components/dashboard/employer/c
 import { DataTable } from "@/components/table/data-table";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
 import { Checkbox } from "@/components/ui/checkbox";
+import { jobUrl } from "@/lib/pages";
 import { cn } from "@/lib/utils";
 import {
   CompanyWithOpeningsAndApplications,
@@ -55,9 +56,7 @@ export const columns: ColumnDef<JobPostWithApplications>[] = [
       <DataTableColumnHeader column={column} title="Role" />
     ),
     cell: ({ row }) => {
-      return (
-        <Link href={`/jobs/${row.original.id}`}>{row.original.title}</Link>
-      );
+      return <Link href={jobUrl(row.original.id)}>{row.original.title}</Link>;
     },
     enableSorting: true,
     enableHiding: false,

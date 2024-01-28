@@ -1,5 +1,3 @@
-"use client";
-
 import { Row } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
@@ -7,14 +5,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { applicationUrl } from "@/lib/pages";
 import { ApplicationWithJob } from "@/services/ApplicationService";
-import { unsaveJob } from "@/services/actions/job";
-import { CircleEllipsisIcon, EyeIcon, TrashIcon } from "lucide-react";
+import { CircleEllipsisIcon, EyeIcon } from "lucide-react";
 import Link from "next/link";
 
 interface DataTableRowActionsProps {
@@ -35,20 +31,10 @@ export function ApplicationsTableRowActions({ row }: DataTableRowActionsProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem asChild>
-          <Link href={`/e/applications/${row.original.id}`}>
+          <Link href={applicationUrl(row.original.id)}>
             <EyeIcon className="h-4 w-4 mr-2" />
             View
           </Link>
-        </DropdownMenuItem>
-
-        <DropdownMenuSeparator />
-
-        <DropdownMenuItem
-          onClick={async () => await unsaveJob(row.original.id)}
-        >
-          <TrashIcon className="h-4 w-4 mr-2" />
-          Delete
-          <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
