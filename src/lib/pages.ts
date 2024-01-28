@@ -49,3 +49,37 @@ export async function isAuthorizedForApplications(
     isAuthorized: isAuthorized,
   };
 }
+
+export declare type AuthorizeSuccess<Output> = {
+  authorized: true;
+  data: Output;
+};
+export declare type AuthorizeError = {
+  authorized: false;
+};
+export declare type AuthorizeReturnType<Success> =
+  | AuthorizeSuccess<Success>
+  | AuthorizeError;
+
+export async function isAuthorizedForEmployerDash(userId: User["id"]): Promise<
+  AuthorizeReturnType<{
+    user: UserWithCompany;
+  }>
+> {
+  const user = await getUserWithCompanyById(userId);
+
+  const isAuthorized = user !== null && user.company !== null;
+
+  if (!isAuthorized) {
+    return {
+      authorized: false,
+    };
+  }
+
+  return {
+    data: {
+      user,
+    },
+    authorized: true,
+  };
+}

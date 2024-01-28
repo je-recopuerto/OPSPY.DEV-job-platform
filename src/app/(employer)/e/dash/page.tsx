@@ -6,15 +6,14 @@ import CompanyJobTable from "@/components/dashboard/employer/company-job-table";
 import CompanyProfile from "@/components/jobs/company-profile";
 import { buttonVariants } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { newJobUrl } from "@/lib/pages";
+import { isAuthorizedForEmployerDash, newJobUrl } from "@/lib/pages";
 import { cn } from "@/lib/utils";
 import { getApplicationsForCompanyId } from "@/services/ApplicationService";
 import { getCompanyWithOpeningsAndApplicationsById } from "@/services/JobService";
-import { getUserWithCompanyById } from "@/services/UserService";
 import { Company } from "@prisma/client";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 export const metadata = {
@@ -23,14 +22,17 @@ export const metadata = {
 
 export default async function EmployerDashboardPage() {
   const session = await auth();
-  if (!session?.user) return <SignIn />;
+  if (!session?.user || !session.user.id) return <SignIn />;
 
-  const user = await getUserWithCompanyById(session.user.id);
-  if (!user || !user.company) return redirect("/e");
+  const response = await isAuthorizedForEmployerDash(session.user.id);
+  if (!response.authorized) return <div>Not authorized</div>;
+
+  const { company } = response.data.user;
+  if (!company) return notFound();
 
   return (
     <div className="container min-h-screen space-y-4">
-      <CompanyProfile company={user.company} />
+      <CompanyProfile company={company} />
 
       <div className="flex items-center justify-between space-y-2">
         <h2 className="text-3xl font-bold tracking-tight">
@@ -50,12 +52,12 @@ export default async function EmployerDashboardPage() {
         </TabsList>
         <TabsContent value="jobs" className="space-y-4">
           <Suspense fallback={<Spinner />}>
-            <JobTable companyId={user.company.id} />
+            <JobTable companyId={company.id} />
           </Suspense>
         </TabsContent>
         <TabsContent value={"applications"} className="space-y-4">
           <Suspense fallback={<Spinner />}>
-            <ServerApplicationsTable companyId={user.company.id} />
+            <ServerApplicationsTable companyId={company.id} />
           </Suspense>
         </TabsContent>
       </Tabs>
