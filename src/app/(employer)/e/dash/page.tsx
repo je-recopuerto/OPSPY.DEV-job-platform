@@ -13,7 +13,7 @@ import { getCompanyWithOpeningsAndApplicationsById } from "@/services/JobService
 import { Company } from "@prisma/client";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Suspense } from "react";
 
 export const metadata = {
@@ -25,7 +25,7 @@ export default async function EmployerDashboardPage() {
   if (!session?.user || !session.user.id) return <SignIn />;
 
   const response = await isAuthorizedForEmployerDash(session.user.id);
-  if (!response.authorized) return <div>Not authorized</div>;
+  if (!response.authorized) return redirect("/t/dash");
 
   const { company } = response.data.user;
   if (!company) return notFound();

@@ -9,7 +9,6 @@ import {
   PageHeaderHeading,
 } from "@/components/home/page-header";
 import { getRandomJobPosts } from "@/services/JobService";
-import Image from "next/image";
 import { Suspense } from "react";
 
 export default async function Home() {
@@ -19,14 +18,6 @@ export default async function Home() {
     <div>
       <PageHeader>
         {/*<Announcement />*/}
-
-        <Image
-          src={"default_profile_picture.svg"}
-          alt={""}
-          width={"16"}
-          height={"16"}
-          className={"w-16 h-16 rounded-full"}
-        />
 
         <PageHeaderHeading>
           Jobs,{" "}
