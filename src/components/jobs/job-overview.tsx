@@ -1,5 +1,3 @@
-"use client";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -19,10 +17,10 @@ type JobListingProps = {
   isFollowing: boolean;
 };
 
-function JobOverview(props: JobListingProps) {
+function JobOverview({ job, isFollowing }: JobListingProps) {
   const searchParams = new URLSearchParams(window.location.search);
   const newSearchParams = new URLSearchParams(searchParams);
-  newSearchParams.set("jid", props.job.id.toString());
+  newSearchParams.set("jid", job.id.toString());
 
   const jobUrl = `/jobs?${newSearchParams.toString()}`;
 
@@ -32,8 +30,8 @@ function JobOverview(props: JobListingProps) {
         <CardHeader className={"flex flex-row gap-x-4 space-y-0"}>
           <Avatar className={"h-10 w-10 rounded-sm"}>
             <AvatarImage
-              src={props.job.company.logoUrl ?? "https://github.com/shadcn.png"}
-              alt={props.job.company.name}
+              src={job.company.logoUrl ?? "https://github.com/shadcn.png"}
+              alt={job.company.name}
               sizes={"cover"}
             />
             <AvatarFallback>CN</AvatarFallback>
@@ -42,23 +40,18 @@ function JobOverview(props: JobListingProps) {
           <div>
             <CardTitle className={"text-md"}>
               <Link className={"hover:underline"} href={jobUrl}>
-                {props.job.title}
+                {job.title}
               </Link>
             </CardTitle>
             <CardDescription>
-              {props.job.company.name} | {props.job.location} |{" "}
-              {jobTypes[props.job.type]} |{" "}
-              {getSalaryRangeString(
-                props.job.minSalary,
-                props.job.maxSalary,
-                props.job.currency,
-              )}
+              {job.company.name} | {job.location} | {jobTypes[job.type]} |{" "}
+              {getSalaryRangeString(job.minSalary, job.maxSalary, job.currency)}
             </CardDescription>
           </div>
 
           <div>
             <div className={"flex flex-row gap-2"}>
-              {props.job.tags.map((tag) => (
+              {job.tags.map((tag) => (
                 <Badge key={tag.id} variant={"default"}>
                   {tag.name}
                 </Badge>
@@ -71,7 +64,7 @@ function JobOverview(props: JobListingProps) {
           <p
             className={"text-sm font-normal leading-none text-muted-foreground"}
           >
-            {props.job.description?.slice(0, 125) + "..."}
+            {job.description?.slice(0, 125) + "..."}
           </p>
         </CardContent>
       </Card>
@@ -79,7 +72,7 @@ function JobOverview(props: JobListingProps) {
   );
 }
 
-const jobTypes = {
+const jobTypes: Record<JobType, string> = {
   [JobType.FULL_TIME]: "Full Time",
   [JobType.PART_TIME]: "Part Time",
   [JobType.CONTRACT]: "Contract",

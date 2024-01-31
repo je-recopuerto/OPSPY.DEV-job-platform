@@ -244,7 +244,7 @@ export default function CreateJobForm() {
           />
 
           <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Loading..." : "Create Job Post"}
+            {isSubmitting ? "Loading..." : "Create"}
           </Button>
         </div>
       </form>
