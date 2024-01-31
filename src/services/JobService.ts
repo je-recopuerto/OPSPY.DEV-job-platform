@@ -244,6 +244,9 @@ export function getCompanyWithOpeningsAndApplicationsById(
         include: {
           application: true,
         },
+        orderBy: {
+          createdAt: "desc",
+        },
       },
     },
   });

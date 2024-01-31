@@ -21,8 +21,8 @@ type AppliedJobsTableProps = {
   data: CompanyWithOpeningsAndApplications;
 };
 
-export default function CompanyJobTable(props: AppliedJobsTableProps) {
-  return <DataTable columns={columns} data={props.data.openings} />;
+export default function CompanyJobTable({ data }: AppliedJobsTableProps) {
+  return <DataTable columns={columns} data={data.openings} />;
 }
 
 export const columns: ColumnDef<JobPostWithApplications>[] = [
@@ -160,7 +160,7 @@ const countOfStatuses = (
   return applications.filter((x) => statuses.includes(x.status)).length;
 };
 
-const jobStatuses: {
+export const jobStatuses: {
   value: JobStatus;
   label: string;
   icon?: LucideIcon;

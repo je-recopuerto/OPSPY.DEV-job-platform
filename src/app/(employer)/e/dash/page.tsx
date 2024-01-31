@@ -1,11 +1,16 @@
 import { auth } from "@/auth";
 import { SignIn } from "@/components/auth-components";
 import Spinner from "@/components/cui/Spinner";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/cui/tabs";
 import ApplicationsTable from "@/components/dashboard/applications/applications-table";
 import CompanyJobTable from "@/components/dashboard/employer/company-job-table";
 import CompanyProfile from "@/components/jobs/company-profile";
 import { buttonVariants } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { isAuthorizedForEmployerDash, newJobUrl } from "@/lib/pages";
 import { cn } from "@/lib/utils";
 import { getApplicationsForCompanyId } from "@/services/ApplicationService";
@@ -20,7 +25,15 @@ export const metadata = {
   title: "Dashboard",
 };
 
-export default async function EmployerDashboardPage() {
+type EmployerDashboardPageProps = {
+  searchParams: {
+    tab?: string;
+  };
+};
+
+export default async function EmployerDashboardPage({
+  searchParams: { tab },
+}: EmployerDashboardPageProps) {
   const session = await auth();
   if (!session?.user || !session.user.id) return <SignIn />;
 
@@ -45,7 +58,7 @@ export default async function EmployerDashboardPage() {
           </Link>
         </div>
       </div>
-      <Tabs defaultValue="jobs" className="space-y-4">
+      <Tabs defaultValue={tab || "jobs"} className="space-y-4">
         <TabsList>
           <TabsTrigger value="jobs">Job Postings</TabsTrigger>
           <TabsTrigger value="applications">Applications</TabsTrigger>

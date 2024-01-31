@@ -4,11 +4,7 @@ import { ProfileForm } from "@/components/settings/profile-form";
 import ProfileFormSkeleton from "@/components/settings/profile-form-skeleton";
 import { Separator } from "@/components/ui/separator";
 import knock from "@/lib/knock";
-import {
-  getUserBioGenerationsLeft,
-  getUserWithCvsById,
-  UserWithCvs,
-} from "@/services/UserService";
+import { getUserWithCvsById, UserWithCvs } from "@/services/UserService";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
@@ -37,8 +33,6 @@ export default async function SettingsProfilePage() {
 }
 
 async function ProfilePage({ user }: PageProps) {
-  const generationsLeft = await getUserBioGenerationsLeft(user.id);
-
   return (
     <div>
       <div>

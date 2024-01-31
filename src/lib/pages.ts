@@ -40,7 +40,6 @@ export async function isAuthorizedForApplications(
   userId: User["id"],
   applicationId: JobApplication["id"],
 ): Promise<{
-  user: UserWithCompany | null;
   application: ApplicationWithJob | null;
   isAuthorized: boolean;
 }> {
@@ -55,7 +54,6 @@ export async function isAuthorizedForApplications(
     user.company?.id === application.job.companyId;
 
   return {
-    user: user,
     application: application,
     isAuthorized: isAuthorized,
   };
@@ -67,7 +65,6 @@ export async function isAuthorizedForEmployerDash(userId: User["id"]): Promise<
   }>
 > {
   const user = await getUserWithCompanyById(userId);
-
   const isAuthorized = user !== null && user.company !== null;
 
   if (!isAuthorized) {

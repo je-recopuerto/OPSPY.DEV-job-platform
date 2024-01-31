@@ -82,6 +82,21 @@ const columns: ColumnDef<ApplicationWithJob>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: "applicationDate",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Date Applied" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center text-sm">
+          {new Date(row.original.createdAt).toLocaleString()}
+        </div>
+      );
+    },
+    enableSorting: true,
+    enableHiding: false,
+  },
+  {
     accessorKey: "applicationStatus",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Status" />

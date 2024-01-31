@@ -12,6 +12,7 @@ export type ApplicationWithJob = Prisma.JobApplicationGetPayload<{
     user: {
       include: {
         cv: true;
+        workExperience: true;
       };
     };
   };
@@ -35,6 +36,7 @@ export async function getApplicationsForCompanyId(
       user: {
         include: {
           cv: true,
+          workExperience: true,
         },
       },
     },
@@ -57,6 +59,7 @@ export async function getApplicationById(
       user: {
         include: {
           cv: true,
+          workExperience: true,
         },
       },
     },

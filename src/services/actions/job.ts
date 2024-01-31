@@ -90,6 +90,24 @@ export async function toggleSaveJob(id: JobPost["id"]) {
   return removed;
 }
 
+export async function updateJobStatus(
+  postId: JobPost["id"],
+  status: JobPost["status"],
+) {
+  const result = await prisma.jobPost.update({
+    where: {
+      id: postId,
+    },
+    data: {
+      status: status,
+    },
+  });
+
+  revalidatePath("/e/dash");
+
+  return result;
+}
+
 export async function deleteJobPost(id: JobPost["id"]) {
   const result = await prisma.jobPost.delete({
     where: {
