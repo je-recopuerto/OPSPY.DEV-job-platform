@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import OnboardingForm from "@/components/onboarding/OnboardCard";
+import OnboardingCard from "@/components/onboarding/onboarding";
 import { getUserById } from "@/services/UserService";
 import { redirect } from "next/navigation";
 
@@ -18,5 +18,5 @@ export default async function OnboardingPage() {
     return redirect("/t/dash");
   }
 
-  return <OnboardingForm email={session.user?.email ?? ""} />;
+  return <OnboardingCard email={session.user?.email ?? ""} />;
 }

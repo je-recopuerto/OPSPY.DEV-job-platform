@@ -1,5 +1,5 @@
 import { buttonVariants } from "@/components/ui/button";
-import { getJobUrl } from "@/lib/utils";
+import { jobUrl } from "@/lib/pages";
 import { JobPostWithCompany } from "@/services/JobService";
 import Link from "next/link";
 import {
@@ -21,6 +21,11 @@ export default function FeaturedJobs({ jobs }: FeaturedJobsProps) {
         Featured Jobs
       </h2>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {jobs.length === 0 && (
+          <div className="text-center col-span-full text-muted-foreground text-sm">
+            No jobs found. Please try again later.
+          </div>
+        )}
         {jobs.map((job, key) => (
           <Card key={key}>
             {/*<img*/}
@@ -44,7 +49,7 @@ export default function FeaturedJobs({ jobs }: FeaturedJobsProps) {
 
               <Link
                 className={buttonVariants({ variant: "outline" })}
-                href={getJobUrl(job.id)}
+                href={jobUrl(job.id)}
               >
                 View Details
               </Link>

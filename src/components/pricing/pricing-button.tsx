@@ -3,8 +3,8 @@
 import { requestPlan } from "@/app/pricing/_actions";
 import { buttonVariants } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { SubscriptionPlan } from "@/lib/stripe";
 import { cn } from "@/lib/utils";
-import { SubscriptionPlan } from "@/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

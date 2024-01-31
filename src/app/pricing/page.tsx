@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { talentFreePlan, talentProPlan } from "@/config/subscriptions";
+import { SubscriptionPlan } from "@/lib/stripe";
 import { cn } from "@/lib/utils";
 import { getUserById, getUserSubscriptionPlan } from "@/services/UserService";
-import { SubscriptionPlan } from "@/types";
 import { CheckCircle2 } from "lucide-react";
 
 const PricingHeader = ({

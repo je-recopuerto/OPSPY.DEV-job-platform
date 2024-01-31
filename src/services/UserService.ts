@@ -1,6 +1,6 @@
 import { subscriptions, talentFreePlan } from "@/config/subscriptions";
 import prisma from "@/lib/db";
-import { SubscriptionPlan } from "@/types";
+import { SubscriptionPlan } from "@/lib/stripe";
 import { Prisma, UploadedCv, User } from "@prisma/client";
 
 export function getUserById(id: string): Promise<User | null> {

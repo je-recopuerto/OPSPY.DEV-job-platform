@@ -12,6 +12,8 @@ import { getRandomJobPosts } from "@/services/JobService";
 import { Suspense } from "react";
 
 export default async function Home() {
+  const isServer = typeof window === "undefined";
+
   return (
     <div>
       <PageHeader>
@@ -19,9 +21,9 @@ export default async function Home() {
 
         <PageHeaderHeading>
           Jobs,{" "}
-          <h1 className="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">
+          <span className="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">
             Simplified.
-          </h1>
+          </span>
         </PageHeaderHeading>
         <PageHeaderDescription>
           Search for jobs and apply directly from our platform.

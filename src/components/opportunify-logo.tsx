@@ -2,6 +2,7 @@
 
 import { useTheme } from "next-themes";
 import Image from "next/image";
+import React from "react";
 
 export default function OpportunifyLogo({
   height,
@@ -12,10 +13,15 @@ export default function OpportunifyLogo({
   width?: number;
   className?: string;
 }) {
-  const { theme, systemTheme } = useTheme();
-  const flatTheme = theme === "system" ? systemTheme : theme;
+  const { resolvedTheme } = useTheme();
 
-  return flatTheme === "light" ? (
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => setMounted(true), []);
+
+  if (!mounted) return <LogoSkeleton />;
+
+  return resolvedTheme === "light" ? (
     <Image
       src={"/opportunify-logo-black.svg"}
       alt={"Black logo"}
@@ -33,3 +39,9 @@ export default function OpportunifyLogo({
     />
   );
 }
+
+const LogoSkeleton = () => (
+  <div className="animate-pulse">
+    <div className="h-[24px] w-[24px] bg-gray-300 rounded-full" />
+  </div>
+);
