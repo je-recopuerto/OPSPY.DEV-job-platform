@@ -9,7 +9,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cdn.discordapp.com",
+        hostname: "opportunify.blob.core.windows.net",
         port: "",
         pathname: "/**/*",
       },
