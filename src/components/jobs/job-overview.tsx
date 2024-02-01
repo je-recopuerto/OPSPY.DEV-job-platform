@@ -18,11 +18,10 @@ type JobListingProps = {
 };
 
 function JobOverview({ job, isFollowing }: JobListingProps) {
-  const searchParams = new URLSearchParams(window.location.search);
-  const newSearchParams = new URLSearchParams(searchParams);
-  newSearchParams.set("jid", job.id.toString());
+  const searchParams = new URLSearchParams();
+  searchParams.set("jid", job.id.toString());
 
-  const jobUrl = `/jobs?${newSearchParams.toString()}`;
+  const jobUrl = `/jobs?${searchParams.toString()}`;
 
   return (
     <Link href={jobUrl}>
@@ -38,10 +37,8 @@ function JobOverview({ job, isFollowing }: JobListingProps) {
           </Avatar>
 
           <div>
-            <CardTitle className={"text-md"}>
-              <Link className={"hover:underline"} href={jobUrl}>
-                {job.title}
-              </Link>
+            <CardTitle className={"text-md hover:underline"}>
+              {job.title}
             </CardTitle>
             <CardDescription>
               {job.company.name} | {job.location} | {jobTypes[job.type]} |{" "}
