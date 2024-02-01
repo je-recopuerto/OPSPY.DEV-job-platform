@@ -12,8 +12,6 @@ import { getRandomJobPosts } from "@/services/JobService";
 import { Suspense } from "react";
 
 export default async function Home() {
-  const isServer = typeof window === "undefined";
-
   return (
     <div>
       <PageHeader>
