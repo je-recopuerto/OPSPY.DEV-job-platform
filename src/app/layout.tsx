@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/config/site";
 import knock from "@/lib/knock";
 import { cn } from "@/lib/utils";
+import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Viewport } from "next";
 import { Inter as FontSans } from "next/font/google";
@@ -97,6 +98,7 @@ export default async function RootLayout({
         )}
       >
         <SpeedInsights />
+        <Analytics />
 
         <Providers>
           <Header />
