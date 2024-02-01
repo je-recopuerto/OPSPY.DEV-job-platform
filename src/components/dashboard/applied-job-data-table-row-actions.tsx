@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { JobApplication } from ".prisma/client";
+import { JobApplicationWithCompany } from "@/services/JobService";
 import { withdrawApplication } from "@/services/actions/application";
 import { CircleEllipsisIcon } from "lucide-react";
 import { useState } from "react";
@@ -25,7 +25,7 @@ import {
 } from "../ui/dialog";
 
 interface DataTableRowActionsProps {
-  row: Row<JobApplication>;
+  row: Row<JobApplicationWithCompany>;
 }
 
 export function AppliedJobDataTableRowActions({

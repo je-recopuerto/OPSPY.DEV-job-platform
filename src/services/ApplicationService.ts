@@ -1,3 +1,5 @@
+"use server";
+
 import { JobApplication } from ".prisma/client";
 import prisma from "@/lib/db";
 import { Company, Prisma } from "@prisma/client";

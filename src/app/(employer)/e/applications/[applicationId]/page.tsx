@@ -1,3 +1,4 @@
+import { isAuthorizedForApplications } from "@/app/_actions/_auth";
 import { auth } from "@/auth";
 import { SignIn } from "@/components/auth";
 import BackButton from "@/components/cui/BackButton";
@@ -12,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { isAuthorizedForApplications, jobUrl } from "@/lib/pages";
+import { jobUrl } from "@/lib/pages";
 import { ApplicationWithJob } from "@/services/ApplicationService";
 import { WorkExperience } from "@prisma/client";
 import { formatDistance } from "date-fns";

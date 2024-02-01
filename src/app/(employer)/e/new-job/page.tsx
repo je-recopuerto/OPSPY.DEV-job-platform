@@ -1,8 +1,9 @@
+import { canCreateNewJobPost } from "@/app/_actions/_auth";
 import { auth } from "@/auth";
 import CompanyProfile from "@/components/jobs/company-profile";
 import CreateJobForm from "@/components/jobs/create-job-form";
 import { Separator } from "@/components/ui/separator";
-import { canCreateNewJobPost, homeUrl } from "@/lib/pages";
+import { homeUrl } from "@/lib/pages";
 import { redirect } from "next/navigation";
 
 export const metadata = {

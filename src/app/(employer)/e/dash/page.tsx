@@ -1,3 +1,4 @@
+import { isAuthorizedForEmployerDash } from "@/app/_actions/_auth";
 import { auth } from "@/auth";
 import { SignIn } from "@/components/auth";
 import Spinner from "@/components/cui/Spinner";
@@ -11,7 +12,7 @@ import ApplicationsTable from "@/components/dashboard/applications/applications-
 import CompanyJobTable from "@/components/dashboard/employer/company-job-table";
 import CompanyProfile from "@/components/jobs/company-profile";
 import { buttonVariants } from "@/components/ui/button";
-import { isAuthorizedForEmployerDash, newJobUrl } from "@/lib/pages";
+import { newJobUrl } from "@/lib/pages";
 import { cn } from "@/lib/utils";
 import { getApplicationsForCompanyId } from "@/services/ApplicationService";
 import { getCompanyWithOpeningsAndApplicationsById } from "@/services/JobService";
