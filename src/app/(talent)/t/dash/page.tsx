@@ -7,6 +7,7 @@ import {
 } from "@/components/cui/breadcrumb";
 import AppliedJobsTab from "@/components/dashboard/applied-jobs-tab";
 import ProfileSetupAlert from "@/components/dashboard/profile-setup-alert";
+import SavedJobTab from "@/components/dashboard/saved-job-tab";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getUserWithCompanyById } from "@/services/UserService";
@@ -61,11 +62,11 @@ export default async function DashboardPage() {
             </TabsContent>
           </Suspense>
 
-          {/*<Suspense fallback={<Spinner />}>*/}
-          {/*  <TabsContent value={"saved-jobs"} className="space-y-4">*/}
-          {/*    <SavedJobTab userId={session.user.id} />*/}
-          {/*  </TabsContent>*/}
-          {/*</Suspense>*/}
+          <Suspense fallback={<Spinner />}>
+            <TabsContent value={"saved-jobs"} className="space-y-4">
+              <SavedJobTab userId={session.user.id} />
+            </TabsContent>
+          </Suspense>
         </Tabs>
       </div>
     </div>
