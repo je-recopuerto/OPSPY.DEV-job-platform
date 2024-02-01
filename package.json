@@ -12,7 +12,8 @@
     "lint": "next lint",
     "format": "prettier --check .",
     "format:fix": "prettier --write --list-different .",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.1.0",
