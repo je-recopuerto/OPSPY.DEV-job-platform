@@ -7,6 +7,25 @@ const optionTypeSchema = z.object({
   value: z.string(),
 });
 
+export const useTypedSearchParams = <T extends z.Schema>(
+  schema: T,
+  searchParams: { [key: string]: string | string[] | undefined },
+): {
+  typedSearchParams: z.infer<T>;
+  isValid: boolean;
+  urlSearchParams: URLSearchParams;
+} => {
+  const result = schema.safeParse(searchParams) as z.infer<typeof schema>;
+
+  return {
+    typedSearchParams: result,
+    isValid: result.success,
+    urlSearchParams: new URLSearchParams(
+      searchParams as Record<string, string>,
+    ),
+  };
+};
+
 export const filterJobPostsSchema = z.object({
   jid: z.string().optional(),
   keywords: z.string().max(255).optional(),

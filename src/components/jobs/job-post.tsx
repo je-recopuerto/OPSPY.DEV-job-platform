@@ -6,7 +6,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getJobPostFromIdUserScoped } from "@/services/JobService";
 import { JobPost } from "@prisma/client";
-import { notFound } from "next/navigation";
 
 type JobPostProps = {
   jobId: JobPost["id"];
@@ -19,7 +18,7 @@ async function JobPost({ jobId }: JobPostProps) {
     session?.user?.id,
   );
 
-  if (!jobPost) return notFound();
+  if (!jobPost) return null;
 
   return (
     <ScrollArea className={"rounded-lg border"}>

@@ -6,9 +6,7 @@ export const metadata = {
 };
 
 type JobPageParams = {
-  searchParams: {
-    jid: string;
-  };
+  searchParams: { [key: string]: string | string[] | undefined };
 };
 
 export default async function JobsPage({
@@ -16,9 +14,11 @@ export default async function JobsPage({
 }: JobPageParams) {
   if (!jid) return null;
 
+  const jobId = typeof jid === "string" ? jid : jid[0];
+
   return (
     <Suspense fallback={<JobSkeleton />}>
-      <JobPost jobId={jid} />
+      <JobPost jobId={jobId} />
     </Suspense>
   );
 }

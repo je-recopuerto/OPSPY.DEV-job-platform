@@ -1,7 +1,8 @@
 import { auth } from "@/auth";
-import { JobOverview, JobSearchParams } from "@/components/jobs/job-overview";
+import { JobOverview } from "@/components/jobs/job-overview";
 import JobPagination from "@/components/jobs/job-pagination";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { filterJobPostsSchema, useTypedSearchParams } from "@/schemas/jobPost";
 import {
   JobPostWithCompany,
   fetchJobsPages,
@@ -13,17 +14,22 @@ import {
 } from "@/services/UserService";
 
 type JobPageParams = {
-  searchParams: JobSearchParams;
+  searchParams: { [key: string]: string | string[] | undefined };
 };
 
 export default async function JobList({ searchParams }: JobPageParams) {
+  const { typedSearchParams, urlSearchParams } = useTypedSearchParams(
+    filterJobPostsSchema,
+    searchParams,
+  );
+
   const session = await auth();
   const [jobs, user] = await Promise.all([
-    getJobPostsWithCompany(searchParams),
+    getJobPostsWithCompany(typedSearchParams),
     getUserWithJobTrackersById(session?.user?.id),
   ]);
 
-  const maxPages = await fetchJobsPages(searchParams);
+  const maxPages = await fetchJobsPages(typedSearchParams);
 
   return (
     <>
@@ -34,7 +40,7 @@ export default async function JobList({ searchParams }: JobPageParams) {
               job={job}
               key={job.id}
               isFollowing={isFollowing(job, user)}
-              searchParams={searchParams}
+              searchParams={urlSearchParams}
             />
           ))}
 

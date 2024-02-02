@@ -12,14 +12,10 @@ import { JobType } from "@prisma/client";
 import Link from "next/link";
 import { Skeleton } from "../ui/skeleton";
 
-export type JobSearchParams = {
-  jid: string;
-};
-
 type JobListingProps = {
   job: JobPostWithCompany;
   isFollowing: boolean;
-  searchParams: JobSearchParams;
+  searchParams: URLSearchParams;
 };
 
 function JobOverview({ job, isFollowing, searchParams }: JobListingProps) {

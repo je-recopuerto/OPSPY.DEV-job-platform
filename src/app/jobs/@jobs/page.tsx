@@ -1,17 +1,17 @@
 import JobList from "@/components/jobs/job-list";
 import { JobOverviewSkeleton } from "@/components/jobs/job-overview";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { filterJobPostsSchema } from "@/schemas/jobPost";
 import { Suspense } from "react";
-import { z } from "zod";
 
 type JobPageParams = {
-  searchParams: z.infer<typeof filterJobPostsSchema>;
+  searchParams: { [key: string]: string | string[] | undefined };
 };
 
 export default async function SearchPage({ searchParams }: JobPageParams) {
+  const key = Object.keys(searchParams).join("");
+
   return (
-    <Suspense fallback={<Skeleton />} key={searchParams.page}>
+    <Suspense fallback={<Skeleton />} key={key}>
       <JobList searchParams={searchParams} />
     </Suspense>
   );
