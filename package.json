@@ -13,7 +13,7 @@
     "format": "prettier --check .",
     "format:fix": "prettier --write --list-different .",
     "cypress:open": "cypress open",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate && prisma migrate deploy"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.1.0",
