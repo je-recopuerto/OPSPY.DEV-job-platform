@@ -4,8 +4,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CardDescription, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
+import { companyUrl } from "@/lib/pages";
 import { getJobPostFromIdUserScoped } from "@/services/JobService";
 import { JobPost } from "@prisma/client";
+import { ExternalLink } from "lucide-react";
+import Link from "next/link";
 
 type JobPostProps = {
   jobId: JobPost["id"];
@@ -35,7 +38,17 @@ async function JobPost({ jobId }: JobPostProps) {
 
           <div className={"flex flex-col w-full"}>
             <CardTitle>{jobPost.title}</CardTitle>
-            <CardDescription>{jobPost.company.name}</CardDescription>
+            <CardDescription>
+              <Link
+                href={companyUrl(jobPost.company.id)}
+                className={"hover:underline"}
+                target={"_blank"}
+              >
+                {jobPost.company.name}
+
+                <ExternalLink className={"inline-block h-3 w-3 ml-1"} />
+              </Link>
+            </CardDescription>
           </div>
         </div>
 

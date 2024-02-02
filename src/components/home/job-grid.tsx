@@ -1,6 +1,8 @@
 import { buttonVariants } from "@/components/ui/button";
-import { jobUrl } from "@/lib/pages";
+import { filteredJobsUrl, jobUrl } from "@/lib/pages";
 import { JobPostWithCompany } from "@/services/JobService";
+import { Company } from "@prisma/client";
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import {
   Card,
@@ -12,15 +14,18 @@ import {
 
 type FeaturedJobsProps = {
   jobs: JobPostWithCompany[];
+  showMore?: boolean;
+  companyId?: Company["id"];
 };
 
-export default function FeaturedJobs({ jobs }: FeaturedJobsProps) {
+export default function JobGrid({
+  jobs,
+  showMore = false,
+  companyId,
+}: FeaturedJobsProps) {
   return (
     <>
-      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8">
-        Featured Jobs
-      </h2>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {jobs.length === 0 && (
           <div className="text-center col-span-full text-muted-foreground text-sm">
             No jobs found. Please try again later.
@@ -56,6 +61,20 @@ export default function FeaturedJobs({ jobs }: FeaturedJobsProps) {
             </CardContent>
           </Card>
         ))}
+
+        <div className={"mx-auto my-auto"}>
+          {showMore && (
+            <Link
+              href={filteredJobsUrl({
+                cid: companyId,
+              })}
+              className={buttonVariants({ variant: "ghost" })}
+            >
+              View More
+              <ChevronRight className="ml-2 w-5 h-5" />
+            </Link>
+          )}
+        </div>
       </div>
     </>
   );

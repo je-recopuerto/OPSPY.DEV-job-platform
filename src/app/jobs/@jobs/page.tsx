@@ -8,7 +8,7 @@ type JobPageParams = {
 };
 
 export default async function SearchPage({ searchParams }: JobPageParams) {
-  const key = Object.keys(searchParams).join("");
+  const key = Object.values(searchParams).join("");
 
   return (
     <Suspense fallback={<Skeleton />} key={key}>

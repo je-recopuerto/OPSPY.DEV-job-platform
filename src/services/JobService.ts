@@ -46,6 +46,11 @@ const generateFilter = (
 ): JobPostWhereInput => {
   return {
     AND: [
+      filter?.cid
+        ? {
+            companyId: filter.cid,
+          }
+        : {},
       filter?.keywords
         ? {
             OR: [
@@ -106,6 +111,9 @@ export async function fetchJobsPages(
   if (filter?.page) {
     filter.page = Number(filter.page);
   }
+
+  const cid = filter?.cid;
+  console.log("cid:", cid);
 
   // // Coerce list of keys to array. This is currently a workaround
   // console.log("countries:", filter.countries);
@@ -230,6 +238,38 @@ export function getCompanyWithOpeningsById(
       openings: true,
     },
   });
+}
+
+export async function getJobPostsByCompanyId(
+  companyId: Company["id"],
+  count?: number,
+): Promise<{
+  jobs: JobPostWithCompany[];
+  areMore: boolean;
+}> {
+  const jobs = await prisma.jobPost.findMany({
+    where: {
+      companyId: companyId,
+      status: "ACTIVE",
+    },
+    take: count ? count + 1 : undefined,
+    include: {
+      company: true,
+      tags: true,
+    },
+  });
+
+  if (!count) {
+    return {
+      jobs,
+      areMore: false,
+    };
+  }
+
+  return {
+    jobs: jobs.slice(0, count),
+    areMore: jobs.length > count,
+  };
 }
 
 export function getCompanyWithOpeningsAndApplicationsById(

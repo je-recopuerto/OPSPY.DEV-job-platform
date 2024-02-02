@@ -7,19 +7,22 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CompanyWithOpenings } from "@/services/JobService";
+import Link from "next/link";
 
 type CompanyProfileProps = {
   company: CompanyWithOpenings;
 };
 
-function CompanyProfileWithOpenings(props: CompanyProfileProps) {
+function CompanyProfileWithOpenings({ company }: CompanyProfileProps) {
+  console.log(`/companies/${encodeURI(company.id)}`);
+
   return (
     <Card className={"w-full"}>
       <CardHeader className={"flex flex-row gap-x-3 space-y-0"}>
         <Avatar className={"h-14 w-14"}>
           <AvatarImage
-            src={props.company.logoUrl ?? "https://github.com/shadcn.png"}
-            alt={props.company.name}
+            src={company.logoUrl ?? "https://github.com/shadcn.png"}
+            alt={company.name}
             sizes={"cover"}
           />
           <AvatarFallback>CN</AvatarFallback>
@@ -27,13 +30,20 @@ function CompanyProfileWithOpenings(props: CompanyProfileProps) {
 
         <div className={"flex flex-row w-full justify-between"}>
           <div>
-            <CardTitle>{props.company.name}</CardTitle>
+            <CardTitle>
+              <Link
+                href={`/companies/${encodeURIComponent(company.id)}`}
+                className={"hover:underline"}
+              >
+                {company.name}
+              </Link>
+            </CardTitle>
             <CardDescription>
-              {props.company.description?.slice(0, 100)}
+              {company.description?.slice(0, 100)}
             </CardDescription>
           </div>
           <div className={"flex justify-end"}>
-            {props.company.openings.length} Jobs
+            {company.openings.length} Jobs
           </div>
         </div>
       </CardHeader>

@@ -15,11 +15,13 @@ export const useTypedSearchParams = <T extends z.Schema>(
   isValid: boolean;
   urlSearchParams: URLSearchParams;
 } => {
-  const result = schema.safeParse(searchParams) as z.infer<typeof schema>;
+  const { data, success } = schema.safeParse(searchParams) as z.infer<
+    typeof schema
+  >;
 
   return {
-    typedSearchParams: result,
-    isValid: result.success,
+    typedSearchParams: data,
+    isValid: success,
     urlSearchParams: new URLSearchParams(
       searchParams as Record<string, string>,
     ),
@@ -28,6 +30,8 @@ export const useTypedSearchParams = <T extends z.Schema>(
 
 export const filterJobPostsSchema = z.object({
   jid: z.string().optional(),
+  // This is the company id. If we specify this, then we only want jobs from this company
+  cid: z.string().optional(),
   keywords: z.string().max(255).optional(),
   tags: z.array(z.string()).optional(),
   minSalary: z.number().min(0).max(500000).optional(),

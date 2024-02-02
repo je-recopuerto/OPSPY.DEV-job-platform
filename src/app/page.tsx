@@ -1,7 +1,7 @@
 import Spinner from "@/components/cui/Spinner";
-import FeaturedJobs from "@/components/home/featured-jobs";
 import FindNextJobCta from "@/components/home/find-next-job";
 import JobFilter from "@/components/home/job-filter";
+import FeaturedJobs from "@/components/home/job-grid";
 import {
   PageActions,
   PageHeader,
@@ -47,5 +47,12 @@ export default async function Home() {
 async function FeaturedJobsSection() {
   const jobs = await getRandomJobPosts(4);
 
-  return <FeaturedJobs jobs={jobs} />;
+  return (
+    <>
+      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-8">
+        Featured Jobs
+      </h2>
+      <FeaturedJobs jobs={jobs} />
+    </>
+  );
 }

@@ -18,6 +18,14 @@ const generateFilters = (
   };
 };
 
+export async function getCompanyById(companyId: string) {
+  return prisma.company.findUnique({
+    where: {
+      id: companyId,
+    },
+  });
+}
+
 export async function getCompaniesPageCount(
   searchParams: z.infer<typeof companyFilterSchema>,
 ): Promise<number> {
