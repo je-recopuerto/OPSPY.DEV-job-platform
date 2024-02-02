@@ -12,16 +12,21 @@ import { JobType } from "@prisma/client";
 import Link from "next/link";
 import { Skeleton } from "../ui/skeleton";
 
+export type JobSearchParams = {
+  jid: string;
+};
+
 type JobListingProps = {
   job: JobPostWithCompany;
   isFollowing: boolean;
+  searchParams: JobSearchParams;
 };
 
-function JobOverview({ job, isFollowing }: JobListingProps) {
-  const searchParams = new URLSearchParams();
-  searchParams.set("jid", job.id.toString());
+function JobOverview({ job, isFollowing, searchParams }: JobListingProps) {
+  const newSearchParams = new URLSearchParams(searchParams);
+  newSearchParams.set("jid", job.id.toString());
 
-  const jobUrl = `/jobs?${searchParams.toString()}`;
+  const jobUrl = `/jobs?${newSearchParams.toString()}`;
 
   return (
     <Link href={jobUrl}>
@@ -39,6 +44,12 @@ function JobOverview({ job, isFollowing }: JobListingProps) {
           <div>
             <CardTitle className={"text-md hover:underline"}>
               {job.title}
+
+              {isFollowing && (
+                <Badge variant={"outline"} className={"ml-2"}>
+                  Saved
+                </Badge>
+              )}
             </CardTitle>
             <CardDescription>
               {job.company.name} | {job.location} | {jobTypes[job.type]} |{" "}

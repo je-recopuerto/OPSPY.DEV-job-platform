@@ -1,21 +1,19 @@
 import { auth } from "@/auth";
-import { JobOverview } from "@/components/jobs/job-overview";
+import { JobOverview, JobSearchParams } from "@/components/jobs/job-overview";
 import JobPagination from "@/components/jobs/job-pagination";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { filterJobPostsSchema } from "@/schemas/jobPost";
 import {
+  JobPostWithCompany,
   fetchJobsPages,
   getJobPostsWithCompany,
-  JobPostWithCompany,
 } from "@/services/JobService";
 import {
-  getUserWithJobTrackersById,
   UserWithJobTrackers,
+  getUserWithJobTrackersById,
 } from "@/services/UserService";
-import { z } from "zod";
 
 type JobPageParams = {
-  searchParams: z.infer<typeof filterJobPostsSchema>;
+  searchParams: JobSearchParams;
 };
 
 export default async function JobList({ searchParams }: JobPageParams) {
@@ -36,6 +34,7 @@ export default async function JobList({ searchParams }: JobPageParams) {
               job={job}
               key={job.id}
               isFollowing={isFollowing(job, user)}
+              searchParams={searchParams}
             />
           ))}
 
