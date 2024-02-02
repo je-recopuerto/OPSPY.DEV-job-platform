@@ -1,6 +1,6 @@
 "use client";
 
-import { rejectCandidate } from "@/app/(employer)/e/applications/_actions";
+import { rejectCandidate } from "@/app/(employer)/e/applications/[applicationId]/_actions";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Form,

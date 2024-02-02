@@ -1,4 +1,4 @@
-import { isAuthorizedForEmployerDash } from "@/app/_actions/_auth";
+import { isAuthorizedForEmployerDash } from "@/app/_actions";
 import { auth } from "@/auth";
 import { SignIn } from "@/components/auth";
 import Spinner from "@/components/cui/Spinner";

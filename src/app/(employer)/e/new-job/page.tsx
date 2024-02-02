@@ -1,4 +1,4 @@
-import { canCreateNewJobPost } from "@/app/_actions/_auth";
+import { canCreateNewJobPost } from "@/app/_actions";
 import { auth } from "@/auth";
 import CompanyProfile from "@/components/jobs/company-profile";
 import CreateJobForm from "@/components/jobs/create-job-form";

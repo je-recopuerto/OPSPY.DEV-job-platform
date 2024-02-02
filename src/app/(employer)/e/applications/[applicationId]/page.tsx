@@ -1,4 +1,4 @@
-import { isAuthorizedForApplications } from "@/app/_actions/_auth";
+import { isAuthorizedForApplications } from "@/app/_actions";
 import { auth } from "@/auth";
 import { SignIn } from "@/components/auth";
 import Reject from "@/components/companies/reject-button";

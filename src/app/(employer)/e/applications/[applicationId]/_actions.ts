@@ -1,7 +1,7 @@
 "use server";
 
 import { JobApplication } from ".prisma/client";
-import { type AuthorizeReturnType } from "@/app/_actions/_auth";
+import { type AuthorizeReturnType } from "@/app/_actions";
 import { auth } from "@/auth";
 import prisma from "@/lib/db";
 import { rejectCandidateSchema } from "@/lib/validations/reject";
