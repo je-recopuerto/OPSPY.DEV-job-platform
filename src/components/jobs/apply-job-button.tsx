@@ -53,7 +53,7 @@ export default function ApplyJobButton(props: ApplyJobDialogProps) {
             <DialogHeader>
               <DialogTitle>Quick Apply</DialogTitle>
               <DialogDescription>
-                Apply directly through opportunify and show up on the
+                Apply directly through us. Your application will show up on the
                 employer&apos;s dashboard.
               </DialogDescription>
             </DialogHeader>

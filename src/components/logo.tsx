@@ -4,7 +4,7 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import React from "react";
 
-export default function OpportunifyLogo({
+export default function Logo({
   height,
   width,
   className,
@@ -23,7 +23,7 @@ export default function OpportunifyLogo({
 
   return resolvedTheme === "light" ? (
     <Image
-      src={"/opportunify-logo-black.svg"}
+      src={"/logo-black.svg"}
       alt={"Black logo"}
       height={height || 24}
       width={width || 24}
@@ -31,7 +31,7 @@ export default function OpportunifyLogo({
     />
   ) : (
     <Image
-      src={"/opportunify-logo-white.svg"}
+      src={"/logo-white.svg"}
       alt={"White logo"}
       height={height || 24}
       width={width || 24}

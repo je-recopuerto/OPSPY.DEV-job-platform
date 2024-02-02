@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { NotificationsMenu } from "@/components/NotificationsMenu";
-import OpportunifyLogo from "@/components/opportunify-logo";
+import Logo from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import UserButton from "@/components/user-button";
 import { companiesUrl, homeUrl, jobsUrl, pricingUrl } from "@/lib/pages";
@@ -35,7 +35,7 @@ export default async function Header() {
 const Nav = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
   return (
     <nav className={`flex items-center space-x-2 lg:space-x-6`}>
-      <OpportunifyLogo />
+      <Logo />
 
       <Link
         href={homeUrl}
