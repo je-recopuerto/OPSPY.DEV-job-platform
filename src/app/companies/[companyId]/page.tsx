@@ -43,7 +43,7 @@ export default async function CompanyPage({ params }: CompanyPageParams) {
   const company = await getCompanyById(companyId);
   if (!company) return notFound();
 
-  const bannerUrl = "https://placehold.co/1400x270/svg";
+  const bannerUrl = "https://placehold.co/1400x270/svg?text=Banner";
   // const bannerUrl = undefined;
 
   return (
@@ -128,7 +128,13 @@ const Overview = ({
         <CardTitle>Overview</CardTitle>
       </CardHeader>
       <CardContent>
-        <p>{company.description}</p>
+        {company.description ? (
+          <p>{company.description}</p>
+        ) : (
+          <p className={"text-muted-foreground italic text-sm"}>
+            No description available.
+          </p>
+        )}
       </CardContent>
     </Card>
   );
