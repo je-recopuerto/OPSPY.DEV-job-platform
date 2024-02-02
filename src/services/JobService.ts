@@ -315,6 +315,7 @@ export type JobApplicationWithCompany = Prisma.JobApplicationGetPayload<{
     job: {
       include: {
         company: true;
+        tags: true;
       };
     };
   };
@@ -334,6 +335,7 @@ export function getJobApplications(
       job: {
         include: {
           company: true,
+          tags: true,
         },
       },
     },

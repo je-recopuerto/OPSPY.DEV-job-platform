@@ -1,6 +1,7 @@
 import { isAuthorizedForApplications } from "@/app/_actions/_auth";
 import { auth } from "@/auth";
 import { SignIn } from "@/components/auth";
+import Reject from "@/components/companies/reject-button";
 import BackButton from "@/components/cui/BackButton";
 import ViewCvButton from "@/components/request-cv-button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -15,7 +16,7 @@ import {
 } from "@/components/ui/card";
 import { jobUrl } from "@/lib/pages";
 import { ApplicationWithJob } from "@/services/ApplicationService";
-import { WorkExperience } from "@prisma/client";
+import { ApplicationStatus, WorkExperience } from "@prisma/client";
 import { formatDistance } from "date-fns";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
@@ -157,6 +158,11 @@ const UserSkills = ({ application }: { application: ApplicationWithJob }) => {
 };
 
 const UserProfile = ({ application }: { application: ApplicationWithJob }) => {
+  // Can only decide if the application is in the interviewing or applied state.
+  const canDecide =
+    application.status === ApplicationStatus.INTERVIEWING ||
+    application.status === ApplicationStatus.APPLIED;
+
   return (
     <div className={"flex flex-row"}>
       <Avatar className={"h-24 w-24 mr-5  "}>
@@ -175,7 +181,6 @@ const UserProfile = ({ application }: { application: ApplicationWithJob }) => {
         <CardTitle className={"flex gap-x-4 items-center"}>
           {application.user.firstName + " " + application.user.lastName}
           <small className="text-sm text-muted-foreground font-medium leading-none">
-            <span className={"mr-2"}>{"🇬🇧"}</span>
             {application.user?.location}
           </small>
         </CardTitle>
@@ -183,8 +188,10 @@ const UserProfile = ({ application }: { application: ApplicationWithJob }) => {
       </div>
 
       <div className={"flex flex-row gap-4 justify-end ml-auto mb-auto"}>
-        <Button variant={"destructive"}>Reject</Button>
-        <Button className={"bg-green-500"}>Accept</Button>
+        <Reject application={application} disabled={!canDecide} />
+        <Button className={"bg-green-500"} disabled={!canDecide}>
+          Accept
+        </Button>
         <ViewCvButton cvId={application.user.cv?.id} />
       </div>
     </div>

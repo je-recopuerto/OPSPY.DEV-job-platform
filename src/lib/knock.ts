@@ -17,3 +17,4 @@ export default knock;
 if (process.env.NODE_ENV !== "production") globalForKnock.knock = knock;
 
 export const applicationCreatedKnock = "application-created";
+export const applicationUpdatedKnock = "application-updated";
