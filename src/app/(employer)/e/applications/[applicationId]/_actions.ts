@@ -4,7 +4,10 @@ import { JobApplication } from ".prisma/client";
 import { type AuthorizeReturnType } from "@/app/_actions";
 import { auth } from "@/auth";
 import prisma from "@/lib/db";
-import { rejectCandidateSchema } from "@/lib/validations/reject";
+import {
+  acceptCandidateSchema,
+  rejectCandidateSchema,
+} from "@/lib/validations/reject";
 import { JobApplicationWithCompany } from "@/services/JobService";
 import { notifyApplicationUpdated } from "@/services/KnockService";
 import { UserWithCompany } from "@/services/UserService";
@@ -12,7 +15,7 @@ import { User } from "@prisma/client";
 import { z } from "zod";
 
 async function canModifyApplication(
-  userId: User["id"],
+  userId: User["id"] | null | undefined,
   applicationId: JobApplication["id"],
 ): Promise<
   AuthorizeReturnType<{
@@ -20,6 +23,12 @@ async function canModifyApplication(
     application: JobApplicationWithCompany;
   }>
 > {
+  if (!userId) {
+    return {
+      authorized: false,
+    };
+  }
+
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -63,6 +72,57 @@ async function canModifyApplication(
   };
 }
 
+export async function matchCandidate(
+  applicationId: JobApplication["id"],
+  values: z.infer<typeof acceptCandidateSchema>,
+): Promise<{
+  error?: string;
+  message?: string;
+}> {
+  const parsed = acceptCandidateSchema.safeParse(values);
+  if (!parsed.success) {
+    return {
+      error: "Invalid input",
+      message: parsed.error.errors.join(", "),
+    };
+  }
+
+  const session = await auth();
+  const response = await canModifyApplication(session?.user?.id, applicationId);
+  if (!response.authorized) {
+    return {
+      error: "You are not authorized to perform this action.",
+      message: "",
+    };
+  }
+
+  const { message, notifyCandidate } = parsed.data;
+  const { user, application } = response.data;
+
+  // Change the application status to matched
+  await prisma.jobApplication.update({
+    where: {
+      id: application.id,
+    },
+    data: {
+      status: "MATCHED",
+    },
+  });
+
+  if (notifyCandidate) {
+    // Notify the candidate
+    await notifyApplicationUpdated(user, application.job, message);
+  }
+
+  return {
+    message:
+      "Candidate matched. " +
+      (values.notifyCandidate
+        ? "The candidate has been notified."
+        : "The candidate has not been notified."),
+  };
+}
+
 export async function rejectCandidate(
   applicationId: JobApplication["id"],
   values: z.infer<typeof rejectCandidateSchema>,
@@ -71,19 +131,16 @@ export async function rejectCandidate(
   message?: string;
 }> {
   // Validate schema
-  const { reason } = rejectCandidateSchema.parse(values);
-
-  console.log("Rejecting candidate because:", reason);
-
-  const session = await auth();
-  if (!session?.user || !session?.user.id) {
+  const parsed = rejectCandidateSchema.safeParse(values);
+  if (!parsed.success) {
     return {
-      error: "You must be logged in to perform this action.",
-      message: "",
+      error: "Invalid input",
+      message: parsed.error.errors.join(", "),
     };
   }
 
-  const response = await canModifyApplication(session.user.id, applicationId);
+  const session = await auth();
+  const response = await canModifyApplication(session?.user?.id, applicationId);
   if (!response.authorized) {
     return {
       error: "You are not authorized to perform this action.",
@@ -91,7 +148,10 @@ export async function rejectCandidate(
     };
   }
 
+  const { reason } = parsed.data;
   const { user, application } = response.data;
+
+  console.log("Rejecting candidate because:", reason);
 
   // Change the application status to rejected
   await prisma.jobApplication.update({

@@ -35,6 +35,7 @@ export async function notifyApplicationCreated(
 export async function notifyApplicationUpdated(
   user: User,
   job: JobPostWithCompany,
+  message?: string,
 ) {
   return await knock.notify(applicationUpdatedKnock, {
     actor: user.id,
@@ -54,6 +55,11 @@ export async function notifyApplicationUpdated(
       "jobId": {
         // prettier-ignore
         "value": job.id,
+      },
+      // prettier-ignore
+      "message": {
+        // prettier-ignore
+        "value": message,
       },
     },
   });

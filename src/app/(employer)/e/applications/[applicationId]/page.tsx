@@ -1,12 +1,12 @@
 import { isAuthorizedForApplications } from "@/app/_actions";
 import { auth } from "@/auth";
 import { SignIn } from "@/components/auth";
+import Accept from "@/components/companies/accept-button";
 import Reject from "@/components/companies/reject-button";
 import BackButton from "@/components/cui/BackButton";
 import ViewCvButton from "@/components/request-cv-button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -160,7 +160,7 @@ const UserSkills = ({ application }: { application: ApplicationWithJob }) => {
 const UserProfile = ({ application }: { application: ApplicationWithJob }) => {
   // Can only decide if the application is in the interviewing or applied state.
   const canDecide =
-    application.status === ApplicationStatus.INTERVIEWING ||
+    application.status === ApplicationStatus.MATCHED ||
     application.status === ApplicationStatus.APPLIED;
 
   return (
@@ -189,9 +189,11 @@ const UserProfile = ({ application }: { application: ApplicationWithJob }) => {
 
       <div className={"flex flex-row gap-4 justify-end ml-auto mb-auto"}>
         <Reject application={application} disabled={!canDecide} />
-        <Button className={"bg-green-500"} disabled={!canDecide}>
-          Accept
-        </Button>
+        <Accept
+          application={application}
+          disabled={!canDecide}
+          className={"bg-green-600"}
+        />
         <ViewCvButton cvId={application.user.cv?.id} />
       </div>
     </div>

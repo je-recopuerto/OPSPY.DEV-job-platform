@@ -105,7 +105,7 @@ export const columns: ColumnDef<JobPostWithApplications>[] = [
             <span className={"text-muted-foreground"}>
               {" / "}
               {countOfStatuses(
-                [ApplicationStatus.APPLIED, ApplicationStatus.INTERVIEWING],
+                [ApplicationStatus.APPLIED],
                 row.original.application,
               )}{" "}
               pending

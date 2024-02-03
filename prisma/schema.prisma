@@ -137,7 +137,7 @@ model JobTracker {
 
 enum ApplicationStatus {
   APPLIED
-  INTERVIEWING
+  MATCHED
   REJECTED
   OFFERED
   ACCEPTED

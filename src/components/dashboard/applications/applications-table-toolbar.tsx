@@ -4,12 +4,7 @@ import { DataTableViewOptions } from "@/components/table/data-table-view-options
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ApplicationStatus } from "@prisma/client";
-import {
-  ArrowDownIcon,
-  ArrowRightIcon,
-  ArrowUpIcon,
-  Cross,
-} from "lucide-react";
+import { ArrowDownIcon, ArrowUpIcon, Cross, Handshake } from "lucide-react";
 
 export const applicationStatuses: {
   label: string;
@@ -22,9 +17,9 @@ export const applicationStatuses: {
     icon: ArrowDownIcon,
   },
   {
-    label: "Interviewing",
-    value: "INTERVIEWING",
-    icon: ArrowRightIcon,
+    label: "Matched",
+    value: "MATCHED",
+    icon: Handshake,
   },
   {
     label: "Rejected",

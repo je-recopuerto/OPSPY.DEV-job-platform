@@ -11,8 +11,8 @@ import {
   CheckIcon,
   CircleIcon,
   CrossIcon,
+  Handshake,
   LucideIcon,
-  TimerIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { Checkbox } from "../ui/checkbox";
@@ -37,9 +37,9 @@ export const applicationStatuses: {
     icon: CircleIcon,
   },
   {
-    value: "INTERVIEWING",
-    label: "Interviewing",
-    icon: TimerIcon,
+    value: "MATCHED",
+    label: "Matched",
+    icon: Handshake,
   },
   {
     value: "REJECTED",
