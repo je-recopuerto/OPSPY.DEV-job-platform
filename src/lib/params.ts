@@ -20,7 +20,7 @@ export const jobFilterSchema = z.object({
 export function jobFilterParams(searchParams: {
   [key: string]: string | undefined;
 }): z.infer<typeof jobFilterSchema> {
-  const result = {
+  return {
     keywords: searchParams["keywords"] ?? "",
     tags: searchParams.tags ? searchParams.tags.split(",") : [],
     minSalary: searchParams.minSalary ? parseInt(searchParams.minSalary) : 0,
@@ -33,10 +33,6 @@ export function jobFilterParams(searchParams: {
     //     })
     //   : [],
   };
-
-  console.log(result);
-
-  return result;
 }
 
 export function jobFilterQueryParams(

@@ -19,8 +19,6 @@ export async function generateMetadata(
   const companyId = decodeURI(params.companyId);
   const company = await getCompanyById(companyId);
 
-  console.log(companyId);
-  console.log(company);
   if (!company) {
     return {
       title: "Company Not Found",
