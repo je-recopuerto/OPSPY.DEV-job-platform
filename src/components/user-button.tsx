@@ -39,15 +39,15 @@ export default async function UserButton() {
             <AvatarImage
               src={user?.imageURL ?? "default_profile_picture.svg"}
               alt={"Profile picture"}
-              height={0}
-              width={0}
+              height={32}
+              width={32}
               asChild
             >
               <Image
                 src={user?.imageURL ?? "default_profile_picture.svg"}
                 alt={"Profile picture"}
-                width={0}
-                height={0}
+                width={32}
+                height={32}
               />
             </AvatarImage>
             <AvatarFallback>N</AvatarFallback>
