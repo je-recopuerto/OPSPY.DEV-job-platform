@@ -5,12 +5,12 @@ import { CompanyJobDataTableRowActions } from "@/components/dashboard/employer/c
 import { DataTable } from "@/components/table/data-table";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
 import { Checkbox } from "@/components/ui/checkbox";
-import { jobUrl } from "@/lib/pages";
-import { cn } from "@/lib/utils";
 import {
   CompanyWithOpeningsAndApplications,
   JobPostWithApplications,
-} from "@/services/JobService";
+} from "@/lib/data/job.types";
+import { jobUrl } from "@/lib/pages";
+import { cn } from "@/lib/utils";
 import { ApplicationStatus, JobStatus } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";

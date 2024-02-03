@@ -12,10 +12,10 @@ import ApplicationsTable from "@/components/dashboard/applications/applications-
 import CompanyJobTable from "@/components/dashboard/employer/company-job-table";
 import CompanyProfile from "@/components/jobs/company-profile";
 import { buttonVariants } from "@/components/ui/button";
+import { getApplicationsForCompanyId } from "@/lib/data/application";
+import { getCompanyWithOpeningsAndApplicationsById } from "@/lib/data/job";
 import { newJobUrl } from "@/lib/pages";
 import { cn } from "@/lib/utils";
-import { getApplicationsForCompanyId } from "@/services/ApplicationService";
-import { getCompanyWithOpeningsAndApplicationsById } from "@/services/JobService";
 import { Company } from "@prisma/client";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";

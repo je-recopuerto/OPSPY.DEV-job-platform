@@ -1,9 +1,9 @@
 "use server";
 
 import { auth } from "@/auth";
+import { getUserById, getUserWithCompanyById } from "@/lib/data/user";
 import prisma from "@/lib/db";
 import { createJobPostSchema } from "@/schemas/jobPost";
-import { getUserById, getUserWithCompanyById } from "@/services/UserService";
 import { JobPost, JobTracker, User } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";

@@ -12,7 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { filterJobPostsSchema } from "@/schemas/jobPost";
+import { jobFilterSchema } from "@/lib/params";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -38,8 +38,8 @@ export default function JobFilter() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const form = useForm<z.infer<typeof filterJobPostsSchema>>({
-    resolver: zodResolver(filterJobPostsSchema),
+  const form = useForm<z.infer<typeof jobFilterSchema>>({
+    resolver: zodResolver(jobFilterSchema),
     defaultValues: {
       keywords: searchParams.get("keywords")?.toString(),
       minSalary: searchParams.get("minSalary")
@@ -49,7 +49,7 @@ export default function JobFilter() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof filterJobPostsSchema>) {
+  function onSubmit(values: z.infer<typeof jobFilterSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
 

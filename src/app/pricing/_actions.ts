@@ -1,9 +1,9 @@
 "use server";
 
 import { auth } from "@/auth";
+import { getUserById, getUserSubscriptionPlan } from "@/lib/data/user";
 import { stripe, SubscriptionPlan } from "@/lib/stripe";
 import { absoluteUrl } from "@/lib/utils";
-import { getUserById, getUserSubscriptionPlan } from "@/services/UserService";
 
 const pricingUrl = absoluteUrl("/pricing");
 

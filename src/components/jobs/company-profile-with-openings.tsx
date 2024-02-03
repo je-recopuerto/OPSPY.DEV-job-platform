@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { CompanyWithOpenings } from "@/services/JobService";
+import { CompanyWithOpenings } from "@/lib/data/job.types";
 import Link from "next/link";
 
 type CompanyProfileProps = {

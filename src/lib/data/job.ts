@@ -1,30 +1,16 @@
+import {
+  CompanyWithOpenings,
+  CompanyWithOpeningsAndApplications,
+  JobPostWithCompany,
+  JobTrackerWithPost,
+} from "@/lib/data/job.types";
 import prisma from "@/lib/db";
-import { filterJobPostsSchema } from "@/schemas/jobPost";
+import { jobFilterSchema } from "@/lib/params";
 import { Company, Prisma } from "@prisma/client";
 import { z } from "zod";
 import JobPostWhereInput = Prisma.JobPostWhereInput;
 
 export const JOB_PAGE_SIZE = 8;
-
-export type JobPostWithCandidates = Prisma.JobPostGetPayload<{
-  include: {
-    application: {
-      include: {
-        user: true;
-      };
-    };
-  };
-}>;
-
-export type JobTrackerWithPost = Prisma.JobTrackerGetPayload<{
-  include: {
-    job: {
-      include: {
-        company: true;
-      };
-    };
-  };
-}>;
 
 export function getRandomJobPosts(
   count: number,
@@ -42,7 +28,7 @@ export function getRandomJobPosts(
 }
 
 const generateFilter = (
-  filter?: z.infer<typeof filterJobPostsSchema>,
+  filter?: z.infer<typeof jobFilterSchema>,
 ): JobPostWhereInput => {
   return {
     AND: [
@@ -100,31 +86,13 @@ const generateFilter = (
 };
 
 export async function fetchJobsPages(
-  filter?: z.infer<typeof filterJobPostsSchema>,
+  filter?: z.infer<typeof jobFilterSchema>,
 ): Promise<number> {
-  // Coerce string to number. This is currently a workaround
-  if (filter?.minSalary) {
-    filter.minSalary = Number(filter.minSalary);
-  }
-
-  // Coerce page to number. This is currently a workaround
-  if (filter?.page) {
-    filter.page = Number(filter.page);
-  }
-
-  const cid = filter?.cid;
-  console.log("cid:", cid);
-
-  // // Coerce list of keys to array. This is currently a workaround
-  // console.log("countries:", filter.countries);
-  //
-  // if (filter?.countries) {
-  //   const keys = filter.countries.split(",");
-  //   console.log(keys);
-  // }
-
   // Make sure the schema is valid
-  filterJobPostsSchema.parse(filter);
+  const response = jobFilterSchema.safeParse(filter);
+  if (!response.success) {
+    throw new Error("Invalid filter");
+  }
 
   const totalJobs = await prisma.jobPost.count({
     where: {
@@ -137,7 +105,7 @@ export async function fetchJobsPages(
 }
 
 export async function getJobPostsWithCompany(
-  filter?: z.infer<typeof filterJobPostsSchema>,
+  filter?: z.infer<typeof jobFilterSchema>,
 ): Promise<JobPostWithCompany[]> {
   // Coerce string to number. This is currently a workaround
   if (filter?.minSalary) {
@@ -150,7 +118,7 @@ export async function getJobPostsWithCompany(
   }
 
   // Make sure the schema is valid
-  filterJobPostsSchema.parse(filter);
+  jobFilterSchema.parse(filter);
 
   return prisma.jobPost.findMany({
     where: {
@@ -204,28 +172,6 @@ export function getSavedJobsForUserId(
     },
   });
 }
-
-export type CompanyWithOpenings = Prisma.CompanyGetPayload<{
-  include: {
-    openings: true;
-  };
-}>;
-
-export type CompanyWithOpeningsAndApplications = Prisma.CompanyGetPayload<{
-  include: {
-    openings: {
-      include: {
-        application: true;
-      };
-    };
-  };
-}>;
-
-export type JobPostWithApplications = Prisma.JobPostGetPayload<{
-  include: {
-    application: true;
-  };
-}>;
 
 export function getCompanyWithOpeningsById(
   id: Company["id"],
@@ -291,13 +237,6 @@ export function getCompanyWithOpeningsAndApplicationsById(
     },
   });
 }
-
-export type JobPostWithCompany = Prisma.JobPostGetPayload<{
-  include: {
-    company: true;
-    tags: true;
-  };
-}>;
 
 export function getJobPostFromId(id: string) {
   return prisma.jobPost.findUnique({

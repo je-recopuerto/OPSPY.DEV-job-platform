@@ -1,7 +1,7 @@
 import { JobApplication } from ".prisma/client";
 import AppliedJobsTable from "@/components/dashboard/applied-jobs-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getJobApplications } from "@/services/JobService";
+import { getJobApplications } from "@/lib/data/job";
 import { User } from "@prisma/client";
 import { CircleSlash2, Timer } from "lucide-react";
 

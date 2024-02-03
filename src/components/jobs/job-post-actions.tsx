@@ -3,7 +3,7 @@
 import ApplyJobButton from "@/components/jobs/apply-job-button";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
-import { JobPostWithCompany } from "@/services/JobService";
+import { JobPostWithCompany } from "@/lib/data/job.types";
 import { toggleSaveJob } from "@/services/actions/job";
 import { Pin, PinOff } from "lucide-react";
 import { useState } from "react";

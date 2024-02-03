@@ -8,7 +8,7 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/home/page-header";
-import { getRandomJobPosts } from "@/services/JobService";
+import { getRandomJobPosts } from "@/lib/data/job";
 import { Suspense } from "react";
 
 export default async function Home() {

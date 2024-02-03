@@ -8,8 +8,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { ApplicationWithJob } from "@/lib/data/application.types";
 import { applicationUrl } from "@/lib/pages";
-import { ApplicationWithJob } from "@/services/ApplicationService";
 import { CircleEllipsisIcon, EyeIcon } from "lucide-react";
 import Link from "next/link";
 

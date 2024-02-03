@@ -1,7 +1,7 @@
-import { Prisma } from ".prisma/client";
+import { CompanyWithOpenings } from "@/lib/data/job.types";
 import prisma from "@/lib/db";
 import { companyFilterSchema } from "@/schemas/company";
-import { CompanyWithOpenings } from "@/services/JobService";
+import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import CompanyWhereInput = Prisma.CompanyWhereInput;
 

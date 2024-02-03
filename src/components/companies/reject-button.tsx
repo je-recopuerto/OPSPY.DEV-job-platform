@@ -2,6 +2,7 @@
 
 import { rejectCandidate } from "@/app/(employer)/e/applications/[applicationId]/_actions";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -13,9 +14,9 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import { ApplicationWithJob } from "@/lib/data/application.types";
 import { employerDashboardUrl } from "@/lib/pages";
 import { rejectCandidateSchema } from "@/lib/validations/reject";
-import { ApplicationWithJob } from "@/services/ApplicationService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { VariantProps } from "class-variance-authority";
 import { useRouter } from "next/navigation";
@@ -115,6 +116,27 @@ export default function Reject({ application, ...props }: RejectProps) {
                     This is your public display name.
                   </FormDescription>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="notifyCandidate"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 ">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>Notify the candidate?</FormLabel>
+                    <FormDescription>
+                      You may want to send a message to the candidate manually.
+                    </FormDescription>
+                  </div>
                 </FormItem>
               )}
             />

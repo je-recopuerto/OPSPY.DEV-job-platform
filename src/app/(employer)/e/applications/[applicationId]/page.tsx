@@ -14,8 +14,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ApplicationWithJob } from "@/lib/data/application.types";
 import { jobUrl } from "@/lib/pages";
-import { ApplicationWithJob } from "@/services/ApplicationService";
 import { ApplicationStatus, WorkExperience } from "@prisma/client";
 import { formatDistance } from "date-fns";
 import Link from "next/link";

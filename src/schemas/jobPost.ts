@@ -1,45 +1,6 @@
 import { Currency, JobType, WorkMode } from "@prisma/client";
 import { z } from "zod";
 
-// OptionType is a custom type that is used for the multi-select component
-const optionTypeSchema = z.object({
-  label: z.string(),
-  value: z.string(),
-});
-
-export const useTypedSearchParams = <T extends z.Schema>(
-  schema: T,
-  searchParams: { [key: string]: string | string[] | undefined },
-): {
-  typedSearchParams: z.infer<T>;
-  isValid: boolean;
-  urlSearchParams: URLSearchParams;
-} => {
-  const { data, success } = schema.safeParse(searchParams) as z.infer<
-    typeof schema
-  >;
-
-  return {
-    typedSearchParams: data,
-    isValid: success,
-    urlSearchParams: new URLSearchParams(
-      searchParams as Record<string, string>,
-    ),
-  };
-};
-
-export const filterJobPostsSchema = z.object({
-  jid: z.string().optional(),
-  // This is the company id. If we specify this, then we only want jobs from this company
-  cid: z.string().optional(),
-  keywords: z.string().max(255).optional(),
-  tags: z.array(z.string()).optional(),
-  minSalary: z.number().min(0).max(500000).optional(),
-  type: z.array(z.nativeEnum(JobType)).optional(),
-  page: z.number().min(1).optional(),
-  countries: z.array(optionTypeSchema).optional(),
-});
-
 export const createJobPostSchema = z
   .object({
     title: z

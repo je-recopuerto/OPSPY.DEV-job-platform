@@ -1,6 +1,6 @@
 import { buttonVariants } from "@/components/ui/button";
+import { JobPostWithCompany } from "@/lib/data/job.types";
 import { filteredJobsUrl, jobUrl } from "@/lib/pages";
-import { JobPostWithCompany } from "@/services/JobService";
 import { Company } from "@prisma/client";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";

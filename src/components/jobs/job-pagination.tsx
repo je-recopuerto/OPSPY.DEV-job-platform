@@ -34,19 +34,19 @@ export default function JobPagination({ totalPages }: { totalPages: number }) {
     <Pagination className={"mt-4"}>
       <PaginationContent>
         {/* Previous Page */}
-        <PaginationItem>
-          <PaginationPrevious
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          />
-        </PaginationItem>
+        {currentPage <= 1 && (
+          <PaginationItem>
+            <PaginationPrevious
+              onClick={() => handlePageChange(currentPage - 1)}
+            />
+          </PaginationItem>
+        )}
 
         {/* Page Numbers */}
         {range(firstPage, lastPage).map((page) => (
           <PaginationItem key={page}>
             <PaginationLink
               onClick={() => handlePageChange(page)}
-              disabled={page === currentPage}
               isActive={page === currentPage}
             >
               {page}
@@ -55,12 +55,12 @@ export default function JobPagination({ totalPages }: { totalPages: number }) {
         ))}
 
         {/* Next Page */}
-        <PaginationItem>
-          <PaginationNext
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage >= totalPages}
-          />
-        </PaginationItem>
+
+        {currentPage >= totalPages && (
+          <PaginationItem>
+            <PaginationNext onClick={() => handlePageChange(currentPage + 1)} />
+          </PaginationItem>
+        )}
       </PaginationContent>
     </Pagination>
   );
