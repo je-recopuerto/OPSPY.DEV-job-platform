@@ -1,8 +1,8 @@
 import JobGrid from "@/components/home/job-grid";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getCompanyById } from "@/lib/data/company";
+import { getJobPostsByCompanyId } from "@/lib/data/job";
 import { cn } from "@/lib/utils";
-import { getCompanyById } from "@/services/CompanyService";
-import { getJobPostsByCompanyId } from "@/services/JobService";
 import { Company } from "@prisma/client";
 import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";

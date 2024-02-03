@@ -1,3 +1,9 @@
+import {
+  CompanyWithOpenings,
+  CompanyWithOpeningsAndApplications,
+  JobPostWithCompany,
+  JobTrackerWithPost,
+} from "@/lib/data/job.types";
 import prisma from "@/lib/db";
 import { jobFilterSchema } from "@/lib/params";
 import { Company, Prisma } from "@prisma/client";
@@ -5,26 +11,6 @@ import { z } from "zod";
 import JobPostWhereInput = Prisma.JobPostWhereInput;
 
 export const JOB_PAGE_SIZE = 8;
-
-export type JobPostWithCandidates = Prisma.JobPostGetPayload<{
-  include: {
-    application: {
-      include: {
-        user: true;
-      };
-    };
-  };
-}>;
-
-export type JobTrackerWithPost = Prisma.JobTrackerGetPayload<{
-  include: {
-    job: {
-      include: {
-        company: true;
-      };
-    };
-  };
-}>;
 
 export function getRandomJobPosts(
   count: number,
@@ -187,28 +173,6 @@ export function getSavedJobsForUserId(
   });
 }
 
-export type CompanyWithOpenings = Prisma.CompanyGetPayload<{
-  include: {
-    openings: true;
-  };
-}>;
-
-export type CompanyWithOpeningsAndApplications = Prisma.CompanyGetPayload<{
-  include: {
-    openings: {
-      include: {
-        application: true;
-      };
-    };
-  };
-}>;
-
-export type JobPostWithApplications = Prisma.JobPostGetPayload<{
-  include: {
-    application: true;
-  };
-}>;
-
 export function getCompanyWithOpeningsById(
   id: Company["id"],
 ): Promise<CompanyWithOpenings | null> {
@@ -273,13 +237,6 @@ export function getCompanyWithOpeningsAndApplicationsById(
     },
   });
 }
-
-export type JobPostWithCompany = Prisma.JobPostGetPayload<{
-  include: {
-    company: true;
-    tags: true;
-  };
-}>;
 
 export function getJobPostFromId(id: string) {
   return prisma.jobPost.findUnique({

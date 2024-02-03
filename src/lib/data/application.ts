@@ -1,24 +1,8 @@
 "use server";
 
-import { JobApplication } from ".prisma/client";
+import { ApplicationWithJob } from "@/lib/data/application.types";
 import prisma from "@/lib/db";
-import { Company, Prisma } from "@prisma/client";
-
-export type ApplicationWithJob = Prisma.JobApplicationGetPayload<{
-  include: {
-    job: {
-      include: {
-        company: true;
-      };
-    };
-    user: {
-      include: {
-        cv: true;
-        workExperience: true;
-      };
-    };
-  };
-}>;
+import { Company, JobApplication } from "@prisma/client";
 
 export async function getApplicationsForCompanyId(
   companyId: Company["id"],

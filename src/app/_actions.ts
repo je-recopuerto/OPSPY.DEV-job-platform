@@ -1,13 +1,9 @@
 "use server";
 
-import {
-  ApplicationWithJob,
-  getApplicationById,
-} from "@/services/ApplicationService";
-import {
-  UserWithCompany,
-  getUserWithCompanyById,
-} from "@/services/UserService";
+import { getApplicationById } from "@/lib/data/application";
+import { ApplicationWithJob } from "@/lib/data/application.types";
+import { getUserWithCompanyById } from "@/lib/data/user";
+import { UserWithCompany } from "@/lib/data/user.types";
 import { JobApplication, User } from "@prisma/client";
 
 export declare type AuthorizeSuccess<Output> = {

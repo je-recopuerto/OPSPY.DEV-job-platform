@@ -1,10 +1,10 @@
 import { auth } from "@/auth";
+import { getUserWithCompanyById } from "@/lib/data/user";
 import {
   employerDashboardUrl,
   settingsUrl,
   talentDashboardUrl,
 } from "@/lib/pages";
-import { getUserWithCompanyById } from "@/services/UserService";
 import { Cloud, CreditCard, Github, Settings } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

@@ -3,14 +3,14 @@
 import { JobApplication } from ".prisma/client";
 import { type AuthorizeReturnType } from "@/app/_actions";
 import { auth } from "@/auth";
+import { JobApplicationWithCompany } from "@/lib/data/job.types";
+import { UserWithCompany } from "@/lib/data/user.types";
 import prisma from "@/lib/db";
+import { notifyApplicationUpdated } from "@/lib/knock";
 import {
   acceptCandidateSchema,
   rejectCandidateSchema,
 } from "@/lib/validations/reject";
-import { JobApplicationWithCompany } from "@/services/JobService";
-import { notifyApplicationUpdated } from "@/services/KnockService";
-import { UserWithCompany } from "@/services/UserService";
 import { User } from "@prisma/client";
 import { z } from "zod";
 

@@ -10,7 +10,7 @@ import ProfileSetupAlert from "@/components/dashboard/profile-setup-alert";
 import SavedJobTab from "@/components/dashboard/saved-job-tab";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getUserWithCompanyById } from "@/services/UserService";
+import { getUserWithCompanyById } from "@/lib/data/user";
 import { DownloadIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";

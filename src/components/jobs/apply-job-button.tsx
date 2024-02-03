@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/use-toast";
-import { JobPostWithCompany } from "@/services/JobService";
+import { JobPostWithCompany } from "@/lib/data/job.types";
 import { quickApply } from "@/services/actions/application";
 import { ExternalLink, Gauge } from "lucide-react";
 import Link from "next/link";

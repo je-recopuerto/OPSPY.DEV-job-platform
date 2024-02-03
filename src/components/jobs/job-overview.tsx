@@ -7,8 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { JobPostWithCompany } from "@/lib/data/job.types";
 import { jobFilterQueryParams, jobFilterSchema } from "@/lib/params";
-import { JobPostWithCompany } from "@/services/JobService";
 import { JobType } from "@prisma/client";
 import Link from "next/link";
 import { z } from "zod";

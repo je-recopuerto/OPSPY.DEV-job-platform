@@ -2,10 +2,10 @@
 
 import { JobApplication } from ".prisma/client";
 import { auth } from "@/auth";
+import { JobPostWithCompany } from "@/lib/data/job.types";
+import { getUserById } from "@/lib/data/user";
 import prisma from "@/lib/db";
-import { JobPostWithCompany } from "@/services/JobService";
-import { notifyApplicationCreated } from "@/services/KnockService";
-import { getUserById } from "@/services/UserService";
+import { notifyApplicationCreated } from "@/lib/knock";
 import { JobPost, User } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";

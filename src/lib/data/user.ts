@@ -1,7 +1,12 @@
 import { subscriptions, talentFreePlan } from "@/config/subscriptions";
+import {
+  UserWithCompany,
+  UserWithCvs,
+  UserWithJobTrackers,
+} from "@/lib/data/user.types";
 import prisma from "@/lib/db";
 import { SubscriptionPlan } from "@/lib/stripe";
-import { Prisma, UploadedCv, User } from "@prisma/client";
+import { UploadedCv, User } from "@prisma/client";
 
 export function getUserById(id: string): Promise<User | null> {
   return prisma.user.findFirst({
@@ -35,25 +40,6 @@ export function getUserWithCompanyById(
     },
   });
 }
-
-export type UserWithCvs = Prisma.UserGetPayload<{
-  include: {
-    cv: true;
-    workExperience: true;
-  };
-}>;
-
-export type UserWithJobTrackers = Prisma.UserGetPayload<{
-  include: {
-    trackers: true;
-  };
-}>;
-
-export type UserWithCompany = Prisma.UserGetPayload<{
-  include: {
-    company: true;
-  };
-}>;
 
 export function getUserWithJobTrackersById(
   id?: string,

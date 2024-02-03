@@ -24,8 +24,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { JobPostWithApplications } from "@/lib/data/job.types";
 import { cn } from "@/lib/utils";
-import { JobPostWithApplications } from "@/services/JobService";
 import { deleteJobPost, updateJobStatus } from "@/services/actions/job";
 import { JobStatus } from "@prisma/client";
 import { CircleEllipsisIcon, Eye, TrashIcon } from "lucide-react";

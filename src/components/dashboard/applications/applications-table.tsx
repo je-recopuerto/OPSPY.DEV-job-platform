@@ -6,8 +6,8 @@ import { applicationStatuses } from "@/components/dashboard/saved-job-table";
 import { DataTable } from "@/components/table/data-table";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ApplicationWithJob } from "@/lib/data/application.types";
 import { applicationUrl, jobUrl } from "@/lib/pages";
-import { ApplicationWithJob } from "@/services/ApplicationService";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 

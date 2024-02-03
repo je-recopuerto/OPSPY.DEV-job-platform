@@ -1,5 +1,5 @@
 import SavedJobTable from "@/components/dashboard/saved-job-table";
-import { getSavedJobsForUserId } from "@/services/JobService";
+import { getSavedJobsForUserId } from "@/lib/data/job";
 
 type SavedJobTabProps = {
   userId: string;

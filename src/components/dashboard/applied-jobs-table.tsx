@@ -5,8 +5,8 @@ import { AppliedJobDataTableRowActions } from "@/components/dashboard/applied-jo
 import { DataTable } from "@/components/table/data-table";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { JobApplicationWithCompany } from "@/lib/data/job.types";
 import { jobUrl } from "@/lib/pages";
-import { JobApplicationWithCompany } from "@/services/JobService";
 import { ColumnDef } from "@tanstack/react-table";
 import { format, formatDistanceToNow } from "date-fns";
 import Link from "next/link";

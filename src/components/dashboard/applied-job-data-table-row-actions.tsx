@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { JobApplicationWithCompany } from "@/services/JobService";
+import { JobApplicationWithCompany } from "@/lib/data/job.types";
 import { withdrawApplication } from "@/services/actions/application";
 import { CircleEllipsisIcon } from "lucide-react";
 import { useState } from "react";

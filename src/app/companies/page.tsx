@@ -9,11 +9,11 @@ import {
   CompanyProfileWithOpenings,
 } from "@/components/jobs/company-profile-with-openings";
 import JobPagination from "@/components/jobs/job-pagination";
-import { companyFilterSchema } from "@/schemas/company";
 import {
   getCompaniesPageCount,
   getCompaniesWithOpenings,
-} from "@/services/CompanyService";
+} from "@/lib/data/company";
+import { companyFilterSchema } from "@/schemas/company";
 import { Suspense } from "react";
 import { z } from "zod";
 

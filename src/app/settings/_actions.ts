@@ -1,28 +1,28 @@
 "use server";
 
 import { auth } from "@/auth";
-import { cvTag } from "@/lib/cache-tags";
-import prisma from "@/lib/db";
-import knock from "@/lib/knock";
-import { fileSizeToBytes } from "@/lib/utils";
-import {
-  bioSchema,
-  updateProfileFormSchema,
-} from "@/schemas/updateProfileSchema";
 import {
   deleteFile,
   getExpirableUrlFor,
   getUrlFor,
   uploadFile,
-} from "@/services/BlobService";
-import { improveBio } from "@/services/OpemAiService";
+} from "@/lib/blob";
+import { cvTag } from "@/lib/cache-tags";
 import {
   getCvById,
   getUserBioGenerationsLeft,
   getUserById,
   getUserSubscriptionPlan,
   getUserWithCvsById,
-} from "@/services/UserService";
+} from "@/lib/data/user";
+import prisma from "@/lib/db";
+import knock from "@/lib/knock";
+import { improveBio } from "@/lib/openai";
+import { fileSizeToBytes } from "@/lib/utils";
+import {
+  bioSchema,
+  updateProfileFormSchema,
+} from "@/schemas/updateProfileSchema";
 import { PreferenceSet } from "@knocklabs/node";
 import { UploadedCv, User } from "@prisma/client";
 import { revalidatePath, revalidateTag } from "next/cache";

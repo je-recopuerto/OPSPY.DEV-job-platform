@@ -1,9 +1,9 @@
 "use server";
 
 import { auth } from "@/auth";
+import { getUserById } from "@/lib/data/user";
 import prisma from "@/lib/db";
 import { onboardingSchema } from "@/schemas/onboardingSchema";
-import { getUserById } from "@/services/UserService";
 import { redirect } from "next/navigation";
 import * as z from "zod";
 
