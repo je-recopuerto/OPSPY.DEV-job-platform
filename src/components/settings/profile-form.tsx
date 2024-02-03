@@ -20,20 +20,20 @@ type ProfileFormProps = {
   user: UserWithCvs;
 };
 
-export function ProfileForm(props: ProfileFormProps) {
+export function ProfileForm({ user }: ProfileFormProps) {
   const form = useForm<z.infer<typeof updateProfileFormSchema>>({
     resolver: zodResolver(updateProfileFormSchema),
     defaultValues: {
-      firstName: props.user.firstName ?? "",
-      lastName: props.user.lastName ?? "",
-      dateOfBirth: props.user.dateOfBirth,
-      email: props.user.email ?? "",
-      bio: props.user.bio ?? "",
-      githubLink: props.user.githubLink ?? "",
-      linkedInLink: props.user.linkedinLink ?? "",
-      twitterLink: props.user.twitterLink ?? "",
+      firstName: user.firstName ?? "",
+      lastName: user.lastName ?? "",
+      dateOfBirth: user.dateOfBirth,
+      email: user.email ?? "",
+      bio: user.bio ?? "",
+      githubLink: user.githubLink ?? "",
+      linkedInLink: user.linkedinLink ?? "",
+      twitterLink: user.twitterLink ?? "",
       workExperience:
-        props.user.workExperience.map((experience) => ({
+        user.workExperience.map((experience) => ({
           jobTitle: experience.title,
           company: experience.company,
           location: experience.location ?? "",
@@ -65,7 +65,7 @@ export function ProfileForm(props: ProfileFormProps) {
         onSubmit={form.handleSubmit(async (data) => await updateProfile(data))}
         className="space-y-14"
       >
-        <BasicProfile form={form} user={props.user} />
+        <BasicProfile form={form} user={user} />
         <LinksForm form={form} />
         <WorkExperienceForm form={form} />
         <SubmitButton isSubmitting={isSubmitting} />{" "}
