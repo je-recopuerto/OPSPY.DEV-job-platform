@@ -1,5 +1,5 @@
+import { jobFilterQueryParams, jobFilterSchema } from "@/lib/params";
 import { absoluteUrl } from "@/lib/utils";
-import { filterJobPostsSchema } from "@/schemas/jobPost";
 import { JobApplication } from "@prisma/client";
 import { z } from "zod";
 
@@ -12,17 +12,12 @@ export const applicationUrl = (applicationId: JobApplication["id"]) =>
 export const jobUrl = (jobId: JobApplication["id"]) =>
   absoluteUrl(`/jobs?jid=${jobId}`);
 export const jobsUrl = absoluteUrl("/jobs");
-export function filteredJobsUrl(filter?: z.infer<typeof filterJobPostsSchema>) {
+export function filteredJobsUrl(filter?: z.infer<typeof jobFilterSchema>) {
   if (!filter) {
     return absoluteUrl("/jobs");
   }
 
-  const searchParams = new URLSearchParams();
-
-  if (filter.cid) {
-    searchParams.append("cid", filter.cid);
-  }
-
+  const searchParams = jobFilterQueryParams(filter);
   return absoluteUrl(`/jobs?${searchParams.toString()}`);
 }
 export const pricingUrl = absoluteUrl("/pricing");

@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import { JobOverview } from "@/components/jobs/job-overview";
 import JobPagination from "@/components/jobs/job-pagination";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { filterJobPostsSchema, useTypedSearchParams } from "@/schemas/jobPost";
+import { jobFilterSchema } from "@/lib/params";
 import {
   JobPostWithCompany,
   fetchJobsPages,
@@ -12,24 +12,20 @@ import {
   UserWithJobTrackers,
   getUserWithJobTrackersById,
 } from "@/services/UserService";
+import { z } from "zod";
 
 type JobPageParams = {
-  searchParams: { [key: string]: string | string[] | undefined };
+  filter: z.infer<typeof jobFilterSchema>;
 };
 
-export default async function JobList({ searchParams }: JobPageParams) {
-  const { typedSearchParams, urlSearchParams } = useTypedSearchParams(
-    filterJobPostsSchema,
-    searchParams,
-  );
-
+export default async function JobList({ filter }: JobPageParams) {
   const session = await auth();
   const [jobs, user] = await Promise.all([
-    getJobPostsWithCompany(typedSearchParams),
+    getJobPostsWithCompany(filter),
     getUserWithJobTrackersById(session?.user?.id),
   ]);
 
-  const maxPages = await fetchJobsPages(typedSearchParams);
+  const maxPages = await fetchJobsPages(filter);
 
   return (
     <>
@@ -40,7 +36,7 @@ export default async function JobList({ searchParams }: JobPageParams) {
               job={job}
               key={job.id}
               isFollowing={isFollowing(job, user)}
-              searchParams={urlSearchParams}
+              filter={filter}
             />
           ))}
 

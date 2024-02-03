@@ -7,19 +7,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { jobFilterQueryParams, jobFilterSchema } from "@/lib/params";
 import { JobPostWithCompany } from "@/services/JobService";
 import { JobType } from "@prisma/client";
 import Link from "next/link";
+import { z } from "zod";
 import { Skeleton } from "../ui/skeleton";
 
 type JobListingProps = {
   job: JobPostWithCompany;
   isFollowing: boolean;
-  searchParams: URLSearchParams;
+  filter: z.infer<typeof jobFilterSchema>;
 };
 
-function JobOverview({ job, isFollowing, searchParams }: JobListingProps) {
-  const newSearchParams = new URLSearchParams(searchParams);
+function JobOverview({ job, isFollowing, filter }: JobListingProps) {
+  const newSearchParams = jobFilterQueryParams(filter);
   newSearchParams.set("jid", job.id.toString());
 
   const jobUrl = `/jobs?${newSearchParams.toString()}`;

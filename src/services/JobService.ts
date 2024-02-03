@@ -1,5 +1,5 @@
 import prisma from "@/lib/db";
-import { filterJobPostsSchema } from "@/schemas/jobPost";
+import { jobFilterSchema } from "@/lib/params";
 import { Company, Prisma } from "@prisma/client";
 import { z } from "zod";
 import JobPostWhereInput = Prisma.JobPostWhereInput;
@@ -42,7 +42,7 @@ export function getRandomJobPosts(
 }
 
 const generateFilter = (
-  filter?: z.infer<typeof filterJobPostsSchema>,
+  filter?: z.infer<typeof jobFilterSchema>,
 ): JobPostWhereInput => {
   return {
     AND: [
@@ -100,31 +100,13 @@ const generateFilter = (
 };
 
 export async function fetchJobsPages(
-  filter?: z.infer<typeof filterJobPostsSchema>,
+  filter?: z.infer<typeof jobFilterSchema>,
 ): Promise<number> {
-  // Coerce string to number. This is currently a workaround
-  if (filter?.minSalary) {
-    filter.minSalary = Number(filter.minSalary);
-  }
-
-  // Coerce page to number. This is currently a workaround
-  if (filter?.page) {
-    filter.page = Number(filter.page);
-  }
-
-  const cid = filter?.cid;
-  console.log("cid:", cid);
-
-  // // Coerce list of keys to array. This is currently a workaround
-  // console.log("countries:", filter.countries);
-  //
-  // if (filter?.countries) {
-  //   const keys = filter.countries.split(",");
-  //   console.log(keys);
-  // }
-
   // Make sure the schema is valid
-  filterJobPostsSchema.parse(filter);
+  const response = jobFilterSchema.safeParse(filter);
+  if (!response.success) {
+    throw new Error("Invalid filter");
+  }
 
   const totalJobs = await prisma.jobPost.count({
     where: {
@@ -137,7 +119,7 @@ export async function fetchJobsPages(
 }
 
 export async function getJobPostsWithCompany(
-  filter?: z.infer<typeof filterJobPostsSchema>,
+  filter?: z.infer<typeof jobFilterSchema>,
 ): Promise<JobPostWithCompany[]> {
   // Coerce string to number. This is currently a workaround
   if (filter?.minSalary) {
@@ -150,7 +132,7 @@ export async function getJobPostsWithCompany(
   }
 
   // Make sure the schema is valid
-  filterJobPostsSchema.parse(filter);
+  jobFilterSchema.parse(filter);
 
   return prisma.jobPost.findMany({
     where: {
