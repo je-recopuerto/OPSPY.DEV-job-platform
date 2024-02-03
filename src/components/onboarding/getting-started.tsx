@@ -140,8 +140,6 @@ export default function GettingStarted({ form }: OnboardingCardProps) {
 
           <Separator className={"mt-4"} />
 
-          {/*bio location linkedinUrl githubUrl portfolioUrl*/}
-
           <FormField
             control={form.control}
             name="location"
@@ -177,7 +175,10 @@ export default function GettingStarted({ form }: OnboardingCardProps) {
               <FormItem className={"flex-grow"}>
                 <FormLabel>LinkedIn Link</FormLabel>
                 <FormControl>
-                  <Input placeholder="The best lawyer" {...field} />
+                  <Input
+                    placeholder="https://www.linkedin.com/in/..."
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -191,7 +192,7 @@ export default function GettingStarted({ form }: OnboardingCardProps) {
               <FormItem className={"flex-grow"}>
                 <FormLabel>GitHub Link</FormLabel>
                 <FormControl>
-                  <Input placeholder="The best lawyer" {...field} />
+                  <Input placeholder="https://github.com/..." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -205,7 +206,7 @@ export default function GettingStarted({ form }: OnboardingCardProps) {
               <FormItem className={"flex-grow"}>
                 <FormLabel>Portfolio Link</FormLabel>
                 <FormControl>
-                  <Input placeholder="The best lawyer" {...field} />
+                  <Input placeholder="https://example.com/" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
