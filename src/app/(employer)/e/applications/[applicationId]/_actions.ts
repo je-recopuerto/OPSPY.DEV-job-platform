@@ -148,7 +148,7 @@ export async function rejectCandidate(
     };
   }
 
-  const { reason } = parsed.data;
+  const { reason, notifyCandidate } = parsed.data;
   const { user, application } = response.data;
 
   console.log("Rejecting candidate because:", reason);
@@ -164,8 +164,10 @@ export async function rejectCandidate(
     },
   });
 
-  // Notify the candidate
-  await notifyApplicationUpdated(user, application.job);
+  if (notifyCandidate) {
+    // Notify the candidate
+    await notifyApplicationUpdated(user, application.job);
+  }
 
   return {
     message: "Candidate rejected.",

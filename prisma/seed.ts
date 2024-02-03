@@ -35,7 +35,7 @@ async function main() {
 
   const jonny = await prisma.user.create({
     data: {
-      id: "auth0|653daa8c28da5b5c1a849643",
+      id: "auth0|65be4335f904ab16ef5e3430",
       firstName: "Jonathan",
       lastName: "Ruffles",
       dateOfBirth: new Date("2003-03-03"),
