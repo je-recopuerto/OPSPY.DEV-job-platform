@@ -1,3 +1,4 @@
+import StatusBadge from "@/components/companies/status-badge";
 import JobGrid from "@/components/home/job-grid";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getCompanyById } from "@/lib/data/company";
@@ -88,7 +89,10 @@ const BasicInfo = ({ company }: { company: Company }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{company.name}</CardTitle>
+        <CardTitle>
+          {company.name}
+          <StatusBadge className={"ml-2"} isVerified={company.isVerified} />
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <ul className={"flex flex-col gap-y-2 text-sm list-disc list-inside"}>

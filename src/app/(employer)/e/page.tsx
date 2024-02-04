@@ -1,11 +1,20 @@
+import { auth } from "@/auth";
 import { SignIn } from "@/components/auth";
+import { buttonVariants } from "@/components/ui/button";
+import { getUserWithCompanyById } from "@/lib/data/user";
+import { employerDashboardUrl, registerCompanyUrl } from "@/lib/pages";
 import Image from "next/image";
+import Link from "next/link";
 
 export const metadata = {
   title: "Employer",
 };
 
-export default function EmployerPage() {
+export default async function EmployerPage() {
+  const session = await auth();
+  const user = await getUserWithCompanyById(session?.user?.id);
+  const isCompany = user?.company !== null;
+
   return (
     <>
       <section className="flex flex-row space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32 min-h-screen">
@@ -37,7 +46,22 @@ export default function EmployerPage() {
                 Simplify your hiring, amplify your results.
               </p>
               <div className="space-x-4">
-                <SignIn />
+                {!user && <SignIn />}
+                {isCompany ? (
+                  <Link
+                    href={employerDashboardUrl}
+                    className={buttonVariants({ variant: "default" })}
+                  >
+                    Go to Dashboard
+                  </Link>
+                ) : (
+                  <Link
+                    href={registerCompanyUrl}
+                    className={buttonVariants({ variant: "default" })}
+                  >
+                    Register Company
+                  </Link>
+                )}
               </div>
             </div>
           </div>
