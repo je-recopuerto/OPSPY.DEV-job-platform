@@ -5,6 +5,7 @@ import { z } from "zod";
 
 export const newJobUrl = absoluteUrl("/e/new-job");
 export const employerDashboardUrl = absoluteUrl("/e/dash");
+export const registerCompanyUrl = absoluteUrl("/e/register");
 export const employerHomepageUrl = absoluteUrl("/e");
 export const talentDashboardUrl = absoluteUrl("/t/dash");
 export const applicationUrl = (applicationId: JobApplication["id"]) =>

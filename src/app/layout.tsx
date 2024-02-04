@@ -5,6 +5,7 @@ import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/config/site";
 import knock from "@/lib/knock";
+import { employerHomepageUrl } from "@/lib/pages";
 import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -121,6 +122,12 @@ const Footer = () => (
       © 2024 {siteConfig.name} Inc. All rights reserved.
     </p>
     <nav className="sm:ml-auto flex gap-4 sm:gap-6">
+      <Link
+        className="text-xs hover:underline underline-offset-4"
+        href={employerHomepageUrl}
+      >
+        Employers
+      </Link>
       <Link className="text-xs hover:underline underline-offset-4" href="#">
         Terms of Service
       </Link>

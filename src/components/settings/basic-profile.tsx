@@ -48,7 +48,6 @@ export default function BasicProfile({ form, user }: ProfileFormProps) {
   useEffect(() => {
     const getGenerationsLeft = async () => {
       const generationsLeft = await getMyGenerationsLeft();
-      console.log("generationsLeft", generationsLeft);
       setGenerationsLeft(generationsLeft);
     };
 
