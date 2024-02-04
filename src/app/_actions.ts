@@ -69,7 +69,8 @@ export async function canCreateNewJobPost(userId: User["id"]): Promise<
 > {
   const user = await getUserWithCompanyById(userId);
 
-  let isAuthorized = user !== null && user.company !== null;
+  let isAuthorized =
+    user !== null && user.company !== null && user.company.isVerified;
 
   if (!isAuthorized || !user) {
     return {
