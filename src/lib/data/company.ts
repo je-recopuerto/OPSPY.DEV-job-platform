@@ -7,6 +7,27 @@ import CompanyWhereInput = Prisma.CompanyWhereInput;
 
 export const COMPANY_PAGE_SIZE = 10;
 
+export async function getCompanyCountGrowth(): Promise<{
+  count: number;
+  countLastMonth: number;
+}> {
+  const [count, countLastMonth] = await Promise.all([
+    prisma.company.count(),
+    prisma.company.count({
+      where: {
+        createdAt: {
+          lt: new Date(Date.now() - 86_400_000 * 30),
+        },
+      },
+    }),
+  ]);
+
+  return {
+    count,
+    countLastMonth,
+  };
+}
+
 const generateFilters = (
   searchParams: z.infer<typeof companyFilterSchema>,
 ): CompanyWhereInput => {
