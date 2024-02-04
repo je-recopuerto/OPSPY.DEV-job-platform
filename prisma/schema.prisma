@@ -71,6 +71,7 @@ model Company {
   openings    JobPost[]
   owner       User?     @relation(fields: [ownerId], references: [id])
   ownerId     String?   @unique
+  isVerified  Boolean   @default(false)
 }
 
 model JobPost {

@@ -1,11 +1,22 @@
 import { CompanyWithOpenings } from "@/lib/data/job.types";
 import prisma from "@/lib/db";
 import { companyFilterSchema } from "@/schemas/company";
-import { Prisma } from "@prisma/client";
+import { Company, Prisma } from "@prisma/client";
 import { z } from "zod";
 import CompanyWhereInput = Prisma.CompanyWhereInput;
 
 export const COMPANY_PAGE_SIZE = 10;
+
+export async function getCompanysToReview(): Promise<Company[]> {
+  return prisma.company.findMany({
+    include: {
+      openings: true,
+    },
+    where: {
+      isVerified: false,
+    },
+  });
+}
 
 export async function getCompanyCountGrowth(): Promise<{
   count: number;

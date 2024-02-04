@@ -1,4 +1,6 @@
 import { auth } from "@/auth";
+import CompanyTable from "@/components/admin/company-table";
+import Overview from "@/components/admin/overview";
 import Spinner from "@/components/cui/Spinner";
 import {
   Breadcrumb,
@@ -11,13 +13,8 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/cui/tabs";
-import SavedJobTab from "@/components/dashboard/saved-job-tab";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { getCompanyCountGrowth } from "@/lib/data/company";
-import { getJobCountGrowth } from "@/lib/data/job";
-import { getUserById, getUserCountGrowth } from "@/lib/data/user";
-import { Timer } from "lucide-react";
+import { getCompanysToReview } from "@/lib/data/company";
+import { getUserById } from "@/lib/data/user";
 import { notFound, redirect } from "next/navigation";
 import { Suspense } from "react";
 
@@ -57,128 +54,26 @@ export default async function AdminPage() {
         <Tabs defaultValue="applications" className="space-y-4">
           <TabsList>
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="saved-jobs">Saved Jobs</TabsTrigger>
+            <TabsTrigger value="company-requests">Company Requests</TabsTrigger>
           </TabsList>
 
           <TabsContent value={"overview"} className="space-y-4">
             <Overview />
           </TabsContent>
 
-          <Suspense fallback={<Spinner />}>
-            <TabsContent value={"saved-jobs"} className="space-y-4">
-              <SavedJobTab userId={session.user.id} />
-            </TabsContent>
-          </Suspense>
+          <TabsContent value={"company-requests"} className="space-y-4">
+            <Suspense fallback={<Spinner />}>
+              <CompanyReviewTable />
+            </Suspense>
+          </TabsContent>
         </Tabs>
       </div>
     </div>
   );
 }
 
-const Overview = () => {
-  return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-      <Suspense fallback={<CardSkeleton title={"Total users"} />}>
-        <TotalUsers />
-      </Suspense>
+const CompanyReviewTable = async () => {
+  const companies = await getCompanysToReview();
 
-      <Suspense fallback={<CardSkeleton title={"Total jobs"} />}>
-        <TotalJobs />
-      </Suspense>
-
-      <Suspense fallback={<CardSkeleton title={"Total companies"} />}>
-        <TotalCompanies />
-      </Suspense>
-    </div>
-  );
-};
-
-const TotalUsers = async () => {
-  const { count, countLastMonth } = await getUserCountGrowth();
-  const monthGrowth = calculateGrowth(count, countLastMonth);
-
-  return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">
-          Total active users
-        </CardTitle>
-        <Timer className={"h-4 w-4 text-muted-foreground"} />
-      </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold">{count}</div>
-        <p className="text-xs text-muted-foreground">
-          {monthGrowth}% from last month
-        </p>
-      </CardContent>
-    </Card>
-  );
-};
-
-const TotalJobs = async () => {
-  const { count, countLastMonth } = await getJobCountGrowth();
-  const monthGrowth = calculateGrowth(count, countLastMonth);
-
-  return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">Total jobs</CardTitle>
-        <Timer className={"h-4 w-4 text-muted-foreground"} />
-      </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold">{count}</div>
-        <p className="text-xs text-muted-foreground">
-          {monthGrowth}% from last month
-        </p>
-      </CardContent>
-    </Card>
-  );
-};
-
-const TotalCompanies = async () => {
-  const { count, countLastMonth } = await getCompanyCountGrowth();
-  const monthGrowth = calculateGrowth(count, countLastMonth);
-
-  return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">Total companies</CardTitle>
-        <Timer className={"h-4 w-4 text-muted-foreground"} />
-      </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold">{count}</div>
-        <p className="text-xs text-muted-foreground">
-          {monthGrowth}% from last month
-        </p>
-      </CardContent>
-    </Card>
-  );
-};
-
-const calculateGrowth = (current: number, lastMonth: number) => {
-  const growth = Math.round(((current - lastMonth) / lastMonth) * 100);
-
-  // If it's infinity, we show 100%
-  if (growth === Infinity) {
-    return 100;
-  }
-
-  return growth;
-};
-
-const CardSkeleton = ({ title }: { title: string }) => {
-  return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">{title}</CardTitle>
-        <Timer className={"h-4 w-4 text-muted-foreground"} />
-      </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold">
-          <Skeleton className="h-8 w-16" />
-        </div>
-        <p className="text-xs text-muted-foreground">+19% from last month</p>
-      </CardContent>
-    </Card>
-  );
+  return <CompanyTable data={companies} />;
 };
