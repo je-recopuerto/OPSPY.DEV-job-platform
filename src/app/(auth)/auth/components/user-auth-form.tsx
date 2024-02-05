@@ -2,69 +2,99 @@
 
 import * as React from "react";
 
-import Spinner from "@/components/cui/Spinner";
+import { signInAuth } from "@/app/(auth)/auth/_actions";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { Github } from "lucide-react";
+import { LinkedInLogoIcon } from "@radix-ui/react-icons";
+import {
+  FacebookIcon,
+  GithubIcon,
+  Key,
+  LoaderIcon,
+  TwitterIcon,
+} from "lucide-react";
+import { getProviders } from "next-auth/react";
+import { useEffect } from "react";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [providers, setProviders] =
+    React.useState<Awaited<ReturnType<typeof getProviders>>>(null);
 
-  async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault();
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-  }
+  useEffect(() => {
+    getProviders().then((r) => setProviders(r));
+  }, []);
 
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
-      <form onSubmit={onSubmit}>
-        <div className="grid gap-2">
-          <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="email">
-              Email
-            </Label>
-            <Input
-              id="email"
-              placeholder="name@example.com"
-              type="email"
-              autoCapitalize="none"
-              autoComplete="email"
-              autoCorrect="off"
-              disabled={isLoading}
-            />
-          </div>
-          <Button disabled={isLoading}>
-            {isLoading && <Spinner className="mr-2 h-4 w-4 animate-spin" />}
-            Sign In with Email
-          </Button>
-        </div>
-      </form>
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
-          </span>
-        </div>
-      </div>
-      <Button variant="outline" type="button" disabled={isLoading}>
-        {isLoading ? (
-          <Spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <Github className="mr-2 h-4 w-4" />
-        )}{" "}
-        GitHub
-      </Button>
+    <div className={cn("grid gap-2", className)} {...props}>
+      {providers ? (
+        <AuthButtons providers={providers} />
+      ) : (
+        <AuthButtonsSkeleton />
+      )}
     </div>
   );
 }
+
+const AuthButtonsSkeleton = () => {
+  return (
+    <Button variant="outline" type="button" disabled={true}>
+      <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
+      Loading
+    </Button>
+  );
+};
+
+const AuthButtons = ({
+  providers,
+}: {
+  providers: Awaited<ReturnType<typeof getProviders>>;
+}) => {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  return (
+    <>
+      {providers &&
+        Object.values(providers).map((provider) => (
+          <Button
+            variant="outline"
+            type="button"
+            disabled={isLoading}
+            onClick={async () => signInAuth(provider.id)}
+            key={(provider as any).name}
+          >
+            {isLoading ? (
+              <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <ProviderIcon provider={provider.name} className="mr-2 h-4 w-4" />
+            )}{" "}
+            {provider.name}
+          </Button>
+        ))}
+    </>
+  );
+};
+
+const ProviderIcon = ({
+  provider,
+  className,
+}: {
+  provider: string;
+  className?: string;
+}) => {
+  switch (provider.toLowerCase()) {
+    case "auth0":
+      return <Key className={cn("", className)} />;
+    case "linkedin":
+      return <LinkedInLogoIcon className={cn("", className)} />;
+    case "github":
+      return <GithubIcon className={cn("", className)} />;
+    case "facebook":
+      return <FacebookIcon className={cn("", className)} />;
+    case "twitter":
+      return <TwitterIcon className={cn("", className)} />;
+    default:
+      return null; // or a default icon
+  }
+};

@@ -6,6 +6,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   theme: {
     logo: "https://next-auth.js.org/img/logo/logo-sm.png",
   },
+  pages: {
+    signIn: "/auth",
+  },
   providers: [
     Auth0Provider({
       clientId: process.env.AUTH0_ID,
