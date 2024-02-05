@@ -78,16 +78,22 @@ export default async function EmployerDashboardPage({
 
 const AddJobButton = ({ disabled }: { disabled: boolean }) => {
   return (
-    <Link
-      href={newJobUrl}
-      className={cn(
-        buttonVariants(),
-        disabled ? "pointer-events-none opacity-50" : "",
+    <div className={"flex flex-col gap-1"}>
+      <Link
+        href={newJobUrl}
+        className={cn(
+          buttonVariants(),
+          "ml-auto align-end",
+          disabled ? "pointer-events-none opacity-50" : "",
+        )}
+      >
+        <PlusIcon className={"w-4 h-4 mr-2"} />
+        Add Job
+      </Link>
+      {disabled && (
+        <p className={"text-xs text-muted-foreground"}>Requires verification</p>
       )}
-    >
-      <PlusIcon className={"w-4 h-4 mr-2"} />
-      Add Job
-    </Link>
+    </div>
   );
 };
 
