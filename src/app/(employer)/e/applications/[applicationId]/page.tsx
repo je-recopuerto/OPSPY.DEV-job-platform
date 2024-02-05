@@ -3,7 +3,7 @@ import { auth } from "@/auth";
 import { SignIn } from "@/components/auth";
 import Accept from "@/components/companies/accept-button";
 import Reject from "@/components/companies/reject-button";
-import BackButton from "@/components/cui/BackButton";
+import Back from "@/components/cui/BackButton";
 import ViewCvButton from "@/components/request-cv-button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
 import { ApplicationWithJob } from "@/lib/data/application.types";
 import { jobUrl } from "@/lib/pages";
 import { ApplicationStatus, WorkExperience } from "@prisma/client";
@@ -47,10 +48,10 @@ export default async function ApplicationPage({
 
   return (
     <div className="container space-y-4">
-      <BackButton />
+      <Back />
 
-      <JobTitle application={application} />
-      <JobBody application={application} />
+      <Title application={application} />
+      <Body application={application} />
 
       <Notes />
     </div>
@@ -72,7 +73,7 @@ const Notes = () => {
   );
 };
 
-const JobTitle = ({ application }: { application: ApplicationWithJob }) => {
+const Title = ({ application }: { application: ApplicationWithJob }) => {
   return (
     <div className="flex items-center justify-between space-y-2 pt-4 pb-2">
       <h2 className="text-3xl font-bold tracking-tight">
@@ -93,7 +94,7 @@ const JobTitle = ({ application }: { application: ApplicationWithJob }) => {
   );
 };
 
-const JobBody = ({ application }: { application: ApplicationWithJob }) => {
+const Body = ({ application }: { application: ApplicationWithJob }) => {
   return (
     <Card>
       <CardHeader>
