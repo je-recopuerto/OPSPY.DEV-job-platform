@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteCv, requestCvUrl } from "@/app/settings/_actions";
+import { deleteCv, requestCvUrl } from "@/app/(app)/settings/_actions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

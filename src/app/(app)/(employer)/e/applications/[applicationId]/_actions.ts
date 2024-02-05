@@ -1,6 +1,5 @@
 "use server";
 
-import { JobApplication } from ".prisma/client";
 import { type AuthorizeReturnType } from "@/app/_actions";
 import { auth } from "@/auth";
 import { JobApplicationWithCompany } from "@/lib/data/job.types";
@@ -11,7 +10,7 @@ import {
   acceptCandidateSchema,
   rejectCandidateSchema,
 } from "@/lib/validations/reject";
-import { User } from "@prisma/client";
+import { JobApplication, User } from "@prisma/client";
 import { z } from "zod";
 
 async function canModifyApplication(

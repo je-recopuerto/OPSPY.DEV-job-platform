@@ -1,6 +1,6 @@
 "use client";
 
-import { registerCompany } from "@/app/(employer)/e/register/_actions";
+import { registerCompany } from "@/app/(app)/(employer)/e/register/_actions";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-export default function BackButton() {
+export default function Back() {
   const router = useRouter();
 
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { uploadCv } from "@/app/settings/_actions";
+import { uploadCv } from "@/app/(app)/settings/_actions";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { Plus } from "lucide-react";
