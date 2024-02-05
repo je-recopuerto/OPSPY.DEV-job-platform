@@ -3,6 +3,7 @@
 import { canCreateNewCompany } from "@/app/_actions";
 import { auth } from "@/auth";
 import prisma from "@/lib/db";
+import { notifyCompanyRegistration } from "@/lib/knock";
 import { registerCompanySchema } from "@/lib/validations/company";
 import { Company } from "@prisma/client";
 import { z } from "zod";
@@ -14,7 +15,6 @@ type RegisterCompanyResult =
 export async function registerCompany(
   values: z.infer<typeof registerCompanySchema>,
 ): Promise<RegisterCompanyResult> {
-  console.log("values", values);
   const response = registerCompanySchema.safeParse(values);
   if (!response.success) {
     return {
@@ -48,7 +48,6 @@ export async function registerCompany(
     data: {
       name: parsedValues.name,
       phone: parsedValues.phone,
-      email: parsedValues.email,
       website: parsedValues.website,
       employeeCount: parsedValues.employeeCount,
       description: parsedValues.description,
@@ -64,6 +63,9 @@ export async function registerCompany(
   });
 
   if (!company) throw new Error("Company not created");
+
+  // Notify company owner
+  await notifyCompanyRegistration(company);
 
   return {
     success: true,
