@@ -1,6 +1,6 @@
 "use client";
 
-import { uploadProfilePicture } from "@/app/settings/_actions";
+import { uploadProfilePicture } from "@/app/(app)/settings/_actions";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Tooltip,

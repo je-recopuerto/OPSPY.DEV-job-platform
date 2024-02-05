@@ -4,6 +4,7 @@ const nextConfig = {
   experimental: {
     // Fixes: https://github.com/vercel/next.js/issues/59432
     serverComponentsExternalPackages: ["@azure/storage-blob"],
+    typedRoutes: true,
   },
   images: {
     remotePatterns: [

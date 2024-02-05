@@ -1,4 +1,4 @@
-import RegisterCompany from "@/app/(employer)/e/register/_components/register-company";
+import RegisterCompany from "@/app/(app)/(employer)/e/register/_components/register-company";
 import { canCreateNewCompany } from "@/app/_actions";
 import { auth } from "@/auth";
 import { employerHomepageUrl } from "@/lib/pages";
