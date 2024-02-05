@@ -1,3 +1,4 @@
+import "@/app/globals.css";
 import { auth } from "@/auth";
 import { Providers } from "@/components/providers";
 import { siteConfig } from "@/config/site";
@@ -5,7 +6,6 @@ import knock from "@/lib/knock";
 import { cn } from "@/lib/utils";
 import { Viewport } from "next";
 import { Inter as FontSans } from "next/font/google";
-import "./globals.css";
 
 export const viewport: Viewport = {
   themeColor: [

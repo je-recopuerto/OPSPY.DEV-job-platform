@@ -1,4 +1,3 @@
-import "@/app/globals.css";
 import Header from "@/components/header";
 import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/config/site";
