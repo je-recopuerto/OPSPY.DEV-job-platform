@@ -65,7 +65,6 @@ model Company {
   name          String
   description   String?
   phone         String?
-  email         String?
   logoUrl       String?
   website       String?
   createdAt     DateTime       @default(now())

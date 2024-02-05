@@ -168,22 +168,7 @@ export default function RegisterCompany() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Company E-mail</FormLabel>
-                <FormControl>
-                  <Input type={"email"} {...field} />
-                </FormControl>
-                <FormDescription>
-                  Please do not use personal email
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
           <AddressForm form={form} />
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Loading..." : "Register"}
