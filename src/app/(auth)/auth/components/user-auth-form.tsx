@@ -53,6 +53,12 @@ const AuthButtons = ({
 }) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
+  const onClick = async (provider: string) => {
+    setIsLoading(true);
+    await signInAuth(provider);
+    setIsLoading(false);
+  };
+
   return (
     <>
       {providers &&
@@ -61,7 +67,7 @@ const AuthButtons = ({
             variant="outline"
             type="button"
             disabled={isLoading}
-            onClick={async () => signInAuth(provider.id)}
+            onClick={() => onClick(provider.id)}
             key={(provider as any).name}
           >
             {isLoading ? (
