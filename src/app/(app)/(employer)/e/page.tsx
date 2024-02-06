@@ -12,7 +12,6 @@ export const metadata = {
 
 export default async function EmployerPage() {
   const session = await auth();
-  // TODO: We need to fix the user check here to make sure the buttons are always correct
   const user = await getUserWithCompanyById(session?.user?.id);
   const isCompany = user?.company !== null;
 
@@ -47,21 +46,14 @@ export default async function EmployerPage() {
                 Simplify your hiring, amplify your results.
               </p>
               <div className="space-x-4">
-                {!session && <SignIn />}
-                {isCompany ? (
-                  <Link
-                    href={employerDashboardUrl}
-                    className={buttonVariants({ variant: "default" })}
-                  >
-                    Go to Dashboard
-                  </Link>
+                {session?.user ? (
+                  isCompany ? (
+                    <Dashboard />
+                  ) : (
+                    <Register />
+                  )
                 ) : (
-                  <Link
-                    href={registerCompanyUrl}
-                    className={buttonVariants({ variant: "default" })}
-                  >
-                    Register Company
-                  </Link>
+                  <SignIn />
                 )}
               </div>
             </div>
@@ -71,3 +63,25 @@ export default async function EmployerPage() {
     </>
   );
 }
+
+const Dashboard = () => {
+  return (
+    <Link
+      href={employerDashboardUrl}
+      className={buttonVariants({ variant: "default" })}
+    >
+      Go to Dashboard
+    </Link>
+  );
+};
+
+const Register = () => {
+  return (
+    <Link
+      href={registerCompanyUrl}
+      className={buttonVariants({ variant: "default" })}
+    >
+      Register Company
+    </Link>
+  );
+};
