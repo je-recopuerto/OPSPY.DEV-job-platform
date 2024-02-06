@@ -3,7 +3,7 @@ import { NotificationsMenu } from "@/components/NotificationsMenu";
 import Logo from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import UserButton from "@/components/user-button";
-import { companiesUrl, homeUrl, jobsUrl, pricingUrl } from "@/lib/pages";
+import { companiesUrl, jobsUrl, pricingUrl } from "@/lib/pages";
 import Link from "next/link";
 import React from "react";
 
@@ -36,13 +36,6 @@ const Nav = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
   return (
     <nav className={`flex items-center space-x-2 lg:space-x-6`}>
       <Logo />
-
-      <Link
-        href={homeUrl}
-        className={`text-sm font-medium transition-colors hover:text-primary`}
-      >
-        Home
-      </Link>
 
       <Link
         href={jobsUrl}
