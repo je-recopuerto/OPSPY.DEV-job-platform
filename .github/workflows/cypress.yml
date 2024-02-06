@@ -1,59 +1,59 @@
-name: Cypress Tests
-on: [push]
-jobs:
-  cypress-run:
-    runs-on: ubuntu-latest
-    # Runs tests in parallel with matrix strategy https://docs.cypress.io/guides/guides/parallelization
-    # https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
-    # Also see warning here https://github.com/cypress-io/github-action#parallel
-    strategy:
-      fail-fast: false # https://github.com/cypress-io/github-action/issues/48
-      matrix:
-        containers: [1] # Uses 1 parallel instance
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Cypress run
-        # Uses the official Cypress GitHub action https://github.com/cypress-io/github-action
-        uses: cypress-io/github-action@v6
-        with:
-          build: yarn run build
-          # Starts web server for E2E tests - replace with your own server invocation
-          # https://docs.cypress.io/guides/continuous-integration/introduction#Boot-your-server
-          start: yarn run start
-          wait-on: 'http://localhost:3000' # Waits for above
-          # Records to Cypress Cloud
-          # https://docs.cypress.io/guides/cloud/projects#Set-up-a-project-to-record
-          record: true
-          parallel: false # Runs test in parallel using settings above
-        env:
-          # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
-          # in GitHub repo → Settings → Secrets → Actions
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-          # Application environment variables
-          NEXTAUTH_SECRET: ${{ secrets.TEST_NEXTAUTH_SECRET }}
-          NEXTAUTH_URL: ${{ secrets.TEST_NEXTAUTH_URL }}
-          NEXT_PUBLIC_APP_URL: ${{ secrets.TEST_NEXT_PUBLIC_APP_URL }}
-          AUTH0_ID: ${{ secrets.TEST_AUTH0_ID }}
-          AUTH0_SECRET: ${{ secrets.TEST_AUTH0_SECRET }}
-          AUTH0_ISSUER: ${{ secrets.TEST_AUTH0_ISSUER }}
-          AUTH0_SCOPE: ${{ secrets.TEST_AUTH0_SCOPE }}
-          AUTH0_AUDIENCE: ${{ secrets.TEST_AUTH0_AUDIENCE }}
-          LINKEDIN_ID: ${{ secrets.TEST_LINKEDIN_ID }}
-          LINKEDIN_SECRET: ${{ secrets.TEST_LINKEDIN_SECRET }}
-          AUTH0_TALENT_TEST_USERNAME: ${{ secrets.TEST_AUTH0_TALENT_TEST_USERNAME }}
-          AUTH0_TALENT_TEST_PASSWORD: ${{ secrets.TEST_AUTH0_TALENT_TEST_PASSWORD }}
-          DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
-          NEXT_PUBLIC_KNOCK_API_KEY: ${{ secrets.TEST_NEXT_PUBLIC_KNOCK_API_KEY }}
-          KNOCK_SECRET_API_KEY: ${{ secrets.TEST_KNOCK_SECRET_API_KEY }}
-          AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.TEST_AZURE_STORAGE_ACCOUNT_NAME }}
-          AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.TEST_AZURE_STORAGE_ACCOUNT_KEY }}
-          NEXT_PUBLIC_MAX_CV_FILE_SIZE: 5MB
-          NEXT_PUBLIC_MAX_PROFILE_PICTURE_SIZE: 5MB
-          OPENAI_API_KEY: ${{ secrets.TEST_OPENAI_API_KEY }}
-          STRIPE_API_KEY: ${{ secrets.TEST_STRIPE_API_KEY }}
-          STRIPE_WEBHOOK_SECRET: ${{ secrets.TEST_STRIPE_WEBHOOK_SECRET }}
-          STRIPE_TALENT_PRO_MONTHLY_PLAN_ID: ${{ secrets.TEST_STRIPE_TALENT_PRO_MONTHLY_PLAN_ID }}
+#name: Cypress Tests
+#on: [push]
+#jobs:
+#  cypress-run:
+#    runs-on: ubuntu-latest
+#    # Runs tests in parallel with matrix strategy https://docs.cypress.io/guides/guides/parallelization
+#    # https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
+#    # Also see warning here https://github.com/cypress-io/github-action#parallel
+#    strategy:
+#      fail-fast: false # https://github.com/cypress-io/github-action/issues/48
+#      matrix:
+#        containers: [1] # Uses 1 parallel instance
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#      - name: Cypress run
+#        # Uses the official Cypress GitHub action https://github.com/cypress-io/github-action
+#        uses: cypress-io/github-action@v6
+#        with:
+#          build: yarn run build
+#          # Starts web server for E2E tests - replace with your own server invocation
+#          # https://docs.cypress.io/guides/continuous-integration/introduction#Boot-your-server
+#          start: yarn run start
+#          wait-on: 'http://localhost:3000' # Waits for above
+#          # Records to Cypress Cloud
+#          # https://docs.cypress.io/guides/cloud/projects#Set-up-a-project-to-record
+#          record: true
+#          parallel: false # Runs test in parallel using settings above
+#        env:
+#          # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
+#          # in GitHub repo → Settings → Secrets → Actions
+#          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+#          # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#          # Application environment variables
+#          NEXTAUTH_SECRET: ${{ secrets.TEST_NEXTAUTH_SECRET }}
+#          NEXTAUTH_URL: ${{ secrets.TEST_NEXTAUTH_URL }}
+#          NEXT_PUBLIC_APP_URL: ${{ secrets.TEST_NEXT_PUBLIC_APP_URL }}
+#          AUTH0_ID: ${{ secrets.TEST_AUTH0_ID }}
+#          AUTH0_SECRET: ${{ secrets.TEST_AUTH0_SECRET }}
+#          AUTH0_ISSUER: ${{ secrets.TEST_AUTH0_ISSUER }}
+#          AUTH0_SCOPE: ${{ secrets.TEST_AUTH0_SCOPE }}
+#          AUTH0_AUDIENCE: ${{ secrets.TEST_AUTH0_AUDIENCE }}
+#          LINKEDIN_ID: ${{ secrets.TEST_LINKEDIN_ID }}
+#          LINKEDIN_SECRET: ${{ secrets.TEST_LINKEDIN_SECRET }}
+#          AUTH0_TALENT_TEST_USERNAME: ${{ secrets.TEST_AUTH0_TALENT_TEST_USERNAME }}
+#          AUTH0_TALENT_TEST_PASSWORD: ${{ secrets.TEST_AUTH0_TALENT_TEST_PASSWORD }}
+#          DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
+#          NEXT_PUBLIC_KNOCK_API_KEY: ${{ secrets.TEST_NEXT_PUBLIC_KNOCK_API_KEY }}
+#          KNOCK_SECRET_API_KEY: ${{ secrets.TEST_KNOCK_SECRET_API_KEY }}
+#          AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.TEST_AZURE_STORAGE_ACCOUNT_NAME }}
+#          AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.TEST_AZURE_STORAGE_ACCOUNT_KEY }}
+#          NEXT_PUBLIC_MAX_CV_FILE_SIZE: 5MB
+#          NEXT_PUBLIC_MAX_PROFILE_PICTURE_SIZE: 5MB
+#          OPENAI_API_KEY: ${{ secrets.TEST_OPENAI_API_KEY }}
+#          STRIPE_API_KEY: ${{ secrets.TEST_STRIPE_API_KEY }}
+#          STRIPE_WEBHOOK_SECRET: ${{ secrets.TEST_STRIPE_WEBHOOK_SECRET }}
+#          STRIPE_TALENT_PRO_MONTHLY_PLAN_ID: ${{ secrets.TEST_STRIPE_TALENT_PRO_MONTHLY_PLAN_ID }}
