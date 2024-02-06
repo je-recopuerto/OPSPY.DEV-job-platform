@@ -66,6 +66,8 @@ function loginViaAuth0Ui(provider: Providers) {
 
   const { username, password } = providerCredentials[provider];
 
+  cy.log("Password length:", password.length);
+
   // Login on Auth0.
   cy.get("input#username").type(username);
   cy.get("input#password").type(password, { log: false });
@@ -82,6 +84,7 @@ Cypress.Commands.add("login", (provider: Providers) => {
     // @ts-ignore
     autoEnd: false,
   });
+
   log.snapshot("before");
 
   // cy.disableSameSiteCookieRestrictions();
