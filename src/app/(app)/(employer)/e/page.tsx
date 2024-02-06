@@ -12,6 +12,7 @@ export const metadata = {
 
 export default async function EmployerPage() {
   const session = await auth();
+  // TODO: We need to fix the user check here to make sure the buttons are always correct
   const user = await getUserWithCompanyById(session?.user?.id);
   const isCompany = user?.company !== null;
 
@@ -46,7 +47,7 @@ export default async function EmployerPage() {
                 Simplify your hiring, amplify your results.
               </p>
               <div className="space-x-4">
-                {!user && <SignIn />}
+                {!session && <SignIn />}
                 {isCompany ? (
                   <Link
                     href={employerDashboardUrl}
