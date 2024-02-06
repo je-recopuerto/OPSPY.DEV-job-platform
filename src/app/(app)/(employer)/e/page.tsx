@@ -13,7 +13,7 @@ export const metadata = {
 export default async function EmployerPage() {
   const session = await auth();
   const user = await getUserWithCompanyById(session?.user?.id);
-  const isCompany = user?.company !== null;
+  const isCompany = user && user.company !== null;
 
   return (
     <>
