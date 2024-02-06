@@ -6,6 +6,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   theme: {
     logo: "https://next-auth.js.org/img/logo/logo-sm.png",
   },
+  pages: {
+    signIn: "/auth",
+  },
   providers: [
     Auth0Provider({
       clientId: process.env.AUTH0_ID,
@@ -17,6 +20,36 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         },
       },
     }),
+    // LinkedinProvider({
+    //   clientId: process.env.LINKEDIN_ID,
+    //   clientSecret: process.env.LINKEDIN_SECRET,
+    //   userinfo: {
+    //     url: "https://api.linkedin.com/v2/userinfo",
+    //   },
+    //   authorization: {
+    //     url: "https://www.linkedin.com/oauth/v2/authorization",
+    //     params: {
+    //       scope: "profile email openid",
+    //       prompt: "consent",
+    //       access_type: "offline",
+    //       response_type: "code",
+    //     },
+    //   },
+    //   token: {
+    //     url: "https://www.linkedin.com/oauth/v2/accessToken",
+    //   },
+    //   issuer: "https://www.linkedin.com",
+    //   jwks_endpoint: "https://www.linkedin.com/oauth/openid/jwks",
+    //   async profile(profile) {
+    //     return {
+    //       id: profile.sub,
+    //       name: profile.name,
+    //       firstname: profile.given_name,
+    //       lastname: profile.family_name,
+    //       email: profile.email,
+    //     };
+    //   },
+    // }),
   ],
   callbacks: {
     authorized({ request, auth }) {

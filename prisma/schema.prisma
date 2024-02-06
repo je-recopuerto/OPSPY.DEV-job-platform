@@ -33,6 +33,7 @@ model User {
   stripeSubscriptionId   String?          @unique @map(name: "stripe_subscription_id")
   stripePriceId          String?          @map(name: "stripe_price_id")
   stripeCurrentPeriodEnd DateTime?        @map(name: "stripe_current_period_end")
+  isSuperUser            Boolean          @default(false)
 }
 
 model WorkExperience {
@@ -60,16 +61,36 @@ model UploadedCv {
 }
 
 model Company {
-  id          String    @id @default(cuid())
-  name        String
-  description String?
-  logoUrl     String?
-  website     String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  openings    JobPost[]
-  owner       User?     @relation(fields: [ownerId], references: [id])
-  ownerId     String?   @unique
+  id            String         @id @default(cuid())
+  name          String
+  description   String?
+  phone         String?
+  logoUrl       String?
+  website       String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  openings      JobPost[]
+  owner         User?          @relation(fields: [ownerId], references: [id])
+  ownerId       String?        @unique
+  isVerified    Boolean        @default(false)
+  employeeCount EmployeeCount?
+  addressLine1  String?
+  addressLine2  String?
+  city          String?
+  state         String?
+  country       String?
+  zipCode       String?
+}
+
+enum EmployeeCount {
+  ONE_TO_TEN
+  ELEVEN_TO_FIFTY
+  FIFTY_ONE_TO_TWO_HUNDRED
+  TWO_HUNDRED_AND_ONE_TO_FIVE_HUNDRED
+  FIVE_HUNDRED_AND_ONE_TO_ONE_THOUSAND
+  ONE_THOUSAND_AND_ONE_TO_FIVE_THOUSAND
+  FIVE_THOUSAND_AND_ONE_TO_TEN_THOUSAND
+  TEN_THOUSAND_AND_ONE_PLUS
 }
 
 model JobPost {

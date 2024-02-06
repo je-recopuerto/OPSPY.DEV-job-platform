@@ -12,6 +12,27 @@ import JobPostWhereInput = Prisma.JobPostWhereInput;
 
 export const JOB_PAGE_SIZE = 8;
 
+export async function getJobCountGrowth(): Promise<{
+  count: number;
+  countLastMonth: number;
+}> {
+  const [count, countLastMonth] = await Promise.all([
+    prisma.jobPost.count(),
+    prisma.jobPost.count({
+      where: {
+        createdAt: {
+          lt: new Date(Date.now() - 86_400_000 * 30),
+        },
+      },
+    }),
+  ]);
+
+  return {
+    count,
+    countLastMonth,
+  };
+}
+
 export function getRandomJobPosts(
   count: number,
 ): Promise<JobPostWithCompany[]> {

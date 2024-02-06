@@ -1,6 +1,6 @@
 "use client";
 
-import { requestCvUrl } from "@/app/settings/_actions";
+import { requestCvUrl } from "@/app/(app)/settings/_actions";
 import { Button } from "@/components/ui/button";
 import { FileSearch } from "lucide-react";
 

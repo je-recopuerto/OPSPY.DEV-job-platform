@@ -8,6 +8,27 @@ import prisma from "@/lib/db";
 import { SubscriptionPlan } from "@/lib/stripe";
 import { UploadedCv, User } from "@prisma/client";
 
+export async function getUserCountGrowth(): Promise<{
+  count: number;
+  countLastMonth: number;
+}> {
+  const [count, countLastMonth] = await Promise.all([
+    prisma.user.count(),
+    prisma.user.count({
+      where: {
+        createdAt: {
+          lt: new Date(Date.now() - 86_400_000 * 30),
+        },
+      },
+    }),
+  ]);
+
+  return {
+    count,
+    countLastMonth,
+  };
+}
+
 export function getUserById(id: string): Promise<User | null> {
   return prisma.user.findFirst({
     where: {

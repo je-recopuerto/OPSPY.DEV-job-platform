@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { updateProfile } from "@/app/settings/_actions";
+import { updateProfile } from "@/app/(app)/settings/_actions";
 import BasicProfile from "@/components/settings/basic-profile";
 import LinksForm from "@/components/settings/links-form";
 import WorkExperienceForm from "@/components/settings/work-experience-form";

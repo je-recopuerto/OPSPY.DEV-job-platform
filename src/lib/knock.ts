@@ -1,6 +1,6 @@
 import { JobPostWithCompany } from "@/lib/data/job.types";
 import { Knock } from "@knocklabs/node";
-import { User } from "@prisma/client";
+import { Company, User } from "@prisma/client";
 
 const knockClientSingleton = () => {
   return new Knock(process.env.KNOCK_SECRET_API_KEY!);
@@ -20,6 +20,19 @@ if (process.env.NODE_ENV !== "production") globalForKnock.knock = knock;
 
 export const applicationCreatedKnock = "application-created";
 export const applicationUpdatedKnock = "application-updated";
+
+export async function notifyCompanyRegistration(company: Company) {
+  if (!company.ownerId) return;
+
+  return await knock.notify("company-registration", {
+    actor: company.ownerId,
+    recipients: [company.ownerId],
+    data: {
+      // prettier-ignore
+      "companyName": company.name,
+    },
+  });
+}
 
 export async function notifyApplicationCreated(
   user: User,

@@ -22,7 +22,7 @@ export default async function NewJobPage() {
 
   return (
     <main className="flex flex-col max-w-3xl m-auto px-14 pb-[14rem]">
-      <CompanyProfile company={user.company} />
+      <CompanyProfile company={user.company} showStatus={true} />
 
       <Separator className={"my-8"} />
 

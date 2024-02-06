@@ -1,6 +1,9 @@
 "use client";
 
-import { getEnhancedBio, getMyGenerationsLeft } from "@/app/settings/_actions";
+import {
+  getEnhancedBio,
+  getMyGenerationsLeft,
+} from "@/app/(app)/settings/_actions";
 import CvCard from "@/components/settings/cv-card";
 import AddCvButton from "@/components/settings/cv-input";
 import EnhanceBio from "@/components/settings/enhance-bio";
@@ -48,7 +51,6 @@ export default function BasicProfile({ form, user }: ProfileFormProps) {
   useEffect(() => {
     const getGenerationsLeft = async () => {
       const generationsLeft = await getMyGenerationsLeft();
-      console.log("generationsLeft", generationsLeft);
       setGenerationsLeft(generationsLeft);
     };
 

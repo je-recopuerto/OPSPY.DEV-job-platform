@@ -4,6 +4,7 @@ const nextConfig = {
   experimental: {
     // Fixes: https://github.com/vercel/next.js/issues/59432
     serverComponentsExternalPackages: ["@azure/storage-blob"],
+    // typedRoutes: true,
   },
   images: {
     remotePatterns: [
@@ -18,6 +19,12 @@ const nextConfig = {
         hostname: "media.glassdoor.com",
         port: "",
         pathname: "/**/*",
+      },
+      {
+        protocol: "https",
+        hostname: "github.com",
+        port: "",
+        pathname: "/shadcn.png",
       },
     ],
   },

@@ -46,17 +46,14 @@ export default async function EmployerDashboardPage({
 
   return (
     <div className="container min-h-screen space-y-4">
-      <CompanyProfile company={company} />
+      <CompanyProfile company={company} showStatus={true} />
 
       <div className="flex items-center justify-between space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">
+        <h2 className="flex align-baseline text-3xl font-bold tracking-tight">
           Employer Dashboard
         </h2>
         <div className="flex items-center space-x-2">
-          <Link href={newJobUrl} className={cn(buttonVariants())}>
-            <PlusIcon className={"w-4 h-4 mr-2"} />
-            Add Job
-          </Link>
+          <AddJobButton disabled={!company.isVerified} />
         </div>
       </div>
       <Tabs defaultValue={tab || "jobs"} className="space-y-4">
@@ -78,6 +75,27 @@ export default async function EmployerDashboardPage({
     </div>
   );
 }
+
+const AddJobButton = ({ disabled }: { disabled: boolean }) => {
+  return (
+    <div className={"flex flex-col gap-1"}>
+      <Link
+        href={newJobUrl}
+        className={cn(
+          buttonVariants(),
+          "ml-auto align-end",
+          disabled ? "pointer-events-none opacity-50" : "",
+        )}
+      >
+        <PlusIcon className={"w-4 h-4 mr-2"} />
+        Add Job
+      </Link>
+      {disabled && (
+        <p className={"text-xs text-muted-foreground"}>Requires verification</p>
+      )}
+    </div>
+  );
+};
 
 async function JobTable({ companyId }: { companyId: Company["id"] }) {
   const company = await getCompanyWithOpeningsAndApplicationsById(companyId);

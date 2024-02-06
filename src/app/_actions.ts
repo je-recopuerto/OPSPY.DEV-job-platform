@@ -69,7 +69,31 @@ export async function canCreateNewJobPost(userId: User["id"]): Promise<
 > {
   const user = await getUserWithCompanyById(userId);
 
-  let isAuthorized = user !== null && user.company !== null;
+  let isAuthorized =
+    user !== null && user.company !== null && user.company.isVerified;
+
+  if (!isAuthorized || !user) {
+    return {
+      authorized: false,
+    };
+  }
+
+  return {
+    data: {
+      user,
+    },
+    authorized: true,
+  };
+}
+
+export async function canCreateNewCompany(userId: User["id"]): Promise<
+  AuthorizeReturnType<{
+    user: UserWithCompany;
+  }>
+> {
+  const user = await getUserWithCompanyById(userId);
+
+  let isAuthorized = user !== null && user.company === null;
 
   if (!isAuthorized || !user) {
     return {

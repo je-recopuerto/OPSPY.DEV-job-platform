@@ -1,6 +1,6 @@
 "use client";
 
-import { updateNotificationSettings } from "@/app/settings/_actions";
+import { updateNotificationSettings } from "@/app/(app)/settings/_actions";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";

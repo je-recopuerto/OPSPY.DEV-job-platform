@@ -1,6 +1,6 @@
 "use client";
 
-import { matchCandidate } from "@/app/(employer)/e/applications/[applicationId]/_actions";
+import { matchCandidate } from "@/app/(app)/(employer)/e/applications/[applicationId]/_actions";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
