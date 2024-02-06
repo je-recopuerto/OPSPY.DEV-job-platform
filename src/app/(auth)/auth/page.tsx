@@ -2,12 +2,14 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 import { UserAuthForm } from "@/app/(auth)/auth/components/user-auth-form";
+import { auth } from "@/auth";
 import Logo from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { buttonVariants } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { homeUrl } from "@/lib/pages";
 import { cn } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Authentication",
@@ -15,6 +17,9 @@ export const metadata: Metadata = {
 };
 
 export default async function AuthenticationPage() {
+  const session = await auth();
+  if (session?.user) return redirect(homeUrl);
+
   return (
     <>
       <div className="container relative min-h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
