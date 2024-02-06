@@ -1,9 +1,6 @@
 describe("Auth0", () => {
   beforeEach(function () {
-    cy.loginToAuth0(
-      Cypress.env("auth0_talent_test_username"),
-      Cypress.env("auth0_talent_test_password"),
-    );
+    cy.login("Auth0");
     cy.visit("/");
   });
 

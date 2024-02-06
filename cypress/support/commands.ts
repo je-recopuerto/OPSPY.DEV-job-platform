@@ -36,7 +36,16 @@
 //   }
 // }
 
-function loginViaAuth0Ui(username: string, password: string) {
+export type Providers = "Auth0";
+
+const providerCredentials = {
+  Auth0: {
+    username: Cypress.env("auth0_talent_test_username"),
+    password: Cypress.env("auth0_talent_test_password"),
+  },
+};
+
+function loginViaAuth0Ui(provider: Providers) {
   // Ensure we're logged out first
   // remove the two lines below if you need to stay logged in for your remaining tests
   cy.visit("/api/auth/signout");
@@ -51,6 +60,8 @@ function loginViaAuth0Ui(username: string, password: string) {
   // Assert we're on the Auth0 login page.
   cy.url().should("include", "auth0");
 
+  const { username, password } = providerCredentials[provider];
+
   // Login on Auth0.
   cy.get("input#username").type(username);
   cy.get("input#password").type(password, { log: false });
@@ -60,10 +71,10 @@ function loginViaAuth0Ui(username: string, password: string) {
   cy.url().should("equal", "http://localhost:3000/");
 }
 
-Cypress.Commands.add("loginToAuth0", (username: string, password: string) => {
+Cypress.Commands.add("login", (provider: Providers) => {
   const log = Cypress.log({
     displayName: "AUTH0 LOGIN",
-    message: [`🔐 Authenticating | ${username}`],
+    message: [`🔐 Authenticating | ${provider}`],
     // @ts-ignore
     autoEnd: false,
   });
@@ -71,7 +82,7 @@ Cypress.Commands.add("loginToAuth0", (username: string, password: string) => {
 
   // cy.disableSameSiteCookieRestrictions();
 
-  loginViaAuth0Ui(username, password);
+  loginViaAuth0Ui(provider);
 
   log.snapshot("after");
   log.end();
