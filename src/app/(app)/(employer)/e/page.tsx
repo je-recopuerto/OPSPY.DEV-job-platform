@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { SignIn } from "@/components/auth";
 import { buttonVariants } from "@/components/ui/button";
-import { getUserWithCompanyById } from "@/lib/data/user";
+import { getUserWithCompanyById, isCompanyAccount } from "@/lib/data/user";
 import { employerDashboardUrl, registerCompanyUrl } from "@/lib/pages";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,7 +13,7 @@ export const metadata = {
 export default async function EmployerPage() {
   const session = await auth();
   const user = await getUserWithCompanyById(session?.user?.id);
-  const isCompany = user && user.company !== null;
+  const isCompany = isCompanyAccount(user);
 
   return (
     <>
