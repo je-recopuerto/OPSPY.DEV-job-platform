@@ -1,10 +1,15 @@
 describe("Auth0", () => {
   beforeEach(function () {
     cy.loginToAuth0(
-      Cypress.env("auth0_test_username"),
-      Cypress.env("auth0_test_password"),
+      Cypress.env("auth0_talent_test_username"),
+      Cypress.env("auth0_talent_test_password"),
     );
     cy.visit("/");
+  });
+
+  it("shows the user profile", function () {
+    cy.contains("Profile").click();
+    cy.contains("User Profile").should("be.visible");
   });
 
   it("shows onboarding", function () {

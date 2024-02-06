@@ -1,6 +1,5 @@
 import { isAuthorizedForEmployerDash } from "@/app/_actions";
 import { auth } from "@/auth";
-import { SignIn } from "@/components/auth";
 import Spinner from "@/components/cui/Spinner";
 import {
   Tabs,
@@ -36,9 +35,7 @@ export default async function EmployerDashboardPage({
   searchParams: { tab },
 }: EmployerDashboardPageProps) {
   const session = await auth();
-  if (!session?.user || !session.user.id) return <SignIn />;
-
-  const response = await isAuthorizedForEmployerDash(session.user.id);
+  const response = await isAuthorizedForEmployerDash(session?.user?.id);
   if (!response.authorized) return redirect("/t/dash");
 
   const { company } = response.data.user;
