@@ -13,7 +13,7 @@ import CompanyProfile from "@/components/jobs/company-profile";
 import { buttonVariants } from "@/components/ui/button";
 import { getApplicationsForCompanyId } from "@/lib/data/application";
 import { getCompanyWithOpeningsAndApplicationsById } from "@/lib/data/job";
-import { newJobUrl } from "@/lib/pages";
+import { loginUrl, newJobUrl } from "@/lib/pages";
 import { cn } from "@/lib/utils";
 import { Company } from "@prisma/client";
 import { PlusIcon } from "lucide-react";
@@ -36,7 +36,7 @@ export default async function EmployerDashboardPage({
 }: EmployerDashboardPageProps) {
   const session = await auth();
   const response = await isAuthorizedForEmployerDash(session?.user?.id);
-  if (!response.authorized) return redirect("/t/dash");
+  if (!response.authorized) return redirect(loginUrl);
 
   const { company } = response.data.user;
   if (!company) return notFound();

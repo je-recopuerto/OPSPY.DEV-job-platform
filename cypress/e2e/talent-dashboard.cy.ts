@@ -1,7 +1,8 @@
 describe("talent dashboard", () => {
-  // Test Case 1: Talent User
+  context("no user", () => {});
+
   it("Talent user should stay on /t/dash", () => {
-    cy.login("Auth0");
+    cy.login("Auth0Talent");
 
     cy.visit("/t/dash");
     cy.url().should("include", "/t/dash");

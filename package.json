@@ -13,6 +13,7 @@
     "format": "prettier --check .",
     "format:fix": "prettier --write --list-different .",
     "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
     "postinstall": "prisma generate && prisma migrate deploy",
     "test": "jest",
     "test:watch": "jest --watch"

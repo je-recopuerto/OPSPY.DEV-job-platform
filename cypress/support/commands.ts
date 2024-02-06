@@ -36,12 +36,16 @@
 //   }
 // }
 
-export type Providers = "Auth0";
+export type Providers = "Auth0Talent" | "Auth0Company";
 
 const providerCredentials = {
-  Auth0: {
+  Auth0Talent: {
     username: Cypress.env("auth0_talent_test_username"),
     password: Cypress.env("auth0_talent_test_password"),
+  },
+  Auth0Company: {
+    username: Cypress.env("auth0_company_test_username"),
+    password: Cypress.env("auth0_company_test_password"),
   },
 };
 
@@ -110,4 +114,9 @@ Cypress.Commands.add("disableSameSiteCookieRestrictions", () => {
       }
     });
   });
+});
+
+Cypress.Commands.add("logout", () => {
+  cy.visit("/api/auth/signout");
+  cy.get("form").submit();
 });

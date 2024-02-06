@@ -11,6 +11,8 @@ declare global {
        */
       login(provider: Providers): Chainable<JQuery<HTMLElement>>;
 
+      logout(): Chainable<JQuery<HTMLElement>>;
+
       disableSameSiteCookieRestrictions(): void;
     }
   }
