@@ -1,3 +1,5 @@
+import { Providers } from "./commands";
+
 export {};
 
 declare global {
@@ -7,10 +9,9 @@ declare global {
        * Custom command to select DOM element by data-cy attribute.
        * @example cy.dataCy('greeting')
        */
-      loginToAuth0(
-        username: string,
-        password: string,
-      ): Chainable<JQuery<HTMLElement>>;
+      login(provider: Providers): Chainable<JQuery<HTMLElement>>;
+
+      logout(): Chainable<JQuery<HTMLElement>>;
 
       disableSameSiteCookieRestrictions(): void;
     }

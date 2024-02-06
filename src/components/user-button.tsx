@@ -34,6 +34,7 @@ export default async function UserButton() {
         <Button
           variant="ghost"
           className="relative w-8 h-8 rounded-full my-auto"
+          id={"test-user-menu"}
         >
           <Avatar className="w-8 h-8">
             <AvatarImage

@@ -1,6 +1,5 @@
 import { isAuthorizedForEmployerDash } from "@/app/_actions";
 import { auth } from "@/auth";
-import { SignIn } from "@/components/auth";
 import Spinner from "@/components/cui/Spinner";
 import {
   Tabs,
@@ -14,7 +13,7 @@ import CompanyProfile from "@/components/jobs/company-profile";
 import { buttonVariants } from "@/components/ui/button";
 import { getApplicationsForCompanyId } from "@/lib/data/application";
 import { getCompanyWithOpeningsAndApplicationsById } from "@/lib/data/job";
-import { newJobUrl } from "@/lib/pages";
+import { loginUrl, newJobUrl } from "@/lib/pages";
 import { cn } from "@/lib/utils";
 import { Company } from "@prisma/client";
 import { PlusIcon } from "lucide-react";
@@ -36,10 +35,8 @@ export default async function EmployerDashboardPage({
   searchParams: { tab },
 }: EmployerDashboardPageProps) {
   const session = await auth();
-  if (!session?.user || !session.user.id) return <SignIn />;
-
-  const response = await isAuthorizedForEmployerDash(session.user.id);
-  if (!response.authorized) return redirect("/t/dash");
+  const response = await isAuthorizedForEmployerDash(session?.user?.id);
+  if (!response.authorized) return redirect(loginUrl);
 
   const { company } = response.data.user;
   if (!company) return notFound();

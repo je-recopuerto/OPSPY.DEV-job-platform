@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/card";
 
 import { ApplicationWithJob } from "@/lib/data/application.types";
-import { jobUrl } from "@/lib/pages";
+import { jobUrl, loginUrl } from "@/lib/pages";
 import { ApplicationStatus, WorkExperience } from "@prisma/client";
 import { formatDistance } from "date-fns";
 import Link from "next/link";
@@ -43,7 +43,7 @@ export default async function ApplicationPage({
     params.applicationId,
   );
 
-  if (!isAuthorized) return redirect("/t/dash");
+  if (!isAuthorized) return redirect(loginUrl);
   if (!application) return notFound();
 
   return (

@@ -46,21 +46,14 @@ export default async function EmployerPage() {
                 Simplify your hiring, amplify your results.
               </p>
               <div className="space-x-4">
-                {!user && <SignIn />}
-                {isCompany ? (
-                  <Link
-                    href={employerDashboardUrl}
-                    className={buttonVariants({ variant: "default" })}
-                  >
-                    Go to Dashboard
-                  </Link>
+                {session?.user ? (
+                  isCompany ? (
+                    <Dashboard />
+                  ) : (
+                    <Register />
+                  )
                 ) : (
-                  <Link
-                    href={registerCompanyUrl}
-                    className={buttonVariants({ variant: "default" })}
-                  >
-                    Register Company
-                  </Link>
+                  <SignIn />
                 )}
               </div>
             </div>
@@ -70,3 +63,25 @@ export default async function EmployerPage() {
     </>
   );
 }
+
+const Dashboard = () => {
+  return (
+    <Link
+      href={employerDashboardUrl}
+      className={buttonVariants({ variant: "default" })}
+    >
+      Go to Dashboard
+    </Link>
+  );
+};
+
+const Register = () => {
+  return (
+    <Link
+      href={registerCompanyUrl}
+      className={buttonVariants({ variant: "default" })}
+    >
+      Register Company
+    </Link>
+  );
+};

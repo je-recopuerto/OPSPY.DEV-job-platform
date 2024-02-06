@@ -40,11 +40,17 @@ export async function isAuthorizedForApplications(
   };
 }
 
-export async function isAuthorizedForEmployerDash(userId: User["id"]): Promise<
+export async function isAuthorizedForEmployerDash(userId?: User["id"]): Promise<
   AuthorizeReturnType<{
     user: UserWithCompany;
   }>
 > {
+  if (!userId) {
+    return {
+      authorized: false,
+    };
+  }
+
   const user = await getUserWithCompanyById(userId);
   const isAuthorized = user !== null && user.company !== null;
 

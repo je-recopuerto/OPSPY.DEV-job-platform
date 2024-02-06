@@ -1,3 +1,4 @@
+import { loginUrl } from "@/lib/pages";
 import NextAuth from "next-auth";
 import Auth0Provider from "next-auth/providers/auth0";
 
@@ -7,7 +8,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     logo: "https://next-auth.js.org/img/logo/logo-sm.png",
   },
   pages: {
-    signIn: "/auth",
+    signIn: loginUrl,
+  },
+  // Required for Cypress to work with NextAuth
+  cookies: {
+    pkceCodeVerifier: {
+      name: "next-auth.pkce.code_verifier",
+      options: {
+        httpOnly: true,
+        sameSite: "none",
+        path: "/",
+        secure: true,
+      },
+    },
   },
   providers: [
     Auth0Provider({

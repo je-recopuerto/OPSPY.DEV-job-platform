@@ -36,40 +36,60 @@
 //   }
 // }
 
-function loginViaAuth0Ui(username: string, password: string) {
+export type Providers = "Auth0Talent" | "Auth0Company";
+
+const providerCredentials = {
+  Auth0Talent: {
+    username: Cypress.env("auth0_talent_test_username"),
+    password: Cypress.env("auth0_talent_test_password"),
+  },
+  Auth0Company: {
+    username: Cypress.env("auth0_company_test_username"),
+    password: Cypress.env("auth0_company_test_password"),
+  },
+};
+
+function loginViaAuth0Ui(provider: Providers) {
+  // Ensure we're logged out first
+  // remove the two lines below if you need to stay logged in for your remaining tests
+  cy.visit("/api/auth/signout");
+  cy.get("form").submit();
+
   // App landing page redirects to Auth0.
-  cy.visit("/");
+  cy.visit("/api/auth/signin");
 
   // Click the button to login via Auth0.
-  cy.contains("button", "Sign In").click();
+  cy.get("button", { timeout: 10000 }).contains("Auth0").click();
+
+  // Assert we're on the Auth0 login page.
+  cy.url().should("include", "auth0");
+
+  const { username, password } = providerCredentials[provider];
+
+  cy.log("Password length:", password.length);
 
   // Login on Auth0.
-  cy.origin(
-    Cypress.env("auth0_domain"),
-    { args: { username, password } },
-    ({ username, password }) => {
-      cy.get("input#username").type(username);
-      cy.get("input#password").type(password, { log: false });
-      cy.contains("button[value=default]", "Continue").click();
-    },
-  );
+  cy.get("input#username").type(username);
+  cy.get("input#password").type(password, { log: false });
+  cy.contains("button[value=default]", "Continue").click();
 
   // Ensure Auth0 has redirected us back to the RWA.
   cy.url().should("equal", "http://localhost:3000/");
 }
 
-Cypress.Commands.add("loginToAuth0", (username: string, password: string) => {
+Cypress.Commands.add("login", (provider: Providers) => {
   const log = Cypress.log({
     displayName: "AUTH0 LOGIN",
-    message: [`🔐 Authenticating | ${username}`],
+    message: [`🔐 Authenticating | ${provider}`],
     // @ts-ignore
     autoEnd: false,
   });
+
   log.snapshot("before");
 
-  cy.disableSameSiteCookieRestrictions();
+  // cy.disableSameSiteCookieRestrictions();
 
-  loginViaAuth0Ui(username, password);
+  loginViaAuth0Ui(provider);
 
   log.snapshot("after");
   log.end();
@@ -97,4 +117,9 @@ Cypress.Commands.add("disableSameSiteCookieRestrictions", () => {
       }
     });
   });
+});
+
+Cypress.Commands.add("logout", () => {
+  cy.visit("/api/auth/signout");
+  cy.get("form").submit();
 });

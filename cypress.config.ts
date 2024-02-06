@@ -3,6 +3,7 @@ import { defineConfig } from "cypress";
 require("dotenv").config();
 
 export default defineConfig({
+  projectId: "hh8ngv",
   env: {
     auth0_talent_test_username: process.env.AUTH0_TALENT_TEST_USERNAME,
     auth0_talent_test_password: process.env.AUTH0_TALENT_TEST_PASSWORD,
