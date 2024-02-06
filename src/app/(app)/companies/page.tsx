@@ -53,7 +53,10 @@ export default async function ({ searchParams }: Props) {
           <Companies searchParams={searchParams} />
         </Suspense>
       </div>
-      <JobPagination totalPages={totalPages} />
+      <JobPagination
+        currentPage={searchParams.page ?? 1}
+        totalPages={totalPages}
+      />
     </main>
   );
 }

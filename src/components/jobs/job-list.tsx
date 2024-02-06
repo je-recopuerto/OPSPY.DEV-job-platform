@@ -43,7 +43,7 @@ export default async function JobList({ filter }: JobPageParams) {
         </div>
       </ScrollArea>
 
-      <JobPagination totalPages={maxPages} />
+      <JobPagination currentPage={filter.page ?? 1} totalPages={maxPages} />
     </>
   );
 }
