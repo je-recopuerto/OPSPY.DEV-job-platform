@@ -6,7 +6,7 @@ import { DataTable } from "@/components/table/data-table";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { JobApplicationWithCompany } from "@/lib/data/job.types";
-import { jobUrl } from "@/lib/pages";
+import { jobUrl, jobsUrl } from "@/lib/pages";
 import { ColumnDef } from "@tanstack/react-table";
 import { format, formatDistanceToNow } from "date-fns";
 import Link from "next/link";
@@ -22,8 +22,25 @@ type JobApplicationTableProps = {
 };
 
 export default function AppliedJobsTable(props: JobApplicationTableProps) {
-  return <DataTable columns={columns} data={props.data} />;
+  return (
+    <DataTable columns={columns} data={props.data} noResults={<NoResults />} />
+  );
 }
+
+const NoResults = () => {
+  return (
+    <>
+      No applications yet,{" "}
+      <Link
+        href={jobsUrl}
+        className={"underline cursor-pointer font-semibold text-primary"}
+      >
+        start discovering!
+      </Link>{" "}
+      🚀
+    </>
+  );
+};
 
 export const columns: ColumnDef<JobApplicationWithCompany>[] = [
   // {

@@ -32,12 +32,14 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   toolbar?: (table: ReactTable<TData>) => ReactNode;
+  noResults?: ReactNode;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   toolbar,
+  noResults,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -68,6 +70,8 @@ export function DataTable<TData, TValue>({
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
+
+  const noResultsResolved = noResults ?? <>No results.</>;
 
   return (
     <div className="space-y-4">
@@ -116,7 +120,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center text-muted-foreground"
                 >
-                  No results.
+                  {noResultsResolved}
                 </TableCell>
               </TableRow>
             )}
