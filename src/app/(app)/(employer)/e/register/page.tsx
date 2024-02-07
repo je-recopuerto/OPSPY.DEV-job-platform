@@ -1,7 +1,12 @@
 import RegisterCompany from "@/app/(app)/(employer)/e/register/_components/register-company";
-import { canCreateNewCompany } from "@/app/_actions";
+import { canCreateNewCompany, CreateNewJobErrors } from "@/app/_actions";
 import { auth } from "@/auth";
-import { employerHomepageUrl } from "@/lib/pages";
+import {
+  employerDashboardUrl,
+  employerHomepageUrl,
+  homeUrl,
+  loginUrl,
+} from "@/lib/pages";
 import { redirect } from "next/navigation";
 
 export default async function CreateCompanyPage() {
@@ -10,7 +15,14 @@ export default async function CreateCompanyPage() {
     return redirect(employerHomepageUrl);
 
   const response = await canCreateNewCompany(session?.user?.id);
-  if (!response.authorized) return redirect(employerHomepageUrl);
+  if (!response.authorized) {
+    const {
+      data: { error },
+    } = response;
+
+    const redirectUrl = getRedirectUrl(error);
+    return redirect(redirectUrl);
+  }
 
   const { user } = response.data;
 
@@ -21,4 +33,18 @@ export default async function CreateCompanyPage() {
       <RegisterCompany />
     </main>
   );
+}
+
+function getRedirectUrl(error: CreateNewJobErrors) {
+  console.log("error", error);
+  switch (error) {
+    case "NO_USER":
+      return loginUrl;
+    case "HAS_COMPANY":
+      return employerDashboardUrl;
+    case "UNVERIFIED_COMPANY":
+      return employerDashboardUrl;
+    default:
+      return homeUrl;
+  }
 }
