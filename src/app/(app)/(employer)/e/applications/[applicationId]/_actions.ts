@@ -25,6 +25,7 @@ async function canModifyApplication(
   if (!userId) {
     return {
       authorized: false,
+      data: {},
     };
   }
 
@@ -59,6 +60,7 @@ async function canModifyApplication(
   if (!isAuthorized) {
     return {
       authorized: false,
+      data: {},
     };
   }
 
