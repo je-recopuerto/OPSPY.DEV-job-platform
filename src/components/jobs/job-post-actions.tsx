@@ -6,7 +6,7 @@ import { toast } from "@/components/ui/use-toast";
 import { JobPostWithCompany } from "@/lib/data/job.types";
 import { toggleSaveJob } from "@/services/actions/job";
 import { Pin, PinOff } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function JobActions({
   job,
@@ -19,6 +19,10 @@ export default function JobActions({
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSaved, setIsSaved] = useState(isSavedInitial);
+
+  useEffect(() => {
+    setIsSaved(isSavedInitial);
+  }, [isSavedInitial]);
 
   const toggle = async () => {
     setIsLoading(true);
