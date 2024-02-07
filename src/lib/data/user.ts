@@ -8,6 +8,10 @@ import prisma from "@/lib/db";
 import { SubscriptionPlan } from "@/lib/stripe";
 import { UploadedCv, User } from "@prisma/client";
 
+export function isCompanyAccount(user: UserWithCompany | null): boolean {
+  return user !== null && user !== undefined && user.company !== null;
+}
+
 export async function getUserCountGrowth(): Promise<{
   count: number;
   countLastMonth: number;

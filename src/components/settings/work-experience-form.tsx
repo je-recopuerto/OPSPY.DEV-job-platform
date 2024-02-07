@@ -31,7 +31,7 @@ export default function WorkExperienceForm({ form }: PageProps) {
           </p>
         </div>
 
-        <div className={"flex flex-row justify-end ml-auto"}>
+        <div className={"flex flex-row justify-end ml-auto my-auto"}>
           <Button
             type="button"
             onClick={() => {

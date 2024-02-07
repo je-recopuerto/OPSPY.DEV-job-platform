@@ -2,8 +2,13 @@ import { employerHomepageUrl, jobsUrl } from "@/lib/pages";
 import Link from "next/link";
 
 export default async function FindNextJobCta() {
+  const background = "linear-gradient(to top left,#232526,#414345)";
+
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+    <section
+      className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800"
+      style={{ background }}
+    >
       <div className="container px-4 md:px-6">
         <div className="grid items-center gap-6 lg:grid-cols-[1fr_500px] lg:gap-6 xl:grid-cols-[1fr_550px]">
           {/*<Image*/}

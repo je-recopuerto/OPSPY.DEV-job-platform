@@ -10,12 +10,13 @@ export declare type AuthorizeSuccess<Output> = {
   authorized: true;
   data: Output;
 };
-export declare type AuthorizeError = {
+export declare type AuthorizeError<Output> = {
   authorized: false;
+  data: Output;
 };
-export declare type AuthorizeReturnType<Success> =
+export declare type AuthorizeReturnType<Success, Error = {}> =
   | AuthorizeSuccess<Success>
-  | AuthorizeError;
+  | AuthorizeError<Error>;
 
 export async function isAuthorizedForApplications(
   userId: User["id"],
@@ -48,6 +49,7 @@ export async function isAuthorizedForEmployerDash(userId?: User["id"]): Promise<
   if (!userId) {
     return {
       authorized: false,
+      data: {},
     };
   }
 
@@ -57,6 +59,7 @@ export async function isAuthorizedForEmployerDash(userId?: User["id"]): Promise<
   if (!isAuthorized) {
     return {
       authorized: false,
+      data: {},
     };
   }
 
@@ -81,6 +84,7 @@ export async function canCreateNewJobPost(userId: User["id"]): Promise<
   if (!isAuthorized || !user) {
     return {
       authorized: false,
+      data: {},
     };
   }
 
@@ -92,18 +96,46 @@ export async function canCreateNewJobPost(userId: User["id"]): Promise<
   };
 }
 
+export type CreateNewJobErrors =
+  | "NO_USER"
+  | "HAS_COMPANY"
+  | "UNVERIFIED_COMPANY";
+
 export async function canCreateNewCompany(userId: User["id"]): Promise<
-  AuthorizeReturnType<{
-    user: UserWithCompany;
-  }>
+  AuthorizeReturnType<
+    {
+      user: UserWithCompany;
+    },
+    {
+      error: CreateNewJobErrors;
+    }
+  >
 > {
   const user = await getUserWithCompanyById(userId);
-
-  let isAuthorized = user !== null && user.company === null;
-
-  if (!isAuthorized || !user) {
+  if (!user) {
     return {
       authorized: false,
+      data: {
+        error: "NO_USER",
+      },
+    };
+  }
+
+  if (user.company) {
+    if (user.company.isVerified) {
+      return {
+        authorized: false,
+        data: {
+          error: "HAS_COMPANY",
+        },
+      };
+    }
+
+    return {
+      authorized: false,
+      data: {
+        error: "UNVERIFIED_COMPANY",
+      },
     };
   }
 

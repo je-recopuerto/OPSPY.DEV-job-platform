@@ -1,8 +1,5 @@
-import { auth } from "@/auth";
-import { SignIn } from "@/components/auth";
 import { buttonVariants } from "@/components/ui/button";
-import { getUserWithCompanyById } from "@/lib/data/user";
-import { employerDashboardUrl, registerCompanyUrl } from "@/lib/pages";
+import { registerCompanyUrl } from "@/lib/pages";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,11 +7,7 @@ export const metadata = {
   title: "Employer",
 };
 
-export default async function EmployerPage() {
-  const session = await auth();
-  const user = await getUserWithCompanyById(session?.user?.id);
-  const isCompany = user?.company !== null;
-
+export default function EmployerPage() {
   return (
     <>
       <section className="flex flex-row space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32 min-h-screen">
@@ -46,15 +39,7 @@ export default async function EmployerPage() {
                 Simplify your hiring, amplify your results.
               </p>
               <div className="space-x-4">
-                {session?.user ? (
-                  isCompany ? (
-                    <Dashboard />
-                  ) : (
-                    <Register />
-                  )
-                ) : (
-                  <SignIn />
-                )}
+                <GetStarted />
               </div>
             </div>
           </div>
@@ -64,24 +49,46 @@ export default async function EmployerPage() {
   );
 }
 
-const Dashboard = () => {
-  return (
-    <Link
-      href={employerDashboardUrl}
-      className={buttonVariants({ variant: "default" })}
-    >
-      Go to Dashboard
-    </Link>
-  );
-};
-
-const Register = () => {
+const GetStarted = () => {
   return (
     <Link
       href={registerCompanyUrl}
       className={buttonVariants({ variant: "default" })}
     >
-      Register Company
+      Get Started
     </Link>
   );
 };
+
+// const SetupAccount = () => {
+//   return (
+//     <Link
+//       href={employerDashboardUrl}
+//       className={buttonVariants({ variant: "default" })}
+//     >
+//       Setup Account
+//     </Link>
+//   );
+// };
+//
+// const Dashboard = () => {
+//   return (
+//     <Link
+//       href={employerDashboardUrl}
+//       className={buttonVariants({ variant: "default" })}
+//     >
+//       Go to Dashboard
+//     </Link>
+//   );
+// };
+//
+// const RegisterCompany = () => {
+//   return (
+//     <Link
+//       href={registerCompanyUrl}
+//       className={buttonVariants({ variant: "default" })}
+//     >
+//       Register Company
+//     </Link>
+//   );
+// };

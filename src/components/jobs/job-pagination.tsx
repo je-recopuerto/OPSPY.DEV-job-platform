@@ -8,14 +8,17 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
-export default function JobPagination({ totalPages }: { totalPages: number }) {
+export default function JobPagination({
+  currentPage,
+  totalPages,
+}: {
+  currentPage: number;
+  totalPages: number;
+}) {
   const pathname = usePathname();
   const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const currentPage = Math.max(Number(searchParams.get("page")), 1);
 
   const lastPage = Math.min(Math.max(currentPage + 2, 5), totalPages);
   const firstPage = Math.max(1, currentPage - 4);
@@ -34,7 +37,7 @@ export default function JobPagination({ totalPages }: { totalPages: number }) {
     <Pagination className={"mt-4"}>
       <PaginationContent>
         {/* Previous Page */}
-        {currentPage <= 1 && (
+        {currentPage < 1 && (
           <PaginationItem>
             <PaginationPrevious
               onClick={() => handlePageChange(currentPage - 1)}
@@ -56,7 +59,7 @@ export default function JobPagination({ totalPages }: { totalPages: number }) {
 
         {/* Next Page */}
 
-        {currentPage >= totalPages && (
+        {lastPage < totalPages && (
           <PaginationItem>
             <PaginationNext onClick={() => handlePageChange(currentPage + 1)} />
           </PaginationItem>

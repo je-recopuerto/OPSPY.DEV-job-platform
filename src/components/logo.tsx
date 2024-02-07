@@ -1,7 +1,9 @@
 "use client";
 
+import { homeUrl } from "@/lib/pages";
 import { useTheme } from "next-themes";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 export default function Logo({
@@ -21,22 +23,28 @@ export default function Logo({
 
   if (!mounted) return <LogoSkeleton />;
 
-  return resolvedTheme === "light" ? (
-    <Image
-      src={"/logo-black.svg"}
-      alt={"Black logo"}
-      height={height || 24}
-      width={width || 24}
-      className={className}
-    />
-  ) : (
-    <Image
-      src={"/logo-white.svg"}
-      alt={"White logo"}
-      height={height || 24}
-      width={width || 24}
-      className={className}
-    />
+  return (
+    <>
+      <Link href={homeUrl}>
+        {resolvedTheme === "light" ? (
+          <Image
+            src={"/logo-black.svg"}
+            alt={"Black logo"}
+            height={height || 24}
+            width={width || 24}
+            className={className}
+          />
+        ) : (
+          <Image
+            src={"/logo-white.svg"}
+            alt={"White logo"}
+            height={height || 24}
+            width={width || 24}
+            className={className}
+          />
+        )}
+      </Link>
+    </>
   );
 }
 
