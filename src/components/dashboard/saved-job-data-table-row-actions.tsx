@@ -35,7 +35,7 @@ export function SavedJobDataTableRowActions({ row }: DataTableRowActionsProps) {
         <DropdownMenuItem
           onClick={async () => await deleteJobTracker(row.original.id)}
         >
-          Delete
+          Unsave
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
