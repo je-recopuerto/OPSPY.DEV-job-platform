@@ -81,7 +81,7 @@ export async function getEnhancedBio(bio: string): Promise<{
   const response = bioSchema.safeParse(bio);
   if (!response.success) {
     return {
-      error: response.error.message,
+      error: response.error.errors[0].message,
     };
   }
 
@@ -124,7 +124,7 @@ export async function getEnhancedBio(bio: string): Promise<{
       };
     } else if (error instanceof Error) {
       return {
-        error: error.message,
+        error: "An unexpected error occurred. Please try again later.",
       };
     }
   }
