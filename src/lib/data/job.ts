@@ -6,7 +6,7 @@ import {
 } from "@/lib/data/job.types";
 import prisma from "@/lib/db";
 import { jobFilterSchema } from "@/lib/params";
-import { Company, Prisma } from "@prisma/client";
+import { Company, JobPost, Prisma, User } from "@prisma/client";
 import { z } from "zod";
 import JobPostWhereInput = Prisma.JobPostWhereInput;
 
@@ -272,14 +272,14 @@ export function getJobPostFromId(id: string) {
 }
 
 export async function getJobPostFromIdUserScoped(
-  id: string,
-  userId?: string,
+  id: JobPost["id"],
+  userId?: User["id"],
 ): Promise<{
   jobPost?: JobPostWithCompany;
   isSaved: boolean;
   hasApplied: boolean;
 }> {
-  const result = (await prisma.$transaction([
+  const [post, application, tracker] = await prisma.$transaction([
     prisma.jobPost.findUnique({
       where: {
         id: id,
@@ -301,12 +301,12 @@ export async function getJobPostFromIdUserScoped(
         jobId: id,
       },
     }),
-  ])) as any;
+  ]);
 
   return {
-    jobPost: result[0],
-    hasApplied: result[1] !== null,
-    isSaved: result[2] !== null,
+    jobPost: post ?? undefined,
+    hasApplied: application !== null,
+    isSaved: tracker !== null,
   };
 }
 
