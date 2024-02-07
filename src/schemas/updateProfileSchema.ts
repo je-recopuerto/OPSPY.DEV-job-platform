@@ -1,14 +1,19 @@
 import * as z from "zod";
 
 export const bioSchema = z.string().max(1_000).optional();
-export const workExperienceSchema = z.object({
-  jobTitle: z.string().min(1).max(35),
-  company: z.string().min(1).max(35),
-  location: z.string().min(1).max(100),
-  startDate: z.date(),
-  endDate: z.date().or(z.literal(null)), // Allowing null for current jobs
-  description: z.string().max(1000).optional(),
-});
+export const workExperienceSchema = z
+  .object({
+    jobTitle: z.string().min(1).max(35),
+    company: z.string().min(1).max(35),
+    location: z.string().min(1).max(100),
+    startDate: z.date(),
+    endDate: z.date().or(z.literal(null)), // Allowing null for current jobs
+    description: z.string().max(1000).optional(),
+  })
+  .refine((data) => data.endDate === null || data.startDate <= data.endDate, {
+    message: "Start date must be on or before the end date",
+    path: ["endDate"], // This sets the path of the error to point to `endDate` to make it clear where the error is.
+  });
 
 export const updateProfileFormSchema = z.object({
   firstName: z.string().min(2).max(45),
