@@ -43,11 +43,15 @@ export async function createJobPost(
 }
 
 export async function deleteJobTracker(trackerId: JobTracker["id"]) {
-  return prisma.jobTracker.delete({
+  const result = await prisma.jobTracker.delete({
     where: {
       id: trackerId,
     },
   });
+
+  revalidatePath("/t/dash");
+
+  return result;
 }
 
 export async function saveJob(id: JobPost["id"], userId: User["id"]) {
