@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import { env } from "@/env.mjs";
 import { UserWithCvs } from "@/lib/data/user.types";
 import { cn } from "@/lib/utils";
 import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
@@ -232,7 +233,7 @@ export default function BasicProfile({ form, user }: ProfileFormProps) {
         </div>
         <p className={"text-sm text-muted-foreground"}>
           Companies will be able to see your CV. Max size{" "}
-          {process.env.NEXT_PUBLIC_MAX_CV_FILE_SIZE}
+          {env.NEXT_PUBLIC_MAX_CV_FILE_SIZE}
         </p>
       </div>
     </div>

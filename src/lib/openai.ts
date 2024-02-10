@@ -1,8 +1,9 @@
 // Replace 'your-api-key' with your actual OpenAI API key
+import { env } from "@/env.mjs";
 import OpenAI from "openai";
 
 const openai = new OpenAI({
-  apiKey: process.env["OPENAI_API_KEY"],
+  apiKey: env.OPENAI_API_KEY,
 });
 
 export async function improveBio(bio: string): Promise<string> {

@@ -1,6 +1,7 @@
 "use server";
 
 import { auth } from "@/auth";
+import { env } from "@/env.mjs";
 import {
   deleteFile,
   getExpirableUrlFor,
@@ -253,7 +254,7 @@ export async function uploadCv(formData: FormData) {
   const cv = formData.get("cv") as File;
   const buffer = await cv.arrayBuffer();
 
-  const maxSize = process.env.NEXT_PUBLIC_MAX_CV_FILE_SIZE ?? "10MB";
+  const maxSize = env.NEXT_PUBLIC_MAX_CV_FILE_SIZE ?? "10MB";
   console.log(
     "Got file of length",
     buffer.byteLength,
@@ -331,7 +332,7 @@ export async function uploadProfilePicture(formData: FormData) {
   const picture = formData.get("profilePicture") as File;
   const buffer = await picture.arrayBuffer();
 
-  const maxSize = process.env.NEXT_PUBLIC_MAX_PROFILE_PICTURE_SIZE ?? "10MB";
+  const maxSize = env.NEXT_PUBLIC_MAX_PROFILE_PICTURE_SIZE ?? "10MB";
   if (buffer.byteLength > fileSizeToBytes(maxSize)) {
     throw new Error(`File is too large. Please upload a file under ${maxSize}`);
   }

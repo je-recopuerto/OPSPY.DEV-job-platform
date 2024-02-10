@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import Auth0Provider from "next-auth/providers/auth0";
+import { env } from "./env.mjs";
 
 // @ts-ignore
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -20,9 +21,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   providers: [
     Auth0Provider({
-      clientId: process.env.AUTH0_ID,
-      clientSecret: process.env.AUTH0_SECRET,
-      issuer: process.env.AUTH0_ISSUER,
+      clientId: env.AUTH0_ID,
+      clientSecret: env.AUTH0_SECRET,
+      issuer: env.AUTH0_ISSUER,
       authorization: {
         params: {
           prompt: "login",

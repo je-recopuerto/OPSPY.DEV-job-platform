@@ -1,9 +1,10 @@
+import { env } from "@/env.mjs";
 import { JobPostWithCompany } from "@/lib/data/job.types";
 import { Knock } from "@knocklabs/node";
 import { Company, User } from "@prisma/client";
 
 const knockClientSingleton = () => {
-  return new Knock(process.env.KNOCK_SECRET_API_KEY!);
+  return new Knock(env.KNOCK_SECRET_API_KEY);
 };
 
 type KnockSingleton = ReturnType<typeof knockClientSingleton>;

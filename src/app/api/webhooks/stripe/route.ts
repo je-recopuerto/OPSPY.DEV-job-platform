@@ -1,23 +1,21 @@
 import Stripe from "stripe";
 
+import { env } from "@/env.mjs";
 import prisma from "@/lib/db";
 import { stripe } from "@/lib/stripe";
 import { headers } from "next/headers";
 
 export async function POST(req: Request) {
-  console.log("Incoming webhook request");
-
   const body = await req.text();
   const signature = headers().get("Stripe-Signature") as string;
 
   let event: Stripe.Event;
 
   try {
-    console.log("Getting event");
     event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET!,
+      env.STRIPE_WEBHOOK_SECRET!,
     );
   } catch (error) {
     // console.log("Error getting event", error);
@@ -33,10 +31,10 @@ export async function POST(req: Request) {
   }
 
   // Ensure 'event' is assigned before proceeding
-  if (!event) {
-    console.log("No event data");
-    return new Response("No event data", { status: 400 });
-  }
+  // if (!event) {
+  //   console.log("No event data");
+  //   return new Response("No event data", { status: 400 });
+  // }
 
   // console.log("Got event", event);
 

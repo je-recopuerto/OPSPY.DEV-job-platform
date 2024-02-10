@@ -2,6 +2,7 @@ import "@/app/globals.css";
 import { auth } from "@/auth";
 import { Providers } from "@/components/providers";
 import { siteConfig } from "@/config/site";
+import { env } from "@/env.mjs";
 import knock from "@/lib/knock";
 import { cn } from "@/lib/utils";
 import { Viewport } from "next";
@@ -41,7 +42,7 @@ export const metadata = {
       url: "https://ruffles.pw/",
     },
   ],
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? ""),
+  metadataBase: new URL(env.NEXT_PUBLIC_APP_URL ?? ""),
   creator: "Jonny",
   openGraph: {
     type: "website",

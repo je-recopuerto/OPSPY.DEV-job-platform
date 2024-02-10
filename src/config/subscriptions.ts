@@ -1,3 +1,4 @@
+import { env } from "@/env.mjs";
 import { SubscriptionPlan } from "@/lib/stripe";
 
 export const talentFreePlan: SubscriptionPlan = {
@@ -12,7 +13,7 @@ export const talentFreePlan: SubscriptionPlan = {
 export const talentProPlan: SubscriptionPlan = {
   name: "PRO",
   description: "The PRO plan has unlimited posts.",
-  stripePriceId: process.env.STRIPE_TALENT_PRO_MONTHLY_PLAN_ID || "",
+  stripePriceId: env.STRIPE_TALENT_PRO_MONTHLY_PLAN_ID,
   bioGenerationsPerDay: 10,
   maxJobPosts: 0,
 };
