@@ -2,7 +2,7 @@ import BlurBlob from "@/components/home/blur-blob";
 import FeaturedJobs from "@/components/home/job-grid";
 import { buttonVariants } from "@/components/ui/button";
 import { getRandomJobPosts } from "@/lib/data/job";
-import { jobsUrl } from "@/lib/pages";
+import { jobsUrl, pricingUrl } from "@/lib/pages";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -47,16 +47,16 @@ export default async function Home() {
             className="flex animate-fade-up justify-center space-x-2 opacity-0 md:space-x-4"
             style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
           >
-            <Link href={jobsUrl} className={cn(buttonVariants({ size: "lg" }))}>
-              View jobs
-              <ArrowRight className="ml-2 size-4" />
-            </Link>{" "}
             <Link
-              href="/pricing"
+              href={pricingUrl}
               className={cn(buttonVariants({ size: "lg" }))}
             >
               Pricing
             </Link>
+            <Link href={jobsUrl} className={cn(buttonVariants({ size: "lg" }))}>
+              View jobs
+              <ArrowRight className="ml-2 size-4" />
+            </Link>{" "}
           </div>
         </div>
       </section>

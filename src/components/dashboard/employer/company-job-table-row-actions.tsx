@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { jobStatuses } from "@/components/dashboard/employer/company-job-table";
+import StatusBadge from "@/components/status-badge";
 import {
   Dialog,
   DialogContent,
@@ -95,12 +96,7 @@ const Status = ({
               onClick={() => setStatus(value.value)}
             >
               {value.icon && (
-                <value.icon
-                  className={cn(
-                    "mr-2 h-4 w-4 text-muted-foreground",
-                    value.color,
-                  )}
-                />
+                <StatusBadge status={value} className={cn("mr-2")} />
               )}
               {value.label}
             </DropdownMenuItem>

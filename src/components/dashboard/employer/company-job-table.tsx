@@ -2,6 +2,7 @@
 
 import { JobApplication } from ".prisma/client";
 import { CompanyJobDataTableRowActions } from "@/components/dashboard/employer/company-job-table-row-actions";
+import StatusBadge from "@/components/status-badge";
 import { DataTable } from "@/components/table/data-table";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -135,9 +136,7 @@ export const columns: ColumnDef<JobPostWithApplications>[] = [
       return (
         <div className="flex w-[100px] items-center">
           {status.icon && (
-            <status.icon
-              className={cn("mr-2 h-4 w-4 text-muted-foreground", status.color)}
-            />
+            <StatusBadge status={status} className={cn("mr-2")} />
           )}
           <span>{status.label}</span>
         </div>
@@ -160,22 +159,24 @@ const countOfStatuses = (
   return applications.filter((x) => statuses.includes(x.status)).length;
 };
 
-export const jobStatuses: {
+export type JobStatusStyle = {
   value: JobStatus;
   label: string;
   icon?: LucideIcon;
   color?: string;
-}[] = [
+};
+
+export const jobStatuses: JobStatusStyle[] = [
   {
     value: "ACTIVE",
     label: "Active",
     icon: CheckIcon,
-    color: "text-green-600",
+    color: "bg-green-600",
   },
   {
     value: "INACTIVE",
     label: "Inactive",
     icon: XIcon,
-    color: "text-destructive",
+    color: "bg-destructive",
   },
 ];
