@@ -1,4 +1,5 @@
 import { auth, signIn } from "@/auth";
+import Hero1 from "@/components/home/hero1";
 import PricingButton from "@/components/pricing/pricing-button";
 import { Button } from "@/components/ui/button";
 import {
@@ -120,6 +121,7 @@ export default async function Page() {
 
   return (
     <div className="py-8">
+      <Hero1 />
       <PricingHeader
         title="Pricing Plans"
         subtitle="Choose the plan that's right for you"

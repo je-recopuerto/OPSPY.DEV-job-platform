@@ -1,5 +1,7 @@
+import Hero1 from "@/components/home/hero1";
 import { buttonVariants } from "@/components/ui/button";
 import { registerCompanyUrl } from "@/lib/pages";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -32,7 +34,10 @@ export default function EmployerPage() {
           <div className={"flex flex-col"}>
             <div className={"flex flex-col gap-4 text-center items-center"}>
               <h1 className="scroll-m-20 text-7xl font-extrabold tracking-tight lg:text-7xl">
-                Hire the best in the game.
+                Hire the{" "}
+                <span className="text-gradient_indigo-purple font-extrabold">
+                  best in the game.
+                </span>
               </h1>
               <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
                 Connect with top talent and transform your team&apos;s future.
@@ -45,6 +50,7 @@ export default function EmployerPage() {
           </div>
         </div>
       </section>
+      <Hero1 />
     </>
   );
 }
@@ -56,39 +62,7 @@ const GetStarted = () => {
       className={buttonVariants({ variant: "default" })}
     >
       Get Started
+      <ArrowRight className="w-4 h-4 ml-2" />
     </Link>
   );
 };
-
-// const SetupAccount = () => {
-//   return (
-//     <Link
-//       href={employerDashboardUrl}
-//       className={buttonVariants({ variant: "default" })}
-//     >
-//       Setup Account
-//     </Link>
-//   );
-// };
-//
-// const Dashboard = () => {
-//   return (
-//     <Link
-//       href={employerDashboardUrl}
-//       className={buttonVariants({ variant: "default" })}
-//     >
-//       Go to Dashboard
-//     </Link>
-//   );
-// };
-//
-// const RegisterCompany = () => {
-//   return (
-//     <Link
-//       href={registerCompanyUrl}
-//       className={buttonVariants({ variant: "default" })}
-//     >
-//       Register Company
-//     </Link>
-//   );
-// };
