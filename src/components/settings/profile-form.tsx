@@ -63,7 +63,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(async (data) => await updateProfile(data))}
-        className="space-y-14"
+        className="space-y-14 flex flex-col"
       >
         <BasicProfile form={form} user={user} />
         <LinksForm form={form} />
@@ -75,7 +75,11 @@ export function ProfileForm({ user }: ProfileFormProps) {
 }
 
 const SubmitButton = ({ isSubmitting }: { isSubmitting: boolean }) => (
-  <Button type="submit" disabled={isSubmitting}>
+  <Button
+    type="submit"
+    disabled={isSubmitting}
+    className={"ml-auto justify-end"}
+  >
     {isSubmitting ? (
       <>
         <Loader2 className="mr-2 h-4 w-4 animate-spin" />

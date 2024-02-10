@@ -22,7 +22,7 @@ export default function LinksForm({ form }: PageProps) {
   return (
     <div>
       <div>
-        <h3 className="text-2xl font-bold tracking-tight mt-8">Social Links</h3>
+        <h3 className="text-2xl font-bold tracking-tight">Social Links</h3>
         <p className="text-sm text-muted-foreground">
           Add links to your social profiles and personal website.
         </p>

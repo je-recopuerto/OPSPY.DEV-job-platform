@@ -46,6 +46,7 @@ export default function WorkExperienceForm({ form }: PageProps) {
 
               setOpenCardIndex(fields.length);
             }}
+            variant={"ghost"}
           >
             <Plus className={"mr-2 h-4 w-4"} />
             <span>Add Experience</span>
