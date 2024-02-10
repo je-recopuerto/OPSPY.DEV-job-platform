@@ -51,7 +51,15 @@
   }
 }
 
-
+.step1 {
+  flex-grow: 1 !important;
+  background-color: rgba(5, 0, 8, .227);
+  border: 1px solid hsla(0, 0%, 100%, .05);
+  background-image: radial-gradient(hsla(0, 0%, 100%, .1) 1px, transparent 0);
+  background-position: 50% 50%;
+  background-size: 1.1rem 1.1rem;
+  position: relative;
+}
 
 @layer base {
   * {

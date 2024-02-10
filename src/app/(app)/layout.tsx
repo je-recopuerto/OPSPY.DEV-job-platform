@@ -14,7 +14,7 @@ export default async function Layout({
     <>
       <Header />
 
-      <main className={"py-8"}>{children}</main>
+      <main>{children}</main>
 
       <Toaster />
 
