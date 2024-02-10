@@ -18,7 +18,7 @@ export async function POST(req: Request) {
       env.STRIPE_WEBHOOK_SECRET!,
     );
   } catch (error) {
-    // console.log("Error getting event", error);
+    console.log("Error getting event", error);
 
     if (error instanceof Error) {
       return new Response(`Webhook Error: ${error.message}`, {
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
       session.subscription as string,
     );
 
-    // console.log("Got subscription", subscription);
+    console.log("Got subscription", subscription);
 
     // Update the user stripe into in our database.
     // Since this is the initial subscription, we need to update
@@ -67,6 +67,7 @@ export async function POST(req: Request) {
         ),
       },
     });
+    console.log("user update done");
   }
 
   if (event.type === "invoice.payment_succeeded") {
