@@ -8,7 +8,6 @@ import { LogOut } from "lucide-react";
 import React from "react";
 
 export function SignIn({
-  provider,
   ...props
 }: { provider?: string | undefined } & React.ComponentPropsWithRef<
   typeof Button
@@ -17,7 +16,7 @@ export function SignIn({
     <form
       action={async () => {
         "use server";
-        await signIn(provider);
+        await signIn("auth0");
       }}
     >
       <Button {...props}>Sign In</Button>

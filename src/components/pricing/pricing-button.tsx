@@ -1,6 +1,6 @@
 "use client";
 
-import { requestPlan } from "@/app/(app)/(marketing)/pricing/_actions";
+import { requestPlan } from "@/app/(app)/pricing/_actions";
 import { buttonVariants } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { SubscriptionPlan } from "@/lib/stripe";

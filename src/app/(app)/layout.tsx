@@ -14,7 +14,7 @@ export default async function Layout({
     <>
       <Header />
 
-      <main>{children}</main>
+      <main className={"mt-6"}>{children}</main>
 
       <Toaster />
 
