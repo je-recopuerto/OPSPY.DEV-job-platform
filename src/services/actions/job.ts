@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@/auth";
+import { auth, signIn } from "@/auth";
 import { getUserById, getUserWithCompanyById } from "@/lib/data/user";
 import prisma from "@/lib/db";
 import { createJobPostSchema } from "@/schemas/jobPost";
@@ -67,7 +67,7 @@ export async function toggleSaveJob(id: JobPost["id"]) {
   "use server";
 
   const session = await auth();
-  if (!session || !session.user || !session.user.id) return;
+  if (!session || !session.user || !session.user.id) return signIn("auth0");
 
   const user = await getUserById(session.user.id);
   if (!user) return redirect("/t/welcome");
