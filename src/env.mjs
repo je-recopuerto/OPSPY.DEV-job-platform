@@ -7,8 +7,7 @@ export const env = createEnv({
    * Will throw if you access these variables on the client.
    */
   server: {
-    NEXTAUTH_SECRET: z.string().min(1),
-    NEXTAUTH_URL: z.string().url().optional(),
+    AUTH_SECRET: z.string().min(1),
 
     AUTH0_ID: z.string().min(1),
     AUTH0_SECRET: z.string().min(1),
@@ -27,7 +26,6 @@ export const env = createEnv({
 
     STRIPE_API_KEY: z.string().min(1),
     STRIPE_WEBHOOK_SECRET: z.string().min(1),
-    STRIPE_TALENT_PRO_MONTHLY_PLAN_ID: z.string().min(1),
   },
   /*
    * Environment variables available on the client (and server).
@@ -40,6 +38,9 @@ export const env = createEnv({
 
     NEXT_PUBLIC_MAX_CV_FILE_SIZE: z.string().min(1),
     NEXT_PUBLIC_MAX_PROFILE_PICTURE_SIZE: z.string().min(1),
+
+    NEXT_PUBLIC_STRIPE_TALENT_PRO_MONTHLY_PLAN_ID: z.string().min(1),
+    NEXT_PUBLIC_STRIPE_TALENT_PRO_YEARLY_PLAN_ID: z.string().min(1),
   },
   /*
    * Due to how Next.js bundles environment variables on Edge and Client,
@@ -48,8 +49,7 @@ export const env = createEnv({
    * 💡 You'll get type errors if not all variables from `server` & `client` are included here.
    */
   runtimeEnv: {
-    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    AUTH_SECRET: process.env.AUTH_SECRET,
     AUTH0_ID: process.env.AUTH0_ID,
     AUTH0_SECRET: process.env.AUTH0_SECRET,
     AUTH0_ISSUER: process.env.AUTH0_ISSUER,
@@ -67,5 +67,7 @@ export const env = createEnv({
     NEXT_PUBLIC_KNOCK_API_KEY: process.env.NEXT_PUBLIC_KNOCK_API_KEY,
     NEXT_PUBLIC_MAX_CV_FILE_SIZE: process.env.NEXT_PUBLIC_MAX_CV_FILE_SIZE,
     NEXT_PUBLIC_MAX_PROFILE_PICTURE_SIZE: process.env.NEXT_PUBLIC_MAX_PROFILE_PICTURE_SIZE,
+    NEXT_PUBLIC_STRIPE_TALENT_PRO_MONTHLY_PLAN_ID: process.env.NEXT_PUBLIC_STRIPE_TALENT_PRO_MONTHLY_PLAN_ID,
+    NEXT_PUBLIC_STRIPE_TALENT_PRO_YEARLY_PLAN_ID: process.env.NEXT_PUBLIC_STRIPE_TALENT_PRO_YEARLY_PLAN_ID,
   },
 });
