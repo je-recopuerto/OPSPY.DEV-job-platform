@@ -14,7 +14,7 @@ export default async function OnboardingPage() {
   }
 
   const user = await getUserById(session.user.id);
-  if (user) {
+  if (!user || user.isOnboard) {
     return redirect("/t/dash");
   }
 

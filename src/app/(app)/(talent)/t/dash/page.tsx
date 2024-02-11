@@ -28,7 +28,7 @@ export default async function DashboardPage() {
 
   return (
     <div className={"container min-h-screen"}>
-      {!user && <ProfileSetupAlert />}
+      {!!user && !user.isOnboard && <ProfileSetupAlert />}
 
       <div className="flex-1 space-y-4">
         <Breadcrumb>

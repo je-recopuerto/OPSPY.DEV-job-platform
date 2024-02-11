@@ -113,12 +113,10 @@ export async function getUserBioGenerationsLeft(
   const lastReset = lastBioReset?.getTime() || now;
 
   const daysSinceLastReset = Math.floor((now - lastReset) / 86_400_000);
-  console.log("daysSinceLastReset", daysSinceLastReset);
   // If the user's reset date isn't within a day, then they have all their generations left.
   if (daysSinceLastReset >= 1) {
     return plan.bioGenerationsPerDay;
   } else {
-    console.log("daysLeft", plan.bioGenerationsPerDay, "-", bioCompletions);
     return plan.bioGenerationsPerDay - bioCompletions;
   }
 }

@@ -1,18 +1,18 @@
 "use client";
 
-import GettingStarted from "@/app/(app)/(talent)/t/welcome/_components/getting-started";
+import { setOnboarding } from "@/app/(app)/(talent)/t/welcome/_actions";
 import { Button } from "@/components/ui/button";
+import { Card, CardDescription } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/components/ui/use-toast";
 import { onboardingSchema } from "@/schemas/onboardingSchema";
-import { setOnboarding } from "@/services/actions/onboarding";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { Card, CardDescription } from "../../../../../../components/ui/card";
+import GettingStarted from "./getting-started";
 
 type OnboardingCardProps = {
   email: string;

@@ -18,7 +18,7 @@ export default async function SettingsProfilePage() {
   if (!session || !session.user || !session.user.id) return redirect("/");
 
   const user = await getUserWithCvsById(session.user.id);
-  if (!user) return redirect("/t/welcome");
+  if (!user.isOnboard) return redirect("/t/welcome");
 
   return (
     <div className={"space-y-8"}>
