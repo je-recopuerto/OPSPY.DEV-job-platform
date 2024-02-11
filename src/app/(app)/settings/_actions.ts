@@ -192,39 +192,15 @@ export async function updateProfile(
 
   console.log("Updating profile:", validatedState, "for user:", user);
 
-  const result = await prisma.user.upsert({
+  const result = await prisma.user.update({
     where: {
       id: user.id,
     },
-    create: {
-      id: user.id,
+    data: {
       firstName: validatedState.firstName,
       lastName: validatedState.lastName,
       dateOfBirth: validatedState.dateOfBirth,
       bio: validatedState.bio,
-      email: validatedState.email,
-      githubLink: validatedState.githubLink,
-      linkedinLink: validatedState.linkedInLink,
-      twitterLink: validatedState.twitterLink,
-      workExperience: {
-        create: [
-          ...(validatedState.workExperience ?? []).map((experience) => ({
-            title: experience.jobTitle,
-            company: experience.company,
-            location: experience.location,
-            startDate: experience.startDate,
-            endDate: experience.endDate,
-            description: experience.description,
-          })),
-        ],
-      },
-    },
-    update: {
-      firstName: validatedState.firstName,
-      lastName: validatedState.lastName,
-      dateOfBirth: validatedState.dateOfBirth,
-      bio: validatedState.bio,
-      email: validatedState.email,
       githubLink: validatedState.githubLink,
       linkedinLink: validatedState.linkedInLink,
       twitterLink: validatedState.twitterLink,

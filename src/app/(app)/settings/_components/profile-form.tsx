@@ -27,7 +27,6 @@ export function ProfileForm({ user }: ProfileFormProps) {
       firstName: user.firstName ?? "",
       lastName: user.lastName ?? "",
       dateOfBirth: user.dateOfBirth,
-      email: user.email ?? "",
       bio: user.bio ?? "",
       githubLink: user.githubLink ?? "",
       linkedInLink: user.linkedinLink ?? "",

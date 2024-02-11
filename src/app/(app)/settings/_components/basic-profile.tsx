@@ -119,19 +119,13 @@ export default function BasicProfile({ form, user }: ProfileFormProps) {
             />
           </div>
 
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="shadcn" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <FormItem>
+            <FormLabel>Email</FormLabel>
+            <FormControl>
+              <Input value={user.email ?? ""} disabled={true} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
         </div>
       </div>
 
@@ -171,10 +165,8 @@ export default function BasicProfile({ form, user }: ProfileFormProps) {
               </Button>
             </FormLabel>
             <Textarea
-              onChange={field.onChange}
-              defaultValue={field.value ?? ""}
-              value={field.value ?? ""}
               placeholder="I'm a software engineer with experience in..."
+              {...field}
             />
             <FormMessage />
           </FormItem>
