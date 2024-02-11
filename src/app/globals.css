@@ -31,8 +31,8 @@
   .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
-    --card: 24 9.8% 10%;
-    --card-foreground: 0 0% 95%;
+    --card: 240 2.59% 11.13%;
+    --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
     --primary: 0 0% 98%;
@@ -51,7 +51,25 @@
   }
 }
 
+/* Dark mode */
+.dark .step1 {
+  background-color: rgba(5, 0, 8, .227);
+  border: 1px solid hsla(0, 0%, 100%, .05);
+  background-image: radial-gradient(hsla(0, 0%, 100%, .1) 1px, transparent 0);
+  background-position: 50% 50%;
+  background-size: 1.1rem 1.1rem;
+  position: relative;
+}
 
+.step1 {
+  flex-grow: 1 !important;
+  background-color: rgba(5, 0, 8, .227);
+  border: 1px solid hsla(0, 0%, 100%, .05);
+  background-image: radial-gradient(hsla(0, 0%, 0%, 0.21) 1px, transparent 0);
+  background-position: 50% 50%;
+  background-size: 1.1rem 1.1rem;
+  position: relative;
+}
 
 @layer base {
   * {
@@ -59,10 +77,18 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
 /* Reference: https://gist.github.com/mjbalcueva/1fbcb1be9ef68a82c14d778b686a04fa */
 .rdp-vhidden {
   @apply hidden;
+}
+
+.text-gradient_indigo-purple {
+  background: linear-gradient(90deg, #6366f1 0%, rgb(168 85 247 / 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

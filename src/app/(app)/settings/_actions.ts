@@ -1,6 +1,7 @@
 "use server";
 
 import { auth } from "@/auth";
+import { env } from "@/env.mjs";
 import {
   deleteFile,
   getExpirableUrlFor,
@@ -44,7 +45,7 @@ export async function canUserGenerateBio(userId: User["id"]): Promise<boolean> {
   const user = await getUserById(userId);
   if (!user) return false;
 
-  const { plan } = await getUserSubscriptionPlan(userId);
+  const plan = await getUserSubscriptionPlan(userId);
 
   const { bioCompletions, lastBioReset } = user;
 
@@ -191,39 +192,15 @@ export async function updateProfile(
 
   console.log("Updating profile:", validatedState, "for user:", user);
 
-  const result = await prisma.user.upsert({
+  const result = await prisma.user.update({
     where: {
       id: user.id,
     },
-    create: {
-      id: user.id,
+    data: {
       firstName: validatedState.firstName,
       lastName: validatedState.lastName,
       dateOfBirth: validatedState.dateOfBirth,
       bio: validatedState.bio,
-      email: validatedState.email,
-      githubLink: validatedState.githubLink,
-      linkedinLink: validatedState.linkedInLink,
-      twitterLink: validatedState.twitterLink,
-      workExperience: {
-        create: [
-          ...(validatedState.workExperience ?? []).map((experience) => ({
-            title: experience.jobTitle,
-            company: experience.company,
-            location: experience.location,
-            startDate: experience.startDate,
-            endDate: experience.endDate,
-            description: experience.description,
-          })),
-        ],
-      },
-    },
-    update: {
-      firstName: validatedState.firstName,
-      lastName: validatedState.lastName,
-      dateOfBirth: validatedState.dateOfBirth,
-      bio: validatedState.bio,
-      email: validatedState.email,
       githubLink: validatedState.githubLink,
       linkedinLink: validatedState.linkedInLink,
       twitterLink: validatedState.twitterLink,
@@ -253,7 +230,7 @@ export async function uploadCv(formData: FormData) {
   const cv = formData.get("cv") as File;
   const buffer = await cv.arrayBuffer();
 
-  const maxSize = process.env.NEXT_PUBLIC_MAX_CV_FILE_SIZE ?? "10MB";
+  const maxSize = env.NEXT_PUBLIC_MAX_CV_FILE_SIZE ?? "10MB";
   console.log(
     "Got file of length",
     buffer.byteLength,
@@ -331,7 +308,7 @@ export async function uploadProfilePicture(formData: FormData) {
   const picture = formData.get("profilePicture") as File;
   const buffer = await picture.arrayBuffer();
 
-  const maxSize = process.env.NEXT_PUBLIC_MAX_PROFILE_PICTURE_SIZE ?? "10MB";
+  const maxSize = env.NEXT_PUBLIC_MAX_PROFILE_PICTURE_SIZE ?? "10MB";
   if (buffer.byteLength > fileSizeToBytes(maxSize)) {
     throw new Error(`File is too large. Please upload a file under ${maxSize}`);
   }
@@ -351,7 +328,7 @@ export async function uploadProfilePicture(formData: FormData) {
       id: user.id,
     },
     data: {
-      imageURL: blobUrl,
+      image: blobUrl,
     },
   });
 

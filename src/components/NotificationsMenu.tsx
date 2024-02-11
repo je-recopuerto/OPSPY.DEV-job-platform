@@ -8,6 +8,7 @@ import {
 import { useRef, useState } from "react";
 
 // Required CSS import, unless you're overriding the styling
+import { env } from "@/env.mjs";
 import "@knocklabs/react-notification-feed/dist/index.css";
 
 type NotificationsMenuProps = {
@@ -25,7 +26,7 @@ export const NotificationsMenu = (props: NotificationsMenuProps) => {
 
   return (
     <KnockFeedProvider
-      apiKey={process.env.NEXT_PUBLIC_KNOCK_API_KEY!}
+      apiKey={env.NEXT_PUBLIC_KNOCK_API_KEY!}
       feedId={"823b21c4-dd00-4fc6-9725-25e3fc0d9132"}
       userId={props.userId}
       // In production, you must pass a signed userToken

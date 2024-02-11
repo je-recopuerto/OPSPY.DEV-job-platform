@@ -18,7 +18,6 @@ export const workExperienceSchema = z
 export const updateProfileFormSchema = z.object({
   firstName: z.string().min(2).max(45),
   lastName: z.string().min(2).max(45),
-  email: z.string().email(),
   dateOfBirth: z
     .date()
     .min(new Date(1900, 1, 1))
@@ -27,7 +26,6 @@ export const updateProfileFormSchema = z.object({
   bio: bioSchema,
   githubLink: z
     .string()
-    .url()
     .regex(
       /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9](?:[a-zA-Z0-9]|-(?=[a-zA-Z0-9])){0,38}\/?$/,
       "Invalid GitHub URL",
@@ -38,7 +36,6 @@ export const updateProfileFormSchema = z.object({
     .nullish(),
   linkedInLink: z
     .string()
-    .url()
     .regex(/^(https?:\/\/)?(www\.)?linkedin\.com\/.*$/, "Invalid LinkedIn URL")
     .max(255)
     .optional()
@@ -46,7 +43,6 @@ export const updateProfileFormSchema = z.object({
     .nullish(),
   twitterLink: z
     .string()
-    .url()
     .regex(
       /^(https?:\/\/)?(www\.)?twitter\.com\/[A-Za-z0-9_]+\/?$/,
       "Invalid Twitter URL",

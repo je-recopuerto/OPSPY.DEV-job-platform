@@ -1,8 +1,8 @@
-import JobList from "@/components/jobs/job-list";
-import { JobOverviewSkeleton } from "@/components/jobs/job-overview";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { jobFilterParams } from "@/lib/params";
 import { Suspense } from "react";
+import JobList from "../_components/job-list";
+import { JobOverviewSkeleton } from "../_components/job-overview";
 
 type JobPageParams = {
   searchParams: { [key: string]: string | undefined };

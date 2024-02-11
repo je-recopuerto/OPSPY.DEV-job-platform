@@ -1,3 +1,4 @@
+import { env } from "@/env.mjs";
 import {
   BlobSASPermissions,
   BlobSASSignatureValues,
@@ -6,8 +7,8 @@ import {
   StorageSharedKeyCredential,
 } from "@azure/storage-blob";
 
-const storageAccountName = process.env.AZURE_STORAGE_ACCOUNT_NAME!;
-const storageAccountKey = process.env.AZURE_STORAGE_ACCOUNT_KEY!;
+const storageAccountName = env.AZURE_STORAGE_ACCOUNT_NAME!;
+const storageAccountKey = env.AZURE_STORAGE_ACCOUNT_KEY!;
 
 const sharedKeyCredential = new StorageSharedKeyCredential(
   storageAccountName,

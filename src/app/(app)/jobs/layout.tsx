@@ -1,9 +1,9 @@
+import JobFilter from "@/app/(app)/jobs/_components/job-filter";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
 } from "@/components/cui/breadcrumb";
-import JobFilter from "@/components/jobs/job-filter";
 
 type JobsLayoutProps = {
   children: React.ReactNode;

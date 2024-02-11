@@ -1,13 +1,14 @@
 import { auth } from "@/auth";
-import PreferencesForm from "@/components/settings/preferences-form";
-import { ProfileForm } from "@/components/settings/profile-form";
-import ProfileFormSkeleton from "@/components/settings/profile-form-skeleton";
 import { Separator } from "@/components/ui/separator";
 import { getUserWithCvsById } from "@/lib/data/user";
 import { UserWithCvs } from "@/lib/data/user.types";
 import knock from "@/lib/knock";
+import { homeUrl } from "@/lib/pages";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
+import PreferencesForm from "./_components/preferences-form";
+import { ProfileForm } from "./_components/profile-form";
+import ProfileFormSkeleton from "./_components/profile-form-skeleton";
 
 export const metadata = {
   title: "Settings",
@@ -18,7 +19,8 @@ export default async function SettingsProfilePage() {
   if (!session || !session.user || !session.user.id) return redirect("/");
 
   const user = await getUserWithCvsById(session.user.id);
-  if (!user) return redirect("/t/welcome");
+  if (!user) return redirect(homeUrl);
+  if (!user.isOnboard) return redirect("/t/welcome");
 
   return (
     <div className={"space-y-8"}>

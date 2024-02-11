@@ -5,7 +5,6 @@ import {
   employerDashboardUrl,
   employerHomepageUrl,
   homeUrl,
-  loginUrl,
 } from "@/lib/pages";
 import { redirect } from "next/navigation";
 
@@ -39,7 +38,7 @@ function getRedirectUrl(error: CreateNewJobErrors) {
   console.log("error", error);
   switch (error) {
     case "NO_USER":
-      return loginUrl;
+      return homeUrl;
     case "HAS_COMPANY":
       return employerDashboardUrl;
     case "UNVERIFIED_COMPANY":

@@ -26,6 +26,24 @@ const nextConfig = {
         port: "",
         pathname: "/shadcn.png",
       },
+      {
+        protocol: "https",
+        hostname: "s.gravatar.com",
+        port: "",
+        pathname: "/avatar/**/*",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        port: "",
+        pathname: "/u/**/*",
+      },
+      {
+        protocol: "https",
+        hostname: "media.licdn.com",
+        port: "",
+        pathname: "/dms/image/**/*",
+      },
     ],
   },
 };
