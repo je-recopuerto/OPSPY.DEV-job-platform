@@ -124,20 +124,6 @@ export default function GettingStarted({ form }: OnboardingCardProps) {
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className={"flex-grow"}>
-                <FormLabel>E-mail</FormLabel>
-                <FormControl>
-                  <Input placeholder={"saul@gmail.com"} {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
           <Separator className={"mt-4"} />
 
           <FormField

@@ -18,5 +18,5 @@ export default async function OnboardingPage() {
     return redirect("/t/dash");
   }
 
-  return <OnboardingCard email={session.user?.email ?? ""} />;
+  return <OnboardingCard />;
 }

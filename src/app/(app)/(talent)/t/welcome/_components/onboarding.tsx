@@ -14,9 +14,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import GettingStarted from "./getting-started";
 
-type OnboardingCardProps = {
-  email: string;
-};
+type OnboardingCardProps = {};
 
 export default function OnboardingCard(props: OnboardingCardProps) {
   const { toast } = useToast();
@@ -27,7 +25,6 @@ export default function OnboardingCard(props: OnboardingCardProps) {
       firstName: "",
       lastName: "",
       dateOfBirth: new Date("November 12, 1960"),
-      email: props.email,
       bio: "",
       location: "",
       linkedinUrl: "",
