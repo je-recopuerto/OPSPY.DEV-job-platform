@@ -60,8 +60,7 @@ export default async function UserButton() {
           {session.user.name}
         </DropdownMenuLabel>
         <DropdownMenuLabel className={"text-xs text-muted-foreground pt-0.5"}>
-          {/*{session.user.email}*/}
-          {session.user.id}
+          {session.user.email}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
