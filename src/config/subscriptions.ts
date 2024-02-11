@@ -6,7 +6,7 @@ export const talentFreePlan: SubscriptionPlan = {
   description:
     "The free plan is limited to 3 posts. Upgrade to the PRO plan for unlimited posts.",
   features: ["Access all job postings", `${3} daily AI improvements`],
-  limitations: ["Your marj is fat"],
+  limitations: [],
   prices: {
     monthly: 0,
     yearly: 0,
@@ -25,8 +25,8 @@ export const talentProPlan: SubscriptionPlan = {
   features: [`${10} daily AI improvements`, "Boosted profile visibility"],
   limitations: [],
   prices: {
-    monthly: 15,
-    yearly: 144,
+    monthly: 4.99,
+    yearly: 49.99,
   },
   stripeIds: {
     monthly: env.NEXT_PUBLIC_STRIPE_TALENT_PRO_MONTHLY_PLAN_ID,
