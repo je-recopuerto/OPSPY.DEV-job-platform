@@ -64,8 +64,6 @@ export async function saveJob(id: JobPost["id"], userId: User["id"]) {
 }
 
 export async function toggleSaveJob(id: JobPost["id"]) {
-  "use server";
-
   const session = await auth();
   if (!session || !session.user || !session.user.id) return signIn("auth0");
 
