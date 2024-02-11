@@ -45,7 +45,7 @@ export async function canUserGenerateBio(userId: User["id"]): Promise<boolean> {
   const user = await getUserById(userId);
   if (!user) return false;
 
-  const { plan } = await getUserSubscriptionPlan(userId);
+  const plan = await getUserSubscriptionPlan(userId);
 
   const { bioCompletions, lastBioReset } = user;
 
@@ -352,7 +352,7 @@ export async function uploadProfilePicture(formData: FormData) {
       id: user.id,
     },
     data: {
-      imageURL: blobUrl,
+      image: blobUrl,
     },
   });
 

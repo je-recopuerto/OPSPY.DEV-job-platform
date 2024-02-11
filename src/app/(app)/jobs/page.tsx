@@ -1,5 +1,5 @@
-import { JobPost, JobSkeleton } from "@/components/jobs/job-post";
 import { Suspense } from "react";
+import { JobPost, JobSkeleton } from "./_components/job-post";
 
 export const metadata = {
   title: "Jobs",

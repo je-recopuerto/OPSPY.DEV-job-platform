@@ -1,4 +1,4 @@
-import Hero1 from "@/components/home/hero1";
+import Hero1 from "@/app/(app)/(marketing)/_components/hero1";
 import { buttonVariants } from "@/components/ui/button";
 import { registerCompanyUrl } from "@/lib/pages";
 import { ArrowRight } from "lucide-react";

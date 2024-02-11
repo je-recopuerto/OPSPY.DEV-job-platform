@@ -5,15 +5,15 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
 } from "@/components/cui/breadcrumb";
-import AppliedJobsTab from "@/components/dashboard/applied-jobs-tab";
-import ProfileSetupAlert from "@/components/dashboard/profile-setup-alert";
-import SavedJobTab from "@/components/dashboard/saved-job-tab";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getUserWithCompanyById } from "@/lib/data/user";
 import { DownloadIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
+import AppliedJobsTab from "./_components/applied-jobs-tab";
+import ProfileSetupAlert from "./_components/profile-setup-alert";
+import SavedJobTab from "./_components/saved-job-tab";
 
 export const metadata = {
   title: "Dashboard",

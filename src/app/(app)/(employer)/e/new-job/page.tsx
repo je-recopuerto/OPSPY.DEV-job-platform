@@ -1,7 +1,7 @@
+import CompanyProfile from "@/app/(app)/jobs/_components/company-profile";
+import CreateJobForm from "@/app/(app)/jobs/_components/create-job-form";
 import { canCreateNewJobPost } from "@/app/_actions";
 import { auth } from "@/auth";
-import CompanyProfile from "@/components/jobs/company-profile";
-import CreateJobForm from "@/components/jobs/create-job-form";
 import { Separator } from "@/components/ui/separator";
 import { homeUrl } from "@/lib/pages";
 import { redirect } from "next/navigation";

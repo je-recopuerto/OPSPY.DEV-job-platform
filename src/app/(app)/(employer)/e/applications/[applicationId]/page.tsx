@@ -1,8 +1,6 @@
 import { isAuthorizedForApplications } from "@/app/_actions";
 import { auth } from "@/auth";
 import { SignIn } from "@/components/auth";
-import Accept from "@/components/companies/accept-button";
-import Reject from "@/components/companies/reject-button";
 import Back from "@/components/cui/BackButton";
 import ViewCvButton from "@/components/request-cv-button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -14,6 +12,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Accept from "./_components/accept-button";
+import Reject from "./_components/reject-button";
 
 import { ApplicationWithJob } from "@/lib/data/application.types";
 import { jobUrl, loginUrl } from "@/lib/pages";
@@ -168,7 +168,7 @@ const UserProfile = ({ application }: { application: ApplicationWithJob }) => {
     <div className={"flex flex-row"}>
       <Avatar className={"h-24 w-24 mr-5  "}>
         <AvatarImage
-          src={application.user.imageURL ?? ""}
+          src={application.user.image ?? ""}
           alt={"Applicant's profile picture"}
           sizes={"cover"}
         />

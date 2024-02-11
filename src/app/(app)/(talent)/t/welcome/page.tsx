@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
-import OnboardingCard from "@/components/onboarding/onboarding";
 import { getUserById } from "@/lib/data/user";
 import { redirect } from "next/navigation";
+import OnboardingCard from "./_components/onboarding";
 
 export const metadata = {
   title: "Welcome",

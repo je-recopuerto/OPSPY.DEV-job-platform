@@ -38,14 +38,14 @@ export default async function UserButton() {
         >
           <Avatar className="w-8 h-8">
             <AvatarImage
-              src={user?.imageURL ?? "default_profile_picture.svg"}
+              src={user?.image ?? "default_profile_picture.svg"}
               alt={"Profile picture"}
               height={32}
               width={32}
               asChild
             >
               <Image
-                src={user?.imageURL ?? "default_profile_picture.svg"}
+                src={user?.image ?? "default_profile_picture.svg"}
                 alt={"Profile picture"}
                 width={32}
                 height={32}

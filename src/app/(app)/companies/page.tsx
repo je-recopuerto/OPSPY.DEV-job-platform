@@ -1,14 +1,14 @@
-import CompanyFilter from "@/components/companies/company-filter";
+import CompanyFilter from "@/app/(app)/(employer)/e/applications/[applicationId]/_components/company-filter";
+import {
+  CompanyProfileSkeleton,
+  CompanyProfileWithOpenings,
+} from "@/app/(app)/jobs/_components/company-profile-with-openings";
+import JobPagination from "@/app/(app)/jobs/_components/job-pagination";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
 } from "@/components/cui/breadcrumb";
-import {
-  CompanyProfileSkeleton,
-  CompanyProfileWithOpenings,
-} from "@/components/jobs/company-profile-with-openings";
-import JobPagination from "@/components/jobs/job-pagination";
 import {
   getCompaniesPageCount,
   getCompaniesWithOpenings,

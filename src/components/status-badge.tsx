@@ -1,4 +1,4 @@
-import { JobStatusStyle } from "@/components/dashboard/employer/company-job-table";
+import { JobStatusStyle } from "@/app/(app)/(employer)/e/dash/_components/company-job-table";
 import { cn } from "@/lib/utils";
 
 export default function StatusBadge({

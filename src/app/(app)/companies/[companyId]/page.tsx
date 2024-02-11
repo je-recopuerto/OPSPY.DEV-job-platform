@@ -1,4 +1,4 @@
-import JobGrid from "@/components/home/job-grid";
+import JobGrid from "@/app/(app)/(marketing)/_components/job-grid";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getCompanyById } from "@/lib/data/company";
 import { getJobPostsByCompanyId } from "@/lib/data/job";

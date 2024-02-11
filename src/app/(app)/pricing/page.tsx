@@ -1,6 +1,6 @@
+import Hero1 from "@/app/(app)/(marketing)/_components/hero1";
+import { PricingGrid } from "@/app/(app)/pricing/_components/pricing-card";
 import { auth } from "@/auth";
-import Hero1 from "@/components/home/hero1";
-import { PricingGrid } from "@/components/pricing/pricing-card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { employerPlans, talentPlans } from "@/config/subscriptions";
 import { getUserSubscriptionPlan } from "@/lib/data/user";

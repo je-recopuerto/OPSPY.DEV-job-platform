@@ -1,11 +1,11 @@
-import BlurBlob from "@/components/home/blur-blob";
-import FeaturedJobs from "@/components/home/job-grid";
 import { buttonVariants } from "@/components/ui/button";
 import { getRandomJobPosts } from "@/lib/data/job";
 import { jobsUrl, pricingUrl } from "@/lib/pages";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import BlurBlob from "./_components/blur-blob";
+import FeaturedJobs from "./_components/job-grid";
 
 export default async function Home() {
   return (

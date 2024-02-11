@@ -1,6 +1,6 @@
+import CompanyTable from "@/app/(app)/admin/_components/company-table";
+import Overview from "@/app/(app)/admin/_components/overview";
 import { auth } from "@/auth";
-import CompanyTable from "@/components/admin/company-table";
-import Overview from "@/components/admin/overview";
 import Spinner from "@/components/cui/Spinner";
 import {
   Breadcrumb,
