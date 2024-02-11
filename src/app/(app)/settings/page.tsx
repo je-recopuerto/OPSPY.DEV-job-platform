@@ -3,6 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { getUserWithCvsById } from "@/lib/data/user";
 import { UserWithCvs } from "@/lib/data/user.types";
 import knock from "@/lib/knock";
+import { loginUrl } from "@/lib/pages";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import PreferencesForm from "./_components/preferences-form";
@@ -18,6 +19,7 @@ export default async function SettingsProfilePage() {
   if (!session || !session.user || !session.user.id) return redirect("/");
 
   const user = await getUserWithCvsById(session.user.id);
+  if (!user) return redirect(loginUrl);
   if (!user.isOnboard) return redirect("/t/welcome");
 
   return (
