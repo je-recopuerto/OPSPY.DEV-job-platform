@@ -24,7 +24,6 @@ export async function setOnboarding(values: z.infer<typeof onboardingSchema>) {
       firstName: validatedState.firstName,
       lastName: validatedState.lastName,
       dateOfBirth: validatedState.dateOfBirth,
-      email: validatedState.email,
       bio: validatedState.bio,
       location: validatedState.location,
       githubLink: validatedState.githubUrl,
