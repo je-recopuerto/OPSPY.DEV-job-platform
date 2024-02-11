@@ -76,7 +76,7 @@ export function PricingCard({
       className="relative flex flex-col overflow-hidden rounded-xl border"
       key={plan.name}
     >
-      <div className="min-h-[150px] items-start space-y-4 bg-secondary/70 p-6">
+      <div className="min-h-[150px] items-start space-y-4 bg-card p-6">
         <p className="flex font-urban text-sm font-bold uppercase tracking-wider text-muted-foreground">
           {plan.name}
         </p>
@@ -89,7 +89,7 @@ export function PricingCard({
                   <span className="mr-2 text-muted-foreground line-through">
                     ${plan.prices.monthly}
                   </span>
-                  <span>${plan.prices.yearly / 12}</span>
+                  <span>${formatYearlyPrice(plan.prices.yearly / 12)}</span>
                 </>
               ) : (
                 `$${plan.prices.monthly}`
@@ -155,6 +155,11 @@ export function PricingCard({
     </div>
   );
 }
+
+const formatYearlyPrice = (price: number) => {
+  // only show the two decimal places if it's not a whole number
+  return price % 1 === 0 ? price : price.toFixed(2);
+};
 
 interface BillingFormButtonProps {
   plan: SubscriptionPlan;

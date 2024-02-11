@@ -4,7 +4,6 @@ import { auth } from "@/auth";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { employerPlans, talentPlans } from "@/config/subscriptions";
 import { getUserSubscriptionPlan } from "@/lib/data/user";
-import { CheckCircle2 } from "lucide-react";
 
 const PricingHeader = ({
   title,
@@ -18,13 +17,6 @@ const PricingHeader = ({
     <p className="text-xl pt-1">{subtitle}</p>
     <br />
   </section>
-);
-
-const CheckItem = ({ text }: { text: string }) => (
-  <div className="flex gap-2">
-    <CheckCircle2 size={18} className="my-auto text-green-400" />
-    <p className="pt-0.5 text-zinc-700 dark:text-zinc-300 text-sm">{text}</p>
-  </div>
 );
 
 export default async function Page() {
