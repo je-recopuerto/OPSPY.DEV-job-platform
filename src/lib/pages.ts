@@ -3,7 +3,6 @@ import { absoluteUrl } from "@/lib/utils";
 import { JobApplication } from "@prisma/client";
 import { z } from "zod";
 
-export const loginUrl = absoluteUrl("/auth");
 export const newJobUrl = absoluteUrl("/e/new-job");
 export const employerDashboardUrl = absoluteUrl("/e/dash");
 export const registerCompanyUrl = absoluteUrl("/e/register");

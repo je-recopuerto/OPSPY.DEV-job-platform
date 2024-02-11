@@ -16,7 +16,7 @@ import Accept from "./_components/accept-button";
 import Reject from "./_components/reject-button";
 
 import { ApplicationWithJob } from "@/lib/data/application.types";
-import { jobUrl, loginUrl } from "@/lib/pages";
+import { homeUrl, jobUrl } from "@/lib/pages";
 import { ApplicationStatus, WorkExperience } from "@prisma/client";
 import { formatDistance } from "date-fns";
 import Link from "next/link";
@@ -43,7 +43,7 @@ export default async function ApplicationPage({
     params.applicationId,
   );
 
-  if (!isAuthorized) return redirect(loginUrl);
+  if (!isAuthorized) return redirect(homeUrl);
   if (!application) return notFound();
 
   return (
