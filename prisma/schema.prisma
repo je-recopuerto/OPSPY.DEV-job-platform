@@ -142,6 +142,7 @@ model JobPost {
   minSalary    Float
   maxSalary    Float
   currency     Currency
+  interval     PayInterval      @default(YEARLY)
   type         JobType
   status       JobStatus        @default(ACTIVE)
   isQuickApply Boolean          @default(false)
@@ -155,6 +156,14 @@ model JobPost {
   JobTracker   JobTracker[]
   tags         Tag[]
   application  JobApplication[]
+}
+
+enum PayInterval {
+  HOURLY
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
 }
 
 enum JobStatus {

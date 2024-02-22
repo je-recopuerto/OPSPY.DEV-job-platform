@@ -303,8 +303,16 @@ export async function getJobPostFromIdUserScoped(
     }),
   ]);
 
+  if (!userId) {
+    return {
+      jobPost: post ? post : undefined,
+      hasApplied: false,
+      isSaved: false,
+    };
+  }
+
   return {
-    jobPost: post ?? undefined,
+    jobPost: post ? post : undefined,
     hasApplied: application !== null,
     isSaved: tracker !== null,
   };

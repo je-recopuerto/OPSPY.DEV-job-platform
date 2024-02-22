@@ -9,6 +9,7 @@ import { companyUrl } from "@/lib/pages";
 import { JobPost } from "@prisma/client";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
+import Markdown from "react-markdown";
 
 type JobPostProps = {
   jobId: JobPost["id"];
@@ -58,9 +59,9 @@ async function JobPost({ jobId }: JobPostProps) {
           isApplied={hasApplied}
         />
 
-        <p className={"text-sm text-muted-foreground pb-6 whitespace-pre-wrap"}>
+        <Markdown className="prose dark:prose-invert text-sm max-w-none">
           {jobPost.description}
-        </p>
+        </Markdown>
       </div>
     </ScrollArea>
   );
