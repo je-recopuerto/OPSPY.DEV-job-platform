@@ -14,8 +14,6 @@ type CompanyProfileProps = {
 };
 
 function CompanyProfileWithOpenings({ company }: CompanyProfileProps) {
-  console.log(`/companies/${encodeURI(company.id)}`);
-
   return (
     <Card className={"w-full"}>
       <CardHeader className={"flex flex-row gap-x-3 space-y-0"}>
