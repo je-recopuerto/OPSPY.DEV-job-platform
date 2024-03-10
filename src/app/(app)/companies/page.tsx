@@ -25,7 +25,7 @@ type Props = {
   searchParams: z.infer<typeof companyFilterSchema>;
 };
 
-export default async function ({ searchParams }: Props) {
+export default async function CompaniesPage({ searchParams }: Props) {
   const totalPages = await getCompaniesPageCount(searchParams);
 
   return (

@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { JobPost, JobSkeleton } from "./_components/job-post";
+import { JobSkeleton, Post } from "./_components/job-post";
 
 export const metadata = {
   title: "Jobs",
@@ -18,7 +18,7 @@ export default async function JobsPage({
 
   return (
     <Suspense fallback={<JobSkeleton />}>
-      <JobPost jobId={jobId} />
+      <Post jobId={jobId} />
     </Suspense>
   );
 }

@@ -54,7 +54,7 @@ export default function OnboardingCard(props: OnboardingCardProps) {
         onSubmit={form.handleSubmit((data) => setOnboarding(data))}
         className="space-y-8"
       >
-        <Card className="format lg:format-md max-w-2xl m-auto">
+        <Card className="format lg:format-md max-w-2xl m-auto mb-6">
           <GettingStarted form={form} />
 
           <Separator />
