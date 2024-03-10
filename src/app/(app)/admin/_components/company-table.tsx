@@ -3,6 +3,7 @@
 import { CompanyDataTableRowActions } from "@/app/(app)/admin/_components/company-table-row-actions";
 import { DataTable } from "@/components/table/data-table";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
+import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { companyUrl } from "@/lib/pages";
 import { Company } from "@prisma/client";
@@ -81,6 +82,22 @@ export const columns: ColumnDef<Company>[] = [
         </Link>
       ) : (
         <>{row.original.website}</>
+      );
+    },
+    enableSorting: true,
+    enableHiding: false,
+    accessorFn: (row) => row.name,
+  },
+  {
+    accessorKey: "company.status",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Status" />
+    ),
+    cell: ({ row }) => {
+      return row.original.isVerified ? (
+        <Badge variant={"default"}>Verified</Badge>
+      ) : (
+        <Badge variant={"destructive"}>Unverified</Badge>
       );
     },
     enableSorting: true,

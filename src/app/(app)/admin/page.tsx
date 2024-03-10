@@ -51,17 +51,19 @@ export default async function AdminPage() {
           {/*  </Button>*/}
           {/*</div>*/}
         </div>
-        <Tabs defaultValue="applications" className="space-y-4">
+        <Tabs defaultValue="overview" className="space-y-4">
           <TabsList>
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="company-requests">Company Requests</TabsTrigger>
+            <TabsTrigger value="company-approvals">
+              Company Approvals
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value={"overview"} className="space-y-4">
             <Overview />
           </TabsContent>
 
-          <TabsContent value={"company-requests"} className="space-y-4">
+          <TabsContent value={"company-approvals"} className="space-y-4">
             <Suspense fallback={<Spinner />}>
               <CompanyReviewTable />
             </Suspense>
