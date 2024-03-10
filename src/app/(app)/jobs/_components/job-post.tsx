@@ -15,7 +15,7 @@ type JobPostProps = {
   jobId: JobPost["id"];
 };
 
-async function JobPost({ jobId }: JobPostProps) {
+async function Post({ jobId }: JobPostProps) {
   const session = await auth();
   const { jobPost, isSaved, hasApplied } = await getJobPostFromIdUserScoped(
     jobId,
@@ -97,4 +97,4 @@ function JobSkeleton() {
   );
 }
 
-export { JobPost, JobSkeleton };
+export { JobSkeleton, Post };

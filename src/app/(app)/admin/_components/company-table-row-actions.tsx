@@ -1,23 +1,23 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { companyUrl } from "@/lib/pages";
+import { cn } from "@/lib/utils";
 import { Company } from "@prisma/client";
 import { Row } from "@tanstack/react-table";
-import { CircleEllipsisIcon } from "lucide-react";
-import { useState } from "react";
+import { CircleEllipsisIcon, EyeIcon, PencilIcon } from "lucide-react";
+import Link from "next/link";
 
 interface DataTableRowActionsProps {
   row: Row<Company>;
 }
 
 export function CompanyDataTableRowActions({ row }: DataTableRowActionsProps) {
-  const [open, setOpen] = useState(false);
-
   return (
     <>
       <DropdownMenu>
@@ -31,15 +31,28 @@ export function CompanyDataTableRowActions({ row }: DataTableRowActionsProps) {
           </Button>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent align="end" className="w-48">
-          {"Lorem ipsum"}
+        <DropdownMenuContent align="end">
+          <Link
+            href={companyUrl(row.original.id)}
+            className={cn("w-full", buttonVariants({ variant: "ghost" }))}
+          >
+            <PencilIcon className="h-4 w-4 mr-2" />
+            Edit
+          </Link>
+
+          <Link
+            href={companyUrl(row.original.id)}
+            className={cn("w-full", buttonVariants({ variant: "ghost" }))}
+          >
+            <EyeIcon className="h-4 w-4 mr-2" />
+            View
+          </Link>
+
           {/*<Status row={row} status={row.original.status} />*/}
 
           {/*<Delete open={open} setOpen={setOpen} />*/}
         </DropdownMenuContent>
       </DropdownMenu>
-
-      {/*<DeleteDialog open={open} setOpen={setOpen} row={row} />*/}
     </>
   );
 }

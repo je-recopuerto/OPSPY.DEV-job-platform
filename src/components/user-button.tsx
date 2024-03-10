@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { getUserWithCompanyById } from "@/lib/data/user";
 import {
+  adminDashboardUrl,
   employerDashboardUrl,
   settingsUrl,
   talentDashboardUrl,
@@ -73,6 +74,18 @@ export default async function UserButton() {
               <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
             </Link>
           </DropdownMenuItem>
+
+          {user?.isSuperUser && (
+            <>
+              <DropdownMenuItem asChild>
+                <Link href={adminDashboardUrl}>
+                  <CreditCard className="mr-2 h-4 w-4" />
+                  <span>Admin</span>
+                  <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+                </Link>
+              </DropdownMenuItem>
+            </>
+          )}
 
           <DropdownMenuItem asChild>
             <Link href={settingsUrl}>
