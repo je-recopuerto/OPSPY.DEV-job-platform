@@ -14,9 +14,9 @@
     "format:fix": "prettier --write --list-different .",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "postinstall": "prisma generate && prisma migrate deploy",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.5.0",
