@@ -15,7 +15,7 @@ export const env = createEnv({
     AUTH0_SCOPE: z.string().min(1),
     AUTH0_AUDIENCE: z.string().min(1),
 
-    DATABASE_URL: z.string().min(1),
+    POSTGRES_PRISMA_URL: z.string().min(1),
 
     KNOCK_SECRET_API_KEY: z.string().min(1),
 
@@ -55,7 +55,7 @@ export const env = createEnv({
     AUTH0_ISSUER: process.env.AUTH0_ISSUER,
     AUTH0_SCOPE: process.env.AUTH0_SCOPE,
     AUTH0_AUDIENCE: process.env.AUTH0_AUDIENCE,
-    DATABASE_URL: process.env.DATABASE_URL,
+    POSTGRES_PRISMA_URL: process.env.POSTGRES_PRISMA_URL,
     KNOCK_SECRET_API_KEY: process.env.KNOCK_SECRET_API_KEY,
     AZURE_STORAGE_ACCOUNT_NAME: process.env.AZURE_STORAGE_ACCOUNT_NAME,
     AZURE_STORAGE_ACCOUNT_KEY: process.env.AZURE_STORAGE_ACCOUNT_KEY,
