@@ -19,8 +19,10 @@ export const env = createEnv({
 
     KNOCK_SECRET_API_KEY: z.string().min(1),
 
-    AZURE_STORAGE_ACCOUNT_NAME: z.string().min(1),
-    AZURE_STORAGE_ACCOUNT_KEY: z.string().min(1),
+    STORAGE_ACCOUNT_ID: z.string().min(1),
+    STORAGE_ACCESS_KEY_ID: z.string().min(1),
+    STORAGE_SECRET_ACCESS_KEY: z.string().min(1),
+    STORAGE_STATIC_URL: z.string().url(),
 
     OPENAI_API_KEY: z.string().min(1),
 
@@ -57,8 +59,10 @@ export const env = createEnv({
     AUTH0_AUDIENCE: process.env.AUTH0_AUDIENCE,
     POSTGRES_PRISMA_URL: process.env.POSTGRES_PRISMA_URL,
     KNOCK_SECRET_API_KEY: process.env.KNOCK_SECRET_API_KEY,
-    AZURE_STORAGE_ACCOUNT_NAME: process.env.AZURE_STORAGE_ACCOUNT_NAME,
-    AZURE_STORAGE_ACCOUNT_KEY: process.env.AZURE_STORAGE_ACCOUNT_KEY,
+    STORAGE_ACCOUNT_ID: process.env.STORAGE_ACCOUNT_ID,
+    STORAGE_ACCESS_KEY_ID: process.env.STORAGE_ACCESS_KEY_ID,
+    STORAGE_SECRET_ACCESS_KEY: process.env.STORAGE_SECRET_ACCESS_KEY,
+    STORAGE_STATIC_URL: process.env.STORAGE_STATIC_URL,
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     STRIPE_API_KEY: process.env.STRIPE_API_KEY,
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
