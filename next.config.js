@@ -2,17 +2,15 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    // Fixes: https://github.com/vercel/next.js/issues/59432
-    serverComponentsExternalPackages: ["@azure/storage-blob"],
     // typedRoutes: true,
   },
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "opportunify.blob.core.windows.net",
+        hostname: "static.opspy.dev",
         port: "",
-        pathname: "/**/*",
+        pathname: "**",
       },
       {
         protocol: "https",

@@ -5,7 +5,7 @@ import { env } from "@/env.mjs";
 import {
   deleteFile,
   getExpirableUrlFor,
-  getUrlFor,
+  getStaticUrlFor,
   uploadFile,
 } from "@/lib/blob";
 import { cvTag } from "@/lib/cache-tags";
@@ -160,11 +160,7 @@ export async function deleteCv(cvId: UploadedCv["id"]) {
 
   console.log("Deleting cv", cvId, "for user", user.id);
 
-  console.log("Deleting cv from blob storage:", cv.fileName);
-  const result = await deleteFile("cvs", cv.fileName);
-  if (result.errorCode) {
-    console.error("Failed to delete cv from blob storage", result);
-  }
+  const _ = await deleteFile("cvs", cv.fileName);
 
   await prisma.uploadedCv.delete({
     where: {
@@ -254,7 +250,13 @@ export async function uploadCv(formData: FormData) {
 
   // Upload cv to blob storage
   const blobName = uuidv4() + cv.name;
-  const _ = await uploadFile("cvs", buffer, cv.type, blobName);
+  const response = await uploadFile(
+    "cvs",
+    Buffer.from(buffer),
+    cv.type,
+    blobName,
+  );
+  console.log(response);
 
   console.log("Uploading cv to blob storage");
 
@@ -289,8 +291,8 @@ export async function requestCvUrl(cvId: UploadedCv["id"]) {
 
   console.log("Requesting cv url for", cvId, "for user", user.id);
 
-  const expiresAt = new Date(new Date().valueOf() + 60 * 60 * 1000); // 1 hour from now
-  return getExpirableUrlFor("cvs", cv.fileName, expiresAt);
+  // Expires in 1hour = 60 (minutes) * 60 (seconds)
+  return getExpirableUrlFor("cvs", cv.fileName, 60 * 60);
 }
 
 export async function uploadProfilePicture(formData: FormData) {
@@ -314,21 +316,19 @@ export async function uploadProfilePicture(formData: FormData) {
   }
 
   const fileName = uuidv4() + picture.name;
-  const blobResponse = await uploadFile(
+  const response = await uploadFile(
     "profile-pictures",
-    buffer,
+    Buffer.from(buffer),
     picture.type,
     fileName,
   );
-
-  const blobUrl = getUrlFor("profile-pictures", fileName);
 
   const result = await prisma.user.update({
     where: {
       id: user.id,
     },
     data: {
-      image: blobUrl,
+      image: getStaticUrlFor(fileName).toString(),
     },
   });
 

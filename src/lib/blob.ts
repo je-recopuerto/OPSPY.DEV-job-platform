@@ -1,76 +1,60 @@
 import { env } from "@/env.mjs";
 import {
-  BlobSASPermissions,
-  BlobSASSignatureValues,
-  BlobServiceClient,
-  generateBlobSASQueryParameters,
-  StorageSharedKeyCredential,
-} from "@azure/storage-blob";
+  DeleteObjectCommand,
+  GetObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
-const storageAccountName = env.AZURE_STORAGE_ACCOUNT_NAME!;
-const storageAccountKey = env.AZURE_STORAGE_ACCOUNT_KEY!;
+const S3 = new S3Client({
+  region: "auto",
+  endpoint: `https://${env.STORAGE_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+  credentials: {
+    accessKeyId: env.STORAGE_ACCESS_KEY_ID,
+    secretAccessKey: env.STORAGE_SECRET_ACCESS_KEY,
+  },
+});
 
-const sharedKeyCredential = new StorageSharedKeyCredential(
-  storageAccountName,
-  storageAccountKey,
-);
-export const blobService = new BlobServiceClient(
-  `https://${storageAccountName}.blob.core.windows.net`,
-  sharedKeyCredential,
-);
-
-export async function uploadFile(
-  containerName: string,
-  buffer: ArrayBuffer,
+export function uploadFile(
+  bucketName: string,
+  buffer: Buffer,
   fileType: string,
   fileName: string,
 ) {
-  const containerClient = blobService.getContainerClient(containerName);
-  await containerClient.createIfNotExists({
-    access: "container",
-  });
-
-  const blobClient = containerClient.getBlockBlobClient(fileName);
-  const options = { blobHTTPHeaders: { blobContentType: fileType } };
-
-  return await blobClient.uploadData(buffer, options);
+  return S3.send(
+    new PutObjectCommand({
+      Bucket: bucketName,
+      Key: fileName,
+      Body: buffer,
+      ContentType: fileType,
+    }),
+  );
 }
 
-export function getUrlFor(containerName: string, fileName: string) {
-  const containerClient = blobService.getContainerClient(containerName);
-  const blobClient = containerClient.getBlobClient(fileName);
-
-  return blobClient.url;
+export function getStaticUrlFor(fileName: string) {
+  return new URL(fileName, env.STORAGE_STATIC_URL);
 }
 
 export function getExpirableUrlFor(
   containerName: string,
   fileName: string,
-  expiresAt: Date,
+  expiresInSeconds?: number | undefined,
 ) {
-  const containerClient = blobService.getContainerClient(containerName);
-  const blobClient = containerClient.getBlobClient(fileName);
-
-  const sasOptions: BlobSASSignatureValues = {
-    containerName,
-    blobName: fileName,
-    permissions: BlobSASPermissions.parse("r"),
-    startsOn: new Date(),
-    expiresOn: expiresAt,
-    ipRange: { start: "0.0.0.0", end: "255.255.255.255" },
-  };
-
-  const sasToken = generateBlobSASQueryParameters(
-    sasOptions,
-    sharedKeyCredential,
-  ).toString();
-
-  return `${blobClient.url}?${sasToken}`;
+  const command = new GetObjectCommand({
+    Bucket: containerName,
+    Key: fileName,
+  });
+  return getSignedUrl(S3, command, {
+    expiresIn: expiresInSeconds,
+  });
 }
 
-export async function deleteFile(containerName: string, fileName: string) {
-  const containerClient = blobService.getContainerClient(containerName);
-  const blobClient = containerClient.getBlockBlobClient(fileName);
-
-  return await blobClient.deleteIfExists();
+export function deleteFile(containerName: string, fileName: string) {
+  return S3.send(
+    new DeleteObjectCommand({
+      Bucket: containerName,
+      Key: fileName,
+    }),
+  );
 }
