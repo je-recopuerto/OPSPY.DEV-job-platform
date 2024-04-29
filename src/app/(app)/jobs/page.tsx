@@ -1,3 +1,5 @@
+import { getJobPostFromIdUserScoped } from "@/lib/data/job";
+import { Metadata } from "next";
 import { Suspense } from "react";
 import { JobSkeleton, Post } from "./_components/job-post";
 
@@ -21,4 +23,22 @@ export default async function JobsPage({
       <Post jobId={jobId} />
     </Suspense>
   );
+}
+
+export async function generateMetadata({
+  searchParams: { jid },
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}): Promise<Metadata> {
+  const { jobPost } = await getJobPostFromIdUserScoped(jid as string);
+
+  if (!jobPost) return { title: "Job not found" };
+
+  return {
+    title: jobPost.title,
+    openGraph: {
+      title: jobPost.title,
+      description: jobPost.description?.slice(0, 160),
+    },
+  };
 }
