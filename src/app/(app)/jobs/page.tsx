@@ -3,10 +3,6 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import { JobSkeleton, Post } from "./_components/job-post";
 
-export const metadata = {
-  title: "Jobs",
-};
-
 type JobPageParams = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
@@ -32,7 +28,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { jobPost } = await getJobPostFromIdUserScoped(jid as string);
 
-  if (!jobPost) return { title: "Job not found" };
+  if (!jobPost) return { title: "Jobs" };
 
   return {
     title: jobPost.title,
