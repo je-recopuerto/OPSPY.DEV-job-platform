@@ -94,6 +94,8 @@ export function getUserWithCompanyById(
     },
     include: {
       company: true,
+      cv: true,
+      workExperience: true,
     },
   });
 }

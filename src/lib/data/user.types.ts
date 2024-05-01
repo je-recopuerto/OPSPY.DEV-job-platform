@@ -16,6 +16,8 @@ export type UserWithJobTrackers = Prisma.UserGetPayload<{
 export type UserWithCompany = Prisma.UserGetPayload<{
   include: {
     company: true;
+    cv: true;
+    workExperience: true;
   };
 }>;
 
