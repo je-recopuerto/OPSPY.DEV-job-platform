@@ -1,9 +1,11 @@
 import { buttonVariants } from "@/components/ui/button";
 import { getRandomJobPosts } from "@/lib/data/job";
+import prisma from "@/lib/db";
 import { jobsUrl, pricingUrl } from "@/lib/pages";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 import BlurBlob from "./_components/blur-blob";
 import FeaturedJobs from "./_components/job-grid";
 
@@ -55,7 +57,11 @@ export default async function Home() {
               Pricing
             </Link>
             <Link href={jobsUrl} className={cn(buttonVariants({ size: "lg" }))}>
-              View jobs
+              View{" "}
+              <Suspense fallback={"-"}>
+                <JobCount />
+              </Suspense>{" "}
+              jobs
               <ArrowRight className="ml-2 size-4" />
             </Link>{" "}
           </div>
@@ -88,6 +94,11 @@ export default async function Home() {
       </section>
     </>
   );
+}
+
+async function JobCount() {
+  const count = await prisma.jobPost.count();
+  return <>{count}</>;
 }
 
 const features = [
