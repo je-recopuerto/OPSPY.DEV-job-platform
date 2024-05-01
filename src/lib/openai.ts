@@ -1,4 +1,3 @@
-// Replace 'your-api-key' with your actual OpenAI API key
 import { env } from "@/env.mjs";
 import OpenAI from "openai";
 
@@ -18,8 +17,6 @@ export async function improveBio(bio: string): Promise<string> {
       max_tokens: 150,
       model: "gpt-3.5-turbo",
     });
-
-    console.log("completion:", completion);
 
     if (
       completion.choices &&

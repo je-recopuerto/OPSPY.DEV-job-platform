@@ -1,5 +1,6 @@
 import { plans } from "@/config/subscriptions";
 import {
+  UserWithBioGenerations,
   UserWithCompany,
   UserWithCvs,
   UserWithJobTrackers,
@@ -34,7 +35,11 @@ export async function getUserCountGrowth(): Promise<{
   };
 }
 
-export function getUserById(id: string): Promise<User | null> {
+export function getUserById(id?: User["id"]): Promise<User | null> {
+  if (!id) {
+    return Promise.resolve(null);
+  }
+
   return prisma.user.findFirst({
     where: {
       id: id,
@@ -42,7 +47,29 @@ export function getUserById(id: string): Promise<User | null> {
   });
 }
 
-export function getUserWithCvsById(id: string): Promise<UserWithCvs | null> {
+export function getUserWithBioGenerationsById(
+  id?: User["id"],
+): Promise<UserWithBioGenerations | null> {
+  if (!id) {
+    return Promise.resolve(null);
+  }
+
+  return prisma.user.findFirst({
+    where: {
+      id: id,
+    },
+    include: {
+      bioGenerations: true,
+    },
+  });
+}
+
+export function getUserWithCvsById(
+  id?: User["id"],
+): Promise<UserWithCvs | null> {
+  if (!id) {
+    return Promise.resolve(null);
+  }
   return prisma.user.findFirst({
     where: {
       id: id,
@@ -57,6 +84,10 @@ export function getUserWithCvsById(id: string): Promise<UserWithCvs | null> {
 export function getUserWithCompanyById(
   id?: User["id"],
 ): Promise<UserWithCompany | null> {
+  if (!id) {
+    return Promise.resolve(null);
+  }
+
   return prisma.user.findFirst({
     where: {
       id: id,
@@ -86,39 +117,6 @@ export function getCvById(id: UploadedCv["id"]) {
       id: id,
     },
   });
-}
-
-export async function getUserBioGenerationsLeft(
-  id: User["id"],
-): Promise<number> {
-  const plan = await getUserSubscriptionPlan(id);
-
-  const generations = await prisma.user.findFirst({
-    where: {
-      id: id,
-    },
-    select: {
-      bioCompletions: true,
-      lastBioReset: true,
-    },
-  });
-
-  if (!generations) {
-    throw new Error("User not found");
-  }
-
-  const { bioCompletions, lastBioReset } = generations;
-
-  const now = Date.now();
-  const lastReset = lastBioReset?.getTime() || now;
-
-  const daysSinceLastReset = Math.floor((now - lastReset) / 86_400_000);
-  // If the user's reset date isn't within a day, then they have all their generations left.
-  if (daysSinceLastReset >= 1) {
-    return plan.bioGenerationsPerDay;
-  } else {
-    return plan.bioGenerationsPerDay - bioCompletions;
-  }
 }
 
 export async function getUserSubscriptionPlan(

@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteCv, requestCvUrl } from "@/app/(app)/settings/_actions";
+import { deleteCv, requestCvUrl } from "@/app/(app)/settings/_actions/cv";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,16 +17,28 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useToast } from "@/components/ui/use-toast";
 import { UploadedCv } from "@prisma/client";
 import { MoreVertical } from "lucide-react";
 import { useState } from "react";
 
 export default function CvCardActions({ cv }: { cv: UploadedCv }) {
+  const { toast } = useToast();
+
   const [open, setOpen] = useState(false);
 
   const viewCv = async () => {
-    const url = await requestCvUrl(cv.id);
-    window.open(url, "_blank");
+    const response = await requestCvUrl(cv.id);
+
+    if (!response.success) {
+      toast({
+        variant: "default",
+        title: "Error",
+        description: `❌ ${response.error}`,
+      });
+    } else {
+      window.open(response.value, "_blank");
+    }
   };
 
   return (

@@ -18,3 +18,9 @@ export type UserWithCompany = Prisma.UserGetPayload<{
     company: true;
   };
 }>;
+
+export type UserWithBioGenerations = Prisma.UserGetPayload<{
+  include: {
+    bioGenerations: true;
+  };
+}>;

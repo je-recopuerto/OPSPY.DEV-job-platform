@@ -1,77 +1,58 @@
 "use server";
 
-import { canCreateNewCompany } from "@/app/_actions";
 import { auth } from "@/auth";
+import { createServerAction, ServerActionError } from "@/lib/action-utils";
 import prisma from "@/lib/db";
 import { notifyCompanyRegistration } from "@/lib/knock";
+import { canCreateNewCompany } from "@/lib/user";
 import { registerCompanySchema } from "@/lib/validations/company";
-import { Company } from "@prisma/client";
 import { z } from "zod";
 
-type RegisterCompanyResult =
-  | { success: false; error: string }
-  | { success: true; data: { company: Company; message: string } };
+export const registerCompany = createServerAction(
+  async (values: z.infer<typeof registerCompanySchema>) => {
+    const response = registerCompanySchema.safeParse(values);
+    if (!response.success) {
+      throw new ServerActionError(response.error.errors.join(", "));
+    }
 
-export async function registerCompany(
-  values: z.infer<typeof registerCompanySchema>,
-): Promise<RegisterCompanyResult> {
-  const response = registerCompanySchema.safeParse(values);
-  if (!response.success) {
+    const session = await auth();
+    if (!session || !session.user || !session.user.id) {
+      throw new ServerActionError("Unauthorized");
+    }
+
+    if (!(await canCreateNewCompany(session?.user?.id))) {
+      throw new ServerActionError(
+        "You cannot create a new company at this time.",
+      );
+    }
+
+    // Create company
+    const company = await prisma.company.create({
+      data: {
+        name: response.data.name,
+        phone: response.data.phone,
+        website: response.data.website,
+        employeeCount: response.data.employeeCount,
+        description: response.data.description,
+        addressLine1: response.data.addressLine1,
+        addressLine2: response.data.addressLine2,
+        city: response.data.city,
+        state: response.data.state,
+        zipCode: response.data.zipCode,
+        country: response.data.country,
+        ownerId: session?.user?.id,
+        isVerified: false,
+      },
+    });
+
+    if (!company) throw new ServerActionError("Company not created");
+
+    // Notify company owner
+    await notifyCompanyRegistration(company);
+
     return {
-      success: false,
-      error: "Invalid input",
-    };
-  }
-
-  const parsedValues = response.data;
-
-  const session = await auth();
-  if (!session || !session.user || !session.user.id) {
-    return {
-      success: false,
-      error: "Unauthorized",
-    };
-  }
-
-  const data = await canCreateNewCompany(session?.user?.id);
-  if (!data.authorized) {
-    return {
-      success: false,
-      error: "Unauthorized",
-    };
-  }
-
-  const { user } = data.data;
-
-  // Create company
-  const company = await prisma.company.create({
-    data: {
-      name: parsedValues.name,
-      phone: parsedValues.phone,
-      website: parsedValues.website,
-      employeeCount: parsedValues.employeeCount,
-      description: parsedValues.description,
-      addressLine1: parsedValues.addressLine1,
-      addressLine2: parsedValues.addressLine2,
-      city: parsedValues.city,
-      state: parsedValues.state,
-      zipCode: parsedValues.zipCode,
-      country: parsedValues.country,
-      ownerId: user.id,
-      isVerified: false,
-    },
-  });
-
-  if (!company) throw new Error("Company not created");
-
-  // Notify company owner
-  await notifyCompanyRegistration(company);
-
-  return {
-    success: true,
-    data: {
       message: `Company ${company.name} created`,
       company,
-    },
-  };
-}
+    };
+  },
+);

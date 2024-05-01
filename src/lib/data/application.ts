@@ -51,3 +51,27 @@ export async function getApplicationById(
     },
   });
 }
+
+export async function getApplicationWithCompanyById(
+  id: JobApplication["id"],
+): Promise<ApplicationWithJob | null> {
+  return prisma.jobApplication.findFirst({
+    where: {
+      id: id,
+    },
+    include: {
+      job: {
+        include: {
+          company: true,
+        },
+      },
+      user: {
+        include: {
+          company: true,
+          cv: true,
+          workExperience: true,
+        },
+      },
+    },
+  });
+}

@@ -66,20 +66,20 @@ export default function Accept({ application, ...props }: AcceptProps) {
     console.log(values);
 
     const result = await matchCandidate(application.id, values);
-    if (result.error) {
+    if (result.success) {
+      toast({
+        title: "Success",
+        description: "Successfully matched with candidate",
+        duration: 5000,
+      });
+
+      router.push(employerDashboardUrl);
+    } else {
       toast({
         title: "Error",
         description: result.error,
         duration: 5000,
       });
-    } else {
-      toast({
-        title: "Success",
-        description: result.message,
-        duration: 5000,
-      });
-
-      router.push(employerDashboardUrl);
     }
   }
 

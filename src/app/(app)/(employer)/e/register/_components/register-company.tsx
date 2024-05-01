@@ -56,15 +56,13 @@ export default function RegisterCompany() {
         duration: 3000,
       });
     } else {
-      const { data } = response;
-
       toast({
         title: "Success",
-        description: data.message,
+        description: "Successfully registered company",
       });
 
       // Redirect to new company page
-      router.push(companyUrl(data.company.id));
+      router.push(companyUrl(response.value.company.id));
     }
   };
 

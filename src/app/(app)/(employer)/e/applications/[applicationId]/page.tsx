@@ -20,7 +20,7 @@ import { homeUrl, jobUrl } from "@/lib/pages";
 import { ApplicationStatus, WorkExperience } from "@prisma/client";
 import { formatDistance } from "date-fns";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 type ApplicationPageProps = {
   params: {
@@ -38,20 +38,20 @@ export default async function ApplicationPage({
   const session = await auth();
   if (!session?.user || !session.user.id) return <SignIn />;
 
-  const { isAuthorized, application } = await isAuthorizedForApplications(
+  const response = await isAuthorizedForApplications(
     session.user.id,
     params.applicationId,
   );
 
-  if (!isAuthorized) return redirect(homeUrl);
-  if (!application) return notFound();
+  if (!response.success || !response.value.isAuthorized)
+    return redirect(homeUrl);
 
   return (
     <div className="container space-y-4">
       <Back />
 
-      <Title application={application} />
-      <Body application={application} />
+      <Title application={response.value.application} />
+      <Body application={response.value.application} />
 
       <Notes />
     </div>

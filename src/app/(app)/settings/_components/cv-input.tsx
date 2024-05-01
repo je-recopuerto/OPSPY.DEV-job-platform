@@ -1,6 +1,6 @@
 "use client";
 
-import { uploadCv } from "@/app/(app)/settings/_actions";
+import { uploadCv } from "@/app/(app)/settings/_actions/cv";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { Plus } from "lucide-react";
@@ -17,25 +17,26 @@ export default function AddCvButton() {
 
     setUploading(true);
 
-    try {
-      const formData = new FormData();
-      formData.append("cv", file);
+    const formData = new FormData();
+    formData.append("cv", file);
 
-      await uploadCv(formData);
-    } catch (error) {
-      if (!(error instanceof Error)) return;
+    const response = await uploadCv(formData);
 
-      console.error("Error uploading CV:", error);
-      // Handle error appropriately
-
+    if (response.success) {
+      toast({
+        variant: "default",
+        title: "Success",
+        description: "✅ CV uploaded successfully!",
+      });
+    } else {
       toast({
         variant: "default",
         title: "Error",
-        description: "❌ " + error.message,
+        description: `❌ ${response.error}`,
       });
-    } finally {
-      setUploading(false);
     }
+
+    setUploading(false);
   };
 
   const fileInputRef = useRef<HTMLInputElement>(null);
