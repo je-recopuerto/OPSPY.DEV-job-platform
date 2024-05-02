@@ -4,6 +4,15 @@ import { matchCandidate } from "@/app/(app)/(employer)/e/applications/[applicati
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   Form,
   FormControl,
   FormDescription,
@@ -23,15 +32,6 @@ import { useRouter } from "next/navigation";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../../../../../../../components/ui/dialog";
 
 interface AcceptProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -59,12 +59,7 @@ export default function Accept({ application, ...props }: AcceptProps) {
 
   const watchNotifyCandidate = watch("notifyCandidate");
 
-  // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof acceptCandidateSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-
     const result = await matchCandidate(application.id, values);
     if (result.success) {
       toast({
