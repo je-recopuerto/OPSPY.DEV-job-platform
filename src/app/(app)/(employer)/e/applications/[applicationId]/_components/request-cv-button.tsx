@@ -1,6 +1,6 @@
 "use client";
 
-import { requestCvUrl } from "@/app/(app)/settings/_actions";
+import { requestCvUrl } from "@/app/(app)/settings/_actions/cv";
 import { Button } from "@/components/ui/button";
 import { FileSearch } from "lucide-react";
 
@@ -14,8 +14,10 @@ export default function ViewCvButton({ cvId }: ViewCvButtonProps) {
       variant={"default"}
       onClick={async () => {
         if (cvId) {
-          const url = await requestCvUrl(cvId);
-          window.open(url);
+          const response = await requestCvUrl(cvId);
+          if (response.success) {
+            window.open(response.value);
+          }
         }
       }}
       disabled={!cvId}

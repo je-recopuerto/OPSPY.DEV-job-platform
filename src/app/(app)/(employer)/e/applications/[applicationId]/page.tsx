@@ -1,8 +1,8 @@
+import ViewCvButton from "@/app/(app)/(employer)/e/applications/[applicationId]/_components/request-cv-button";
 import { isAuthorizedForApplications } from "@/app/_actions";
 import { auth } from "@/auth";
 import { SignIn } from "@/components/auth";
 import Back from "@/components/cui/BackButton";
-import ViewCvButton from "@/components/request-cv-button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
