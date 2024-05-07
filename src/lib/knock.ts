@@ -62,29 +62,37 @@ export async function notifyApplicationCreated(
   });
 }
 
-export async function notifyApplicationUpdated(
-  user: User,
-  job: JobPostWithCompany,
-  message?: string,
-) {
+export async function notifyApplicationUpdated({
+  userId,
+  companyName,
+  jobTitle,
+  jobId,
+  message,
+}: {
+  userId: User["id"];
+  companyName: string;
+  jobTitle: string;
+  jobId: string;
+  message?: string;
+}) {
   return await knock.notify(applicationUpdatedKnock, {
-    actor: user.id,
-    recipients: [user.id],
+    actor: userId,
+    recipients: [userId],
     data: {
       // prettier-ignore
       "companyName": {
         // prettier-ignore
-        "value": job.company.name,
+        "value": companyName,
       },
       // prettier-ignore
       "jobName": {
         // prettier-ignore
-        "value": job.title,
+        "value": jobTitle,
       },
       // prettier-ignore
       "jobId": {
         // prettier-ignore
-        "value": job.id,
+        "value": jobId,
       },
       // prettier-ignore
       "message": {

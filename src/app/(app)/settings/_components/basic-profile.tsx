@@ -3,7 +3,7 @@
 import {
   getEnhancedBio,
   getMyGenerationsLeft,
-} from "@/app/(app)/settings/_actions";
+} from "@/app/(app)/settings/_actions/bio";
 import CvCard from "@/app/(app)/settings/_components/cv-card";
 import AddCvButton from "@/app/(app)/settings/_components/cv-input";
 import EnhanceBio from "@/app/(app)/settings/_components/enhance-bio";
@@ -32,7 +32,7 @@ import { cn } from "@/lib/utils";
 import { updateProfileFormSchema } from "@/schemas/updateProfileSchema";
 import { format } from "date-fns";
 import { CalendarIcon, Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 
@@ -51,37 +51,43 @@ export default function BasicProfile({ form, user }: ProfileFormProps) {
 
   useEffect(() => {
     const getGenerationsLeft = async () => {
-      const generationsLeft = await getMyGenerationsLeft();
-      setGenerationsLeft(generationsLeft);
+      const response = await getMyGenerationsLeft();
+      if (response.success) {
+        setGenerationsLeft(response.value);
+      } else {
+        toast({
+          variant: "default",
+          title: "Error",
+          description: `❌ ${response.error}`,
+        });
+      }
     };
 
     getGenerationsLeft();
   }, [enhanceOpen]);
 
-  const enhanceBio = async () => {
+  const enhanceBio = useCallback(async () => {
     const bio = form.getValues("bio");
     if (!bio) return;
 
     setEnhanceBioLoading(true);
 
-    const { error, data } = await getEnhancedBio(bio);
+    const response = await getEnhancedBio(bio);
 
-    if (error) {
+    if (response.success) {
+      setEnhanceBioSuggestion(response.value!);
+      setEnhanceOpen(true);
+    } else {
       toast({
         variant: "default",
         title: "Error",
-        description: "❌ " + error,
+        description: `❌ ${response.error}`,
       });
-    } else {
-      if (data) {
-        setEnhanceBioSuggestion(data);
-        setEnhanceOpen(true);
-      }
     }
 
     // Open dialog with new bio
     setEnhanceBioLoading(false);
-  };
+  }, []);
 
   return (
     <div className={"space-y-4"}>

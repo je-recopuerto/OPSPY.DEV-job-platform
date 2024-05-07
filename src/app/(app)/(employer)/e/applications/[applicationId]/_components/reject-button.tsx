@@ -63,7 +63,7 @@ export default function Reject({ application, ...props }: RejectProps) {
     console.log(values);
 
     const result = await rejectCandidate(application.id, values);
-    if (result.error) {
+    if (!result.success) {
       toast({
         title: "Error",
         description: result.error,

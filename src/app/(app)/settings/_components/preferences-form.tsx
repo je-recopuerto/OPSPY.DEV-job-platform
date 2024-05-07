@@ -1,13 +1,12 @@
 "use client";
 
-import { updateNotificationSettings } from "@/app/(app)/settings/_actions";
+import { updateNotificationSettings } from "@/app/(app)/settings/_actions/notifications";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
 import { PreferenceSet } from "@knocklabs/node";
 import { ChannelType } from "@knocklabs/node/dist/src/common/interfaces";
 import { ChannelTypePreferences } from "@knocklabs/node/dist/src/resources/preferences/interfaces";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 type PreferencesFormProps = {
@@ -49,7 +48,7 @@ const preferenceTypes: {
     description: "SMS (text message)",
     code: "sms",
   },
-];
+] as const;
 
 export default function PreferencesForm(props: PreferencesFormProps) {
   const { toast } = useToast();
@@ -61,17 +60,6 @@ export default function PreferencesForm(props: PreferencesFormProps) {
   const {
     formState: { isSubmitting, isSubmitSuccessful, isDirty, errors },
   } = form;
-
-  useEffect(() => {
-    if (!isSubmitting && isSubmitSuccessful) {
-      toast({
-        variant: "default",
-        title: "Success",
-        description: "✅ Successfully updated notification settings!",
-        duration: 3000,
-      });
-    }
-  }, [isSubmitSuccessful, toast, isSubmitting]);
 
   const isChecked = (
     channelTypes: ChannelTypePreferences | null,
@@ -88,8 +76,24 @@ export default function PreferencesForm(props: PreferencesFormProps) {
         onSubmit={form.handleSubmit(async (data) => {
           const result = await updateNotificationSettings(data);
 
-          // Set the form values to the result
-          form.reset(result);
+          if (result.success) {
+            toast({
+              variant: "default",
+              title: "Success",
+              description: "✅ Successfully updated notification settings!",
+              duration: 3000,
+            });
+
+            // Set the form values to the result
+            form.reset(result.value);
+          } else {
+            toast({
+              variant: "destructive",
+              title: "Error",
+              description: `❌ ${result.error}`,
+              duration: 3000,
+            });
+          }
         })}
         className="space-y-5"
       >

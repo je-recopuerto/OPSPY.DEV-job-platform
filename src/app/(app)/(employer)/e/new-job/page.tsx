@@ -15,9 +15,9 @@ export default async function NewJobPage() {
   if (!session || !session.user || !session.user.id) return redirect("/");
 
   const response = await canCreateNewJobPost(session.user.id);
-  if (!response.authorized) return redirect(homeUrl);
+  if (!response.success) return redirect(homeUrl);
 
-  const { user } = response.data;
+  const user = response.value;
   if (!user.company) return redirect(homeUrl);
 
   return (

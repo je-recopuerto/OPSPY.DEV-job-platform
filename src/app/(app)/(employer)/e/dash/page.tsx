@@ -36,9 +36,9 @@ export default async function EmployerDashboardPage({
 }: EmployerDashboardPageProps) {
   const session = await auth();
   const response = await isAuthorizedForEmployerDash(session?.user?.id);
-  if (!response.authorized) return redirect(homeUrl);
+  if (!response.success) return redirect(homeUrl);
 
-  const { company } = response.data.user;
+  const { company } = response.value;
   if (!company) return notFound();
 
   return (

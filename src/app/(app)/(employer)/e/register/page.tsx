@@ -1,11 +1,7 @@
 import RegisterCompany from "@/app/(app)/(employer)/e/register/_components/register-company";
-import { canCreateNewCompany, CreateNewJobErrors } from "@/app/_actions";
 import { auth } from "@/auth";
-import {
-  employerDashboardUrl,
-  employerHomepageUrl,
-  homeUrl,
-} from "@/lib/pages";
+import { employerHomepageUrl, homeUrl } from "@/lib/pages";
+import { canCreateNewCompany } from "@/lib/user";
 import { redirect } from "next/navigation";
 
 export default async function CreateCompanyPage() {
@@ -13,37 +9,14 @@ export default async function CreateCompanyPage() {
   if (!session || !session.user || !session.user.id)
     return redirect(employerHomepageUrl);
 
-  const response = await canCreateNewCompany(session?.user?.id);
-  if (!response.authorized) {
-    const {
-      data: { error },
-    } = response;
-
-    const redirectUrl = getRedirectUrl(error);
-    return redirect(redirectUrl);
+  if (!(await canCreateNewCompany(session?.user?.id))) {
+    return redirect(homeUrl);
   }
-
-  const { user } = response.data;
 
   return (
     <main className="min-h-screen max-w-3xl mx-auto">
       <h1 className="text-2xl font-semibold pb-6">Register your company</h1>
-
       <RegisterCompany />
     </main>
   );
-}
-
-function getRedirectUrl(error: CreateNewJobErrors) {
-  console.log("error", error);
-  switch (error) {
-    case "NO_USER":
-      return homeUrl;
-    case "HAS_COMPANY":
-      return employerDashboardUrl;
-    case "UNVERIFIED_COMPANY":
-      return employerDashboardUrl;
-    default:
-      return homeUrl;
-  }
 }

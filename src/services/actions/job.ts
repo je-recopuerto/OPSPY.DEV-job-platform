@@ -44,9 +44,7 @@ export async function createJobPost(
 
 export async function deleteJobTracker(trackerId: JobTracker["id"]) {
   const result = await prisma.jobTracker.delete({
-    where: {
-      id: trackerId,
-    },
+    where: { id: trackerId },
   });
 
   revalidatePath("/t/dash");
@@ -97,12 +95,8 @@ export async function updateJobStatus(
   status: JobPost["status"],
 ) {
   const result = await prisma.jobPost.update({
-    where: {
-      id: postId,
-    },
-    data: {
-      status: status,
-    },
+    where: { id: postId },
+    data: { status: status },
   });
 
   revalidatePath("/e/dash");
@@ -112,9 +106,7 @@ export async function updateJobStatus(
 
 export async function deleteJobPost(id: JobPost["id"]) {
   const result = await prisma.jobPost.delete({
-    where: {
-      id: id,
-    },
+    where: { id: id },
   });
 
   console.log("Deleted job post with id", id, ":", result);

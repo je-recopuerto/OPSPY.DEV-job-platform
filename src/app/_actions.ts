@@ -1,148 +1,57 @@
 "use server";
 
+import { createServerAction, ServerActionError } from "@/lib/action-utils";
 import { getApplicationById } from "@/lib/data/application";
-import { ApplicationWithJob } from "@/lib/data/application.types";
 import { getUserWithCompanyById } from "@/lib/data/user";
-import { UserWithCompany } from "@/lib/data/user.types";
 import { JobApplication, User } from "@prisma/client";
 
-export declare type AuthorizeSuccess<Output> = {
-  authorized: true;
-  data: Output;
-};
-export declare type AuthorizeError<Output> = {
-  authorized: false;
-  data: Output;
-};
-export declare type AuthorizeReturnType<Success, Error = {}> =
-  | AuthorizeSuccess<Success>
-  | AuthorizeError<Error>;
+export const isAuthorizedForApplications = createServerAction(
+  async (userId: User["id"], applicationId: JobApplication["id"]) => {
+    const [user, application] = await Promise.all([
+      getUserWithCompanyById(userId),
+      getApplicationById(applicationId),
+    ]);
 
-export async function isAuthorizedForApplications(
-  userId: User["id"],
-  applicationId: JobApplication["id"],
-): Promise<{
-  application: ApplicationWithJob | null;
-  isAuthorized: boolean;
-}> {
-  const [user, application] = await Promise.all([
-    getUserWithCompanyById(userId),
-    getApplicationById(applicationId),
-  ]);
+    if (!user) throw new ServerActionError("UNAUTHORIZED");
+    if (!application) throw new ServerActionError("NO_APPLICATION");
 
-  const isAuthorized =
-    user !== null &&
-    application !== null &&
-    user.company?.id === application.job.companyId;
+    const isAuthorized = user.company?.id === application.job.companyId;
 
-  return {
-    application: application,
-    isAuthorized: isAuthorized,
-  };
-}
-
-export async function isAuthorizedForEmployerDash(userId?: User["id"]): Promise<
-  AuthorizeReturnType<{
-    user: UserWithCompany;
-  }>
-> {
-  if (!userId) {
     return {
-      authorized: false,
-      data: {},
+      application: application,
+      isAuthorized: isAuthorized,
     };
-  }
+  },
+);
 
-  const user = await getUserWithCompanyById(userId);
-  const isAuthorized = user !== null && user.company !== null;
-
-  if (!isAuthorized) {
-    return {
-      authorized: false,
-      data: {},
-    };
-  }
-
-  return {
-    data: {
-      user,
-    },
-    authorized: true,
-  };
-}
-
-export async function canCreateNewJobPost(userId: User["id"]): Promise<
-  AuthorizeReturnType<{
-    user: UserWithCompany;
-  }>
-> {
-  const user = await getUserWithCompanyById(userId);
-
-  let isAuthorized =
-    user !== null && user.company !== null && user.company.isVerified;
-
-  if (!isAuthorized || !user) {
-    return {
-      authorized: false,
-      data: {},
-    };
-  }
-
-  return {
-    data: {
-      user,
-    },
-    authorized: true,
-  };
-}
-
-export type CreateNewJobErrors =
-  | "NO_USER"
-  | "HAS_COMPANY"
-  | "UNVERIFIED_COMPANY";
-
-export async function canCreateNewCompany(userId: User["id"]): Promise<
-  AuthorizeReturnType<
-    {
-      user: UserWithCompany;
-    },
-    {
-      error: CreateNewJobErrors;
-    }
-  >
-> {
-  const user = await getUserWithCompanyById(userId);
-  if (!user) {
-    return {
-      authorized: false,
-      data: {
-        error: "NO_USER",
-      },
-    };
-  }
-
-  if (user.company) {
-    if (user.company.isVerified) {
-      return {
-        authorized: false,
-        data: {
-          error: "HAS_COMPANY",
-        },
-      };
+export const isAuthorizedForEmployerDash = createServerAction(
+  async (userId?: User["id"]) => {
+    if (!userId) {
+      throw new ServerActionError("NO_USER");
     }
 
-    return {
-      authorized: false,
-      data: {
-        error: "UNVERIFIED_COMPANY",
-      },
-    };
-  }
+    const user = await getUserWithCompanyById(userId);
+    const isAuthorized = user !== null && user.company !== null;
 
-  return {
-    data: {
-      user,
-    },
-    authorized: true,
-  };
-}
+    if (!isAuthorized) {
+      throw new ServerActionError("UNAUTHORIZED");
+    }
+
+    return user;
+  },
+);
+
+export const canCreateNewJobPost = createServerAction(
+  async (userId: User["id"]) => {
+    const user = await getUserWithCompanyById(userId);
+
+    let isAuthorized =
+      user !== null && user.company !== null && user.company.isVerified;
+
+    if (!isAuthorized || !user) {
+      throw new ServerActionError("UNAUTHORIZED");
+    }
+
+    return user;
+  },
+);
