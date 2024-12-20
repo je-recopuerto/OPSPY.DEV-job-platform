@@ -6955,10 +6955,10 @@ next@^14.2.3:
     "@next/swc-win32-ia32-msvc" "14.2.21"
     "@next/swc-win32-x64-msvc" "14.2.21"
 
-nextjs-toploader@^1.6.12:
-  version "1.6.12"
-  resolved "https://registry.yarnpkg.com/nextjs-toploader/-/nextjs-toploader-1.6.12.tgz#5b9f951e0de80450a23acd5101f4a311265c0d70"
-  integrity sha512-nbun5lvVjlKnxLQlahzZ55nELVEduqoEXT03KCHnsEYJnFpI/3BaIzpMyq/v8C7UGU2NfxQmjq6ldZ310rsDqA==
+nextjs-toploader@^3.0.0:
+  version "3.7.15"
+  resolved "https://registry.yarnpkg.com/nextjs-toploader/-/nextjs-toploader-3.7.15.tgz#2baba98b3d11c2001ab0639004ae5214d0e65f30"
+  integrity sha512-DvvXEJVRPfE2j1HVXgFhmPl8pRcLb/4mvyVBDuYdMdkbEY7KJghp0fG5iOZ002cV6awbBw9j/Di7vQL8LRazxQ==
   dependencies:
     nprogress "^0.2.0"
     prop-types "^15.8.1"
