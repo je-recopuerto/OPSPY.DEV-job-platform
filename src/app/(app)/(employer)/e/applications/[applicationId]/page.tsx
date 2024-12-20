@@ -23,9 +23,9 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 type ApplicationPageProps = {
-  params: {
+  params: Promise<{
     applicationId: string;
-  };
+  }>;
 };
 
 export const metadata = {
@@ -40,7 +40,7 @@ export default async function ApplicationPage({
 
   const response = await isAuthorizedForApplications(
     session.user.id,
-    params.applicationId,
+    (await params).applicationId,
   );
 
   if (!response.success || !response.value.isAuthorized)

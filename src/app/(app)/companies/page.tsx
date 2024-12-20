@@ -22,11 +22,12 @@ export const metadata = {
 };
 
 type Props = {
-  searchParams: z.infer<typeof companyFilterSchema>;
+  searchParams: Promise<z.infer<typeof companyFilterSchema>>;
 };
 
 export default async function CompaniesPage({ searchParams }: Props) {
-  const totalPages = await getCompaniesPageCount(searchParams);
+  const filter = await searchParams;
+  const totalPages = await getCompaniesPageCount(filter);
 
   return (
     <main className=" container min-h-screen ">
@@ -48,15 +49,12 @@ export default async function CompaniesPage({ searchParams }: Props) {
 
         <Suspense
           fallback={<CompaniesSkeleton />}
-          key={`${searchParams.page}${searchParams.name}`}
+          key={`${filter.page}${filter.name}`}
         >
-          <Companies searchParams={searchParams} />
+          <Companies searchParams={filter} />
         </Suspense>
       </div>
-      <JobPagination
-        currentPage={searchParams.page ?? 1}
-        totalPages={totalPages}
-      />
+      <JobPagination currentPage={filter.page ?? 1} totalPages={totalPages} />
     </main>
   );
 }

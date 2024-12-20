@@ -26,14 +26,15 @@ export const metadata = {
 };
 
 type EmployerDashboardPageProps = {
-  searchParams: {
+  searchParams: Promise<{
     tab?: string;
-  };
+  }>;
 };
 
 export default async function EmployerDashboardPage({
-  searchParams: { tab },
+  searchParams,
 }: EmployerDashboardPageProps) {
+  const tab = (await searchParams).tab;
   const session = await auth();
   const response = await isAuthorizedForEmployerDash(session?.user?.id);
   if (!response.success) return redirect(homeUrl);

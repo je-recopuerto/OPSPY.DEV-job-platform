@@ -51,7 +51,11 @@ async function ProfileSuggestions() {
         </CardHeader>
         <CardContent className="space-y-4">
           {qualifiedSuggestions.map((suggestion) => (
-            <div className="flex items-center space-x-2" id={suggestion.title}>
+            <div
+              className="flex items-center space-x-2"
+              id={suggestion.title}
+              key={suggestion.title}
+            >
               <suggestion.icon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
               <div>
                 <p className="font-medium">{suggestion.title}</p>
