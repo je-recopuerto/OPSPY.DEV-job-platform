@@ -9,14 +9,14 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 type CompanyPageParams = {
-  params: { companyId: string };
+  params: Promise<{ companyId: string }>;
 };
 
 export async function generateMetadata(
   { params }: CompanyPageParams,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const companyId = decodeURI(params.companyId);
+  const companyId = decodeURI((await params).companyId);
   const company = await getCompanyById(companyId);
 
   if (!company) {
@@ -37,7 +37,7 @@ export async function generateMetadata(
 }
 
 export default async function CompanyPage({ params }: CompanyPageParams) {
-  const companyId = decodeURI(params.companyId);
+  const companyId = decodeURI((await params).companyId);
   const company = await getCompanyById(companyId);
   if (!company) return notFound();
 
