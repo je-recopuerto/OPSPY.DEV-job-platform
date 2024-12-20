@@ -3,7 +3,7 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-} from "@/components/cui/breadcrumb";
+} from "@/components/ui/breadcrumb";
 
 type JobsLayoutProps = {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ export default function JobsLayout({ children, jobs }: JobsLayoutProps) {
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Home</BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbItem isCurrentPage>
+        <BreadcrumbItem>
           <BreadcrumbLink href="/components">Jobs</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>

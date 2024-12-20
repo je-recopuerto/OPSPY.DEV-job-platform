@@ -3,16 +3,16 @@ import Overview from "@/app/(app)/admin/_components/overview";
 import { auth } from "@/auth";
 import Spinner from "@/components/cui/Spinner";
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-} from "@/components/cui/breadcrumb";
-import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/cui/tabs";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+} from "@/components/ui/breadcrumb";
 import { getCompanysToReview } from "@/lib/data/company";
 import { getUserById } from "@/lib/data/user";
 import { notFound, redirect } from "next/navigation";
@@ -36,7 +36,7 @@ export default async function AdminPage() {
           <BreadcrumbItem>
             <BreadcrumbLink href="/">Home</BreadcrumbLink>
           </BreadcrumbItem>
-          <BreadcrumbItem isCurrentPage>
+          <BreadcrumbItem>
             <BreadcrumbLink href="/components">Admin Dashboard</BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>

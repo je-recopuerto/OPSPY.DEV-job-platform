@@ -8,7 +8,7 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-} from "@/components/cui/breadcrumb";
+} from "@/components/ui/breadcrumb";
 import {
   getCompaniesPageCount,
   getCompaniesWithOpenings,
@@ -35,7 +35,7 @@ export default async function CompaniesPage({ searchParams }: Props) {
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Home</BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbItem isCurrentPage>
+        <BreadcrumbItem>
           <BreadcrumbLink href="/components">Companies</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>

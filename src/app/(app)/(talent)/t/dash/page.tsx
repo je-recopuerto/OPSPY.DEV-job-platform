@@ -4,7 +4,7 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-} from "@/components/cui/breadcrumb";
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getUserWithCompanyById } from "@/lib/data/user";
@@ -35,7 +35,7 @@ export default async function DashboardPage() {
           <BreadcrumbItem>
             <BreadcrumbLink href="/">Home</BreadcrumbLink>
           </BreadcrumbItem>
-          <BreadcrumbItem isCurrentPage>
+          <BreadcrumbItem>
             <BreadcrumbLink href="/components">Dashboard</BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
