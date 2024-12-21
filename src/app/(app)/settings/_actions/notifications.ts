@@ -3,10 +3,10 @@
 import { auth } from "@/auth";
 import { createServerAction, ServerActionError } from "@/lib/action-utils";
 import knock from "@/lib/knock";
-import { PreferenceSet } from "@knocklabs/node";
+import { SetPreferencesProperties } from "@knocklabs/node";
 
 export const updateNotificationSettings = createServerAction(
-  async (preferences: PreferenceSet) => {
+  async (preferences: SetPreferencesProperties) => {
     const session = await auth();
     if (!session || !session.user || !session.user.id) return;
 
