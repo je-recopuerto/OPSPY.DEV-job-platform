@@ -4,14 +4,10 @@ import { updateNotificationSettings } from "@/app/(app)/settings/_actions/notifi
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
-import { PreferenceSet } from "@knocklabs/node";
+import { PreferenceSet, SetPreferencesProperties } from "@knocklabs/node";
 import { ChannelType } from "@knocklabs/node/dist/src/common/interfaces";
 import { ChannelTypePreferences } from "@knocklabs/node/dist/src/resources/preferences/interfaces";
 import { useForm } from "react-hook-form";
-
-type PreferencesFormProps = {
-  preferences: PreferenceSet;
-};
 
 const preferenceTypes: {
   name: string;
@@ -50,11 +46,15 @@ const preferenceTypes: {
   },
 ] as const;
 
-export default function PreferencesForm(props: PreferencesFormProps) {
+export default function PreferencesForm({
+  preferences,
+}: {
+  preferences: PreferenceSet;
+}) {
   const { toast } = useToast();
 
-  const form = useForm<PreferenceSet>({
-    defaultValues: props.preferences,
+  const form = useForm<SetPreferencesProperties>({
+    defaultValues: preferences as SetPreferencesProperties,
   });
 
   const {
@@ -85,7 +85,7 @@ export default function PreferencesForm(props: PreferencesFormProps) {
             });
 
             // Set the form values to the result
-            form.reset(result.value);
+            form.reset(result.value as SetPreferencesProperties);
           } else {
             toast({
               variant: "destructive",
@@ -106,7 +106,7 @@ export default function PreferencesForm(props: PreferencesFormProps) {
                     type="checkbox"
                     className="form-checkbox"
                     defaultChecked={isChecked(
-                      props.preferences.channel_types,
+                      preferences.channel_types,
                       preferenceType.code,
                     )}
                     {...form.register(`channel_types.${preferenceType.code}`)}
