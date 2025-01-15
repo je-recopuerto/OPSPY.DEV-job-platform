@@ -1543,10 +1543,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@knocklabs/client@^0.11.0":
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/@knocklabs/client/-/client-0.11.0.tgz#7c6a392bac1ec2d1d854ce82cef0eb234c70b81b"
-  integrity sha512-L+di1Vnp782XgdUhj6g8GX3af61eDeWaYfiYAJLUNXxr+YoWKKUaVZoZzi5QkwhUDMaO0gQx3zC7MQ0NZHZ11g==
+"@knocklabs/client@^0.11.1":
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/@knocklabs/client/-/client-0.11.1.tgz#e5bd3d507fcd9ab252e3bb705ac570527da4e61c"
+  integrity sha512-/z8HbUs2L0S7cBx4/gCP7oQLeZpkp0fUrq9e+LB4c6Gc7BUTfzohA6b4o0ztu2te5+Bp1xKsiNwCuROy29xIgg==
   dependencies:
     "@babel/runtime" "^7.26.0"
     "@knocklabs/types" "^0.1.5"
@@ -1565,23 +1565,23 @@
   dependencies:
     jose "^5.2.0"
 
-"@knocklabs/react-core@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@knocklabs/react-core/-/react-core-0.3.0.tgz#0d112f32742f65c2ddf3b066d8ee319d974c4bf7"
-  integrity sha512-Hig64qJbiDX2RriyLjzB0UiAhEU7VKOwvj21DappesqX11aoqSOy+wT/qCeaeLtuWU/PraxCDTcvndkiWGUpGw==
+"@knocklabs/react-core@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@knocklabs/react-core/-/react-core-0.3.1.tgz#7c7dc473f92c9dc349b08d9330c959e8dd99fcf2"
+  integrity sha512-jQ7OYzdbfJAJJr9yxWuzBR5sICpRqYClrPaxH+bzc1ctiJkw+XX24r8VCDWaIf4Awnq3McoASLdU5q/I0QjApg==
   dependencies:
-    "@knocklabs/client" "^0.11.0"
+    "@knocklabs/client" "^0.11.1"
     date-fns "^4.0.0"
     swr "^2.2.5"
     zustand "^3.7.2"
 
 "@knocklabs/react@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@knocklabs/react/-/react-0.3.0.tgz#d28f705d6f78064b16aa67d072558ade91284a50"
-  integrity sha512-z9hOx363yA26a6KyUN/+osfzSOwFsYQ18ZWT/HP3VMimGbL7EOfHmtNCKWd7qVKPmUkQ+T8nfXqeV9M2bTX6Iw==
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@knocklabs/react/-/react-0.3.1.tgz#57907015ff60807a140589d0c9e33ed03b2eca7a"
+  integrity sha512-MGgWWYgnEgTYuEGnBfPUzXFETfyT59y7/rWBQxlys1CUtu2UyYRbCGS/c2fqk3STIKJPf6xZJbxRLLk0u2i7UA==
   dependencies:
-    "@knocklabs/client" "^0.11.0"
-    "@knocklabs/react-core" "^0.3.0"
+    "@knocklabs/client" "^0.11.1"
+    "@knocklabs/react-core" "^0.3.1"
     "@popperjs/core" "^2.11.8"
     "@radix-ui/react-popover" "1.0.7"
     "@radix-ui/react-visually-hidden" "1.0.3"
@@ -3167,9 +3167,9 @@
     form-data "^4.0.0"
 
 "@types/node@*", "@types/node@>=8.1.0", "@types/node@^22.0.0":
-  version "22.10.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.10.5.tgz#95af89a3fb74a2bb41ef9927f206e6472026e48b"
-  integrity sha512-F8Q+SeGimwOo86fiovQh8qiXfFEh2/ocYv7tU5pJ3EXMSSxk1Joj5wefpFK2fHTf/N6HKGSxIDBT9f3gCxXPkQ==
+  version "22.10.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.10.6.tgz#5c6795e71635876039f853cbccd59f523d9e4239"
+  integrity sha512-qNiuwC4ZDAUNcY47xgaSuS92cjf8JbSUoaKS77bmLG1rU7MlATVSiw/IlrjtIyyskXBZ8KkNfjK/P5na7rgXbQ==
   dependencies:
     undici-types "~6.20.0"
 
@@ -3191,9 +3191,9 @@
   integrity sha512-0Knk+HJiMP/qOZgMyNFamlIjw9OFCsyC2ZbigmEEyXXixgre6IQpm/4V+r3qH4GC1JPvRJKInw+on2rV6YZLeA==
 
 "@types/react@^19.0.0":
-  version "19.0.6"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.0.6.tgz#98deae4c5c4b24735e5d9e341302f9ebd45e80d3"
-  integrity sha512-gIlMztcTeDgXCUj0vCBOqEuSEhX//63fW9SZtCJ+agxoQTOklwDfiEMlTWn4mR/C/UK5VHlpwsCsOyf7/hc4lw==
+  version "19.0.7"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.0.7.tgz#c451968b999d1cb2d9207dc5ff56496164cf511d"
+  integrity sha512-MoFsEJKkAtZCrC1r6CM8U22GzhG7u2Wir8ons/aCKH6MBdD1ibV24zOSSkdZVUKqN5i396zG5VKLYZ3yaUZdLA==
   dependencies:
     csstype "^3.0.2"
 
@@ -6943,9 +6943,9 @@ lru-cache@^6.0.0:
     yallist "^4.0.0"
 
 lucide-react@^0.471.0:
-  version "0.471.0"
-  resolved "https://registry.yarnpkg.com/lucide-react/-/lucide-react-0.471.0.tgz#22b0966f2f9953e75387c7f5b2c95f5459b4c51e"
-  integrity sha512-3L0OOJClsKDETJGK7nABqW8ftaVmUjWzluzPpw/6dGdI1bOmzsLsCjZpAEpg24Xs/U7xdYveQU+CBkHxWy7MrA==
+  version "0.471.1"
+  resolved "https://registry.yarnpkg.com/lucide-react/-/lucide-react-0.471.1.tgz#16f29cd65c7c847eceab0bbf8592443104423249"
+  integrity sha512-syOxwPhf62gg2YOsz72HRn+CIpeudFy67AeKnSR8Hn/fIIF4ubhNbRF+pQ2CaJrl+X9Os4PL87z2DXQi3DVeDA==
 
 lz-string@^1.5.0:
   version "1.5.0"
@@ -7377,7 +7377,7 @@ mz@^2.7.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-nanoid@^3.3.6, nanoid@^3.3.7:
+nanoid@^3.3.6, nanoid@^3.3.8:
   version "3.3.8"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.8.tgz#b1be3030bee36aaff18bacb375e5cce521684baf"
   integrity sha512-WNLf5Sd8oZxOm+TzppcYk8gVOgP+l58xNy58D0nbUnOxOWRWvlcCV4kUF7ltmI6PsrLl/BgKEyS4mqsGChFN0w==
@@ -7829,11 +7829,11 @@ postcss@8.4.31:
     source-map-js "^1.0.2"
 
 postcss@^8.4.38, postcss@^8.4.47:
-  version "8.4.49"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.49.tgz#4ea479048ab059ab3ae61d082190fabfd994fe19"
-  integrity sha512-OCVPnIObs4N29kxTjzLfUryOkvZEq+pf8jTF0lg8E7uETuWHA+v7j3c/xJmiqpX450191LlmZfUKkXxkTry7nA==
+  version "8.5.1"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.1.tgz#e2272a1f8a807fafa413218245630b5db10a3214"
+  integrity sha512-6oz2beyjc5VMn/KV1pPw8fliQkhBXrVn1Z3TVyqZxU8kZpzEKhBdmCFqI6ZbmGtamQvQGuU1sgPTk8ZrXDD7jQ==
   dependencies:
-    nanoid "^3.3.7"
+    nanoid "^3.3.8"
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
