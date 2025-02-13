@@ -1,16 +1,16 @@
 import { buttonVariants } from "@/components/ui/button";
-import { JobPostWithCompany } from "@/lib/data/job.types";
-import { filteredJobsUrl, jobUrl } from "@/lib/pages";
-import { Company } from "@prisma/client";
-import { ChevronRight } from "lucide-react";
-import Link from "next/link";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../../../../components/ui/card";
+} from "@/components/ui/card";
+import { JobPostWithCompany } from "@/lib/data/job.types";
+import { filteredJobsUrl, jobUrl } from "@/lib/pages";
+import { Company } from "@prisma/client";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 type FeaturedJobsProps = {
   jobs: JobPostWithCompany[];
@@ -35,7 +35,7 @@ export default function JobGrid({
           <Card key={key}>
             {/*<img*/}
             {/*  alt="Property 1"*/}
-            {/*  className="aspect-[5/3] object-cover w-full"*/}
+            {/*  className="aspect-5/3 object-cover w-full"*/}
             {/*  height={300}*/}
             {/*  src="/placeholder.svg"*/}
             {/*  width={500}*/}

@@ -52,7 +52,7 @@ export default function GettingStarted({ form }: OnboardingCardProps) {
               control={form.control}
               name="firstName"
               render={({ field }) => (
-                <FormItem className={"flex-grow"}>
+                <FormItem className={"grow"}>
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
                     <Input placeholder="Saul" {...field} />
@@ -66,7 +66,7 @@ export default function GettingStarted({ form }: OnboardingCardProps) {
               name={"lastName"}
               control={form.control}
               render={({ field }) => (
-                <FormItem className={"flex-grow"}>
+                <FormItem className={"grow"}>
                   <FormLabel>Last Name</FormLabel>
                   <FormControl>
                     <Input placeholder="Goodman" {...field} />
@@ -130,7 +130,7 @@ export default function GettingStarted({ form }: OnboardingCardProps) {
             control={form.control}
             name="location"
             render={({ field }) => (
-              <FormItem className={"flex-grow"}>
+              <FormItem className={"grow"}>
                 <FormLabel>Location</FormLabel>
                 <FormControl>
                   <Input placeholder={"Albuquerque, NM"} {...field} />
@@ -144,7 +144,7 @@ export default function GettingStarted({ form }: OnboardingCardProps) {
             control={form.control}
             name="bio"
             render={({ field }) => (
-              <FormItem className={"flex-grow"}>
+              <FormItem className={"grow"}>
                 <FormLabel>Bio</FormLabel>
                 <FormControl>
                   <Textarea placeholder="The best lawyer" {...field} />
@@ -158,7 +158,7 @@ export default function GettingStarted({ form }: OnboardingCardProps) {
             control={form.control}
             name="linkedinUrl"
             render={({ field }) => (
-              <FormItem className={"flex-grow"}>
+              <FormItem className={"grow"}>
                 <FormLabel>LinkedIn Link</FormLabel>
                 <FormControl>
                   <Input
@@ -175,7 +175,7 @@ export default function GettingStarted({ form }: OnboardingCardProps) {
             control={form.control}
             name="githubUrl"
             render={({ field }) => (
-              <FormItem className={"flex-grow"}>
+              <FormItem className={"grow"}>
                 <FormLabel>GitHub Link</FormLabel>
                 <FormControl>
                   <Input placeholder="https://github.com/..." {...field} />
@@ -189,7 +189,7 @@ export default function GettingStarted({ form }: OnboardingCardProps) {
             control={form.control}
             name="portfolioUrl"
             render={({ field }) => (
-              <FormItem className={"flex-grow"}>
+              <FormItem className={"grow"}>
                 <FormLabel>Portfolio Link</FormLabel>
                 <FormControl>
                   <Input placeholder="https://example.com/" {...field} />

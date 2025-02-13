@@ -76,7 +76,7 @@ export default function WorkExperienceCard({
                       id="title"
                       defaultValue={field.value ?? ""}
                       placeholder="Enter Job Title"
-                      className="resize-none appearance-none overflow-hidden bg-transparent text-2xl font-bold focus:outline-none"
+                      className="resize-none appearance-none overflow-hidden bg-transparent text-2xl font-bold focus:outline-hidden"
                       disabled={!editing}
                       hidden={!editing && !field.value}
                       {...field}
@@ -121,7 +121,7 @@ export default function WorkExperienceCard({
                       defaultValue={field.value ?? ""}
                       placeholder="Enter Company Name"
                       className={
-                        "resize-none appearance-none overflow-hidden bg-transparent text-md font-bold focus:outline-none"
+                        "resize-none appearance-none overflow-hidden bg-transparent text-md font-bold focus:outline-hidden"
                       }
                       disabled={!editing}
                       hidden={!editing && !field.value}
@@ -200,7 +200,7 @@ export default function WorkExperienceCard({
                   id="title"
                   defaultValue={field.value ?? ""}
                   placeholder="I worked on..."
-                  className="w-full resize-none appearance-none overflow-hidden bg-transparent text-sm focus:outline-none"
+                  className="w-full resize-none appearance-none overflow-hidden bg-transparent text-sm focus:outline-hidden"
                   disabled={!editing}
                   hidden={!editing && !field.value}
                   {...field}
