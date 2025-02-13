@@ -1,8 +1,148 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
+@plugin 'tailwindcss-animate';
+@plugin '@tailwindcss/typography';
+@plugin 'tailwindcss-animate';
 
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --font-sans:
+    var(--font-sans), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-fade-up: fade-up 0.5s;
+  --animate-fade-down: fade-down 0.5s;
+  --animate-fade-in: fade-in 0.4s;
+  --animate-fade-out: fade-out 0.4s;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  @keyframes fade-up {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    80% {
+      opacity: 0.7;
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+  @keyframes fade-down {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    80% {
+      opacity: 0.6;
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.6;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes fade-out {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.6;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
 
 @layer base {
   :root {
@@ -51,24 +191,29 @@
   }
 }
 
-/* Dark mode */
-.dark .step1 {
-  background-color: rgba(5, 0, 8, .227);
-  border: 1px solid hsla(0, 0%, 100%, .05);
-  background-image: radial-gradient(hsla(0, 0%, 100%, .1) 1px, transparent 0);
-  background-position: 50% 50%;
-  background-size: 1.1rem 1.1rem;
-  position: relative;
-}
+@layer utilities {
+  /* Dark mode */
+  .dark .step1 {
+    background-color: rgba(5, 0, 8, 0.227);
+    border: 1px solid hsla(0, 0%, 100%, 0.05);
+    background-image: radial-gradient(
+      hsla(0, 0%, 100%, 0.1) 1px,
+      transparent 0
+    );
+    background-position: 50% 50%;
+    background-size: 1.1rem 1.1rem;
+    position: relative;
+  }
 
-.step1 {
-  flex-grow: 1 !important;
-  background-color: rgba(5, 0, 8, .227);
-  border: 1px solid hsla(0, 0%, 100%, .05);
-  background-image: radial-gradient(hsla(0, 0%, 0%, 0.21) 1px, transparent 0);
-  background-position: 50% 50%;
-  background-size: 1.1rem 1.1rem;
-  position: relative;
+  .step1 {
+    flex-grow: 1 !important;
+    background-color: rgba(5, 0, 8, 0.227);
+    border: 1px solid hsla(0, 0%, 100%, 0.05);
+    background-image: radial-gradient(hsla(0, 0%, 0%, 0.21) 1px, transparent 0);
+    background-position: 50% 50%;
+    background-size: 1.1rem 1.1rem;
+    position: relative;
+  }
 }
 
 @layer base {

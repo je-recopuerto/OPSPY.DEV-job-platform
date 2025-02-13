@@ -41,7 +41,7 @@ export const PricingGrid = ({
       </div>
       <section
         className={
-          "mx-auto grid max-w-screen-lg gap-5 bg-inherit md:grid-cols-3 lg:grid-cols-3"
+          "mx-auto grid max-w-(--breakpoint-lg) gap-5 bg-inherit md:grid-cols-3 lg:grid-cols-3"
         }
       >
         {plans.map((plan) => {

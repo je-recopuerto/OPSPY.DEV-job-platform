@@ -11,7 +11,7 @@ export default async function Header() {
   const session = await auth();
 
   return (
-    <header className="sticky top-0 z-50 flex justify-center border-b backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 flex justify-center border-b backdrop-blur-sm supports-backdrop-filter:bg-background/60">
       <div className="flex items-center justify-between w-full h-16 max-w-7xl px-4 mx-auto sm:px-6">
         <Nav />
 
