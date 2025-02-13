@@ -68,7 +68,7 @@
     "react-textarea-autosize": "^8.5.3",
     "react-wrap-balancer": "^1.1.0",
     "stripe": "^17.0.0",
-    "tailwind-merge": "^2.3.0",
+    "tailwind-merge": "^3.0.0",
     "tailwindcss-animate": "^1.0.7",
     "ts-pattern": "^5.1.1",
     "use-debounce": "^10.0.0",
